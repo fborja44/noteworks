@@ -7,14 +7,14 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const App = () => {
     return (
         <Router>
-            <div className="page-container">
+            <body className="page-container">
                 <Header />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                 </Switch>
-            </div>
+            </body>
         </Router>
     );
 };

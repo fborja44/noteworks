@@ -4,7 +4,7 @@ import { BiLogIn } from "react-icons/bi";
 
 const Home = () => {
     return (
-        <body className="body-home">
+        <section className="body-home">
             <div className="body-content">
                 <div id="splash-text">Never forget a thing.</div>
                 <div id="splash-desc">
@@ -33,7 +33,7 @@ const Home = () => {
             <footer>
                 <span className="app-name">Denote!</span>
             </footer>
-        </body>
+        </section>
     );
 };
 
