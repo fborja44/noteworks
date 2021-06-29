@@ -2,8 +2,8 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI",
+        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -22,26 +22,26 @@ code {
     --header-text-color: white;
 
     /* Background Definitions */
-    --bg-color-primary: #C9C9C9;
+    --bg-color-primary: #c9c9c9;
 
     /* Color Definitions */
     --color-black: black;
     --color-black-hover: #151515;
     --color-white: white;
-    --color-white-hover: #EDEDED;
+    --color-white-hover: #ededed;
 
-    --color-red: #EB5757;
-    --color-red-dark: #CF4242;
-    --color-orange: #F2994A;
-    --color-orange-dark: #E98034;
-    --color-yellow: #F2C94C;
-    --color-yellow-dark: #EDAC2F;
-    --color-green: #27AE60;
-    --color-green-dark: #2B9843;
-    --color-blue: #2F80ED;
-    --color-blue-dark: #2C62CD;
-    --color-purple: #BB6BD9;
-    --color-purple-dark: #964CC3;
+    --color-red: #eb5757;
+    --color-red-dark: #cf4242;
+    --color-orange: #f2994a;
+    --color-orange-dark: #e98034;
+    --color-yellow: #f2c94c;
+    --color-yellow-dark: #edac2f;
+    --color-green: #27ae60;
+    --color-green-dark: #2b9843;
+    --color-blue: #2f80ed;
+    --color-blue-dark: #2c62cd;
+    --color-purple: #bb6bd9;
+    --color-purple-dark: #964cc3;
 }
 
 .page-container {
@@ -49,8 +49,11 @@ code {
     background: var(--bg-color-primary);
 }
 
-/* Import Oleo Script */
+/* Import Oleo Script Font */
 @import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap");
+
+/* Import Raleway Font */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /* Header Styles */
 header {
@@ -88,6 +91,10 @@ header {
     font-family: "Oleo Script";
     color: var(--header-text-color);
     margin-left: 0.75rem;
+}
+
+.home-link {
+    text-decoration: none;
 }
 
 #header-nav {
@@ -135,26 +142,77 @@ header {
 }
 
 .signup-button:hover {
-  background: var(--color-blue-dark);
+    background: var(--color-blue-dark);
 }
 
 .login-button:hover {
-  background: var(--color-red-dark);
+    background: var(--color-red-dark);
 }
 
-/* .login-button span {
+.login-button span {
     position: relative;
     bottom: 1px;
-} */
+}
 
-.login-icon  {
+.login-icon {
     font-size: 14px;
     margin-left: 0.2rem;
     position: relative;
     top: 2px;
 }
 
-.signup-button span {
-    position: relative;
-    top: 1px;
+/** Homepage Styles **/
+
+.body-home {
+    background: linear-gradient(258.68deg, #eb5757 0%, #9b51e0 100%), #2f80ed;
+    min-height: calc(100vh - 55px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.body-content {
+    align-self: center;
+    height: fit-content;
+    padding: 5rem 0 1rem;
+}
+
+#splash-text {
+    color: white;
+    font-weight: 900;
+    font-size: 64px;
+    margin: 0 auto 2rem auto;
+    width: fit-content;
+}
+
+#splash-desc {
+    color: white;
+    font-weight: bold;
+    margin: 0 auto 2rem auto;
+    width: 550px;
+    text-align: center;
+}
+
+.home-buttons-container {
+    margin: 0 auto 0 auto;
+    height: 125px;
+    width: 300px;
+    text-align: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-buttons-content p {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+}
+
+footer .app-name {
+    font-size: 56px;
 }

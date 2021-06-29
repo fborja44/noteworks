@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
     return (
         <header>
-            <Link to="/">
+            <Link className="home-link" to="/">
                 <div className="app-title">
                     <span className="app-logo-container">
                         <BiNotepad className="app-logo" />
