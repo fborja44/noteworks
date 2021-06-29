@@ -16,12 +16,40 @@ code {
 
 /** Page Styles **/
 
+:root {
+    /* Header Definitions */
+    --header-bg-color: #151515;
+    --header-text-color: white;
+
+    /* Background Definitions */
+    --bg-color-primary: #C9C9C9;
+
+    /* Color Definitions */
+    --color-black: black;
+    --color-black-hover: #151515;
+    --color-white: white;
+    --color-white-hover: #EDEDED;
+
+    --color-red: #EB5757;
+    --color-red-dark: #CF4242;
+    --color-orange: #F2994A;
+    --color-orange-dark: #E98034;
+    --color-yellow: #F2C94C;
+    --color-yellow-dark: #EDAC2F;
+    --color-green: #27AE60;
+    --color-green-dark: #2B9843;
+    --color-blue: #2F80ED;
+    --color-blue-dark: #2C62CD;
+    --color-purple: #BB6BD9;
+    --color-purple-dark: #964CC3;
+}
+
 /* Import Oleo Script */
 @import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap");
 
 /* Header Styles */
 header {
-    background-color: #25242c;
+    background-color: var(--header-bg-color);
     display: flex;
     flex-direction: row;
     min-height: 55px;
@@ -30,7 +58,7 @@ header {
 }
 
 .app-title {
-    color: white;
+    color: var(--header-text-color);
     font-size: 24px;
     margin-left: 1rem;
     display: flex;
@@ -46,13 +74,13 @@ header {
 }
 
 .app-logo {
-    color: white;
+    color: var(--header-text-color);
     padding: 4px 0px 0px 5px;
 }
 
 .app-name {
     font-family: "Oleo Script";
-    color: white;
+    color: var(--header-text-color);
     margin-left: 0.75rem;
 }
 
@@ -63,18 +91,19 @@ header {
     align-items: center;
 }
 
-#header-nav * {
+.header-nav-element {
     margin: 0 0.5rem 0 0.5rem;
 }
 
 .header-icon {
-    color: white;
+    color: var(--header-text-color);
     width: 28px;
     height: 28px;
 }
 
 .header-icon:hover {
     cursor: pointer;
+    color: var(--color-white-hover);
 }
 
 .header-button {
@@ -82,7 +111,9 @@ header {
     height: 28px;
     border-radius: 5px;
     border: none;
-    color: white;
+    color: var(--header-text-color);
+
+    font-size: 12px;
 }
 
 .header-button:hover {
@@ -90,9 +121,29 @@ header {
 }
 
 .signup-button {
-    background: #2F80ED;
+    background: var(--color-blue);
 }
 
 .login-button {
-    background: #eb5757;
+    background: var(--color-red);
+}
+
+.signup-button:hover {
+  background: var(--color-blue-dark);
+}
+
+.login-button:hover {
+  background: var(--color-red-dark);
+}
+
+.login-icon  {
+    font-size: 14px;
+    margin-left: 0.2rem;
+    position: relative;
+    top: 2px;
+}
+
+.signup-button span {
+    position: relative;
+    top: 1px;
 }
