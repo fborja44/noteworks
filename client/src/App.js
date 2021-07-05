@@ -12,6 +12,7 @@ import QuickNotesList from "./components/quicknotes/QuickNotesList";
 
 // CSS imports
 import "./css/app.css";
+import "./css/quicknotes.css";
 
 const App = () => {
   const [quicknotes, setQuickNotes] = useState([]);
@@ -21,7 +22,9 @@ const App = () => {
 
   // Effect hook to retrieve data from local storage
   useEffect(() => {
-    const savedQuickNotes = JSON.parse(localStorage.getItem("react-notes-app-data"));
+    const savedQuickNotes = JSON.parse(
+      localStorage.getItem("react-notes-app-data")
+    );
     // Check if notes were received
     if (savedQuickNotes) {
       setQuickNotes(savedQuickNotes);
@@ -58,6 +61,15 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+      <main>
+        <QuickNotesList
+          notes={quicknotes.filter((note) =>
+            note.text.toLowerCase().includes(searchText)
+          )}
+          handleAddNote={addQuickNote}
+          handleDeleteNote={deleteQuickNote}
+        />
+      </main>
       <Footer />
     </div>
   );

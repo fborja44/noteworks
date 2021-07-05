@@ -1,0 +1,116 @@
+/** Quick Notes Styles **/
+
+/* Import Oleo Script Font */
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap");
+
+/* Import Raleway Font */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* Variable Declarations */
+:root {
+  --note-background-primary: white;
+
+  /* Color Definitions */
+  --color-black: black;
+  --color-black-hover: #151515;
+  --color-white: white;
+  --color-white-hover: #ededed;
+
+  --color-red: #eb5757;
+  --color-red-dark: #cf4242;
+  --color-orange: #f2994a;
+  --color-orange-dark: #e98034;
+  --color-yellow: #f2c94c;
+  --color-yellow-dark: #edac2f;
+  --color-green: #27ae60;
+  --color-green-dark: #2b9843;
+  --color-blue: #2f80ed;
+  --color-blue-dark: #2c62cd;
+  --color-purple: #bb6bd9;
+  --color-purple-dark: #964cc3;
+}
+
+.quicknotes-list {
+  display: flex;
+  padding: 2rem;
+}
+
+.quicknote.new {
+  /* background-color: #67d7cc; */
+}
+
+.quicknote.new textarea {
+  border: none;
+  resize: none;
+  background-color: inherit;
+}
+
+.quicknote.new textarea:focus {
+  outline: none;
+}
+
+.save,
+.dark-mode-toggle {
+  background-color: #e1e1e1;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+  font-size: 12px;
+}
+
+.save:hover,
+.dark-mode-toggle:hover {
+  background-color: #ededed;
+  cursor: pointer;
+}
+
+.quicknote-header {
+  width: 100%;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: var(--color-red);
+}
+
+.quicknote-name {
+  margin-left: .5rem;
+}
+
+.quicknote > *,
+.quicknote-content > * {
+  font-size: 13px;
+}
+
+.quicknote {
+  background-color: var(--note-background-primary);
+  margin: 0 10px 10px 10px;
+  width: 230px;
+  height: 200px;
+}
+
+.quicknote-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  white-space: pre-wrap; /* keep spacing added to text */
+  padding: 0.5rem;
+
+  height: calc(100% - 25px - 1rem);
+}
+
+.quicknote-content textarea {
+  width: 100%;
+}
+
+.quicknote-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-icon {
+  cursor: pointer;
+}
