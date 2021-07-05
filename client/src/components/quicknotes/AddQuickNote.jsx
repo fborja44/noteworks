@@ -2,7 +2,7 @@
 import { React, useState } from "react";
 
 // Image and icon imports
-import { IoMdAdd } from "react-icons/io";
+import { MdAddCircleOutline } from "react-icons/md";
 
 const AddQuickNote = ({ handleAddNote }) => {
   // State hook for title
@@ -38,7 +38,7 @@ const AddQuickNote = ({ handleAddNote }) => {
   };
 
   return (
-    <div className="quicknote new">
+    <div className="quicknote add">
       <div className="quicknote-header">
         <input className="quicknote-title-input" placeholder="Title..." value={noteTitle} onChange={handleTitleChange}/>
       </div>
@@ -53,7 +53,7 @@ const AddQuickNote = ({ handleAddNote }) => {
         <div className="quicknote-footer">
           <small>Character Limit: {textCharacterLimit - noteText.length}</small>
           <button className="add-quicknote-button" onClick={handleSaveClick}>
-            <IoMdAdd className="add-icon" />
+            <MdAddCircleOutline className="add-icon" />
           </button>
         </div>
       </div>

@@ -10,7 +10,9 @@
 :root {
   --note-background-primary: white;
   --note-header-text-color: #333333;
-  --note-text-color-primary: #828282;
+  --note-text-color-primary: #333333;
+
+  --note-text-color-edit: #828282;
 
   /* Color Definitions */
   --color-black: black;
@@ -49,23 +51,6 @@
 }
 
 /* General Quick Note Styles */
-.quicknote-header {
-  width: 230.5px;
-  height: 25px;
-  color: var(--note-header-text-color);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background-color: var(--color-red);
-  border-bottom: 1px solid #828282;
-}
-
-.quicknote-name, .quicknote-title-input {
-  margin: 0 .5rem 0 .5rem;
-}
-
 .quicknote {
   background-color: var(--note-background-primary);
   margin: 0 10px 10px 10px;
@@ -76,7 +61,26 @@
 
   font-size: 13px;
   font-family: 'Source Sans Pro', sans-serif !important;
-  border: 1px solid #828282;
+}
+
+.quicknote-header {
+  width: 100%;
+  height: 25px;
+  color: var(--note-header-text-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: var(--color-red);
+  border-top: 1px solid #828282;
+  border-left: 1px solid #828282;
+  border-right: 1px solid #828282;
+  box-sizing: border-box;
+}
+
+.quicknote-name, .quicknote-title-input {
+  margin: 0 .5rem 0 .5rem;
 }
 
 .quicknote textarea {
@@ -93,7 +97,7 @@
   padding: 0.5rem;
   color: var(--note-text-color-primary);
   
-
+  border: 1px solid #828282;
   height: calc(100% - 25px - 1rem);
 }
 
@@ -116,8 +120,8 @@
   color: var(--color-red-dark);
 }
 
-/* New Quick Note Styles */
-.quicknote.new .quicknote-header  {
+/* Add Quick Note Styles */
+.quicknote.add .quicknote-header  {
   background-color: var(--color-grey);
 }
 
@@ -133,13 +137,14 @@
   outline: none;
 }
 
-.quicknote.new textarea {
+.quicknote.add textarea {
   border: none;
   resize: none;
   background-color: inherit;
+  color: var(--note-text-color-edit);
 }
 
-.quicknote.new textarea:focus {
+.quicknote.add textarea:focus {
   outline: none;
 }
 
@@ -147,7 +152,6 @@
   border: none;
   background-color: rgb(0,0,0,0);
   color: var(--note-text-color-primary);
-  font-size: 14px;
   transition: color 0.2s ease 0s;
 }
 
