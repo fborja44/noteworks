@@ -1,0 +1,93 @@
+/*** Main Application Stylesheet ***/
+
+/* Import Oleo Script Font */
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap");
+
+/* Import Raleway Font */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* Variable Definitions */
+:root {
+  --header-bg-color: #25242c;
+  --header-bg-color-hover: #3e3d44;
+  --header-text-color-primary: white;
+
+  --background-color-primary: #e0e0e0;
+
+  --text-color-primary: #333333;
+
+  /* Color Definitions */
+  --color-black: black;
+  --color-black-hover: #151515;
+  --color-white: white;
+  --color-white-hover: #ededed;
+
+  --color-red: #eb5757;
+  --color-red-dark: #cf4242;
+  --color-orange: #f2994a;
+  --color-orange-dark: #e98034;
+  --color-yellow: #f2c94c;
+  --color-yellow-dark: #edac2f;
+  --color-green: #27ae60;
+  --color-green-dark: #2b9843;
+  --color-blue: #2f80ed;
+  --color-blue-dark: #2c62cd;
+  --color-purple: #bb6bd9;
+  --color-purple-dark: #964cc3;
+}
+
+/* General Styles */
+body {
+  background-color: var(--background-color-primary);
+  height: 100vh;
+}
+
+/* Header and Title Bar Styles */
+header {
+  background-color: var(--header-bg-color);
+  color: var(--header-text-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+
+  height: 40px;
+}
+
+#app-title {
+  font-family: "Oleo Script", sans-serif;
+  margin-left: 1rem;
+}
+
+#title-bar-buttons ul {
+  list-style: none;
+  margin: 0;
+  height: 40px;
+  color: var(--header-text-color-primary);
+}
+
+#title-bar-buttons ul li {
+  float: left;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 55px;
+  height: 100%;
+  transition: background-color 0.2s ease 0s;
+}
+
+#title-bar-buttons ul li:hover {
+  background-color: var(--header-bg-color-hover);
+  cursor: pointer;
+}
+
+#minimize-icon {
+  position: relative;
+  bottom: 4px;
+}
+
+#power-icon {
+  font-size: 28px;
+}
