@@ -6,7 +6,7 @@ import { MdAddCircleOutline } from "react-icons/md";
 
 const AddQuickNote = ({ handleAddNote }) => {
   // State hook for title
-  const [noteTitle, setNoteTitle] = useState(""); // Set noteTitle state
+  const [noteTitle, setNoteTitle] = useState("");
   const titleCharacterLimit = 30;
 
   const handleTitleChange = (event) => {
@@ -16,7 +16,7 @@ const AddQuickNote = ({ handleAddNote }) => {
   };
 
   // State hook for note text
-  const [noteText, setNoteText] = useState(""); // Set noteText state
+  const [noteText, setNoteText] = useState("");
   const textCharacterLimit = 200;
 
   const handleTextChange = (event) => {
@@ -26,10 +26,13 @@ const AddQuickNote = ({ handleAddNote }) => {
     }
   };
 
+  // State hook for note color
+  const [noteColor, setNoteColor] = useState("");
+
   const handleSaveClick = () => {
     // Validate input
     if (noteText.trim().length > 0) {
-      if (noteTitle.trim().length == 0) {
+      if (noteTitle.trim().length === 0) {
         handleAddNote({ noteTitle: "Note", noteText });
       } else {
         handleAddNote({ noteTitle, noteText });

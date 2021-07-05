@@ -61,9 +61,35 @@ header {
   z-index: 10;
 }
 
+#header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 #app-title {
   font-family: "Oleo Script", sans-serif;
   margin-left: 1rem;
+}
+
+.searchbar {
+  margin-left: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  font-size: 10px;
+}
+
+.searchbar input {
+  width: 200px;
+  margin-left: 0.3rem;
+  font-size: 12px;
+}
+
+.searchbar input:focus {
+  outline: none;
 }
 
 #title-bar-buttons ul {
@@ -116,13 +142,13 @@ header {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-color-primary); 
+  background: var(--scrollbar-color-primary);
   transition: all 0.3s ease 0s;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-color-hover); 
+  background: var(--scrollbar-color-hover);
   cursor: pointer;
 }
 
@@ -154,11 +180,12 @@ footer {
 
 #github-link:hover {
   background-color: var(--header-bg-color-hover);
+  cursor: pointer;
 }
 
 #github-link a {
   color: var(--header-text-color-primary);
-  margin-left: .5em;
+  margin-left: 0.5em;
   text-decoration: none;
 }
 

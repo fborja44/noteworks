@@ -36,13 +36,12 @@ const App = () => {
     localStorage.setItem("react-notes-app-data", JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes
 
-
   /**
    * Adds a quick note to the quick notes list.
    * @param {*} noteTitle Title of the note
    * @param {*} noteText Text of the note
    */
-  const addQuickNote = ({noteTitle, noteText}) => {
+  const addQuickNote = ({ noteTitle, noteText }) => {
     const date = new Date();
     const newQuickNote = {
       id: nanoid(),
@@ -63,11 +62,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
+      <Header handleSearchNote={setSearchText} />
       <main>
         <QuickNotesList
-          notes={quicknotes.filter((note) =>
-            note.text.toLowerCase().includes(searchText)
+          notes={quicknotes.filter(
+            (note) =>
+              note.text.toLowerCase().includes(searchText.toLowerCase()) ||
+              note.title.toLowerCase().includes(searchText.toLowerCase())
           )}
           handleAddNote={addQuickNote}
           handleDeleteNote={deleteQuickNote}
