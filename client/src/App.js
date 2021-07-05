@@ -36,15 +36,18 @@ const App = () => {
     localStorage.setItem("react-notes-app-data", JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes
 
+
   /**
-   * Adds a note to the list
-   * @param {*} text The text that is being saved in the note
+   * Adds a quick note to the quick notes list.
+   * @param {*} noteTitle Title of the note
+   * @param {*} noteText Text of the note
    */
-  const addQuickNote = (text) => {
+  const addQuickNote = ({noteTitle, noteText}) => {
     const date = new Date();
     const newQuickNote = {
       id: nanoid(),
-      text: text,
+      title: noteTitle,
+      text: noteText,
       date: date.toLocaleDateString(),
     };
 
