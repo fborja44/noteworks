@@ -91,3 +91,36 @@ header {
 #power-icon {
   font-size: 28px;
 }
+
+/* Footer Styles */
+footer {
+  background-color: var(--header-bg-color);
+  color: var(--header-text-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 9px;
+
+  width: 100vw;
+  height: 15px;
+  position: fixed;
+  bottom: 0;
+}
+
+#github-link {
+  margin-left: 1rem;
+}
+
+#github-link a {
+  color: var(--header-text-color-primary);
+  margin-left: .5em;
+  text-decoration: none;
+}
+
+#github-link a:visited {
+  color: var(--header-text-color-primary);
+}
+
+#cpy {
+  margin-right: 1rem;
+}
