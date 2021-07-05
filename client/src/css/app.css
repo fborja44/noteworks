@@ -49,9 +49,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: 16px;
 
-  height: 40px;
+  height: 30px;
 }
 
 #app-title {
@@ -62,7 +62,7 @@ header {
 #title-bar-buttons ul {
   list-style: none;
   margin: 0;
-  height: 40px;
+  height: 30px;
   color: var(--header-text-color-primary);
 }
 
@@ -73,7 +73,7 @@ header {
   align-items: center;
   justify-content: center;
 
-  width: 55px;
+  width: 50px;
   height: 100%;
   transition: background-color 0.2s ease 0s;
 }
@@ -89,7 +89,7 @@ header {
 }
 
 #power-icon {
-  font-size: 28px;
+  font-size: 22px;
 }
 
 /* Footer Styles */
