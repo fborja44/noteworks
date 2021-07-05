@@ -1,6 +1,9 @@
 // React imports
 import { React, useState } from "react";
 
+// Image and icon imports
+import { IoMdAdd } from "react-icons/io";
+
 const AddQuickNote = ({ handleAddNote }) => {
   // Use state hook to get user input
   const [noteText, setNoteText] = useState(""); // start state as empty string
@@ -35,9 +38,9 @@ const AddQuickNote = ({ handleAddNote }) => {
           onChange={handleChange}
         ></textarea>
         <div className="quicknote-footer">
-          <small>{characterLimit - noteText.length} Remaining</small>
-          <button className="save" onClick={handleSaveClick}>
-            Save
+          <small>Character Limit: {characterLimit - noteText.length}</small>
+          <button className="add-quicknote-button" onClick={handleSaveClick}>
+            <IoMdAdd className="add-icon" />
           </button>
         </div>
       </div>
