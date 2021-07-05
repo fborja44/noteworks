@@ -1,0 +1,20 @@
+{
+  "name": "denote-server",
+  "version": "1.0.0",
+  "description": "Backend for Denote notes application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Francis Borja",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "https": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}
