@@ -13,6 +13,3 @@ const Footer = () => {
 };
 
 export default Footer;
-<footer>
-  <div id="github-link"></div>
-</footer>;

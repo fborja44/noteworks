@@ -143,7 +143,17 @@ footer {
 }
 
 #github-link {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
+  height: 100%;
+  transition: background-color 0.2s ease 0s;
+
+  display: flex;
+  align-items: center;
+}
+
+#github-link:hover {
+  background-color: var(--header-bg-color-hover);
 }
 
 #github-link a {
