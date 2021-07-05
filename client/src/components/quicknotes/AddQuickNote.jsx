@@ -29,7 +29,11 @@ const AddQuickNote = ({ handleAddNote }) => {
   const handleSaveClick = () => {
     // Validate input
     if (noteText.trim().length > 0) {
-      handleAddNote({noteTitle, noteText});
+      if (noteTitle.trim().length == 0) {
+        handleAddNote({ noteTitle: "Note", noteText });
+      } else {
+        handleAddNote({ noteTitle, noteText });
+      }
 
       // Reset inner text
       setNoteTitle("");
@@ -40,7 +44,12 @@ const AddQuickNote = ({ handleAddNote }) => {
   return (
     <div className="quicknote add">
       <div className="quicknote-header">
-        <input className="quicknote-title-input" placeholder="Title..." value={noteTitle} onChange={handleTitleChange}/>
+        <input
+          className="quicknote-title-input"
+          placeholder="Title..."
+          value={noteTitle}
+          onChange={handleTitleChange}
+        />
       </div>
       <div className="quicknote-content">
         <textarea
