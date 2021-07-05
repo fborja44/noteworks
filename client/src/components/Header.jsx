@@ -21,7 +21,7 @@ const Header = () => {
           <li>
             <BiWindow id="window-icon" />
           </li>
-          <li>
+          <li id="close-app-button">
             <TiPower id="power-icon" />
           </li>
         </ul>

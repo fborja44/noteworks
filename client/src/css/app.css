@@ -83,6 +83,10 @@ header {
   cursor: pointer;
 }
 
+#title-bar-buttons ul #close-app-button:hover {
+  background-color: var(--color-red-dark);
+}
+
 #minimize-icon {
   position: relative;
   bottom: 4px;
