@@ -64,7 +64,7 @@ const AddQuickNote = ({ handleAddNote }) => {
         ></textarea>
         <div className="quicknote-footer">
           <small>Character Limit: {textCharacterLimit - noteText.length}</small>
-          <button className="add-quicknote-button" onClick={handleSaveClick}>
+          <button title="Save Note" className="add-quicknote-button" onClick={handleSaveClick}>
             <MdAddCircleOutline className="add-icon" />
           </button>
         </div>

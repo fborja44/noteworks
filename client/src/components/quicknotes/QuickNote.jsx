@@ -62,11 +62,12 @@ const QuickNote = ({
         <span>{text}</span>
         <div className="quicknote-footer">
           <small>{date}</small>
-          <MdDeleteForever
-            onClick={() => handleDeleteNote(id)}
-            className="delete-icon"
-            size="1.3em"
-          />
+          <button title="Delete Note" className="delete-quicknote-button" onClick={() => handleDeleteNote(id)}>
+            <MdDeleteForever
+              className="delete-icon"
+              size="1.2em"
+            />
+          </button>
         </div>
       </div>
       <ColorMenu

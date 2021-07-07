@@ -13,11 +13,11 @@ function createWindow() {
     minWidth: 810,
     minHeight: 580,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
     },
-    frame: false
+    frame: false,
   });
 
   // load the application depending on dev status
@@ -27,9 +27,25 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
-  ipc.on('closeApp', () => {
-    console.log("Closing app...");
-  })
+  // Check for button presses
+  ipc.on("closeApp", () => {
+    console.log("Closing app...\n");
+    mainWindow.close();
+  });
+
+  ipc.on("minimizeApp", () => {
+    mainWindow.minimize();
+  });
+
+  ipc.on("maximizeApp", () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.restore();
+    } else {
+      mainWindow.maximize();
+    }
+  });
+
+  // Need to switch between mazimize and restore
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

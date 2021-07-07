@@ -14,9 +14,18 @@ import { TiPower } from "react-icons/ti";
 const { ipcRenderer } = window.require("electron");
 const ipc = ipcRenderer;
 
+// Button handlers
 const handleOnClickClose = () => {
-  ipc.send('closeApp');
-}
+  ipc.send("closeApp");
+};
+
+const handleOnClickMinimize = () => {
+  ipc.send("minimizeApp");
+};
+
+const handleOnClickMaximize = () => {
+  ipc.send("maximizeApp");
+};
 
 const Header = ({ handleSearchNote }) => {
   return (
@@ -31,14 +40,14 @@ const Header = ({ handleSearchNote }) => {
           <li>
             <IoSettingsSharp id="settings-icon" />
           </li>
-          <li>
+          <li onClick={handleOnClickMinimize}>
             <FaRegWindowMinimize id="minimize-icon" />
           </li>
-          <li>
+          <li onClick={handleOnClickMaximize}>
             <BiWindow id="window-icon" />
           </li>
-          <li id="close-app-button">
-            <TiPower onClick={handleOnClickClose} id="power-icon" />
+          <li onClick={handleOnClickClose} id="close-app-button">
+            <TiPower id="power-icon" />
           </li>
         </ul>
       </div>
