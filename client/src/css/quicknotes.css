@@ -76,7 +76,6 @@
   align-items: center;
   justify-content: space-between;
 
-  background-color: var(--color-red);
   border-top: 1px solid #828282;
   border-left: 1px solid #828282;
   border-right: 1px solid #828282;
@@ -223,12 +222,12 @@
   height: 100%;
   display: flex;
   align-items: center;
-  transition: color 0.2s ease 0s;
 }
 
 .color-menu-button:hover {
   cursor: pointer;
   color: var(--note-header-text-color-hover);
+  transition: color 0.2s ease 0s;
 }
 
 .color-menu-content {

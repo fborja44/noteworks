@@ -1,4 +1,4 @@
-const COLORS = {
+const COLOR = {
   BLACK: "black",
   BLACK_HOVER: "#151515",
   WHITE: "white",
@@ -19,3 +19,5 @@ const COLORS = {
   PINK: "#f035a5",
   CYAN: "#31C6DA",
 };
+
+export {COLOR};

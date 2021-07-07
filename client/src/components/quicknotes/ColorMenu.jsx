@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 // Image and icon imports
 import { MdClose } from "react-icons/md";
 
-const ColorMenu = ({ showColorMenu, setShowColorMenu }) => {
+const ColorMenu = ({ showColorMenu, setShowColorMenu, setLabelColor }) => {
   const menuRef = useRef();
 
   // Close on click of background
@@ -27,6 +27,11 @@ const ColorMenu = ({ showColorMenu, setShowColorMenu }) => {
     return () => document.removeEventListener("keydown", keyPress);
   }, [keyPress]);
 
+  const handleOnClick = (event) => {
+    setLabelColor(event.target.dataset.color);
+    setShowColorMenu(false);
+  };
+
   return (
     <React.Fragment>
       {/* Ternary operator to determine whether to render modal */}
@@ -42,14 +47,14 @@ const ColorMenu = ({ showColorMenu, setShowColorMenu }) => {
               />
             </div>
             <div className="color-menu-content">
-              <div className="color-option red"></div>
-              <div className="color-option orange"></div>
-              <div className="color-option yellow"></div>
-              <div className="color-option green"></div>
-              <div className="color-option blue"></div>
-              <div className="color-option purple"></div>
-              <div className="color-option pink"></div>
-              <div className="color-option cyan"></div>
+              <div onClick={handleOnClick} data-color="RED" className="color-option red"></div>
+              <div onClick={handleOnClick} data-color="ORANGE " className="color-option orange"></div>
+              <div onClick={handleOnClick} data-color="YELLOW" className="color-option yellow"></div>
+              <div onClick={handleOnClick} data-color="GREEN" className="color-option green"></div>
+              <div onClick={handleOnClick} data-color="BLUE" className="color-option blue"></div>
+              <div onClick={handleOnClick} data-color="PURPLE" className="color-option purple"></div>
+              <div onClick={handleOnClick} data-color="PINK" className="color-option pink"></div>
+              <div onClick={handleOnClick} data-color="CYAN" className="color-option cyan"></div>
             </div>
           </section>
         </div>

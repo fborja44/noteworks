@@ -9,7 +9,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import QuickNotesList from "./components/quicknotes/QuickNotesList";
-import ColorMenu from "./components/quicknotes/ColorMenu";
 
 // CSS imports
 import "./css/app.css";
@@ -61,12 +60,6 @@ const App = () => {
     setQuickNotes(newQuickNotes);
   };
 
-  const [showColorMenu, setShowColorMenu] = useState(false);
-
-  const openColorMenu = () => {
-    setShowColorMenu((prev) => !prev); // Toggle off and on
-  };
-
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
@@ -79,13 +72,8 @@ const App = () => {
           )}
           handleAddNote={addQuickNote}
           handleDeleteNote={deleteQuickNote}
-          openColorMenu={openColorMenu}
         />
       </main>
-      <ColorMenu
-        showColorMenu={showColorMenu}
-        setShowColorMenu={setShowColorMenu}
-      />
       <Footer />
     </div>
   );
