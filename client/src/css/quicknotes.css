@@ -246,7 +246,18 @@
   height: 20px;
   border: 1px solid #828282;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
 }
+
+.color-option:hover {
+  border: 2px solid #666666;
+}
+
 
 .red {
   background: var(--color-red);
