@@ -5,16 +5,16 @@ import { React, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 const Searchbar = ({ handleSearchNote }) => {
-    return (
-        <div className="searchbar">
-            <FaSearch className="search-icon" size="1.3em" />
-            <input
-                onChange={(event) => handleSearchNote(event.target.value)}
-                text="text"
-                placeholder="type to search..."
-            />
-        </div>
-    );
+  return (
+    <div className="searchbar">
+      <FaSearch className="search-icon" size="1.3em" />
+      <input
+        onChange={(event) => handleSearchNote(event.target.value)}
+        text="text"
+        placeholder="type to search..."
+      />
+    </div>
+  );
 };
 
 export default Searchbar;

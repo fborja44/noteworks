@@ -5,7 +5,12 @@ import { React } from "react";
 import Note from "./QuickNote";
 import AddNote from "./AddQuickNote";
 
-const QuickNotesList = ({ notes, handleAddNote, handleDeleteNote, openColorMenu }) => {
+const QuickNotesList = ({
+  notes,
+  handleAddNote,
+  handleDeleteNote,
+  openColorMenu,
+}) => {
   return (
     <div className="quicknotes-list">
       {/** Pass in note data as props with map function */}

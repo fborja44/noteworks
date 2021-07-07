@@ -9,12 +9,12 @@ import { BiWindow } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
 
-const Header = ({handleSearchNote}) => {
+const Header = ({ handleSearchNote }) => {
   return (
     <header>
       <div id="header-left">
         <div id="app-title">Denote!</div>
-        <Searchbar handleSearchNote={handleSearchNote}/>
+        <Searchbar handleSearchNote={handleSearchNote} />
       </div>
       <div id="title-bar-buttons">
         <ul>

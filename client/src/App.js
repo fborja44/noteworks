@@ -82,7 +82,10 @@ const App = () => {
           openColorMenu={openColorMenu}
         />
       </main>
-      <ColorMenu showColorMenu={showColorMenu} setShowColorMenu={setShowColorMenu} />
+      <ColorMenu
+        showColorMenu={showColorMenu}
+        setShowColorMenu={setShowColorMenu}
+      />
       <Footer />
     </div>
   );
