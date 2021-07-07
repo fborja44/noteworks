@@ -41,6 +41,16 @@ const ColorMenu = ({ showColorMenu, setShowColorMenu }) => {
                 onClick={() => setShowColorMenu((prev) => !prev)}
               />
             </div>
+            <div className="color-menu-content">
+              <div className="color-option red"></div>
+              <div className="color-option orange"></div>
+              <div className="color-option yellow"></div>
+              <div className="color-option green"></div>
+              <div className="color-option blue"></div>
+              <div className="color-option purple"></div>
+              <div className="color-option pink"></div>
+              <div className="color-option cyan"></div>
+            </div>
           </section>
         </div>
       ) : null}
