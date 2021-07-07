@@ -4,6 +4,9 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
+// Common imports
+import { COLOR } from "./common/color";
+
 // Component imports
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -48,6 +51,7 @@ const App = () => {
       title: noteTitle,
       text: noteText,
       date: date.toLocaleDateString(),
+      color: COLOR.RED 
     };
 
     // Add new note to end of state array
@@ -72,6 +76,8 @@ const App = () => {
           )}
           handleAddNote={addQuickNote}
           handleDeleteNote={deleteQuickNote}
+          quicknotesList={quicknotes}
+          setQuickNotes={setQuickNotes}
         />
       </main>
       <Footer />

@@ -16,7 +16,10 @@ const QuickNote = ({
   title,
   text,
   date,
-  handleDeleteNote
+  color,
+  handleDeleteNote,
+  quicknotesList,
+  setQuickNotes,
 }) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -26,11 +29,26 @@ const QuickNote = ({
   };
 
   // Label color state
-  const [labelColor, setLabelColor] = useState(COLOR.RED);
+  const [labelColor, setLabelColor] = useState(color);
+
+  // Update color in quicknotes state if labelColor changes
+  useEffect(() => {
+    // Find the note in the list, copy it, and update it
+    let index = quicknotesList.findIndex((item) => item.id === id);
+    let updatedNote = Object.assign({}, quicknotesList[index]);
+    updatedNote.color = labelColor;
+
+    // Update state
+    setQuickNotes(
+      quicknotesList.map((item) => {
+        return item.id === updatedNote.id ? updatedNote : item;
+      })
+    );
+  }, [labelColor]);
 
   let label_color = {
-    backgroundColor: labelColor
-  }
+    backgroundColor: labelColor,
+  };
 
   return (
     <div className="quicknote">

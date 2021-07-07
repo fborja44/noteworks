@@ -9,6 +9,8 @@ const QuickNotesList = ({
   notes,
   handleAddNote,
   handleDeleteNote,
+  quicknotesList,
+  setQuickNotes
 }) => {
   return (
     <div className="quicknotes-list">
@@ -19,7 +21,10 @@ const QuickNotesList = ({
           title={note.title}
           text={note.text}
           date={note.date}
+          color={note.color}
           handleDeleteNote={handleDeleteNote}
+          quicknotesList={quicknotesList}
+          setQuickNotes={setQuickNotes}
         />
       ))}
       <AddNote id="add-quicknote" handleAddNote={handleAddNote} />
