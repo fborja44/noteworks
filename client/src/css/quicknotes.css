@@ -10,6 +10,7 @@
 :root {
   --note-background-primary: white;
   --note-header-text-color: #333333;
+  --note-header-text-color-hover: white;
   --note-text-color-primary: #333333;
 
   --note-text-color-edit: #828282;
@@ -19,7 +20,7 @@
   --color-black-hover: #151515;
   --color-white: white;
   --color-white-hover: #ededed;
-  --color-grey: #A1A1A1;
+  --color-grey: #a1a1a1;
 
   --color-red: #eb5757;
   --color-red-dark: #cf4242;
@@ -60,7 +61,7 @@
   justify-self: center;
 
   font-size: 13px;
-  font-family: 'Source Sans Pro', sans-serif !important;
+  font-family: "Source Sans Pro", sans-serif !important;
 }
 
 .quicknote-header {
@@ -80,13 +81,14 @@
   box-sizing: border-box;
 }
 
-.quicknote-name, .quicknote-title-input {
-  margin: 0 .5rem 0 .5rem;
+.quicknote-name,
+.quicknote-title-input {
+  margin: 0 0.5rem 0 0.5rem;
 }
 
 .quicknote textarea {
   font-size: 13px;
-  font-family: 'Source Sans Pro', sans-serif !important;
+  font-family: "Source Sans Pro", sans-serif !important;
   color: var(--note-text-color-primary);
   font-weight: 500;
 }
@@ -99,7 +101,7 @@
   padding: 0.5rem;
   color: var(--note-text-color-primary);
   font-weight: 500;
-  
+
   border: 1px solid #828282;
   height: calc(100% - 25px - 1rem);
 }
@@ -124,7 +126,7 @@
 }
 
 /* Add Quick Note Styles */
-.quicknote.add .quicknote-header  {
+.quicknote.add .quicknote-header {
   background-color: var(--color-grey);
 }
 
@@ -132,7 +134,7 @@
   border: none;
   background-color: inherit;
   font-size: 13px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   width: 100%;
 }
 
@@ -153,7 +155,7 @@
 
 .add-quicknote-button {
   border: none;
-  background-color: rgb(0,0,0,0);
+  background-color: rgb(0, 0, 0, 0);
   color: var(--note-text-color-primary);
   transition: color 0.2s ease 0s;
 }
@@ -161,4 +163,45 @@
 .add-quicknote-button:hover {
   cursor: pointer;
   color: var(--color-blue-dark);
+}
+
+/* Menu Modal Styles */
+.modal-background {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-wrapper {
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+}
+
+.color-menu-button {
+  background: none;
+  border: none;
+  color: var(--note-header-text-color);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease 0s;
+}
+
+.color-menu-button:hover {
+  cursor: pointer;
+  color: var(--note-header-text-color-hover);
 }
