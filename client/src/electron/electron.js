@@ -1,8 +1,9 @@
 /* Electron configuration file (boilerplate from Electron documentation)
 ------------------------------------------------------------------------------*/
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const ipc = ipcMain;
 
 function createWindow() {
   // Create the browser window.
@@ -12,9 +13,11 @@ function createWindow() {
     minWidth: 810,
     minHeight: 580,
     webPreferences: {
-      //   preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      contextIsolation: false
     },
+    frame: false
   });
 
   // load the application depending on dev status
@@ -23,6 +26,10 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+  ipc.on('closeApp', () => {
+    console.log("Closing app...");
+  })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

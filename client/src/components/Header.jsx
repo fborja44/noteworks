@@ -1,3 +1,4 @@
+// React imports
 import React from "react";
 
 // Component imports
@@ -9,6 +10,14 @@ import { BiWindow } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
 
+// Import electron renderer
+const { ipcRenderer } = window.require("electron");
+const ipc = ipcRenderer;
+
+const handleOnClickClose = () => {
+  ipc.send('closeApp');
+}
+
 const Header = ({ handleSearchNote }) => {
   return (
     <header>
@@ -16,6 +25,7 @@ const Header = ({ handleSearchNote }) => {
         <div id="app-title">Denote!</div>
         <Searchbar handleSearchNote={handleSearchNote} />
       </div>
+      <div id="header-drag"></div>
       <div id="title-bar-buttons">
         <ul>
           <li>
@@ -28,7 +38,7 @@ const Header = ({ handleSearchNote }) => {
             <BiWindow id="window-icon" />
           </li>
           <li id="close-app-button">
-            <TiPower id="power-icon" />
+            <TiPower onClick={handleOnClickClose} id="power-icon" />
           </li>
         </ul>
       </div>

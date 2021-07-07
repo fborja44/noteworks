@@ -61,19 +61,33 @@ header {
   z-index: 10;
 }
 
+#header-drag {
+  flex: 1;
+  height: 100%;
+  display: absolute;
+  top: 0;
+  left: 0;
+  -webkit-app-region: drag;
+}
+
 #header-left {
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 100%;
 }
 
 #app-title {
   font-family: "Oleo Script", sans-serif;
-  margin-left: 1rem;
+  padding: 0 1rem 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
 }
 
 .searchbar {
-  margin-left: 1.5rem;
   display: flex;
   align-items: center;
 }
@@ -97,6 +111,7 @@ header {
   margin: 0;
   height: 30px;
   color: var(--header-text-color-primary);
+  padding: 0;
 }
 
 #title-bar-buttons ul li {
