@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { COLOR } from "./common/color";
+import { QuickNoteT } from "./common/types";
 
 // Component imports
 import Header from "./components/Header";
@@ -18,15 +19,17 @@ import "./css/app.css";
 import "./css/quicknotes.css";
 
 const App = () => {
-  const [quicknotes, setQuickNotes] = useState([]);
+  const [quicknotes, setQuickNotes] = useState<QuickNoteT[]>([]);
 
   // Search hook
   const [searchText, setSearchText] = useState("");
 
+  const local = "react-notes-app-data";
+
   // Effect hook to retrieve data from local storage
   useEffect(() => {
     const savedQuickNotes = JSON.parse(
-      localStorage.getItem("react-notes-app-data")
+      localStorage.getItem(local) || '{}'
     );
     // Check if notes were received
     if (savedQuickNotes) {
@@ -36,7 +39,7 @@ const App = () => {
 
   // Save notes to local storage each time notes are updated
   useEffect(() => {
-    localStorage.setItem("react-notes-app-data", JSON.stringify(quicknotes));
+    localStorage.setItem(local, JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes
 
   /**
@@ -44,9 +47,9 @@ const App = () => {
    * @param {*} noteTitle Title of the note
    * @param {*} noteText Text of the note
    */
-  const addQuickNote = ({ noteTitle, noteText }) => {
+  const addQuickNote = ({ noteTitle, noteText }: { noteTitle: string, noteText: string}) => {
     const date = new Date();
-    const newQuickNote = {
+    const newQuickNote: QuickNoteT = {
       id: nanoid(),
       title: noteTitle,
       text: noteText,
@@ -59,8 +62,8 @@ const App = () => {
     setQuickNotes(newQuickNotes);
   };
 
-  const deleteQuickNote = (id) => {
-    const newQuickNotes = quicknotes.filter((note) => note.id !== id); // don't need to make new array since filter returns new array
+  const deleteQuickNote = (id: string) => {
+    const newQuickNotes = quicknotes.filter((note: QuickNoteT) => note.id !== id); // don't need to make new array since filter returns new array
     setQuickNotes(newQuickNotes);
   };
 

@@ -1,9 +1,20 @@
 // React imports
 import React from "react";
 
+// Common imports
+import { QuickNoteT } from "../../common/types";
+
 // Component imports
 import Note from "./QuickNote";
 import AddNote from "./AddQuickNote";
+
+interface QuickNotesListProps {
+  notes: QuickNoteT[],
+  handleAddNote: ({ noteTitle, noteText }: { noteTitle: string, noteText: string}) => void,
+  handleDeleteNote: (id: string) => void,
+  quicknotesList: QuickNoteT[],
+  setQuickNotes: React.Dispatch<React.SetStateAction<QuickNoteT[]>>
+}
 
 const QuickNotesList = ({
   notes,
@@ -11,7 +22,7 @@ const QuickNotesList = ({
   handleDeleteNote,
   quicknotesList,
   setQuickNotes
-}) => {
+}: QuickNotesListProps) => {
   return (
     <div className="quicknotes-list">
       {/** Pass in note data as props with map function */}

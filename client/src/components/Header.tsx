@@ -27,7 +27,7 @@ const handleOnClickMaximize = () => {
   ipc.send("maximizeApp");
 };
 
-const Header = ({ handleSearchNote }) => {
+const Header = ({ handleSearchNote }: {handleSearchNote: React.Dispatch<React.SetStateAction<string>>}) => {
   return (
     <header>
       <div id="header-left">

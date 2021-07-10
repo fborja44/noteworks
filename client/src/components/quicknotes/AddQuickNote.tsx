@@ -1,15 +1,25 @@
 // React imports
-import { React, useState } from "react";
+import React, { useState } from "react";
 
 // Image and icon imports
 import { MdAddCircleOutline } from "react-icons/md";
 
-const AddQuickNote = ({ handleAddNote }) => {
+interface AddQuickNoteProps {
+  handleAddNote: ({ noteTitle, noteText }: {
+    noteTitle: string;
+    noteText: string;
+}) => void;
+}
+
+const AddQuickNote = ({ handleAddNote }: AddQuickNoteProps) => {
   // State hook for title
   const [noteTitle, setNoteTitle] = useState("");
   const titleCharacterLimit = 30;
 
-  const handleTitleChange = (event) => {
+  /**
+   * TODO: Update event type
+   */
+  const handleTitleChange = (event: any) => {
     if (titleCharacterLimit - event.target.value.length >= 0) {
       setNoteTitle(event.target.value); // update state every time value of text area changes
     }
@@ -19,15 +29,15 @@ const AddQuickNote = ({ handleAddNote }) => {
   const [noteText, setNoteText] = useState("");
   const textCharacterLimit = 200;
 
-  const handleTextChange = (event) => {
+  /**
+   * TODO: Update event type
+   */
+  const handleTextChange = (event: any) => {
     // Check character limit
     if (textCharacterLimit - event.target.value.length >= 0) {
       setNoteText(event.target.value); // update state every time value of text area changes
     }
   };
-
-  // State hook for note color
-  const [noteColor, setNoteColor] = useState("");
 
   const handleSaveClick = () => {
     // Validate input
@@ -56,8 +66,8 @@ const AddQuickNote = ({ handleAddNote }) => {
       </div>
       <div className="quicknote-content">
         <textarea
-          rows="8"
-          cols="10"
+          rows={8}
+          cols={10}
           placeholder="Type to add a note..."
           value={noteText}
           onChange={handleTextChange}

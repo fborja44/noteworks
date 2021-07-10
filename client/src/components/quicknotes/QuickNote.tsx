@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 // Common imports
-import { COLOR } from "../../common/color";
+import { QuickNoteT } from "../../common/types";
 
 // Component imports
 import ColorMenu from "./ColorMenu";
@@ -10,6 +10,17 @@ import ColorMenu from "./ColorMenu";
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
+
+interface QuickNoteProps {
+  id: string,
+  title: string,
+  text: string,
+  date: string,
+  color: string,
+  handleDeleteNote: (id: string) => void,
+  quicknotesList: object[],
+  setQuickNotes: React.Dispatch<React.SetStateAction<QuickNoteT[]>>,
+}
 
 const QuickNote = ({
   id,
@@ -20,7 +31,7 @@ const QuickNote = ({
   handleDeleteNote,
   quicknotesList,
   setQuickNotes,
-}) => {
+}: QuickNoteProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -34,16 +45,19 @@ const QuickNote = ({
   // Update color in quicknotes state if labelColor changes
   useEffect(() => {
     // Find the note in the list, copy it, and update it
-    let index = quicknotesList.findIndex((item) => item.id === id);
-    let updatedNote = Object.assign({}, quicknotesList[index]);
+    let index = quicknotesList.findIndex((item: any) => item.id === id);
+    let updatedNote: any = Object.assign({}, quicknotesList[index]); // Copys note info into an empty object
     updatedNote.color = labelColor;
 
     // Update state
     setQuickNotes(
-      quicknotesList.map((item) => {
+      quicknotesList.map<QuickNoteT>((item: any) => {
         return item.id === updatedNote.id ? updatedNote : item;
       })
     );
+
+    // Ignore warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labelColor]);
 
   let label_color = {

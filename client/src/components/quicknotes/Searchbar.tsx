@@ -3,7 +3,7 @@ import React from "react";
 // Image and icon imports
 import { FaSearch } from "react-icons/fa";
 
-const Searchbar = ({ handleSearchNote }) => {
+const Searchbar = ({ handleSearchNote }: { handleSearchNote: React.Dispatch<React.SetStateAction<string>>}) => {
   return (
     <div className="searchbar">
       <FaSearch className="search-icon" size="1.3em" />

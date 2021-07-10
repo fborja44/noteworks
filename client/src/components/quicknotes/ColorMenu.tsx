@@ -7,17 +7,28 @@ import { COLOR } from "../../common/color";
 // Image and icon imports
 import { MdClose } from "react-icons/md";
 
-const ColorMenu = ({ showColorMenu, setShowColorMenu, setLabelColor }) => {
-  const menuRef = useRef();
+interface ColorMenuProps {
+  showColorMenu: any
+  setShowColorMenu: any
+  setLabelColor: any
+}
 
-  // Close on click of background
-  const closeMenu = (event) => {
+const ColorMenu = ({ showColorMenu, setShowColorMenu, setLabelColor }: ColorMenuProps) => {
+  const menuRef: any = useRef();
+
+  /**
+   * Closes the menu
+   * TODO: Update event type
+   */
+  const closeMenu = (event: any) => {
     if (menuRef.current === event.target) {
       setShowColorMenu(false);
     }
   };
 
-  // Close on 'ESC' key press
+  /**
+   * Closes menu on ESC keypress
+   */
   const keyPress = useCallback(
     (event) => {
       if (event.key === "Escape" && showColorMenu) {
@@ -31,14 +42,13 @@ const ColorMenu = ({ showColorMenu, setShowColorMenu, setLabelColor }) => {
     return () => document.removeEventListener("keydown", keyPress);
   }, [keyPress]);
 
-  const handleOnClick = (event) => {
+  /**
+   * On click handler to change color of note
+   * TODO: Update event type
+   */
+  const handleOnClick = (event: any) => {
     setLabelColor(event.target.dataset.color);
     setShowColorMenu(false);
-  };
-
-  // Option on hover: Display checkmark
-  const handleMouseHover = (event) => {
-    event.target.style.display = "block";
   };
 
   return (
@@ -52,7 +62,7 @@ const ColorMenu = ({ showColorMenu, setShowColorMenu, setLabelColor }) => {
               <MdClose
                 className="menu-close-button"
                 aria-label="Close Menu"
-                onClick={() => setShowColorMenu((prev) => !prev)}
+                onClick={() => setShowColorMenu((prev: any) => !prev)}
               />
             </div>
             <div className="color-menu-content">
