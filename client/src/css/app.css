@@ -47,6 +47,11 @@ body {
   overflow: auto;
 }
 
+main {
+  height: calc(100vh - 50px);
+  overflow: auto;
+}
+
 /* Header and Title Bar Styles */
 header {
   background-color: var(--header-bg-color);
