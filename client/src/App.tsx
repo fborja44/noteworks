@@ -79,7 +79,6 @@ const App = () => {
           )}
           handleAddNote={addQuickNote}
           handleDeleteNote={deleteQuickNote}
-          quicknotesList={quicknotes}
           setQuickNotes={setQuickNotes}
         />
       </main>

@@ -12,7 +12,6 @@ interface QuickNotesListProps {
   notes: QuickNoteT[],
   handleAddNote: ({ noteTitle, noteText }: { noteTitle: string, noteText: string}) => void,
   handleDeleteNote: (id: string) => void,
-  quicknotesList: QuickNoteT[],
   setQuickNotes: React.Dispatch<React.SetStateAction<QuickNoteT[]>>
 }
 
@@ -20,7 +19,6 @@ const QuickNotesList = ({
   notes,
   handleAddNote,
   handleDeleteNote,
-  quicknotesList,
   setQuickNotes
 }: QuickNotesListProps) => {
   return (
@@ -33,8 +31,8 @@ const QuickNotesList = ({
           text={note.text}
           date={note.date}
           color={note.color}
+          notes={notes}
           handleDeleteNote={handleDeleteNote}
-          quicknotesList={quicknotesList}
           setQuickNotes={setQuickNotes}
         />
       ))}

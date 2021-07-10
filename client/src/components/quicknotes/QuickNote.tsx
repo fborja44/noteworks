@@ -17,8 +17,8 @@ interface QuickNoteProps {
   text: string,
   date: string,
   color: string,
+  notes: QuickNoteT[],
   handleDeleteNote: (id: string) => void,
-  quicknotesList: object[],
   setQuickNotes: React.Dispatch<React.SetStateAction<QuickNoteT[]>>,
 }
 
@@ -28,8 +28,8 @@ const QuickNote = ({
   text,
   date,
   color,
+  notes,
   handleDeleteNote,
-  quicknotesList,
   setQuickNotes,
 }: QuickNoteProps) => {
   // Menu state
@@ -45,13 +45,13 @@ const QuickNote = ({
   // Update color in quicknotes state if labelColor changes
   useEffect(() => {
     // Find the note in the list, copy it, and update it
-    let index = quicknotesList.findIndex((item: any) => item.id === id);
-    let updatedNote: any = Object.assign({}, quicknotesList[index]); // Copys note info into an empty object
+    let index = notes.findIndex((item: any) => item.id === id);
+    let updatedNote: any = Object.assign({}, notes[index]); // Copys note info into an empty object
     updatedNote.color = labelColor;
 
     // Update state
     setQuickNotes(
-      quicknotesList.map<QuickNoteT>((item: any) => {
+      notes.map<QuickNoteT>((item: any) => {
         return item.id === updatedNote.id ? updatedNote : item;
       })
     );
