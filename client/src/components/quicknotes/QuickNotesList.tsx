@@ -1,5 +1,5 @@
 // React imports
-import { React } from "react";
+import React from "react";
 
 // Component imports
 import Note from "./QuickNote";
@@ -27,7 +27,7 @@ const QuickNotesList = ({
           setQuickNotes={setQuickNotes}
         />
       ))}
-      <AddNote id="add-quicknote" handleAddNote={handleAddNote} />
+      <AddNote handleAddNote={handleAddNote} />
     </div>
   );
 };

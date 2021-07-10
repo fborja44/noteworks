@@ -1,5 +1,5 @@
 // React imports
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // Common imports
 import { COLOR } from "../../common/color";
