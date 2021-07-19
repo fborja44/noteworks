@@ -1,5 +1,6 @@
 {
   "name": "denote",
+  "productName": "Denote! App",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001",

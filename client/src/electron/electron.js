@@ -17,6 +17,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    title: "Denote!",
     frame: false,
   });
 
@@ -37,7 +38,7 @@ function createWindow() {
     mainWindow.minimize();
   });
 
-  ipc.on("maximizeApp", () => {
+  ipc.on("maximizeRestoreApp", () => {
     if (mainWindow.isMaximized()) {
       mainWindow.restore();
     } else {

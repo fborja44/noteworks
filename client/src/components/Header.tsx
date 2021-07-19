@@ -1,12 +1,12 @@
 // React imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // Component imports
 import Searchbar from "./quicknotes/Searchbar";
 
 // Image and icon imports
 import { IoSettingsSharp } from "react-icons/io5";
-import { BiWindow } from "react-icons/bi";
+import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
 
@@ -14,20 +14,45 @@ import { TiPower } from "react-icons/ti";
 const { ipcRenderer } = window.require("electron");
 const ipc = ipcRenderer;
 
-// Button handlers
-const handleOnClickClose = () => {
-  ipc.send("closeApp");
+// Icon Components for Maximize/Restore button
+const Restore = () => {
+  return <BiWindows className="window-icon" />;
 };
 
-const handleOnClickMinimize = () => {
-  ipc.send("minimizeApp");
+const Maximize = () => {
+  return <BiWindow className="window-icon" />;
 };
 
-const handleOnClickMaximize = () => {
-  ipc.send("maximizeApp");
-};
+const Header = ({
+  handleSearchNote,
+}: {
+  handleSearchNote: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  // State to check if window is maximized
+  const [windowMaximized, setWindowMaximized] = useState(false);
+  const [windowIcon, setWindowIcon] = useState(<Maximize />);
+  const window_button = document.getElementById("window-button");
 
-const Header = ({ handleSearchNote }: {handleSearchNote: React.Dispatch<React.SetStateAction<string>>}) => {
+  // Button handlers
+  const handleOnClickClose = () => {
+    ipc.send("closeApp");
+  };
+
+  const handleOnClickMinimize = () => {
+    ipc.send("minimizeApp");
+  };
+
+  const handleOnClickMaximizeRestore = () => {
+    ipc.send("maximizeRestoreApp");
+    setWindowMaximized(windowMaximized ? false : true);
+  };
+
+  // Effect hook to switch between maximize icon and restore icon
+  useEffect(() => {
+    setWindowIcon(windowMaximized ? <Restore /> : <Maximize />);
+    if (window_button !== null) window_button.title = windowMaximized ? "Restore Down" : "Maximize";
+  }, [windowMaximized, window_button]);
+
   return (
     <header>
       <div id="header-left">
@@ -43,8 +68,8 @@ const Header = ({ handleSearchNote }: {handleSearchNote: React.Dispatch<React.Se
           <li onClick={handleOnClickMinimize}>
             <FaRegWindowMinimize id="minimize-icon" />
           </li>
-          <li onClick={handleOnClickMaximize}>
-            <BiWindow id="window-icon" />
+          <li id="window-button" onClick={handleOnClickMaximizeRestore}>
+            {windowIcon}
           </li>
           <li onClick={handleOnClickClose} id="close-app-button">
             <TiPower id="power-icon" />
