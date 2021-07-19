@@ -7,7 +7,7 @@ import { COLOR } from "../../common/color";
 // Image and icon imports
 import { MdClose } from "react-icons/md";
 
-interface ColorMenuProps {
+export interface ColorMenuProps {
   showColorMenu: any
   setShowColorMenu: any
   setLabelColor: any

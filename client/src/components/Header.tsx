@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Searchbar from "./quicknotes/Searchbar";
 
 // Image and icon imports
-import { IoSettingsSharp } from "react-icons/io5";
 import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
@@ -62,9 +61,6 @@ const Header = ({
       <div id="header-drag"></div>
       <div id="title-bar-buttons">
         <ul>
-          <li>
-            <IoSettingsSharp id="settings-icon" />
-          </li>
           <li onClick={handleOnClickMinimize}>
             <FaRegWindowMinimize id="minimize-icon" />
           </li>

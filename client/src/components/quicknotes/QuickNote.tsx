@@ -11,7 +11,7 @@ import ColorMenu from "./ColorMenu";
 import { MdDeleteForever } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 
-interface QuickNoteProps {
+export interface QuickNoteProps {
   id: string,
   title: string,
   text: string,

@@ -10,6 +10,7 @@ import { QuickNoteT } from "./common/types";
 
 // Component imports
 import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
 import QuickNotesList from "./components/quicknotes/QuickNotesList";
@@ -28,9 +29,7 @@ const App = () => {
 
   // Effect hook to retrieve data from local storage
   useEffect(() => {
-    const savedQuickNotes = JSON.parse(
-      localStorage.getItem(local) || '{}'
-    );
+    const savedQuickNotes = JSON.parse(localStorage.getItem(local) || "{}");
     // Check if notes were received
     if (savedQuickNotes) {
       setQuickNotes(savedQuickNotes);
@@ -47,14 +46,20 @@ const App = () => {
    * @param {*} noteTitle Title of the note
    * @param {*} noteText Text of the note
    */
-  const addQuickNote = ({ noteTitle, noteText }: { noteTitle: string, noteText: string}) => {
+  const addQuickNote = ({
+    noteTitle,
+    noteText,
+  }: {
+    noteTitle: string;
+    noteText: string;
+  }) => {
     const date = new Date();
     const newQuickNote: QuickNoteT = {
       id: nanoid(),
       title: noteTitle,
       text: noteText,
       date: date.toLocaleDateString(),
-      color: COLOR.RED 
+      color: COLOR.RED,
     };
 
     // Add new note to end of state array
@@ -63,25 +68,30 @@ const App = () => {
   };
 
   const deleteQuickNote = (id: string) => {
-    const newQuickNotes = quicknotes.filter((note: QuickNoteT) => note.id !== id); // don't need to make new array since filter returns new array
+    const newQuickNotes = quicknotes.filter(
+      (note: QuickNoteT) => note.id !== id
+    ); // don't need to make new array since filter returns new array
     setQuickNotes(newQuickNotes);
   };
 
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
-      <main>
-        <QuickNotesList
-          notes={quicknotes.filter(
-            (note) =>
-              note.text.toLowerCase().includes(searchText.toLowerCase()) ||
-              note.title.toLowerCase().includes(searchText.toLowerCase())
-          )}
-          handleAddNote={addQuickNote}
-          handleDeleteNote={deleteQuickNote}
-          setQuickNotes={setQuickNotes}
-        />
-      </main>
+      <div className="app-container">
+        <Sidebar />
+        <main>
+          <QuickNotesList
+            notes={quicknotes.filter(
+              (note) =>
+                note.text.toLowerCase().includes(searchText.toLowerCase()) ||
+                note.title.toLowerCase().includes(searchText.toLowerCase())
+            )}
+            handleAddNote={addQuickNote}
+            handleDeleteNote={deleteQuickNote}
+            setQuickNotes={setQuickNotes}
+          />
+        </main>
+      </div>
       <Footer />
     </div>
   );

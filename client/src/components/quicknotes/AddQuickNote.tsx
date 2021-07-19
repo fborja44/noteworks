@@ -4,7 +4,7 @@ import React, { useState } from "react";
 // Image and icon imports
 import { MdAddCircleOutline } from "react-icons/md";
 
-interface AddQuickNoteProps {
+export interface AddQuickNoteProps {
   handleAddNote: ({ noteTitle, noteText }: {
     noteTitle: string;
     noteText: string;

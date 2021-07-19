@@ -115,10 +115,6 @@
   justify-content: space-between;
 }
 
-.delete-icon {
-  transition: color 0.2s ease 0s;
-}
-
 /* Add Quick Note Styles */
 .quicknote.add .quicknote-header {
   background-color: var(--color-grey);
@@ -151,7 +147,6 @@
   border: none;
   background-color: rgb(0, 0, 0, 0);
   color: var(--note-text-color-primary);
-  transition: color 0.2s ease 0s;
   height: fit-content;
   width: fit-content;
   padding: 0;
@@ -160,11 +155,13 @@
 .add-quicknote-button:hover {
   cursor: pointer;
   color: var(--color-blue-dark);
+  transition: color 0.2s ease 0s;
 }
 
 .delete-quicknote-button:hover {
   cursor: pointer;
   color: var(--color-red-dark);
+  transition: color 0.2s ease 0s;
 }
 
 /* Menu Modal Styles */
@@ -201,13 +198,10 @@
   margin-bottom: 0.9rem;
 }
 
-.menu-close-button {
-  transition: color 0.2s ease 0s;
-}
-
 .menu-close-button:hover {
   cursor: pointer;
   color: var(--color-blue-dark);
+  transition: color 0.2s linear 0s;
 }
 
 .menu-title {

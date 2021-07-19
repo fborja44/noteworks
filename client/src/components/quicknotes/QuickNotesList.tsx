@@ -8,7 +8,7 @@ import { QuickNoteT } from "../../common/types";
 import Note from "./QuickNote";
 import AddNote from "./AddQuickNote";
 
-interface QuickNotesListProps {
+export interface QuickNotesListProps {
   notes: QuickNoteT[],
   handleAddNote: ({ noteTitle, noteText }: { noteTitle: string, noteText: string}) => void,
   handleDeleteNote: (id: string) => void,
