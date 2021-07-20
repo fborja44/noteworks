@@ -32,20 +32,22 @@ const MarknotesContent = ({
   return (
     <Switch>
       <Route exact path="/marknotes">
-        <div className="marknotes-list">
-          {marknotes.map((note) => (
-            <Marknote
-              id={note.id}
-              title={note.title}
-              body={note.body}
-              lastModified={note.lastModified}
-            />
-          ))}
+        <div className="main-content-wrapper">
+          <div className="marknotes-list">
+            {marknotes.map((note) => (
+              <Marknote
+                id={note.id}
+                title={note.title}
+                body={note.body}
+                lastModified={note.lastModified}
+              />
+            ))}
+          </div>
         </div>
       </Route>
       {marknotes.map((note) => (
         <Route path={`/marknotes/${note.id}`}>
-          <Editor />
+          <Editor note={note} />
         </Route>
       ))}
     </Switch>

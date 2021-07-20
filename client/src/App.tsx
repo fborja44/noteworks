@@ -50,12 +50,10 @@ const App = () => {
             </Route>
             <Route path="/marknotes">
               <main>
-                <div className="main-content-wrapper">
-                  <MarknotesContent
-                    marknotes={marknotes}
-                    setMarknotes={setMarknotes}
-                  />
-                </div>
+                <MarknotesContent
+                  marknotes={marknotes}
+                  setMarknotes={setMarknotes}
+                />
               </main>
             </Route>
             <Route path="/settings">
