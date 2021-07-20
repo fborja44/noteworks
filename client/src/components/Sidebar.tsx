@@ -27,19 +27,19 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/quicknotes" onClick={() => setSelectedTab("Quicknotes")}>
+            <Link to="/quicknotes" onClick={() => setSelectedTab("Quicknotes")} title="Quicknotes">
               <div id="Quicknotes" className="nav-button" />
               <BiNote className="nav-icon" />
             </Link>
           </li>
           <li>
-            <Link to="/marknotes" onClick={() => setSelectedTab("Marknotes")}>
+            <Link to="/marknotes" onClick={() => setSelectedTab("Marknotes")} title="Marknotes">
               <div id="Marknotes" className="nav-button" />
               <BiNotepad className="nav-icon" />
             </Link>
           </li>
           <li>
-            <Link to="/settings" onClick={() => setSelectedTab("Settings")}>
+            <Link to="/settings" onClick={() => setSelectedTab("Settings")} title="Settings">
               <div id="Settings" className="nav-button" />
               <FiSettings className="nav-icon settings-icon" />
             </Link>

@@ -62,13 +62,13 @@ const Header = ({
       <div id="header-drag"></div>
       <div id="title-bar-buttons">
         <ul>
-          <li onClick={handleOnClickMinimize}>
+          <li onClick={handleOnClickMinimize} title="Minimize">
             <FaRegWindowMinimize id="minimize-icon" />
           </li>
           <li id="window-button" onClick={handleOnClickMaximizeRestore}>
             {windowIcon}
           </li>
-          <li onClick={handleOnClickClose} id="close-app-button">
+          <li onClick={handleOnClickClose} id="close-app-button" title="Close">
             <TiPower id="power-icon" />
           </li>
         </ul>
