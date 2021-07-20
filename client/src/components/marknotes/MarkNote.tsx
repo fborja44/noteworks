@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
-export interface MarkNoteProps {
+export interface MarknoteProps {
   id: string;
   title: string;
   body: string;
   lastModified: number;
 }
 
-const MarkNote = ({ id, title, body, lastModified }: MarkNoteProps) => {
+const Marknote = ({ id, title, body, lastModified }: MarknoteProps) => {
   return (
     <Link className="marknote-link" to={`/marknotes/${id}`}>
       <div className="marknote">
@@ -39,4 +39,4 @@ const MarkNote = ({ id, title, body, lastModified }: MarkNoteProps) => {
   );
 };
 
-export default MarkNote;
+export default Marknote;

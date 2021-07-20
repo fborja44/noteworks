@@ -4,14 +4,14 @@ import React, { useState } from "react";
 // Image and icon imports
 import { MdAddCircleOutline } from "react-icons/md";
 
-export interface AddQuickNoteProps {
+export interface AddQuicknoteProps {
   handleAddNote: ({ noteTitle, noteText }: {
     noteTitle: string;
     noteText: string;
 }) => void;
 }
 
-const AddQuickNote = ({ handleAddNote }: AddQuickNoteProps) => {
+const AddQuicknote = ({ handleAddNote }: AddQuicknoteProps) => {
   // State hook for title
   const [noteTitle, setNoteTitle] = useState("");
   const titleCharacterLimit = 30;
@@ -83,4 +83,4 @@ const AddQuickNote = ({ handleAddNote }: AddQuickNoteProps) => {
   );
 };
 
-export default AddQuickNote;
+export default AddQuicknote;

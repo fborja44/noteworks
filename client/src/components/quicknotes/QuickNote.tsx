@@ -8,18 +8,18 @@ import ColorMenu from "./ColorMenu";
 import { MdDeleteForever } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 
-export interface QuickNoteProps {
+export interface QuicknoteProps {
   id: string;
   title: string;
   text: string;
   date: string;
   color: string;
-  notes?: QuickNoteProps[];
+  notes?: QuicknoteProps[];
   handleDeleteNote?: (id: string) => void;
-  setQuickNotes?: React.Dispatch<React.SetStateAction<QuickNoteProps[]>>;
+  setQuicknotes?: React.Dispatch<React.SetStateAction<QuicknoteProps[]>>;
 }
 
-const QuickNote = ({
+const Quicknote = ({
   id,
   title,
   text,
@@ -27,8 +27,8 @@ const QuickNote = ({
   color,
   notes,
   handleDeleteNote,
-  setQuickNotes,
-}: QuickNoteProps) => {
+  setQuicknotes,
+}: QuicknoteProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -42,14 +42,14 @@ const QuickNote = ({
   // Update color in quicknotes state if labelColor changes
   useEffect(() => {
     // Find the note in the list, copy it, and update it
-    if (notes && setQuickNotes) {
+    if (notes && setQuicknotes) {
       let index = notes.findIndex((item: any) => item.id === id);
       let updatedNote: any = Object.assign({}, notes[index]); // Copys note info into an empty object
       updatedNote.color = labelColor;
 
       // Update state
-      setQuickNotes(
-        notes.map<QuickNoteProps>((item: any) => {
+      setQuicknotes(
+        notes.map<QuicknoteProps>((item: any) => {
           return item.id === updatedNote.id ? updatedNote : item;
         })
       );
@@ -93,4 +93,4 @@ const QuickNote = ({
   );
 };
 
-export default QuickNote;
+export default Quicknote;
