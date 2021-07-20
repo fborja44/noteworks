@@ -9,9 +9,15 @@ import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
 
+
 // Import electron renderer
-const { ipcRenderer } = window.require("electron");
-const ipc = ipcRenderer;
+let ipc: any;
+try {
+  const { ipcRenderer } = window.require("electron");
+  ipc = ipcRenderer;
+} catch (e) {
+  // Do nothing
+}
 
 // Icon Components for Maximize/Restore button
 const Restore = () => {

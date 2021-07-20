@@ -64,6 +64,11 @@
   cursor: pointer;
 }
 
+.marknote-link {
+  text-decoration: none;
+  
+}
+
 .marknote-header {
   width: 100%;
   height: 25px;

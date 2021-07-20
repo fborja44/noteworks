@@ -16,7 +16,8 @@ import Footer from "./components/Footer";
 import Note, { QuickNoteProps } from "./components/quicknotes/QuickNote";
 import AddNote from "./components/quicknotes/AddQuickNote";
 
-import MarkNote from "./components/marknotes/MarkNote";
+import MarkNote, { MarkNoteProps } from "./components/marknotes/MarkNote";
+import Editor from "./components/marknotes/Editor";
 
 // CSS imports
 import "./css/app.css";
@@ -103,32 +104,47 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   );
 };
 
-export interface MarknotesContentProps {}
+export interface MarknotesContentProps {
+  marknotes: MarkNoteProps[];
+  setMarknotes: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        title: string;
+        body: string;
+        lastModified: number;
+      }[]
+    >
+  >;
+}
 
 /**
  * Content for marknotes route
  */
-const MarknotesContent = ({}: MarknotesContentProps) => {
-  const [marknotes, setMarknotes] = useState([
-    {
-      id: nanoid(),
-      title: "Untitled Note",
-      body: "",
-      lastModified: Date.now(),
-    },
-  ]);
-
+const MarknotesContent = ({
+  marknotes,
+  setMarknotes,
+}: MarknotesContentProps) => {
   return (
-    <div className="marknotes-list">
+    <Switch>
+      <Route exact path="/marknotes">
+        <div className="marknotes-list">
+          {marknotes.map((note) => (
+            <MarkNote
+              id={note.id}
+              title={note.title}
+              body={note.body}
+              lastModified={note.lastModified}
+            />
+          ))}
+        </div>
+      </Route>
       {marknotes.map((note) => (
-        <MarkNote
-          id={note.id}
-          title={note.title}
-          body={note.body}
-          lastModified={note.lastModified}
-        />
+        <Route path={`/marknotes/${note.id}`}>
+          <Editor />
+        </Route>
       ))}
-    </div>
+    </Switch>
   );
 };
 
@@ -139,27 +155,47 @@ const App = () => {
   // Search state hook
   const [searchText, setSearchText] = useState("");
 
+  const [marknotes, setMarknotes] = useState([
+    {
+      id: nanoid(),
+      title: "Untitled Note",
+      body: "",
+      lastModified: Date.now(),
+    },
+  ]);
+
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
       <Router>
         <div className="app-container">
           <Sidebar />
-          <main>
-            <div className="main-content-wrapper">
-              <Switch>
-                <Route path="/quicknotes">
+          <Switch>
+            <Route path="/quicknotes">
+              <main>
+                <div className="main-content-wrapper">
                   <QuicknotesContent searchText={searchText} />
-                </Route>
-                <Route path="/marknotes">
-                  <MarknotesContent />
-                </Route>
-                <Route path="/settings">
+                </div>
+              </main>
+            </Route>
+            <Route path="/marknotes">
+              <main>
+                <div className="main-content-wrapper">
+                  <MarknotesContent
+                    marknotes={marknotes}
+                    setMarknotes={setMarknotes}
+                  />
+                </div>
+              </main>
+            </Route>
+            <Route path="/settings">
+              <main>
+                <div className="main-content-wrapper">
                   <div>Settings</div>
-                </Route>
-              </Switch>
-            </div>
-          </main>
+                </div>
+              </main>
+            </Route>
+          </Switch>
         </div>
       </Router>
       <Footer />
