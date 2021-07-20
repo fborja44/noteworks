@@ -14,18 +14,25 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
-import QuickNotesList from "./components/quicknotes/QuickNotesList";
+import Note from "./components/quicknotes/QuickNote";
+import AddNote from "./components/quicknotes/AddQuickNote";
+
+import MarkNote from "./components/marknotes/MarkNote";
 
 // CSS imports
 import "./css/app.css";
 import "./css/quicknotes.css";
+import "./css/marknotes.css";
 
-const App = () => {
+export interface QuicknotesContentProps {
+  searchText: any;
+}
+
+/**
+ * Content for the quicknotes route.
+ */
+const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   const [quicknotes, setQuickNotes] = useState<QuickNoteT[]>([]);
-
-  // Search hook
-  const [searchText, setSearchText] = useState("");
-
   const local = "react-notes-app-data";
 
   // Effect hook to retrieve data from local storage
@@ -76,6 +83,50 @@ const App = () => {
   };
 
   return (
+    <div className="quicknotes-list">
+      {/** Pass in note data as props with map function */}
+      {quicknotes.map((note) => (
+        <Note
+          id={note.id}
+          title={note.title}
+          text={note.text}
+          date={note.date}
+          color={note.color}
+          notes={quicknotes}
+          handleDeleteNote={deleteQuickNote}
+          setQuickNotes={setQuickNotes}
+        />
+      ))}
+      <AddNote handleAddNote={addQuickNote} />
+    </div>
+  );
+};
+
+export interface MarknotesContentProps {}
+
+/**
+ * Content for marknotes route
+ */
+const MarknotesContent = ({}: MarknotesContentProps) => {
+  const [marknotes, setMarknotes] = useState([{}]);
+
+  return (
+    <div className="marknotes-list">
+      {marknotes.map((note) => (
+        <MarkNote />
+      ))}
+    </div>
+  );
+};
+
+/**
+ * Main application component
+ */
+const App = () => {
+  // Search state hook
+  const [searchText, setSearchText] = useState("");
+
+  return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
       <Router>
@@ -85,23 +136,10 @@ const App = () => {
             <div className="main-content-wrapper">
               <Switch>
                 <Route path="/quicknotes">
-                  <QuickNotesList
-                    notes={quicknotes.filter(
-                      (note) =>
-                        note.text
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase()) ||
-                        note.title
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase())
-                    )}
-                    handleAddNote={addQuickNote}
-                    handleDeleteNote={deleteQuickNote}
-                    setQuickNotes={setQuickNotes}
-                  />
+                  <QuicknotesContent searchText={searchText} />
                 </Route>
                 <Route path="/marknotes">
-                  <div>Marknotes</div>
+                  <MarknotesContent />
                 </Route>
                 <Route path="/settings">
                   <div>Settings</div>
