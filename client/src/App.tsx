@@ -7,14 +7,13 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { COLOR } from "./common/color";
-import { QuickNoteT } from "./common/types";
 
 // Component imports
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
-import Note from "./components/quicknotes/QuickNote";
+import Note, { QuickNoteProps } from "./components/quicknotes/QuickNote";
 import AddNote from "./components/quicknotes/AddQuickNote";
 
 import MarkNote from "./components/marknotes/MarkNote";
@@ -32,7 +31,7 @@ export interface QuicknotesContentProps {
  * Content for the quicknotes route.
  */
 const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
-  const [quicknotes, setQuickNotes] = useState<QuickNoteT[]>([]);
+  const [quicknotes, setQuickNotes] = useState<QuickNoteProps[]>([]);
   const local = "react-notes-app-data";
 
   // Effect hook to retrieve data from local storage
@@ -62,7 +61,7 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     noteText: string;
   }) => {
     const date = new Date();
-    const newQuickNote: QuickNoteT = {
+    const newQuickNote: QuickNoteProps = {
       id: nanoid(),
       title: noteTitle,
       text: noteText,
@@ -77,7 +76,7 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
 
   const deleteQuickNote = (id: string) => {
     const newQuickNotes = quicknotes.filter(
-      (note: QuickNoteT) => note.id !== id
+      (note: QuickNoteProps) => note.id !== id
     ); // don't need to make new array since filter returns new array
     setQuickNotes(newQuickNotes);
   };
@@ -85,18 +84,20 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   return (
     <div className="quicknotes-list">
       {/** Pass in note data as props with map function */}
-      {quicknotes.map((note) => (
-        <Note
-          id={note.id}
-          title={note.title}
-          text={note.text}
-          date={note.date}
-          color={note.color}
-          notes={quicknotes}
-          handleDeleteNote={deleteQuickNote}
-          setQuickNotes={setQuickNotes}
-        />
-      ))}
+      {quicknotes
+        .filter((note) => note.text.toLowerCase().includes(searchText))
+        .map((note) => (
+          <Note
+            id={note.id}
+            title={note.title}
+            text={note.text}
+            date={note.date}
+            color={note.color}
+            notes={quicknotes}
+            handleDeleteNote={deleteQuickNote}
+            setQuickNotes={setQuickNotes}
+          />
+        ))}
       <AddNote handleAddNote={addQuickNote} />
     </div>
   );
@@ -108,17 +109,24 @@ export interface MarknotesContentProps {}
  * Content for marknotes route
  */
 const MarknotesContent = ({}: MarknotesContentProps) => {
-  const [marknotes, setMarknotes] = useState([{
-    id: nanoid(),
-    title: "Untitled Note",
-    body: "",
-    lastModified: Date.now(),
-  }]);
+  const [marknotes, setMarknotes] = useState([
+    {
+      id: nanoid(),
+      title: "Untitled Note",
+      body: "",
+      lastModified: Date.now(),
+    },
+  ]);
 
   return (
     <div className="marknotes-list">
       {marknotes.map((note) => (
-        <MarkNote id={note.id} title={note.title} body={note.body} lastModified={note.lastModified} />
+        <MarkNote
+          id={note.id}
+          title={note.title}
+          body={note.body}
+          lastModified={note.lastModified}
+        />
       ))}
     </div>
   );
