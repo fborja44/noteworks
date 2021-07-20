@@ -61,6 +61,7 @@
 
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
+  cursor: pointer;
 }
 
 .marknote-header {
@@ -105,8 +106,11 @@
   height: calc(100% - 25px - 1rem);
 }
 
-.marknote-content textarea {
+.marknote-content span {
   width: 100%;
+  height: 100%;
+  display: block;
+  word-wrap: break-word;
 }
 
 .marknote-footer {

@@ -108,12 +108,17 @@ export interface MarknotesContentProps {}
  * Content for marknotes route
  */
 const MarknotesContent = ({}: MarknotesContentProps) => {
-  const [marknotes, setMarknotes] = useState([{}]);
+  const [marknotes, setMarknotes] = useState([{
+    id: nanoid(),
+    title: "Untitled Note",
+    body: "",
+    lastModified: Date.now(),
+  }]);
 
   return (
     <div className="marknotes-list">
       {marknotes.map((note) => (
-        <MarkNote />
+        <MarkNote id={note.id} title={note.title} body={note.body} lastModified={note.lastModified} />
       ))}
     </div>
   );

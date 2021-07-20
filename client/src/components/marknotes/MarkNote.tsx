@@ -3,18 +3,31 @@ import React, { useState, useEffect } from "react";
 
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
-export interface MarkNoteProps {}
+export interface MarkNoteProps {
+  id: string;
+  title: string;
+  body: string;
+  lastModified: number;
+}
 
-const MarkNote = ({}: MarkNoteProps) => {
+const MarkNote = ({ id, title, body, lastModified }: MarkNoteProps) => {
   return (
     <div className="marknote">
       <div className="marknote-header">
-        <span className="marknote-name">Title</span>
+        <span className="marknote-name">{title}</span>
       </div>
       <div className="marknote-content">
-        <span>Content</span>
+        <span>
+          {body.length > 0 ? body && body.substr(0, 150) + "..." : "Empty"}
+        </span>
         <div className="marknote-footer">
-          <small>7/19/2021</small>
+          <small>Last Modifed:</small>
+          <small>
+            {new Date(lastModified).toLocaleDateString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </small>
         </div>
       </div>
     </div>
