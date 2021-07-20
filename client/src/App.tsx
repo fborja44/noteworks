@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
@@ -77,21 +78,39 @@ const App = () => {
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
-      <div className="app-container">
-        <Sidebar />
-        <main>
-          <QuickNotesList
-            notes={quicknotes.filter(
-              (note) =>
-                note.text.toLowerCase().includes(searchText.toLowerCase()) ||
-                note.title.toLowerCase().includes(searchText.toLowerCase())
-            )}
-            handleAddNote={addQuickNote}
-            handleDeleteNote={deleteQuickNote}
-            setQuickNotes={setQuickNotes}
-          />
-        </main>
-      </div>
+      <Router>
+        <div className="app-container">
+          <Sidebar />
+          <main>
+            <div className="main-content-wrapper">
+              <Switch>
+                <Route path="/quicknotes">
+                  <QuickNotesList
+                    notes={quicknotes.filter(
+                      (note) =>
+                        note.text
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()) ||
+                        note.title
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase())
+                    )}
+                    handleAddNote={addQuickNote}
+                    handleDeleteNote={deleteQuickNote}
+                    setQuickNotes={setQuickNotes}
+                  />
+                </Route>
+                <Route path="/marknotes">
+                  <div>Marknotes</div>
+                </Route>
+                <Route path="/settings">
+                  <div>Settings</div>
+                </Route>
+              </Switch>
+            </div>
+          </main>
+        </div>
+      </Router>
       <Footer />
     </div>
   );

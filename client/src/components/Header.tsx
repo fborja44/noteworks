@@ -49,7 +49,8 @@ const Header = ({
   // Effect hook to switch between maximize icon and restore icon
   useEffect(() => {
     setWindowIcon(windowMaximized ? <Restore /> : <Maximize />);
-    if (window_button !== null) window_button.title = windowMaximized ? "Restore Down" : "Maximize";
+    if (window_button !== null)
+      window_button.title = windowMaximized ? "Restore Down" : "Maximize";
   }, [windowMaximized, window_button]);
 
   return (

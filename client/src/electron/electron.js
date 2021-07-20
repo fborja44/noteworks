@@ -24,7 +24,7 @@ function createWindow() {
   // load the application depending on dev status
   mainWindow.loadURL(
     isDev
-      ? "http://localhost:3000"
+      ? "http://localhost:3000/quicknotes"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
