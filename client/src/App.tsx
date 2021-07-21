@@ -11,18 +11,15 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
 import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
-import QNHelp from "./components/quicknotes/QNHelp";
 import MarknotesContent from "./components/marknotes/MarknotesContent";
 import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
 
-// Image and icon imports
-import { MdHelpOutline } from "react-icons/md";
+import SettingsContent from "./components/settings/SettingsContent";
 
 // CSS imports
 import "./css/app.css";
 import "./css/quicknotes.css";
 import "./css/marknotes.css";
-import { notEqual } from "assert";
 
 /**
  * Main application component
@@ -89,13 +86,6 @@ const App = () => {
     setMarknotes(updatedMarknotesArray);
   };
 
-  // Quicknotes Help Menu state
-  const [showQNHelp, setShowQNHelp] = useState(false);
-
-  const openQNHelp = () => {
-    setShowQNHelp((prev) => !prev);
-  };
-  
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
@@ -105,20 +95,7 @@ const App = () => {
           <Switch>
             <Route path="/quicknotes">
               <main>
-                <section className="sub-header">
-                  <h1>Quicknotes</h1>
-                  <div className="sub-header-buttons shift">
-                    <ul>
-                      <li onClick={openQNHelp} title="Help">
-                        <MdHelpOutline />
-                      </li>
-                    </ul>
-                  </div>
-                </section>
-                <div className="main-content-wrapper">
-                  <QuicknotesContent searchText={searchText} />
-                </div>
-                <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
+                <QuicknotesContent searchText={searchText} />
               </main>
             </Route>
             <Route path="/marknotes">
@@ -135,12 +112,7 @@ const App = () => {
             </Route>
             <Route path="/settings">
               <main>
-                <section className="sub-header">
-                  <h1>Settings</h1>
-                </section>
-                <div className="main-content-wrapper">
-                  <div>Settings</div>
-                </div>
+                <SettingsContent />
               </main>
             </Route>
           </Switch>
