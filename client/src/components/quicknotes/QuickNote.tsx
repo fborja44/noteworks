@@ -33,9 +33,37 @@ const Quicknote = ({
   setQuicknotes,
   handleUpdateQuicknote,
 }: QuicknoteProps) => {
+  // Character limits
+  const titleCharLimit = 30;
+  const bodyCharLimit = 200;
+  let body_limit = bodyCharLimit;
+
+  if (body) {
+    body_limit -= body.length;
+  }
+
+  /**
+   * Function to handle changes in a note's field
+   * @param key The field being changed
+   * @param value The new value of the field
+   */
+   const handleEditField = (key: string, value: string) => {
+    // Check character limit
+    if ((key === "title" && titleCharLimit - value.length > 0) || (key === "body" && bodyCharLimit - value.length > 0)) {
+      handleUpdateQuicknote(currentNote, {
+        ...currentNote,
+        [key]: value,
+        lastModified: Date.now(),
+      });
+    }
+  };
+
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
+  /**
+   * Function to open the color menu
+   */
   const openColorMenu = () => {
     setShowColorMenu((prev) => !prev); // Toggle off and on
   };
@@ -67,19 +95,6 @@ const Quicknote = ({
     backgroundColor: labelColor,
   };
 
-  /**
-   * Function to handle changes in a note's field
-   * @param key The field being changed
-   * @param value The new value of the field
-   */
-  const handleEditField = (key: string, value: string) => {
-    handleUpdateQuicknote(currentNote, {
-      ...currentNote,
-      [key]: value,
-      lastModified: Date.now(),
-    });
-  };
-
   return (
     <div className="quicknote">
       <div className="quicknote-header" style={label_color}>
@@ -101,7 +116,7 @@ const Quicknote = ({
           onChange={(event) => handleEditField("body", event.target.value)}
         />
         <div className="quicknote-footer">
-          <small>{new Date(lastModified).toLocaleDateString()}</small>
+          <small>{new Date(lastModified).toLocaleDateString()}   Limit: {body_limit}</small>
           <button
             title="Delete Note"
             className="delete-quicknote-button"
