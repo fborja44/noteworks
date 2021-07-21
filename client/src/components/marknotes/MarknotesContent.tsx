@@ -8,6 +8,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Marknote, { MarknoteProps } from "./Marknote";
 import Editor from "./Editor";
 
+// Image and icon impaorts
+import { MdAdd } from "react-icons/md";
+
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];
   setMarknotes: React.Dispatch<
@@ -20,6 +23,8 @@ export interface MarknotesContentProps {
       }[]
     >
   >;
+  handleAddMarknote: () => void;
+  handleUpdateMarknote: (currentMarknote: MarknoteProps, updatedMarknote: any) => void;
 }
 
 /**
@@ -28,10 +33,22 @@ export interface MarknotesContentProps {
 const MarknotesContent = ({
   marknotes,
   setMarknotes,
+  handleAddMarknote,
+  handleUpdateMarknote
 }: MarknotesContentProps) => {
   return (
     <Switch>
       <Route exact path="/marknotes">
+        <section className="sub-header">
+          <h1>Marknotes</h1>
+          <div className="sub-header-buttons">
+            <ul>
+              <li>
+                <MdAdd onClick={handleAddMarknote} />
+              </li>
+            </ul>
+          </div>
+        </section>
         <div className="main-content-wrapper">
           <div className="marknotes-list">
             {marknotes.map((note) => (
@@ -47,7 +64,10 @@ const MarknotesContent = ({
       </Route>
       {marknotes.map((note) => (
         <Route path={`/marknotes/${note.id}`}>
-          <Editor note={note} />
+          <Editor
+            note={note}
+            handleUpdateMarknote={handleUpdateMarknote}
+          />
         </Route>
       ))}
     </Switch>

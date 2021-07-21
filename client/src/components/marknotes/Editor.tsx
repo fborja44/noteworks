@@ -12,14 +12,30 @@ import { RiEdit2Line } from "react-icons/ri";
 
 export interface EditorProps {
   note: MarknoteProps;
+  handleUpdateMarknote: (currentMarknote: MarknoteProps, updatedMarknote: any) => void;
 }
 
-const Editor = ({ note }: EditorProps) => {
+const Editor = ({
+  note,
+  handleUpdateMarknote,
+}: EditorProps) => {
+  const handleEditField = (key: string, value: string) => {
+    handleUpdateMarknote(note, {
+      ...note,
+      [key]: value,
+      lastModified: Date.now(),
+    });
+  };
+
   return (
-    <div>
-      <section className="editor-header">
-        <h1>{note.title}</h1>
-        <div className="editor-header-buttons">
+    <div className="editor-main">
+      <section className="sub-header editor-header">
+        <h1>
+          <input 
+            type="text" id="title"  value={note.title}
+            onChange={(event) => handleEditField("title", event.target.value)} />
+        </h1>
+        <div className="sub-header-buttons editor-header-buttons">
           <ul>
             <li>
               <RiEdit2Line />
@@ -35,6 +51,10 @@ const Editor = ({ note }: EditorProps) => {
           </ul>
         </div>
       </section>
+      <div className="editor-content">
+        <section className="editor-container"></section>
+        <section className="preview-container"></section>
+      </div>
     </div>
   );
 };

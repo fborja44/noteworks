@@ -15,10 +15,6 @@
 
   --note-text-color-edit: #828282;
 
-  --editor-header-background-primary: #4b4a53;
-  --editor-header-background-hover: #636269;
-  --editor-header-text-color-primary: white;
-
   /* Color Definitions */
   --color-black: black;
   --color-black-hover: #151515;
@@ -128,62 +124,28 @@
 }
 
 /** Editor Styles **/
-.editor-header {
-  background: var(--editor-header-background-primary);
-  color: var(--editor-header-text-color-primary);
-  height: 30px;
+.editor-main {
+  height: 100%;
+}
+
+.editor-content {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: -5;
+  flex-direction: row;
+  height: calc(100% - 30px);
+}
+
+.editor-container {
+  background: white;
+  height: 100%;
+  flex: 1;
   box-sizing: border-box;
-  padding: 0 0 0 1rem;
 }
 
-.editor-header h1 {
-  margin-left: 1rem;
-  font-size: 16px;
-  margin: 0;
-  position: relative;
-  bottom: 1px;
-}
-
-.editor-header-buttons {
-  height: inherit;
-}
-
-.editor-header-buttons ul {
-  list-style: none;
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  height: inherit;
-}
-
-.editor-header-buttons ul li {
-  width: 40px;
+.preview-container {
+  background: white;
   height: 100%;
-  float: left;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  flex: 1;
+  box-sizing: border-box;
 
-.editor-header-buttons ul li:hover {
-  cursor: pointer;
-  background: var(--editor-header-background-hover);
-  transition: background-color 0.2s ease 0s;
-}
-
-.editor-header-buttons ul li a {
-  color: var(--editor-header-text-color-primary);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.editor-header-buttons ul li a:visited {
-  color: var(--editor-header-text-color-primary);
+  border-left: solid 20px #C4C4C4;
 }

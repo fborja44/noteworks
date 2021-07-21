@@ -12,27 +12,50 @@ import Footer from "./components/Footer";
 
 import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
 import MarknotesContent from "./components/marknotes/MarknotesContent";
+import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
 
 // CSS imports
 import "./css/app.css";
 import "./css/quicknotes.css";
 import "./css/marknotes.css";
+import { notEqual } from "assert";
 
 /**
  * Main application component
  */
 const App = () => {
-  // Search state hook
+  /* Search text state hook
+  ------------------------------------------------------------------------------*/
   const [searchText, setSearchText] = useState("");
 
-  const [marknotes, setMarknotes] = useState([
-    {
+  /* Marknotes state hook and methods
+  ------------------------------------------------------------------------------*/
+  const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
+
+  /**
+   * Marknote function to add a new empty marknote to the list
+   */
+  const handleAddMarknote = () => {
+    // Add new to state list
+    const newMarknote = {
       id: nanoid(),
       title: "Untitled Note",
       body: "",
       lastModified: Date.now(),
-    },
-  ]);
+    };
+
+    setMarknotes([newMarknote, ...marknotes]);
+  };
+
+  const handleUpdateMarknote = (currentMarknote: MarknoteProps, updatedMarknote: any) => {
+    const updatedMarknotesArray = marknotes.map((note: any) => {
+      if (note.id === currentMarknote.id) {
+        return updatedMarknote;
+      }
+      return note;
+    });
+    setMarknotes(updatedMarknotesArray);
+  };
 
   return (
     <div className="App">
@@ -43,6 +66,9 @@ const App = () => {
           <Switch>
             <Route path="/quicknotes">
               <main>
+                <section className="sub-header">
+                  <h1>Quicknotes</h1>
+                </section>
                 <div className="main-content-wrapper">
                   <QuicknotesContent searchText={searchText} />
                 </div>
@@ -53,11 +79,16 @@ const App = () => {
                 <MarknotesContent
                   marknotes={marknotes}
                   setMarknotes={setMarknotes}
+                  handleAddMarknote={handleAddMarknote}
+                  handleUpdateMarknote={handleUpdateMarknote}
                 />
               </main>
             </Route>
             <Route path="/settings">
               <main>
+                <section className="sub-header">
+                  <h1>Settings</h1>
+                </section>
                 <div className="main-content-wrapper">
                   <div>Settings</div>
                 </div>
