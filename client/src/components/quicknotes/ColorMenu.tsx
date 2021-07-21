@@ -16,18 +16,21 @@ export interface ColorMenuProps {
   showColorMenu: any;
   setShowColorMenu: any;
   setLabelColor: any;
+  handleEditColor: any;
 }
 
 const ColorMenu = ({
   showColorMenu,
   setShowColorMenu,
   setLabelColor,
+  handleEditColor
 }: ColorMenuProps) => {
   /**
    * On click handler to change color of note
    * TODO: Update event type
    */
   const handleOnClick = (event: any) => {
+    handleEditColor(event.target.dataset.color);
     setLabelColor(event.target.dataset.color);
     setShowColorMenu(false);
   };

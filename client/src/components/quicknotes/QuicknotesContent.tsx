@@ -26,7 +26,7 @@ export interface QuicknotesContentProps {
 const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>(
     JSON.parse(localStorage.denote_quicknotes) || []
-  ); // Retirve quicknotes from local storage or use empty array
+  ); // Retrieve quicknotes from local storage or use empty array
   const local = "denote_quicknotes";
 
   /**
@@ -59,10 +59,10 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
       title: "",
       body: "",
       lastModified: Date.now(),
-      color: COLOR.RED,
+      color: COLOR.GREY_DARK,
     };
 
-    setQuicknotes([newQuicknote, ...quicknotes]);
+    setQuicknotes([...quicknotes, newQuicknote]);
   };
 
   /**

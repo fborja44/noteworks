@@ -43,19 +43,33 @@ const Quicknote = ({
   }
 
   /**
-   * Function to handle changes in a note's field
+   * Function to handle changes in a note's field.
    * @param key The field being changed
    * @param value The new value of the field
    */
-   const handleEditField = (key: string, value: string) => {
+  const handleEditField = (key: string, value: string) => {
     // Check character limit
-    if ((key === "title" && titleCharLimit - value.length > 0) || (key === "body" && bodyCharLimit - value.length > 0)) {
+    if (
+      (key === "title" && titleCharLimit - value.length > 0) ||
+      (key === "body" && bodyCharLimit - value.length > 0)
+    ) {
       handleUpdateQuicknote(currentNote, {
         ...currentNote,
         [key]: value,
         lastModified: Date.now(),
       });
     }
+  };
+
+  /**
+   * Function to handle a change in the note's color.
+   * Does NOT change the last modified date.
+   */
+  const handleEditColor = (color: any) => {
+    handleUpdateQuicknote(currentNote, {
+      ...currentNote,
+      color: color,
+    });
   };
 
   // Menu state
@@ -69,27 +83,7 @@ const Quicknote = ({
   };
 
   // Label color state
-  const [labelColor, setLabelColor] = useState(color);
-
-  // Update color in quicknotes state if labelColor changes
-  useEffect(() => {
-    // Find the note in the list, copy it, and update it
-    if (notes && setQuicknotes) {
-      let index = notes.findIndex((item: any) => item.id === id);
-      let updatedNote: any = Object.assign({}, notes[index]); // Copys note info into an empty object
-      updatedNote.color = labelColor;
-
-      // Update state
-      setQuicknotes(
-        notes.map<QuicknoteProps>((item: any) => {
-          return item.id === updatedNote.id ? updatedNote : item;
-        })
-      );
-    }
-
-    // Ignore warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [labelColor]);
+  const [labelColor, setLabelColor] = useState(currentNote.color);
 
   let label_color = {
     backgroundColor: labelColor,
@@ -116,7 +110,9 @@ const Quicknote = ({
           onChange={(event) => handleEditField("body", event.target.value)}
         />
         <div className="quicknote-footer">
-          <small>{new Date(lastModified).toLocaleDateString()}   Limit: {body_limit}</small>
+          <small>
+            {new Date(lastModified).toLocaleDateString()} Limit: {body_limit}
+          </small>
           <button
             title="Delete Note"
             className="delete-quicknote-button"
@@ -130,6 +126,7 @@ const Quicknote = ({
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
         setLabelColor={setLabelColor}
+        handleEditColor={handleEditColor}
       />
     </div>
   );
