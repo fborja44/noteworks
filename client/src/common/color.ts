@@ -3,7 +3,7 @@ const COLOR = {
   BLACK_HOVER: "#151515",
   WHITE: "white",
   WHITE_HOVER: "#ededed",
-  GREY: "#a1a1a1",
+  GREY: "#b4b4b4",
   GREY_DARK: "#828282",
   RED: "#eb5757",
   RED_DARK: "#cf4242",
@@ -19,6 +19,8 @@ const COLOR = {
   PURPLE_DARK: "#964cc3",
   PINK: "#f035a5",
   CYAN: "#31C6DA",
+  LEMON: "#FAFF00",
+  LIME: "#58D744",
 };
 
-export {COLOR};
+export { COLOR };

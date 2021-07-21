@@ -20,7 +20,8 @@
   --color-black-hover: #151515;
   --color-white: white;
   --color-white-hover: #ededed;
-  --color-grey: #a1a1a1;
+  --color-grey: #b4b4b4;
+  --color-grey-dark: #828282;
 
   --color-red: #eb5757;
   --color-red-dark: #cf4242;
@@ -35,7 +36,9 @@
   --color-purple: #bb6bd9;
   --color-purple-dark: #964cc3;
   --color-pink: #f035a5;
-  --color-cyan: #31C6DA;
+  --color-cyan: #31c6da;
+  --color-lemon: #faff00;
+  --color-lime: #58d744;
 }
 
 /* Quick Notes List Styles */
@@ -209,7 +212,7 @@
 
 .color-menu-content {
   display: grid;
-  grid-template-columns: repeat(4, 20px);
+  grid-template-columns: repeat(6, 20px);
   grid-column-gap: 1.25rem;
   grid-template-rows: repeat(2, 20px);
   grid-row-gap: 1rem;
@@ -235,7 +238,6 @@
 .color-option:hover {
   border: 2px solid #666666;
 }
-
 
 .red {
   background: var(--color-red);
@@ -267,4 +269,21 @@
 
 .cyan {
   background: var(--color-cyan);
+}
+
+.lemon {
+  background: var(--color-lemon);
+  border: 1px solid #949494;
+}
+
+.lime {
+  background: var(--color-lime);
+}
+
+.grey {
+  background: var(--color-grey);
+}
+
+.grey-dark {
+  background: var(--color-grey-dark);
 }

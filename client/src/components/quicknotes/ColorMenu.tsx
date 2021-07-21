@@ -23,7 +23,7 @@ const ColorMenu = ({
   showColorMenu,
   setShowColorMenu,
   setLabelColor,
-  handleEditColor
+  handleEditColor,
 }: ColorMenuProps) => {
   /**
    * On click handler to change color of note
@@ -46,42 +46,74 @@ const ColorMenu = ({
           onClick={handleOnClick}
           data-color={COLOR.RED}
           className="color-option red"
-        ></div>
+          title="Red"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.ORANGE}
           className="color-option orange"
-        ></div>
+          title="Orange"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.YELLOW}
           className="color-option yellow"
-        ></div>
+          title="Yellow"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.GREEN}
           className="color-option green"
-        ></div>
+          title="Green"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.BLUE}
           className="color-option blue"
-        ></div>
+          title="Blue"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.PURPLE}
           className="color-option purple"
-        ></div>
+          title="Purple"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.PINK}
           className="color-option pink"
-        ></div>
+          title="Pink"
+        />
         <div
           onClick={handleOnClick}
           data-color={COLOR.CYAN}
           className="color-option cyan"
-        ></div>
+          title="Cyan"
+        />
+        <div
+          onClick={handleOnClick}
+          data-color={COLOR.LEMON}
+          className="color-option lemon"
+          title="Lemon"
+        />
+        <div
+          onClick={handleOnClick}
+          data-color={COLOR.LIME}
+          className="color-option lime"
+          title="Lime"
+        />
+        <div
+          onClick={handleOnClick}
+          data-color={COLOR.GREY}
+          className="color-option grey"
+          title="Grey"
+        />
+        <div
+          onClick={handleOnClick}
+          data-color={COLOR.GREY_DARK}
+          className="color-option grey-dark"
+          title="Dark Grey"
+        />
       </div>
     </ModalMenu>
   );
