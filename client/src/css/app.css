@@ -147,12 +147,12 @@ header {
 
   width: 50px;
   height: 100%;
-  transition: background-color 0.2s ease 0s;
 }
 
 #title-bar-buttons ul li:hover {
   background-color: var(--header-bg-color-hover);
   cursor: pointer;
+  transition: background-color 0.2s ease 0s;
 }
 
 #title-bar-buttons ul #close-app-button:hover {
@@ -334,7 +334,6 @@ footer {
   margin-left: 0.5rem;
   padding: 0 0.4rem 0 0.4rem;
   height: 100%;
-  transition: background-color 0.2s ease 0s;
 
   display: flex;
   align-items: center;
@@ -343,6 +342,7 @@ footer {
 #github-link:hover {
   background-color: var(--header-bg-color-hover);
   cursor: pointer;
+  transition: background-color 0.2s ease 0s;
 }
 
 #github-link a {
