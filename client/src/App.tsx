@@ -116,6 +116,7 @@ const App = () => {
               <main>
                 <MarknotesContent
                   marknotes={marknotes}
+                  searchText={searchText}
                   setMarknotes={setMarknotes}
                   handleAddMarknote={handleAddMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}

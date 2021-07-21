@@ -14,6 +14,7 @@ import { MdHelpOutline } from "react-icons/md";
 
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];
+  searchText: string;
   setMarknotes: React.Dispatch<
     React.SetStateAction<
       {
@@ -37,11 +38,17 @@ export interface MarknotesContentProps {
  */
 const MarknotesContent = ({
   marknotes,
+  searchText,
   setMarknotes,
   handleAddMarknote,
   handleDeleteMarknote,
   handleUpdateMarknote,
 }: MarknotesContentProps) => {
+  // Sort notes in descending order from last modifed date
+  const sortedMarknotes = marknotes.sort(
+    (a: any, b: any) => b.lastModified - a.lastModified
+  );
+
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -60,14 +67,20 @@ const MarknotesContent = ({
         </section>
         <div className="main-content-wrapper">
           <div className="marknotes-list">
-            {marknotes.map((note) => (
-              <Marknote
-                id={note.id}
-                title={note.title}
-                body={note.body}
-                lastModified={note.lastModified}
-              />
-            ))}
+            {sortedMarknotes
+              .filter(
+                (note) =>
+                  note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+                  note.body.toLowerCase().includes(searchText.toLowerCase())
+              )
+              .map((note) => (
+                <Marknote
+                  id={note.id}
+                  title={note.title}
+                  body={note.body}
+                  lastModified={note.lastModified}
+                />
+              ))}
           </div>
         </div>
       </Route>

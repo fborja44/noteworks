@@ -69,7 +69,11 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     <div className="quicknotes-list">
       {/** Pass in note data as props with map function */}
       {quicknotes
-        .filter((note) => note.text.toLowerCase().includes(searchText))
+        .filter(
+          (note) =>
+            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            note.text.toLowerCase().includes(searchText.toLowerCase())
+        )
         .map((note) => (
           <Note
             id={note.id}

@@ -39,12 +39,13 @@
 }
 
 /* Mark Notes List Styles */
+/** TODO: Fix link grid area **/
 
 .marknotes-list {
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(auto-fit, 250px);
-  grid-auto-rows: 220px;
+  grid-auto-rows: 150px;
   max-width: 100vw;
 
   z-index: 1;
