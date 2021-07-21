@@ -224,6 +224,11 @@
   transition: color 0.2s ease 0s;
 }
 
+.color-menu-button:focus {
+  outline: none;
+  border: none;
+}
+
 .color-menu-content {
   display: grid;
   grid-template-columns: repeat(4, 25px);

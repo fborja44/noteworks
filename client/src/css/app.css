@@ -381,3 +381,71 @@ footer {
   background: var(--scrollbar-color-hover);
   cursor: pointer;
 }
+
+/** Modal Menu Styles **/
+.modal-menu-background {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-menu-wrapper {
+  width: 260px;
+  height: fit-content;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  color: #000;
+  position: relative;
+  z-index: 10;
+  padding: 1rem 1rem 1.5rem 1rem;
+}
+
+.modal-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: inherit;
+  height: fit-content;
+
+  margin-bottom: 0.9rem;
+}
+
+.modal-menu-close-button:hover {
+  cursor: pointer;
+  color: var(--color-blue-dark);
+  transition: color 0.2s linear 0s;
+}
+
+.modal-menu-title {
+  margin: 0;
+  font-size: 18px;
+  color: var(--note-header-text-color);
+}
+
+.modal-menu-button {
+  background: none;
+  border: none;
+  color: var(--note-header-text-color);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.modal-menu-button:hover {
+  cursor: pointer;
+  color: var(--note-header-text-color-hover);
+  transition: color 0.2s ease 0s;
+}
+
+.modal-menu-content-container {
+  display: block;
+
+  width: fit-content;
+  margin: 0 auto 0 auto;
+}
