@@ -38,6 +38,10 @@ const Sidebar = () => {
               <BiNotepad className="nav-icon" />
             </Link>
           </li>
+        </ul>
+      </nav>
+      <nav>
+        <ul>
           <li>
             <Link to="/settings" onClick={() => setSelectedTab("Settings")} title="Settings">
               <div id="Settings" className="nav-button" />
