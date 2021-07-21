@@ -4,7 +4,7 @@ const COLOR = {
   WHITE: "white",
   WHITE_HOVER: "#ededed",
   GREY: "#a1a1a1",
-  GREY_DARK: "828282",
+  GREY_DARK: "#828282",
   RED: "#eb5757",
   RED_DARK: "#cf4242",
   ORANGE: "#f2994a",
