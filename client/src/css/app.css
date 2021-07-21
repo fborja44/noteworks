@@ -79,6 +79,19 @@ input:focus, textarea:focus {
   font-style: italic;
 }
 
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  text-align: center;
+}
+
+.empty p {
+  margin: 0.5rem;
+}
+
 /** Header and Title Bar Styles **/
 header {
   background-color: var(--header-bg-color);

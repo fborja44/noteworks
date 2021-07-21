@@ -26,7 +26,10 @@ export interface QuicknotesContentProps {
 const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>([]);
   const local = "denote_quicknotes";
-  // Effect hook to retrieve quicknotes from local storage
+
+  /**
+   * Effect hook to retrieve quicknotes from local storage
+   */
   useEffect(() => {
     const savedQuicknotes = JSON.parse(localStorage.getItem(local) || "{}");
     // Check if notes were received
@@ -89,6 +92,31 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     setQuicknotes(updatedQuicknotesArray);
   };
 
+  let notes_list = (
+    <div className="quicknotes-list">
+      {quicknotes
+        .filter(
+          (note: any) =>
+            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            note.body.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((note: any) => (
+          <Note
+            id={note.id}
+            currentNote={note}
+            title={note.title}
+            body={note.body}
+            lastModified={note.lastModified}
+            color={note.color}
+            notes={quicknotes}
+            handleDeleteNote={deleteQuicknote}
+            setQuicknotes={setQuicknotes}
+            handleUpdateQuicknote={handleUpdateQuicknote}
+          />
+        ))}
+    </div>
+  );
+
   return (
     <React.Fragment>
       <section className="sub-header">
@@ -105,29 +133,14 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
         </div>
       </section>
       <div className="main-content-wrapper">
-        <div className="quicknotes-list">
-          {/** Pass in note data as props with map function */}
-          {quicknotes
-            .filter(
-              (note) =>
-                note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-                note.body.toLowerCase().includes(searchText.toLowerCase())
-            )
-            .map((note) => (
-              <Note
-                id={note.id}
-                currentNote={note}
-                title={note.title}
-                body={note.body}
-                lastModified={note.lastModified}
-                color={note.color}
-                notes={quicknotes}
-                handleDeleteNote={deleteQuicknote}
-                setQuicknotes={setQuicknotes}
-                handleUpdateQuicknote={handleUpdateQuicknote}
-              />
-            ))}
-        </div>
+        {quicknotes.length !== 0 ? (
+          notes_list
+        ) : (
+          <div className="empty">
+            <p>You have no saved quicknotes.</p>
+            <p>Create one now by pressing the + button in the menu above!</p>
+          </div>
+        )}
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
     </React.Fragment>

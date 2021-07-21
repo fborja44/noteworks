@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Component imports
 import Marknote, { MarknoteProps } from "./Marknote";
-import MNHelp from "./MNHelp"
+import MNHelp from "./MNHelp";
 import Editor from "./Editor";
 
 // Image and icon impaorts
@@ -57,6 +57,25 @@ const MarknotesContent = ({
     setShowMNHelp((prev) => !prev);
   };
 
+  let notes_list = (
+    <div className="marknotes-list">
+      {sortedMarknotes
+        .filter(
+          (note) =>
+            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            note.body.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((note) => (
+          <Marknote
+            id={note.id}
+            title={note.title}
+            body={note.body}
+            lastModified={note.lastModified}
+          />
+        ))}
+    </div>
+  );
+
   // TODO: Redirect to editor page when creating new marknote
   return (
     <Switch>
@@ -75,22 +94,14 @@ const MarknotesContent = ({
           </div>
         </section>
         <div className="main-content-wrapper">
-          <div className="marknotes-list">
-            {sortedMarknotes
-              .filter(
-                (note) =>
-                  note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-                  note.body.toLowerCase().includes(searchText.toLowerCase())
-              )
-              .map((note) => (
-                <Marknote
-                  id={note.id}
-                  title={note.title}
-                  body={note.body}
-                  lastModified={note.lastModified}
-                />
-              ))}
-          </div>
+          {marknotes.length !== 0 ? (
+            notes_list
+          ) : (
+            <div className="empty">
+              <p>You have no saved marknotes.</p>
+              <p>Create one now by pressing the + button in the menu above!</p>
+            </div>
+          )}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
