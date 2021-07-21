@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Component imports
 import Marknote, { MarknoteProps } from "./Marknote";
+import MNHelp from "./MNHelp"
 import Editor from "./Editor";
 
 // Image and icon impaorts
@@ -49,6 +50,13 @@ const MarknotesContent = ({
     (a: any, b: any) => b.lastModified - a.lastModified
   );
 
+  // Help menu state
+  const [showMNHelp, setShowMNHelp] = useState(false);
+
+  const openMNHelp = () => {
+    setShowMNHelp((prev) => !prev);
+  };
+
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -56,10 +64,10 @@ const MarknotesContent = ({
           <h1>Marknotes</h1>
           <div className="sub-header-buttons shift">
             <ul>
-              <li>
-                <RiAddLine onClick={handleAddMarknote} />
+              <li onClick={handleAddMarknote}>
+                <RiAddLine />
               </li>
-              <li>
+              <li onClick={openMNHelp}>
                 <MdHelpOutline />
               </li>
             </ul>
@@ -83,6 +91,7 @@ const MarknotesContent = ({
               ))}
           </div>
         </div>
+        <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
       {marknotes.map((note) => (
         <Route path={`/marknotes/${note.id}`}>

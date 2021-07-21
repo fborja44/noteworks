@@ -1,3 +1,5 @@
+/* Reusable Modal Menu Component
+------------------------------------------------------------------------------*/
 // React imports
 import React, { useRef, useEffect, useCallback } from "react";
 
@@ -46,23 +48,28 @@ const ModalMenu = ({
   }, [keyPress]);
 
   return (
-    <div
-      ref={menuRef}
-      onClick={(event) => closeMenu(event, setShowMenuState)}
-      className="modal-menu-background"
-    >
-      <section className="modal-menu-wrapper">
-        <div className="modal-menu-header">
-          <h1 className="modal-menu-title">{heading}</h1>
-          <MdClose
-            className="modal-menu-close-button"
-            aria-label="Close Menu"
-            onClick={() => setShowMenuState((prev: any) => !prev)}
-          />
+    <React.Fragment>
+      {/** Ternary Operator decides whether to show the menu or not */}
+      {showMenuState ? (
+        <div
+          ref={menuRef}
+          onClick={(event) => closeMenu(event, setShowMenuState)}
+          className="modal-menu-background"
+        >
+          <section className="modal-menu-wrapper">
+            <div className="modal-menu-header">
+              <h1 className="modal-menu-title">{heading}</h1>
+              <MdClose
+                className="modal-menu-close-button"
+                aria-label="Close Menu"
+                onClick={() => setShowMenuState((prev: any) => !prev)}
+              />
+            </div>
+            <div className="modal-menu-content-container">{children}</div>
+          </section>
         </div>
-        <div className="modal-menu-content-container">{children}</div>
-      </section>
-    </div>
+      ) : null}
+    </React.Fragment>
   );
 };
 
