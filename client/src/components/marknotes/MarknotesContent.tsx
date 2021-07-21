@@ -64,10 +64,10 @@ const MarknotesContent = ({
           <h1>Marknotes</h1>
           <div className="sub-header-buttons shift">
             <ul>
-              <li onClick={handleAddMarknote}>
+              <li onClick={handleAddMarknote} title="New Note">
                 <RiAddLine />
               </li>
-              <li onClick={openMNHelp}>
+              <li onClick={openMNHelp} title="Help">
                 <MdHelpOutline />
               </li>
             </ul>

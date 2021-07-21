@@ -11,6 +11,7 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
 import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
+import QNHelp from "./components/quicknotes/QNHelp";
 import MarknotesContent from "./components/marknotes/MarknotesContent";
 import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
 
@@ -88,6 +89,13 @@ const App = () => {
     setMarknotes(updatedMarknotesArray);
   };
 
+  // Quicknotes Help Menu state
+  const [showQNHelp, setShowQNHelp] = useState(false);
+
+  const openQNHelp = () => {
+    setShowQNHelp((prev) => !prev);
+  };
+  
   return (
     <div className="App">
       <Header handleSearchNote={setSearchText} />
@@ -101,7 +109,7 @@ const App = () => {
                   <h1>Quicknotes</h1>
                   <div className="sub-header-buttons shift">
                     <ul>
-                      <li>
+                      <li onClick={openQNHelp} title="Help">
                         <MdHelpOutline />
                       </li>
                     </ul>
@@ -110,6 +118,7 @@ const App = () => {
                 <div className="main-content-wrapper">
                   <QuicknotesContent searchText={searchText} />
                 </div>
+                <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
               </main>
             </Route>
             <Route path="/marknotes">

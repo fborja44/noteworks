@@ -14,11 +14,23 @@ export interface MNHelpProps {
 const MNHelp = ({ showMNHelp, setShowMNHelp }: MNHelpProps) => {
   return (
     <ModalMenu
-      heading="Marknotes"
+      heading="Marknotes Help"
       showMenuState={showMNHelp}
       setShowMenuState={setShowMNHelp}
     >
-      Hello!
+      <p>
+        Marknotes are editable documents where you can use markdown syntax in
+        your notes to add styling.
+      </p>
+      <p>To add a new note, click the + button in the menu.</p>
+      <p>
+        To open the editor to edit and preview your marknotes, click the
+        marknote in the menu.
+      </p>
+      <p>
+        All notes are automatically saved when they are edited, created, or
+        deleted.
+      </p>
     </ModalMenu>
   );
 };

@@ -396,7 +396,8 @@ footer {
 }
 
 .modal-menu-wrapper {
-  width: 260px;
+  width: fit-content;
+  max-width: 450px;
   height: fit-content;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
   background: #fff;
@@ -410,7 +411,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: inherit;
+  width: 100%;
   height: fit-content;
 
   margin-bottom: 0.9rem;
@@ -445,7 +446,9 @@ footer {
 
 .modal-menu-content-container {
   display: block;
+  width: 100%;
+}
 
-  width: fit-content;
-  margin: 0 auto 0 auto;
+.modal-menu-content-container p {
+  margin: 0.5rem 0 0.5rem;
 }
