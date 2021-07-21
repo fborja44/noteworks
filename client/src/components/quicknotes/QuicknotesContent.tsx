@@ -20,19 +20,14 @@ export interface QuicknotesContentProps {
  * Content for the quicknotes route.
  */
 const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
-  const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>([]);
-  const local = "react-notes-app-data";
+  const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>(
+    JSON.parse(localStorage.denote_quicknotes) || []
+  ); // Retirve quicknotes from local storage or use empty array
+  const local = "denote_quicknotes";
 
-  // Effect hook to retrieve data from local storage
-  useEffect(() => {
-    const savedQuicknotes = JSON.parse(localStorage.getItem(local) || "{}");
-    // Check if notes were received
-    if (savedQuicknotes) {
-      setQuicknotes(savedQuicknotes);
-    }
-  }, []); // Run on load
-
-  // Save notes to local storage each time notes are updated
+  /**
+   * Effect hook to save quicknotes to local storage when change is made
+   */
   useEffect(() => {
     localStorage.setItem(local, JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes

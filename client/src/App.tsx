@@ -30,7 +30,17 @@ const App = () => {
 
   /* Marknotes state hook and methods
   ------------------------------------------------------------------------------*/
-  const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
+  const [marknotes, setMarknotes] = useState<MarknoteProps[]>(
+    JSON.parse(localStorage.denote_marknotes) || []
+  ); // Retirve quicknotes from local storage or use empty array
+  const local = "denote_marknotes";
+
+  /**
+   * Effect hook to save marknotes to local storage when change is made
+   */
+  useEffect(() => {
+    localStorage.setItem(local, JSON.stringify(marknotes));
+  }, [marknotes]);
 
   /**
    * Marknote function to add a new empty marknote to the list
