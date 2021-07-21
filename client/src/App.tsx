@@ -32,10 +32,16 @@ const App = () => {
   /* Marknotes state hook and methods
   ------------------------------------------------------------------------------*/
   // TODO: Move marknotes hooks and methods to MarknotesContent
-  const [marknotes, setMarknotes] = useState<MarknoteProps[]>(
-    JSON.parse(localStorage.denote_marknotes) || []
-  ); // Retirve quicknotes from local storage or use empty array
+  const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
   const local = "denote_marknotes";
+  // Effect hook to retrieve marknotes from local storage
+  useEffect(() => {
+    const savedMarknotes = JSON.parse(localStorage.getItem(local) || "{}");
+    // Check if notes were received
+    if (savedMarknotes) {
+      setMarknotes(savedMarknotes);
+    }
+  }, []); // Run on load
 
   /**
    * Effect hook to save marknotes to local storage when change is made
