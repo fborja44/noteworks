@@ -51,7 +51,6 @@ body {
   background-color: var(--background-color-primary);
   height: 100vh;
   max-width: 100vw;
-  overflow: auto;
 }
 
 .app-container {
@@ -62,11 +61,14 @@ body {
 main {
   flex: 1;
   height: calc(100vh - 50px);
-  overflow: auto;
 }
 
 .main-content-wrapper {
-  padding: 1.5rem 0 0 1.5rem;
+  padding: 1.5rem 1.5rem .75rem 1.5rem;
+  overflow: auto;
+  height: calc(100vh - 80px);
+  width: calc(100vw - 40px);
+  box-sizing: border-box;
 }
 
 /** Header and Title Bar Styles **/
@@ -171,6 +173,7 @@ header {
   background: var(--sidebar-bg-color);
   height: calc(100vh - 50px);
   width: 45px;
+  min-width: 45px;
   color: var(--header-text-color-primary);
   z-index: 0;
 }
@@ -219,13 +222,15 @@ header {
 }
 
 #sidebar nav ul li .nav-button {
-  border-left: solid 3px var(--sidebar-bg-color);
+  border-left: solid 2px var(--sidebar-bg-color);
+  box-sizing: border-box;
 }
 
 #sidebar nav ul li:hover .nav-button {
   cursor: pointer;
-  border-left: solid 3px var(--header-text-color-primary);
+  border-left: solid 2px var(--header-text-color-primary);
   transition: all 0.2s ease 0s;
+  box-sizing: border-box;
 }
 
 .nav-icon {

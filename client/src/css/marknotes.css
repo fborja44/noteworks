@@ -115,6 +115,7 @@
   height: 100%;
   display: block;
   word-wrap: break-word;
+  font-style: italic;
 }
 
 .marknote-footer {
@@ -128,10 +129,27 @@
   height: 100%;
 }
 
+.editor-title {
+  background: #5f5e64;
+  color: white;
+  height: 100%;
+  width: fit-content;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.editor-title:focus {
+  outline: none;
+}
+
 .editor-content {
   display: flex;
   flex-direction: row;
   height: calc(100% - 30px);
+  outline: none;
 }
 
 .editor-container {
@@ -141,6 +159,18 @@
   box-sizing: border-box;
 }
 
+.editor-body, .preview-body {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+
+.editor-body:focus {
+  outline: none;
+}
+
+/** Preview Styles **/
 .preview-container {
   background: white;
   height: 100%;
@@ -148,4 +178,12 @@
   box-sizing: border-box;
 
   border-left: solid 20px #C4C4C4;
+}
+
+.preview-body {
+  overflow: auto;
+}
+
+.preview-body p {
+  margin: 0;
 }

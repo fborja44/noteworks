@@ -1,6 +1,7 @@
 // React imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 // Component imports
 import { MarknoteProps } from "./Marknote";
@@ -12,13 +13,13 @@ import { RiEdit2Line } from "react-icons/ri";
 
 export interface EditorProps {
   note: MarknoteProps;
-  handleUpdateMarknote: (currentMarknote: MarknoteProps, updatedMarknote: any) => void;
+  handleUpdateMarknote: (
+    currentMarknote: MarknoteProps,
+    updatedMarknote: any
+  ) => void;
 }
 
-const Editor = ({
-  note,
-  handleUpdateMarknote,
-}: EditorProps) => {
+const Editor = ({ note, handleUpdateMarknote }: EditorProps) => {
   const handleEditField = (key: string, value: string) => {
     handleUpdateMarknote(note, {
       ...note,
@@ -30,11 +31,12 @@ const Editor = ({
   return (
     <div className="editor-main">
       <section className="sub-header editor-header">
-        <h1>
-          <input 
-            type="text" id="title"  value={note.title}
-            onChange={(event) => handleEditField("title", event.target.value)} />
-        </h1>
+        <input
+          type="text"
+          className="editor-title"
+          value={note.title}
+          onChange={(event) => handleEditField("title", event.target.value)}
+        />
         <div className="sub-header-buttons editor-header-buttons">
           <ul>
             <li>
@@ -52,8 +54,17 @@ const Editor = ({
         </div>
       </section>
       <div className="editor-content">
-        <section className="editor-container"></section>
-        <section className="preview-container"></section>
+        <section className="editor-container">
+          <textarea
+            className="editor-body"
+            placeholder="Write your note here!&#10;You can use markdown syntax to style your note."
+            value={note.body}
+            onChange={(event) => handleEditField("body", event.target.value)}
+          />
+        </section>
+        <section className="preview-container">
+          <ReactMarkdown className="preview-body">{note.body}</ReactMarkdown>
+        </section>
       </div>
     </div>
   );
