@@ -6,7 +6,7 @@ import ColorMenu from "./ColorMenu";
 
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
+import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
   id: string;
@@ -84,18 +84,19 @@ const Quicknote = ({
     <div className="quicknote">
       <div className="quicknote-header" style={label_color}>
         <input
-          className="quicknote-name"
+          className="quicknote-title"
           value={title}
+          placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
         <button onClick={openColorMenu} className="color-menu-button">
-          <RiEdit2Fill />
+          <IoMdMenu />
         </button>
       </div>
       <div className="quicknote-content">
         <textarea
           className="quicknote-body"
-          placeholder="Write your note here!&#10;You can use markdown syntax to style your note."
+          placeholder="Write your note here..."
           value={currentNote.body}
           onChange={(event) => handleEditField("body", event.target.value)}
         />

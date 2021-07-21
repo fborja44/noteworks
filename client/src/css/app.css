@@ -71,8 +71,12 @@ main {
   box-sizing: border-box;
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: none;
+}
+
+::placeholder {
+  font-style: italic;
 }
 
 /** Header and Title Bar Styles **/

@@ -57,6 +57,7 @@ const MarknotesContent = ({
     setShowMNHelp((prev) => !prev);
   };
 
+  // TODO: Redirect to editor page when creating new marknote
   return (
     <Switch>
       <Route exact path="/marknotes">

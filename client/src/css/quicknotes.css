@@ -79,16 +79,31 @@
   box-sizing: border-box;
 }
 
-.quicknote-name,
-.quicknote-title-input {
+.quicknote-title {
+  border: none;
+  background-color: inherit;
+  font-size: 13px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+  color: var(--note-header-text-color);
+  width: 100%;
   margin: 0 0.5rem 0 0.5rem;
 }
 
+.quicknote-title::placeholder {
+  color: var(--note-header-text-color);
+}
+
 .quicknote textarea {
+  border: none;
+  resize: none;
+  background-color: inherit;
+  height: 100%;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   color: var(--note-text-color-primary);
   font-weight: 500;
+  width: 100%;
 }
 
 .quicknote-content {
@@ -104,38 +119,10 @@
   height: calc(100% - 25px - 1rem);
 }
 
-.quicknote-content textarea {
-  width: 100%;
-}
-
 .quicknote-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-/* Add Quick Note Styles */
-.quicknote.add .quicknote-header {
-  background-color: var(--color-grey);
-}
-
-.quicknote-title-input {
-  border: none;
-  background-color: inherit;
-  font-size: 13px;
-  font-family: "Source Sans Pro", sans-serif;
-  width: 100%;
-}
-
-.quicknote-title-input:focus {
-  outline: none;
-}
-
-.quicknote.add textarea {
-  border: none;
-  resize: none;
-  background-color: inherit;
-  color: var(--note-text-color-edit);
 }
 
 .delete-quicknote-button {
@@ -206,6 +193,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  font-size: 15px;
 }
 
 .color-menu-button:hover {
