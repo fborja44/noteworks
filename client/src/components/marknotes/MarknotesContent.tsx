@@ -24,6 +24,7 @@ export interface MarknotesContentProps {
     >
   >;
   handleAddMarknote: () => void;
+  handleDeleteMarknote: (noteId: any) => void;
   handleUpdateMarknote: (currentMarknote: MarknoteProps, updatedMarknote: any) => void;
 }
 
@@ -34,6 +35,7 @@ const MarknotesContent = ({
   marknotes,
   setMarknotes,
   handleAddMarknote,
+  handleDeleteMarknote,
   handleUpdateMarknote
 }: MarknotesContentProps) => {
   return (
@@ -66,6 +68,7 @@ const MarknotesContent = ({
         <Route path={`/marknotes/${note.id}`}>
           <Editor
             note={note}
+            handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
           />
         </Route>

@@ -10,16 +10,22 @@ import { MarknoteProps } from "./Marknote";
 import { IoClose } from "react-icons/io5";
 import { TiStarOutline, TiStar } from "react-icons/ti";
 import { RiEdit2Line } from "react-icons/ri";
+import { MdDeleteForever } from "react-icons/md";
 
 export interface EditorProps {
   note: MarknoteProps;
+  handleDeleteMarknote: (noteId: any) => void;
   handleUpdateMarknote: (
     currentMarknote: MarknoteProps,
     updatedMarknote: any
   ) => void;
 }
 
-const Editor = ({ note, handleUpdateMarknote }: EditorProps) => {
+const Editor = ({
+  note,
+  handleDeleteMarknote,
+  handleUpdateMarknote,
+}: EditorProps) => {
   const handleEditField = (key: string, value: string) => {
     handleUpdateMarknote(note, {
       ...note,
@@ -41,6 +47,11 @@ const Editor = ({ note, handleUpdateMarknote }: EditorProps) => {
           <ul>
             <li>
               <RiEdit2Line />
+            </li>
+            <li>
+              <Link to="/marknotes" onClick={() => handleDeleteMarknote(note.id)}>
+                <MdDeleteForever />
+              </Link>
             </li>
             <li>
               <TiStarOutline />

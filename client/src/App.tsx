@@ -47,7 +47,25 @@ const App = () => {
     setMarknotes([newMarknote, ...marknotes]);
   };
 
-  const handleUpdateMarknote = (currentMarknote: MarknoteProps, updatedMarknote: any) => {
+  /**
+   * Marknote function to delete a marknote from the list
+   * @param noteId The id of the marknote to be deleted
+   */
+  const handleDeleteMarknote = (noteId: any) => {
+    // Use filter to check if id is the one we're deleting
+    // If n ot, keep; Otherwise, remove
+    setMarknotes(marknotes.filter((note: any) => note.id !== noteId));
+  };
+
+  /**
+   * Marknote function to update a marknote in the list
+   * @param currentMarknote The marknote being updated
+   * @param updatedMarknote The data to update the marknote with
+   */
+  const handleUpdateMarknote = (
+    currentMarknote: MarknoteProps,
+    updatedMarknote: any
+  ) => {
     const updatedMarknotesArray = marknotes.map((note: any) => {
       if (note.id === currentMarknote.id) {
         return updatedMarknote;
@@ -80,6 +98,7 @@ const App = () => {
                   marknotes={marknotes}
                   setMarknotes={setMarknotes}
                   handleAddMarknote={handleAddMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
                   handleUpdateMarknote={handleUpdateMarknote}
                 />
               </main>
