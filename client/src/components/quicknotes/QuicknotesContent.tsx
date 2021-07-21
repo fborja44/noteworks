@@ -10,10 +10,10 @@ import { COLOR } from "../../common/color";
 
 // Component imports
 import Note, { QuicknoteProps } from "./Quicknote";
-import AddNote from "./AddQuicknote";
 import QNHelp from "./QNHelp";
 
 // Image and icon imports
+import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
 export interface QuicknotesContentProps {
@@ -36,32 +36,6 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     localStorage.setItem(local, JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes
 
-  /**
-   * Adds a quick note to the quick notes list.
-   * @param {*} noteTitle Title of the note
-   * @param {*} noteText Text of the note
-   */
-  const addQuicknote = ({
-    noteTitle,
-    noteText,
-  }: {
-    noteTitle: string;
-    noteText: string;
-  }) => {
-    const date = new Date();
-    const newQuicknote: QuicknoteProps = {
-      id: nanoid(),
-      title: noteTitle,
-      text: noteText,
-      date: date.toLocaleDateString(),
-      color: COLOR.RED,
-    };
-
-    // Add new note to end of state array
-    const newQuicknotes = [...quicknotes, newQuicknote];
-    setQuicknotes(newQuicknotes);
-  };
-
   const deleteQuicknote = (id: string) => {
     const newQuicknotes = quicknotes.filter(
       (note: QuicknoteProps) => note.id !== id
@@ -76,12 +50,48 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     setShowQNHelp((prev) => !prev);
   };
 
+  /**
+   * Function to add new empty quicknote after add quicknote button is pressed
+   */
+  const handleAddQuicknote = () => {
+    const newQuicknote = {
+      id: nanoid(),
+      title: "",
+      body: "",
+      lastModified: Date.now(),
+      color: COLOR.RED,
+    };
+
+    setQuicknotes([newQuicknote, ...quicknotes]);
+  };
+
+  /**
+   * Function to update a quicknote in the list with updated information
+   * @param currentQuicknote The quicknote being updated
+   * @param updatedQuicknote The new information in update with
+   */
+  const handleUpdateQuicknote = (
+    currentQuicknote: QuicknoteProps,
+    updatedQuicknote: any
+  ) => {
+    const updatedQuicknotesArray = quicknotes.map((note: any) => {
+      if (note.id === currentQuicknote.id) {
+        return updatedQuicknote;
+      }
+      return note;
+    });
+    setQuicknotes(updatedQuicknotesArray);
+  };
+
   return (
     <React.Fragment>
       <section className="sub-header">
         <h1>Quicknotes</h1>
         <div className="sub-header-buttons shift">
           <ul>
+            <li onClick={handleAddQuicknote} title="New Note">
+              <RiAddLine />
+            </li>
             <li onClick={openQNHelp} title="Help">
               <MdHelpOutline />
             </li>
@@ -95,21 +105,22 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
             .filter(
               (note) =>
                 note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-                note.text.toLowerCase().includes(searchText.toLowerCase())
+                note.body.toLowerCase().includes(searchText.toLowerCase())
             )
             .map((note) => (
               <Note
                 id={note.id}
+                currentNote={note}
                 title={note.title}
-                text={note.text}
-                date={note.date}
+                body={note.body}
+                lastModified={note.lastModified}
                 color={note.color}
                 notes={quicknotes}
                 handleDeleteNote={deleteQuicknote}
                 setQuicknotes={setQuicknotes}
+                handleUpdateQuicknote={handleUpdateQuicknote}
               />
             ))}
-          <AddNote handleAddNote={addQuicknote} />
         </div>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>

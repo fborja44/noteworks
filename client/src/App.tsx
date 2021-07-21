@@ -31,6 +31,7 @@ const App = () => {
 
   /* Marknotes state hook and methods
   ------------------------------------------------------------------------------*/
+  // TODO: Move marknotes hooks and methods to MarknotesContent
   const [marknotes, setMarknotes] = useState<MarknoteProps[]>(
     JSON.parse(localStorage.denote_marknotes) || []
   ); // Retirve quicknotes from local storage or use empty array

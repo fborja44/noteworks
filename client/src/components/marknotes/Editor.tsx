@@ -26,6 +26,11 @@ const Editor = ({
   handleDeleteMarknote,
   handleUpdateMarknote,
 }: EditorProps) => {
+  /**
+   * Function to handle changes in a note's field
+   * @param key The field being changed
+   * @param value The new value of the field
+   */
   const handleEditField = (key: string, value: string) => {
     handleUpdateMarknote(note, {
       ...note,

@@ -71,6 +71,10 @@ main {
   box-sizing: border-box;
 }
 
+input:focus {
+  outline: none;
+}
+
 /** Header and Title Bar Styles **/
 header {
   background-color: var(--header-bg-color);

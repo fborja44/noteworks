@@ -10,24 +10,28 @@ import { RiEdit2Fill } from "react-icons/ri";
 
 export interface QuicknoteProps {
   id: string;
+  currentNote?: any;
   title: string;
-  text: string;
-  date: string;
+  body: string;
+  lastModified: number;
   color: string;
   notes?: QuicknoteProps[];
   handleDeleteNote?: (id: string) => void;
   setQuicknotes?: React.Dispatch<React.SetStateAction<QuicknoteProps[]>>;
+  handleUpdateQuicknote?: any;
 }
 
 const Quicknote = ({
   id,
+  currentNote,
   title,
-  text,
-  date,
+  body,
+  lastModified,
   color,
   notes,
   handleDeleteNote,
   setQuicknotes,
+  handleUpdateQuicknote,
 }: QuicknoteProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -63,18 +67,40 @@ const Quicknote = ({
     backgroundColor: labelColor,
   };
 
+  /**
+   * Function to handle changes in a note's field
+   * @param key The field being changed
+   * @param value The new value of the field
+   */
+  const handleEditField = (key: string, value: string) => {
+    handleUpdateQuicknote(currentNote, {
+      ...currentNote,
+      [key]: value,
+      lastModified: Date.now(),
+    });
+  };
+
   return (
     <div className="quicknote">
       <div className="quicknote-header" style={label_color}>
-        <span className="quicknote-name">{title}</span>
+        <input
+          className="quicknote-name"
+          value={title}
+          onChange={(event) => handleEditField("title", event.target.value)}
+        />
         <button onClick={openColorMenu} className="color-menu-button">
           <RiEdit2Fill />
         </button>
       </div>
       <div className="quicknote-content">
-        <span>{text}</span>
+        <textarea
+          className="quicknote-body"
+          placeholder="Write your note here!&#10;You can use markdown syntax to style your note."
+          value={currentNote.body}
+          onChange={(event) => handleEditField("body", event.target.value)}
+        />
         <div className="quicknote-footer">
-          <small>{date}</small>
+          <small>{new Date(lastModified).toLocaleDateString()}</small>
           <button
             title="Delete Note"
             className="delete-quicknote-button"
