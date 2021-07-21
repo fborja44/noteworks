@@ -14,6 +14,9 @@ import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
 import MarknotesContent from "./components/marknotes/MarknotesContent";
 import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
 
+// Image and icon imports
+import { MdHelpOutline } from "react-icons/md";
+
 // CSS imports
 import "./css/app.css";
 import "./css/quicknotes.css";
@@ -96,6 +99,13 @@ const App = () => {
               <main>
                 <section className="sub-header">
                   <h1>Quicknotes</h1>
+                  <div className="sub-header-buttons shift">
+                    <ul>
+                      <li>
+                        <MdHelpOutline />
+                      </li>
+                    </ul>
+                  </div>
                 </section>
                 <div className="main-content-wrapper">
                   <QuicknotesContent searchText={searchText} />

@@ -9,7 +9,8 @@ import Marknote, { MarknoteProps } from "./Marknote";
 import Editor from "./Editor";
 
 // Image and icon impaorts
-import { MdAdd } from "react-icons/md";
+import { RiAddLine } from "react-icons/ri";
+import { MdHelpOutline } from "react-icons/md";
 
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];
@@ -25,7 +26,10 @@ export interface MarknotesContentProps {
   >;
   handleAddMarknote: () => void;
   handleDeleteMarknote: (noteId: any) => void;
-  handleUpdateMarknote: (currentMarknote: MarknoteProps, updatedMarknote: any) => void;
+  handleUpdateMarknote: (
+    currentMarknote: MarknoteProps,
+    updatedMarknote: any
+  ) => void;
 }
 
 /**
@@ -36,17 +40,20 @@ const MarknotesContent = ({
   setMarknotes,
   handleAddMarknote,
   handleDeleteMarknote,
-  handleUpdateMarknote
+  handleUpdateMarknote,
 }: MarknotesContentProps) => {
   return (
     <Switch>
       <Route exact path="/marknotes">
         <section className="sub-header">
           <h1>Marknotes</h1>
-          <div className="sub-header-buttons">
+          <div className="sub-header-buttons shift">
             <ul>
               <li>
-                <MdAdd onClick={handleAddMarknote} />
+                <RiAddLine onClick={handleAddMarknote} />
+              </li>
+              <li>
+                <MdHelpOutline />
               </li>
             </ul>
           </div>

@@ -309,6 +309,11 @@ header {
   color: var(--sub-header-text-color-primary);
 }
 
+.shift {
+  position: relative;
+  right: 5px;
+}
+
 /** Footer Styles **/
 footer {
   background-color: var(--header-bg-color);

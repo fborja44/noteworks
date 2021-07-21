@@ -36,14 +36,14 @@ const Editor = ({
 
   return (
     <div className="editor-main">
-      <section className="sub-header editor-header">
+      <section className="sub-header">
         <input
           type="text"
           className="editor-title"
           value={note.title}
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        <div className="sub-header-buttons editor-header-buttons">
+        <div className="sub-header-buttons">
           <ul>
             <li>
               <RiEdit2Line />
