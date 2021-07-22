@@ -31,6 +31,8 @@
   --color-black-hover: #151515;
   --color-white: white;
   --color-white-hover: #ededed;
+  --color-grey: #b4b4b4;
+  --color-grey-dark: #828282;
 
   --color-red: #eb5757;
   --color-red-dark: #cf4242;
@@ -44,6 +46,10 @@
   --color-blue-dark: #2c62cd;
   --color-purple: #bb6bd9;
   --color-purple-dark: #964cc3;
+  --color-pink: #f035a5;
+  --color-cyan: #31c6da;
+  --color-lemon: #faff00;
+  --color-lime: #58d744;
 }
 
 /** General Styles **/
@@ -64,14 +70,15 @@ main {
 }
 
 .main-content-wrapper {
-  padding: 1.5rem 1.5rem .75rem 1.5rem;
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
   overflow: auto;
   height: calc(100vh - 80px);
   width: calc(100vw - 45px);
   box-sizing: border-box;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
 }
 
@@ -306,10 +313,11 @@ header {
   padding: 0 0 0 1rem;
 }
 
-.sub-header-left, .sub-header-right {
+.sub-header-left,
+.sub-header-right {
   display: flex;
   flex-direction: row;
-  align-items:  center;
+  align-items: center;
   height: 100%;
 }
 
@@ -430,6 +438,28 @@ footer {
 }
 
 /** Modal Menu Styles **/
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: inherit;
+  height: fit-content;
+
+  margin-bottom: 0.9rem;
+}
+
+.menu-close-button:hover {
+  cursor: pointer;
+  color: var(--color-blue-dark);
+  transition: color 0.2s linear 0s;
+}
+
+.menu-title {
+  margin: 0;
+  font-size: 18px;
+  color: var(--note-header-text-color);
+}
+
 .modal-menu-background {
   width: 100%;
   height: 100%;
@@ -499,4 +529,157 @@ footer {
 
 .modal-menu-content-container p {
   margin: 0.5rem 0 0.5rem;
+}
+
+/** Delete Menu **/
+.delete-note-button {
+  border: none;
+  background-color: rgb(0, 0, 0, 0);
+  color: var(--note-text-color-primary);
+  height: fit-content;
+  width: fit-content;
+  padding: 0;
+  margin-right: 0.4rem;
+  font-size: 12px;
+  position: relative;
+  top: 2px;
+}
+
+.delete-note-button:hover {
+  cursor: pointer;
+  color: white;
+  transition: color 0.2s ease 0s;
+}
+
+.delete-menu-text {
+  text-align: center;
+  margin: 1.5rem 1rem 0 1rem;
+}
+
+.delete-menu-button {
+  margin: 1rem auto 0 auto;
+  width: 200px;
+  background-color: var(--color-red);
+  color: white;
+  border: solid 1px #666666;
+  box-sizing: border-box;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.delete-menu-button:hover {
+  cursor: pointer;
+  background-color: var(--color-red-dark);
+  transition: background-color 0.1s ease 0s;
+}
+
+/** Color Menu Styles **/
+.color-menu-wrapper {
+  width: 260px;
+  height: fit-content;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  color: #000;
+  position: relative;
+  z-index: 10;
+  padding: 1rem 1rem 1.5rem 1rem;
+}
+
+.color-menu-button {
+  background: none;
+  border: none;
+  color: var(--note-header-text-color);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.color-menu-button:hover {
+  cursor: pointer;
+  color: var(--note-header-text-color-hover);
+  transition: color 0.2s ease 0s;
+}
+
+.color-menu-button:focus {
+  outline: none;
+  border: none;
+}
+
+.color-menu-content {
+  display: grid;
+  grid-template-columns: repeat(6, 20px);
+  grid-column-gap: 1.25rem;
+  grid-template-rows: repeat(2, 20px);
+  grid-row-gap: 1rem;
+
+  width: fit-content;
+  margin: 0 auto 0 auto;
+  padding: 0 2rem 0 2rem;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #828282;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+.color-option:hover {
+  border: 2px solid #666666;
+}
+
+.red {
+  background: var(--color-red);
+}
+
+.orange {
+  background: var(--color-orange);
+}
+
+.yellow {
+  background: var(--color-yellow);
+}
+
+.green {
+  background: var(--color-green);
+}
+
+.blue {
+  background: var(--color-blue);
+}
+
+.purple {
+  background: var(--color-purple);
+}
+
+.pink {
+  background: var(--color-pink);
+}
+
+.cyan {
+  background: var(--color-cyan);
+}
+
+.lemon {
+  background: var(--color-lemon);
+  border: 1px solid #949494;
+}
+
+.lime {
+  background: var(--color-lime);
+}
+
+.grey {
+  background: var(--color-grey);
+}
+
+.grey-dark {
+  background: var(--color-grey-dark);
 }

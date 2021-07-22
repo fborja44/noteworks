@@ -4,7 +4,7 @@
 import React from "react";
 
 // Component imports
-import ModalMenu from "../ModalMenu";
+import ModalMenu from "../menus/ModalMenu";
 
 export interface MNHelpProps {
   showMNHelp: any;

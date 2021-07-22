@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // Component imports
 import ColorMenu from "../quicknotes/ColorMenu";
-import ConfirmDelete from "../ConfirmDelete";
+import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
 import { TiDelete } from "react-icons/ti";

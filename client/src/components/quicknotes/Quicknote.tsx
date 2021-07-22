@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 // Component imports
 import ColorMenu from "./ColorMenu";
-import ConfirmDelete from "../ConfirmDelete";
+import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
 import { TiDelete } from "react-icons/ti";
