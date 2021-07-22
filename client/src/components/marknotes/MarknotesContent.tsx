@@ -76,6 +76,7 @@ const MarknotesContent = ({
             body={note.body}
             lastModified={note.lastModified}
             handleUpdateMarknote={handleUpdateMarknote}
+            handleDeleteMarknote={handleDeleteMarknote}
             currentNote={note}
           />
         ))}

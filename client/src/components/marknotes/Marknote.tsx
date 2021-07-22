@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 
 // Component imports
 import ColorMenu from "../quicknotes/ColorMenu";
+import ConfirmDelete from "../ConfirmDelete";
 
 // Image and icon imports
-import { MdDeleteForever } from "react-icons/md";
+import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface MarknoteProps {
@@ -19,6 +20,7 @@ export interface MarknoteProps {
     currentMarknote: MarknoteProps,
     updatedMarknote: any
   ) => void;
+  handleDeleteMarknote?: (noteId: any) => void;
   currentNote?: any;
 }
 
@@ -29,6 +31,7 @@ const Marknote = ({
   body,
   lastModified,
   handleUpdateMarknote,
+  handleDeleteMarknote,
   currentNote,
 }: MarknoteProps) => {
   // Menu state
@@ -61,6 +64,13 @@ const Marknote = ({
     }
   };
 
+  // Marknote Delete Menu state
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  const openConfirmDelete = () => {
+    setShowConfirmDelete((prev) => !prev);
+  };
+
   return (
     <div className="marknote">
       <div className="marknote-header" style={label_color}>
@@ -74,20 +84,35 @@ const Marknote = ({
         <button className="color-menu-button">
           <IoMdMenu onClick={openColorMenu} />
         </button>
+        <button
+          title="Delete Note"
+          className="delete-note-button"
+          onClick={openConfirmDelete}
+        >
+          <TiDelete className="delete-icon" size="1.2em" />
+        </button>
       </div>
       <Link className="marknote-link" to={`/marknotes/${id}`}>
         <div className="marknote-content">
           <span>
-            {body.length > 0 ? body && body.substr(0, 150) + "..." : <span className="italic">This note is empty.</span>}
+            {body.length > 0 ? (
+              body && body.substr(0, 150) + "..."
+            ) : (
+              <span className="italic">This note is empty.</span>
+            )}
           </span>
           <div className="marknote-footer">
-            <small>Last Modifed:</small>
-            <small>
-              {new Date(lastModified).toLocaleDateString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </small>
+            <div className="marknote-footer-left">
+              <small>Last Modifed:</small>
+            </div>
+            <div className="marknote-footer-right">
+              <small>
+                {new Date(lastModified).toLocaleDateString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </small>
+            </div>
           </div>
         </div>
       </Link>
@@ -96,6 +121,13 @@ const Marknote = ({
         setShowColorMenu={setShowColorMenu}
         setLabelColor={setLabelColor}
         handleEditColor={handleEditColor}
+      />
+      <ConfirmDelete
+        noteTitle={title}
+        noteId={id}
+        showMenuState={showConfirmDelete}
+        setShowMenuState={setShowConfirmDelete}
+        handleDeleteNote={handleDeleteMarknote}
       />
     </div>
   );

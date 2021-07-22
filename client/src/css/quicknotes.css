@@ -135,10 +135,6 @@
   align-items: center;
 }
 
-.quicknote-footer-left small {
-  margin-right: 0.3rem;
-}
-
 /* Menu Modal Styles */
 .color-menu-wrapper {
   width: 260px;
@@ -273,21 +269,22 @@
 }
 
 /** Delete Menu **/
-.delete-quicknote-button {
+.delete-note-button {
   border: none;
   background-color: rgb(0, 0, 0, 0);
   color: var(--note-text-color-primary);
   height: fit-content;
   width: fit-content;
   padding: 0;
+  margin-right: 0.4rem;
   font-size: 12px;
   position: relative;
-  top: 1px;
+  top: 2px;
 }
 
-.delete-quicknote-button:hover {
+.delete-note-button:hover {
   cursor: pointer;
-  color: var(--color-red-dark);
+  color: white;
   transition: color 0.2s ease 0s;
 }
 

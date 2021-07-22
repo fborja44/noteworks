@@ -6,7 +6,7 @@ import ColorMenu from "./ColorMenu";
 import ConfirmDelete from "../ConfirmDelete";
 
 // Image and icon imports
-import { TiDeleteOutline } from "react-icons/ti";
+import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
@@ -109,6 +109,13 @@ const Quicknote = ({
         <button onClick={openColorMenu} className="color-menu-button">
           <IoMdMenu />
         </button>
+        <button
+          title="Delete Note"
+          className="delete-note-button"
+          onClick={openConfirmDelete}
+        >
+          <TiDelete className="delete-icon" size="1.2em" />
+        </button>
       </div>
       <div className="quicknote-content">
         <textarea
@@ -123,13 +130,6 @@ const Quicknote = ({
             <small>
               {body_limit}/{bodyCharLimit}
             </small>
-            <button
-              title="Delete Note"
-              className="delete-quicknote-button"
-              onClick={openConfirmDelete}
-            >
-              <TiDeleteOutline className="delete-icon" size="1.2em" />
-            </button>
           </div>
         </div>
       </div>

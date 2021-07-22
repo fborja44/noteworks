@@ -56,7 +56,7 @@
   background-color: var(--note-background-primary);
   margin: 0 10px 10px 10px;
   width: 230px;
-  height: 150px;
+  height: fit-content;
 
   justify-self: center;
 
@@ -88,6 +88,7 @@
 
 .marknote-name {
   margin: 0 0.5rem 0 0.5rem;
+  width: 100%;
 }
 
 .marknote-content {
@@ -95,12 +96,12 @@
   flex-direction: column;
   justify-content: space-between;
   white-space: pre-wrap; /* keep spacing added to text */
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   color: var(--note-text-color-primary);
   font-weight: 500;
 
   border: 1px solid #828282;
-  height: calc(100% - 25px - 1rem);
+  height: calc(130px);
 }
 
 .marknote-content span {
@@ -115,6 +116,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.marknote-footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.marknote-footer-left small {
+  margin-right: 0.3rem;
 }
 
 /** Editor Styles **/
