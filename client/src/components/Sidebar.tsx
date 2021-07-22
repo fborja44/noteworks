@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // Image and icon imports
 import { BiNote, BiNotepad } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
+import { TiHomeOutline } from "react-icons/ti";
 
 export interface SidebarProps {}
 
@@ -27,13 +28,31 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/quicknotes" onClick={() => setSelectedTab("Quicknotes")} title="Quicknotes">
+            <Link
+              to="/"
+              onClick={() => setSelectedTab("Home")}
+              title="Home"
+            >
+              <div id="Home" className="nav-button" />
+              <TiHomeOutline className="nav-icon" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/quicknotes"
+              onClick={() => setSelectedTab("Quicknotes")}
+              title="Quicknotes"
+            >
               <div id="Quicknotes" className="nav-button" />
               <BiNote className="nav-icon" />
             </Link>
           </li>
           <li>
-            <Link to="/marknotes" onClick={() => setSelectedTab("Marknotes")} title="Marknotes">
+            <Link
+              to="/marknotes"
+              onClick={() => setSelectedTab("Marknotes")}
+              title="Marknotes"
+            >
               <div id="Marknotes" className="nav-button" />
               <BiNotepad className="nav-icon" />
             </Link>
@@ -43,7 +62,11 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/settings" onClick={() => setSelectedTab("Settings")} title="Settings">
+            <Link
+              to="/settings"
+              onClick={() => setSelectedTab("Settings")}
+              title="Settings"
+            >
               <div id="Settings" className="nav-button" />
               <FiSettings className="nav-icon settings-icon" />
             </Link>

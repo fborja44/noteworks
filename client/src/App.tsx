@@ -13,7 +13,10 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
+import HomeContent from "./components/home/HomeContent";
+
 import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
+
 import MarknotesContent from "./components/marknotes/MarknotesContent";
 import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
 
@@ -104,6 +107,11 @@ const App = () => {
         <div className="app-container">
           <Sidebar />
           <Switch>
+            <Route exact path="/">
+              <main>
+                <HomeContent />
+              </main>
+            </Route>
             <Route path="/quicknotes">
               <main>
                 <QuicknotesContent />
