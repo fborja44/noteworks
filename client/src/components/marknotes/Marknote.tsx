@@ -38,13 +38,6 @@ const Marknote = ({
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
-   * Function to open the color menu
-   */
-  const openColorMenu = () => {
-    setShowColorMenu((prev) => !prev); // Toggle off and on
-  };
-
-  /**
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
@@ -57,16 +50,29 @@ const Marknote = ({
     }
   };
 
+  /**
+   * Function to toggle the color menu
+   */
+  const toggleColorMenu = () => {
+    setShowColorMenu((prev) => !prev); // Toggle off and on
+  };
+
   // Marknote Delete Menu state
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  const openConfirmDelete = () => {
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleConfirmDelete = () => {
     setShowConfirmDelete((prev) => !prev);
   };
 
   return (
     <div className="marknote">
-      <div className="marknote-header" style={{backgroundColor: currentNote.color}}>
+      <div
+        className="marknote-header"
+        style={{ backgroundColor: currentNote.color }}
+      >
         <span className="marknote-name">
           {title.trim().length !== 0 ? (
             title
@@ -75,12 +81,12 @@ const Marknote = ({
           )}
         </span>
         <button className="color-menu-button">
-          <IoMdMenu onClick={openColorMenu} />
+          <IoMdMenu onClick={toggleColorMenu} />
         </button>
         <button
           title="Delete Note"
           className="delete-note-button"
-          onClick={openConfirmDelete}
+          onClick={toggleConfirmDelete}
         >
           <TiDelete className="delete-icon" size="1.2em" />
         </button>
@@ -120,6 +126,7 @@ const Marknote = ({
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteMarknote}
+        toggleConfirmDelete={toggleConfirmDelete}
       />
     </div>
   );

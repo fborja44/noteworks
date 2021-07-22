@@ -77,16 +77,19 @@ const Quicknote = ({
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
-   * Function to open the color menu
+   * Function to toggle the color menu
    */
-  const openColorMenu = () => {
+  const toggleColorMenu = () => {
     setShowColorMenu((prev) => !prev); // Toggle off and on
   };
 
   // Quicknote Delete Menu state
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  const openConfirmDelete = () => {
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleConfirmDelete = () => {
     setShowConfirmDelete((prev) => !prev);
   };
 
@@ -99,13 +102,13 @@ const Quicknote = ({
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        <button onClick={openColorMenu} className="color-menu-button">
+        <button onClick={toggleColorMenu} className="color-menu-button">
           <IoMdMenu />
         </button>
         <button
           title="Delete Note"
           className="delete-note-button"
-          onClick={openConfirmDelete}
+          onClick={toggleConfirmDelete}
         >
           <TiDelete className="delete-icon" size="1.2em" />
         </button>
@@ -137,6 +140,7 @@ const Quicknote = ({
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteNote}
+        toggleConfirmDelete={toggleConfirmDelete}
       />
     </div>
   );

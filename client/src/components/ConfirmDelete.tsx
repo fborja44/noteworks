@@ -12,6 +12,7 @@ export interface ConfirmDeleteProps {
   showMenuState: any;
   setShowMenuState: any;
   handleDeleteNote?: (id: string) => void;
+  toggleConfirmDelete: () => void;
 }
 
 const ConfirmDelete = ({
@@ -20,6 +21,7 @@ const ConfirmDelete = ({
   showMenuState,
   setShowMenuState,
   handleDeleteNote,
+  toggleConfirmDelete,
 }: ConfirmDeleteProps) => {
   if (noteTitle.trim().length === 0) {
     noteTitle = "Untitled Note";
@@ -36,7 +38,12 @@ const ConfirmDelete = ({
         <button
           className="delete-menu-button"
           onClick={
-            handleDeleteNote ? () => handleDeleteNote(noteId) : undefined
+            handleDeleteNote
+              ? () => {
+                  handleDeleteNote(noteId);
+                  toggleConfirmDelete();
+                }
+              : undefined
           }
         >
           Confirm
