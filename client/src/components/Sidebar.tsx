@@ -12,7 +12,7 @@ export interface SidebarProps {}
 const Sidebar = () => {
   const [selectedTab, setSelectedTab] = useState("Quicknotes");
 
-  const tabs = ["Quicknotes", "Marknotes", "Settings"];
+  const tabs = ["Home", "Quicknotes", "Marknotes", "Settings"];
 
   useEffect(() => {
     let selected = document.getElementById(selectedTab);
@@ -21,7 +21,7 @@ const Sidebar = () => {
       let temp = document.getElementById(tab);
       if (temp !== null) temp.classList.remove("selected");
     }
-  }, [selectedTab]);
+  });
 
   return (
     <section id="sidebar">

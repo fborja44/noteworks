@@ -1,11 +1,8 @@
 /* Marknotes Main Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-// Common imports
-import { COLOR } from "../../common/color";
+import { useState } from "react";
+import { Switch, Route } from "react-router-dom";
 
 // Component imports
 import Marknote, { MarknoteProps } from "./Marknote";
@@ -16,7 +13,6 @@ import Searchbar from "../Searchbar";
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
-import ColorMenu from "../quicknotes/ColorMenu";
 
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];

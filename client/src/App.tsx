@@ -18,7 +18,7 @@ import HomeContent from "./components/home/HomeContent";
 import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
 
 import MarknotesContent from "./components/marknotes/MarknotesContent";
-import Marknote, { MarknoteProps } from "./components/marknotes/Marknote";
+import { MarknoteProps } from "./components/marknotes/Marknote";
 
 import SettingsContent from "./components/settings/SettingsContent";
 

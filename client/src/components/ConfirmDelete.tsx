@@ -1,7 +1,7 @@
 /* Searchbar Component
 ------------------------------------------------------------------------------*/
 // React import
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // Component Imports
 import ModalMenu from "./ModalMenu";

@@ -1,7 +1,7 @@
 /* Color Menu Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useRef, useEffect, useCallback } from "react";
+import React from "react";
 
 // Common imports
 import { COLOR } from "../../common/color";
@@ -10,7 +10,6 @@ import { COLOR } from "../../common/color";
 import ModalMenu from "../ModalMenu";
 
 // Image and icon imports
-import { MdClose } from "react-icons/md";
 
 export interface ColorMenuProps {
   showColorMenu: any;

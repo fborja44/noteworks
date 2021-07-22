@@ -1,10 +1,10 @@
 /* Settings Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState, useEffect } from "react";
+import React from "react";
 export interface SettingsContentProps {}
 
-const SettingsContent = ({}: SettingsContentProps) => {
+const SettingsContent = () => {
   return (
     <React.Fragment>
       <section className="sub-header">

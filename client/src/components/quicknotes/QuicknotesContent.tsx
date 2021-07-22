@@ -2,7 +2,6 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
@@ -22,7 +21,7 @@ export interface QuicknotesContentProps {}
 /**
  * Content for the quicknotes route.
  */
-const QuicknotesContent = ({}: QuicknotesContentProps) => {
+const QuicknotesContent = () => {
   const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>([]);
   const local = "denote_quicknotes";
 
@@ -120,32 +119,6 @@ const QuicknotesContent = ({}: QuicknotesContentProps) => {
         ))}
     </div>
   );
-  useEffect(() => {
-    notes_list = (
-      <div className="quicknotes-list">
-        {quicknotes
-          .filter(
-            (note: any) =>
-              note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
-              note.body.toLowerCase().includes(QNSearchText.toLowerCase())
-          )
-          .map((note: any) => (
-            <Quicknote
-              id={note.id}
-              title={note.title}
-              body={note.body}
-              lastModified={note.lastModified}
-              color={note.color}
-              notes={quicknotes}
-              handleDeleteNote={deleteQuicknote}
-              setQuicknotes={setQuicknotes}
-              handleUpdateQuicknote={handleUpdateQuicknote}
-              currentNote={note}
-            />
-          ))}
-      </div>
-    );
-  }, []);
 
   return (
     <React.Fragment>

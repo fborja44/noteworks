@@ -1,10 +1,10 @@
 /* Home Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState, useEffect } from "react";
-export interface SettingsContentProps {}
+import React from "react";
+export interface HomeContentProps {}
 
-const SettingsContent = ({}: SettingsContentProps) => {
+const HomeContent = () => {
   return (
     <React.Fragment>
       <section className="sub-header">
@@ -17,4 +17,4 @@ const SettingsContent = ({}: SettingsContentProps) => {
   );
 };
 
-export default SettingsContent;
+export default HomeContent;

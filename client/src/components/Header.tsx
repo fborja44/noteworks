@@ -28,9 +28,9 @@ const Maximize = () => {
   return <BiWindow className="window-icon" />;
 };
 
-interface HeaderProps {}
+// interface HeaderProps {}
 
-const Header = ({}: HeaderProps) => {
+const Header = () => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);

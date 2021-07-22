@@ -1,5 +1,5 @@
 // React imports
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
@@ -8,7 +8,7 @@ import { MarknoteProps } from "./Marknote";
 
 // Image and icon imports
 import { IoClose } from "react-icons/io5";
-import { TiStarOutline, TiStar } from "react-icons/ti";
+import { TiStarOutline } from "react-icons/ti"; //TiStar
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
 
