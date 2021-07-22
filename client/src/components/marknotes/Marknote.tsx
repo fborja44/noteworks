@@ -83,28 +83,28 @@ const Marknote = ({
   return (
     <div className="marknote">
       <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
-      <div
-        className="marknote-header"
-        style={{ backgroundColor: currentNote.color }}
-      >
-        <span className="marknote-name">
-          {currentNote.title.trim().length !== 0 ? (
-            currentNote.title
-          ) : (
-            <span className="italic">Untitled Note</span>
-          )}
-        </span>
-        <button className="color-menu-button marknote-button">
-          <IoMdMenu onClick={toggleColorMenu} />
-        </button>
-        <button
-          title="Delete Note"
-          className="delete-note-button marknote-button"
-          onClick={toggleConfirmDelete}
+        <div
+          className="marknote-header"
+          style={{ backgroundColor: currentNote.color }}
         >
-          <TiDelete className="delete-icon" size="1.2em" />
-        </button>
-      </div>
+          <span className="marknote-name">
+            {currentNote.title.trim().length !== 0 ? (
+              currentNote.title
+            ) : (
+              <span className="italic">Untitled Note</span>
+            )}
+          </span>
+          <button className="color-menu-button marknote-button">
+            <IoMdMenu onClick={toggleColorMenu} />
+          </button>
+          <button
+            title="Delete Note"
+            className="delete-note-button marknote-button"
+            onClick={toggleConfirmDelete}
+          >
+            <TiDelete className="delete-icon" size="1.2em" />
+          </button>
+        </div>
         <div className="marknote-content">
           <span>
             {currentNote.body.length > 0 ? (

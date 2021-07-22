@@ -16,7 +16,7 @@ export interface QuicknoteProps {
   body: string;
   lastModified: number;
   color: string;
-  
+
   // Props for children of QuicknotesContent
   notes?: QuicknoteProps[];
   currentNote?: any;
@@ -90,7 +90,10 @@ const Quicknote = ({
 
   return (
     <div className="quicknote">
-      <div className="quicknote-header" style={{backgroundColor: currentNote.color}}>
+      <div
+        className="quicknote-header"
+        style={{ backgroundColor: currentNote.color }}
+      >
         <input
           className="quicknote-title"
           value={currentNote.title}
@@ -116,7 +119,9 @@ const Quicknote = ({
           onChange={(event) => handleEditField("body", event.target.value)}
         />
         <div className="quicknote-footer">
-          <small>{new Date(currentNote.lastModified).toLocaleDateString()}</small>
+          <small>
+            {new Date(currentNote.lastModified).toLocaleDateString()}
+          </small>
           <div className="quicknote-footer-left">
             <small>
               {body_limit}/{bodyCharLimit}

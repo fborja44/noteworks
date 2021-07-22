@@ -1,5 +1,5 @@
 // React imports
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
@@ -19,12 +19,14 @@ export interface EditorProps {
     currentMarknote: MarknoteProps,
     updatedMarknote: any
   ) => void;
+  setRedirect?: any;
 }
 
 const Editor = ({
   note,
   handleDeleteMarknote,
   handleUpdateMarknote,
+  setRedirect
 }: EditorProps) => {
   /**
    * Function to handle changes in a note's field
@@ -39,12 +41,18 @@ const Editor = ({
     });
   };
 
+  // Reset redirect when editor mounts
+  useEffect(() => {
+    setRedirect(<></>);
+  }, []);
+
   return (
     <div className="editor-main">
       <section className="sub-header">
         <input
           type="text"
           className="editor-title"
+          placeholder="Enter a title..."
           value={note.title}
           onChange={(event) => handleEditField("title", event.target.value)}
         />
@@ -54,7 +62,10 @@ const Editor = ({
               <RiEdit2Line />
             </li>
             <li>
-              <Link to="/marknotes" onClick={() => handleDeleteMarknote(note.id)}>
+              <Link
+                to="/marknotes"
+                onClick={() => handleDeleteMarknote(note.id)}
+              >
                 <MdDeleteForever />
               </Link>
             </li>

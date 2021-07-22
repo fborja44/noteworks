@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
@@ -18,12 +18,14 @@ import Searchbar from "../Searchbar";
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface MarknotesContentProps {}
+export interface MarknotesContentProps {
+  history?: any;
+}
 
 /**
  * Content for marknotes route
  */
-const MarknotesContent = () => {
+const MarknotesContent = ({ history }: MarknotesContentProps) => {
   const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
   const local = "denote_marknotes";
 
@@ -45,6 +47,9 @@ const MarknotesContent = () => {
     localStorage.setItem(local, JSON.stringify(marknotes));
   }, [marknotes]);
 
+  // Redirect state
+  const [redirect, setRedirect] = useState(<></>);
+
   /**
    * Marknote function to add a new empty marknote to the list
    */
@@ -59,6 +64,9 @@ const MarknotesContent = () => {
     };
 
     setMarknotes([...marknotes, newMarknote]);
+
+    // Redirect when new note is added
+    setRedirect(<Redirect to={`/marknotes/${newMarknote.id}`} />);
   };
 
   /**
@@ -68,7 +76,6 @@ const MarknotesContent = () => {
   const handleDeleteMarknote = (noteId: any) => {
     // Use filter to check if id is the one we're deleting
     // If n ot, keep; Otherwise, remove
-    console.log(noteId);
     setMarknotes(marknotes.filter((note: any) => note.id !== noteId));
   };
 
@@ -162,6 +169,7 @@ const MarknotesContent = () => {
               <p>Create one now by pressing the + button in the menu above!</p>
             </div>
           )}
+          {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
@@ -171,6 +179,7 @@ const MarknotesContent = () => {
             note={note}
             handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
+            setRedirect={setRedirect}
           />
         </Route>
       ))}

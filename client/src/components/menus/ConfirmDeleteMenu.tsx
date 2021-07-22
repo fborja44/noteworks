@@ -12,7 +12,7 @@ export interface ConfirmDeleteProps {
   showMenuState: any;
   setShowMenuState: any;
   handleDeleteNote?: (id: string) => void;
-  toggleConfirmDelete: (event: any) => void
+  toggleConfirmDelete: (event: any) => void;
 }
 
 const ConfirmDelete = ({

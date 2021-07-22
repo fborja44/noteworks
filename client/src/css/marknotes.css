@@ -12,10 +12,10 @@
   --note-header-text-color: #333333;
   --note-header-text-color-hover: white;
   --note-text-color-primary: #333333;
-  
+
   --note-text-color-edit: #828282;
 
-  --note-border-color-hover: #333fe9;
+  --note-border-color-hover: #5560ee;
 
   /* Color Definitions */
   --color-black: black;
@@ -153,12 +153,16 @@
 .editor-title {
   background: #5f5e64;
   color: white;
-  height: 100%;
+  height: 22px;
   width: fit-content;
   border: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   padding: 0 1rem 0 1rem;
+}
+
+.editor-title::placeholder {
+  color: var(--color-grey);
 }
 
 .editor-title:focus {
