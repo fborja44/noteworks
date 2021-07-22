@@ -58,7 +58,7 @@
   background-color: var(--note-background-primary);
   margin: 0 10px 10px 10px;
   width: 230px;
-  height: 200px;
+  height: fit-content;
 
   justify-self: center;
 
@@ -114,33 +114,28 @@
   flex-direction: column;
   justify-content: space-between;
   white-space: pre-wrap; /* keep spacing added to text */
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   color: var(--note-text-color-primary);
   font-weight: 500;
 
   border: 1px solid #828282;
-  height: calc(100% - 25px - 1rem);
+  height: calc(170px);
 }
 
 .quicknote-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 3px;
 }
 
-.delete-quicknote-button {
-  border: none;
-  background-color: rgb(0, 0, 0, 0);
-  color: var(--note-text-color-primary);
-  height: fit-content;
-  width: fit-content;
-  padding: 0;
+.quicknote-footer-left {
+  display: flex;
+  align-items: center;
 }
 
-.delete-quicknote-button:hover {
-  cursor: pointer;
-  color: var(--color-red-dark);
-  transition: color 0.2s ease 0s;
+.quicknote-footer-left small {
+  margin-right: 0.3rem;
 }
 
 /* Menu Modal Styles */
@@ -274,4 +269,45 @@
 
 .grey-dark {
   background: var(--color-grey-dark);
+}
+
+/** Delete Menu **/
+.delete-quicknote-button {
+  border: none;
+  background-color: rgb(0, 0, 0, 0);
+  color: var(--note-text-color-primary);
+  height: fit-content;
+  width: fit-content;
+  padding: 0;
+  font-size: 12px;
+  position: relative;
+  top: 1px;
+}
+
+.delete-quicknote-button:hover {
+  cursor: pointer;
+  color: var(--color-red-dark);
+  transition: color 0.2s ease 0s;
+}
+
+.delete-menu-text {
+  text-align: center;
+  margin: 1.5rem 1rem 0 1rem;
+}
+
+.delete-menu-button {
+  margin: 1rem auto 0 auto;
+  width: 200px;
+  background-color: var(--color-red);
+  color: white;
+  border: solid 1px #666666;
+  box-sizing: border-box;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.delete-menu-button:hover {
+  cursor: pointer;
+  background-color: var(--color-red-dark);
+  transition: background-color 0.1s ease 0s;
 }

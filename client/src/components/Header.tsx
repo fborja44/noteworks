@@ -1,3 +1,5 @@
+/* Header and Titlebar Component
+------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
 

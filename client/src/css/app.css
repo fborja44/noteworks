@@ -473,7 +473,7 @@ footer {
 }
 
 .modal-menu-title {
-  margin: 0;
+  margin: 0 2rem 0 0;
   font-size: 18px;
   color: var(--note-header-text-color);
 }

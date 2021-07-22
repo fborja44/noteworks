@@ -31,6 +31,10 @@ const QNHelp = ({ showQNHelp, setShowQNHelp }: QNHelpProps) => {
         top right of the note.
       </p>
       <p>
+        To delete a note, click the delete button at the bottom right of the
+        notes. Deletions are permanent.
+      </p>
+      <p>
         All notes are automatically saved when they are edited, created, or
         deleted.
       </p>

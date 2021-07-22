@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 
 // Component imports
 import ColorMenu from "./ColorMenu";
+import ConfirmDelete from "../ConfirmDelete";
 
 // Image and icon imports
-import { MdDeleteForever } from "react-icons/md";
+import { TiDeleteOutline } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
@@ -35,7 +36,7 @@ const Quicknote = ({
 }: QuicknoteProps) => {
   // Character limits
   const titleCharLimit = 30;
-  const bodyCharLimit = 200;
+  const bodyCharLimit = 300;
   let body_limit = bodyCharLimit;
 
   if (body) {
@@ -89,6 +90,13 @@ const Quicknote = ({
     backgroundColor: labelColor,
   };
 
+  // Quicknote Delete Menu state
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  const openConfirmDelete = () => {
+    setShowConfirmDelete((prev) => !prev);
+  };
+
   return (
     <div className="quicknote">
       <div className="quicknote-header" style={label_color}>
@@ -110,16 +118,19 @@ const Quicknote = ({
           onChange={(event) => handleEditField("body", event.target.value)}
         />
         <div className="quicknote-footer">
-          <small>
-            {new Date(lastModified).toLocaleDateString()} Limit: {body_limit}
-          </small>
-          <button
-            title="Delete Note"
-            className="delete-quicknote-button"
-            onClick={handleDeleteNote ? () => handleDeleteNote(id) : undefined}
-          >
-            <MdDeleteForever className="delete-icon" size="1.2em" />
-          </button>
+          <small>{new Date(lastModified).toLocaleDateString()}</small>
+          <div className="quicknote-footer-left">
+            <small>
+              {body_limit}/{bodyCharLimit}
+            </small>
+            <button
+              title="Delete Note"
+              className="delete-quicknote-button"
+              onClick={openConfirmDelete}
+            >
+              <TiDeleteOutline className="delete-icon" size="1.2em" />
+            </button>
+          </div>
         </div>
       </div>
       <ColorMenu
@@ -127,6 +138,13 @@ const Quicknote = ({
         setShowColorMenu={setShowColorMenu}
         setLabelColor={setLabelColor}
         handleEditColor={handleEditColor}
+      />
+      <ConfirmDelete
+        noteTitle={title}
+        noteId={id}
+        showMenuState={showConfirmDelete}
+        setShowMenuState={setShowConfirmDelete}
+        handleDeleteNote={handleDeleteNote}
       />
     </div>
   );

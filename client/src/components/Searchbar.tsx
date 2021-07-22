@@ -1,3 +1,5 @@
+/* Searchbar Component
+------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
 // Image and icon imports
