@@ -90,7 +90,7 @@ const MarknotesContent = ({
           </div>
           <div className="sub-header-right">
             <Searchbar handleSearchNote={setMNSearchText} />
-            <div className="sub-header-buttons shift">
+            <div className="sub-header-buttons">
               <ul>
                 <li onClick={handleAddMarknote} title="New Note">
                   <RiAddLine />

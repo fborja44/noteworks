@@ -9,7 +9,7 @@ import { nanoid } from "nanoid";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import Note, { QuicknoteProps } from "./Quicknote";
+import Quicknote, { QuicknoteProps } from "./Quicknote";
 import QNHelp from "./QNHelp";
 import Searchbar from "../Searchbar";
 
@@ -105,7 +105,7 @@ const QuicknotesContent = ({}: QuicknotesContentProps) => {
             note.body.toLowerCase().includes(QNSearchText.toLowerCase())
         )
         .map((note: any) => (
-          <Note
+          <Quicknote
             id={note.id}
             currentNote={note}
             title={note.title}
@@ -129,7 +129,7 @@ const QuicknotesContent = ({}: QuicknotesContentProps) => {
         </div>
         <div className="sub-header-right">
           <Searchbar handleSearchNote={setQNSearchText} />
-          <div className="sub-header-buttons shift">
+          <div className="sub-header-buttons">
             <ul>
               <li onClick={handleAddQuicknote} title="New Note">
                 <RiAddLine />
