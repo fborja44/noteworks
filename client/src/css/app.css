@@ -130,6 +130,7 @@ header {
   height: 100%;
   display: flex;
   align-items: center;
+  font-size: 18px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
 }
@@ -137,6 +138,7 @@ header {
 .searchbar {
   display: flex;
   align-items: center;
+  margin-right: 1rem;
 }
 
 .search-icon {
@@ -146,7 +148,16 @@ header {
 .searchbar input {
   width: 200px;
   margin-left: 0.3rem;
+  padding: 0.2rem;
   font-size: 12px;
+  background-color: var(--sub-header-background-hover);
+  box-sizing: border-box;
+  border: none;
+  color: var(--header-text-color-primary);
+}
+
+.searchbar input::placeholder {
+  color: var(--header-text-color-primary);
 }
 
 .searchbar input:focus {
@@ -185,6 +196,7 @@ header {
 #minimize-icon {
   position: relative;
   bottom: 4px;
+  font-size: 15px;
 }
 
 #power-icon {
@@ -288,6 +300,13 @@ header {
   z-index: -5;
   box-sizing: border-box;
   padding: 0 0 0 1rem;
+}
+
+.sub-header-left, .sub-header-right {
+  display: flex;
+  flex-direction: row;
+  align-items:  center;
+  height: 100%;
 }
 
 .sub-header h1 {

@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from "react";
 
 // Component imports
-import Searchbar from "./quicknotes/Searchbar";
 
 // Image and icon imports
 import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
-
 
 // Import electron renderer
 let ipc: any;
@@ -28,11 +26,9 @@ const Maximize = () => {
   return <BiWindow className="window-icon" />;
 };
 
-const Header = ({
-  handleSearchNote,
-}: {
-  handleSearchNote: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+interface HeaderProps {}
+
+const Header = ({}: HeaderProps) => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);
@@ -63,7 +59,6 @@ const Header = ({
     <header>
       <div id="header-left">
         <div id="app-title">Denote!</div>
-        <Searchbar handleSearchNote={handleSearchNote} />
       </div>
       <div id="header-drag"></div>
       <div id="title-bar-buttons">

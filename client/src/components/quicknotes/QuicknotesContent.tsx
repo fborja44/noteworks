@@ -11,19 +11,18 @@ import { COLOR } from "../../common/color";
 // Component imports
 import Note, { QuicknoteProps } from "./Quicknote";
 import QNHelp from "./QNHelp";
+import Searchbar from "../Searchbar";
 
 // Image and icon imports
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface QuicknotesContentProps {
-  searchText: any;
-}
+export interface QuicknotesContentProps {}
 
 /**
  * Content for the quicknotes route.
  */
-const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
+const QuicknotesContent = ({}: QuicknotesContentProps) => {
   const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>([]);
   const local = "denote_quicknotes";
 
@@ -92,13 +91,18 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
     setQuicknotes(updatedQuicknotesArray);
   };
 
+  /**
+   * State for quicknotes search text
+   */
+  const [QNSearchText, setQNSearchText] = useState("");
+
   let notes_list = (
     <div className="quicknotes-list">
       {quicknotes
         .filter(
           (note: any) =>
-            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-            note.body.toLowerCase().includes(searchText.toLowerCase())
+            note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
+            note.body.toLowerCase().includes(QNSearchText.toLowerCase())
         )
         .map((note: any) => (
           <Note
@@ -120,16 +124,21 @@ const QuicknotesContent = ({ searchText }: QuicknotesContentProps) => {
   return (
     <React.Fragment>
       <section className="sub-header">
-        <h1>Quicknotes</h1>
-        <div className="sub-header-buttons shift">
-          <ul>
-            <li onClick={handleAddQuicknote} title="New Note">
-              <RiAddLine />
-            </li>
-            <li onClick={openQNHelp} title="Help">
-              <MdHelpOutline />
-            </li>
-          </ul>
+        <div className="sub-header-left">
+          <h1>Quicknotes</h1>
+        </div>
+        <div className="sub-header-right">
+          <Searchbar handleSearchNote={setQNSearchText} />
+          <div className="sub-header-buttons shift">
+            <ul>
+              <li onClick={handleAddQuicknote} title="New Note">
+                <RiAddLine />
+              </li>
+              <li onClick={openQNHelp} title="Help">
+                <MdHelpOutline />
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
       <div className="main-content-wrapper">

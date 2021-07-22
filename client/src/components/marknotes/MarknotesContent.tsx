@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Marknote, { MarknoteProps } from "./Marknote";
 import MNHelp from "./MNHelp";
 import Editor from "./Editor";
+import Searchbar from "../Searchbar";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
@@ -15,7 +16,6 @@ import { MdHelpOutline } from "react-icons/md";
 
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];
-  searchText: string;
   setMarknotes: React.Dispatch<
     React.SetStateAction<
       {
@@ -39,7 +39,6 @@ export interface MarknotesContentProps {
  */
 const MarknotesContent = ({
   marknotes,
-  searchText,
   setMarknotes,
   handleAddMarknote,
   handleDeleteMarknote,
@@ -57,13 +56,18 @@ const MarknotesContent = ({
     setShowMNHelp((prev) => !prev);
   };
 
+  /**
+   * State for marknotes search text
+   */
+  const [MNSearchText, setMNSearchText] = useState("");
+
   let notes_list = (
     <div className="marknotes-list">
       {sortedMarknotes
         .filter(
           (note) =>
-            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-            note.body.toLowerCase().includes(searchText.toLowerCase())
+            note.title.toLowerCase().includes(MNSearchText.toLowerCase()) ||
+            note.body.toLowerCase().includes(MNSearchText.toLowerCase())
         )
         .map((note) => (
           <Marknote
@@ -81,16 +85,21 @@ const MarknotesContent = ({
     <Switch>
       <Route exact path="/marknotes">
         <section className="sub-header">
-          <h1>Marknotes</h1>
-          <div className="sub-header-buttons shift">
-            <ul>
-              <li onClick={handleAddMarknote} title="New Note">
-                <RiAddLine />
-              </li>
-              <li onClick={openMNHelp} title="Help">
-                <MdHelpOutline />
-              </li>
-            </ul>
+          <div className="sub-header-left">
+            <h1>Marknotes</h1>
+          </div>
+          <div className="sub-header-right">
+            <Searchbar handleSearchNote={setMNSearchText} />
+            <div className="sub-header-buttons shift">
+              <ul>
+                <li onClick={handleAddMarknote} title="New Note">
+                  <RiAddLine />
+                </li>
+                <li onClick={openMNHelp} title="Help">
+                  <MdHelpOutline />
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
         <div className="main-content-wrapper">

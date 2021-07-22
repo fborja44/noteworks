@@ -25,10 +25,6 @@ import "./css/marknotes.css";
  * Main application component
  */
 const App = () => {
-  /* Search text state hook
-  ------------------------------------------------------------------------------*/
-  const [searchText, setSearchText] = useState("");
-
   /* Marknotes state hook and methods
   ------------------------------------------------------------------------------*/
   // TODO: Move marknotes hooks and methods to MarknotesContent
@@ -98,21 +94,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header handleSearchNote={setSearchText} />
+      <Header />
       <Router>
         <div className="app-container">
           <Sidebar />
           <Switch>
             <Route path="/quicknotes">
               <main>
-                <QuicknotesContent searchText={searchText} />
+                <QuicknotesContent />
               </main>
             </Route>
             <Route path="/marknotes">
               <main>
                 <MarknotesContent
                   marknotes={marknotes}
-                  searchText={searchText}
                   setMarknotes={setMarknotes}
                   handleAddMarknote={handleAddMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
