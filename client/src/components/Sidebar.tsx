@@ -1,6 +1,6 @@
 // React imports
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Image and icon imports
 import { BiNote, BiNotepad } from "react-icons/bi";
@@ -10,9 +10,9 @@ import { TiHomeOutline } from "react-icons/ti";
 export interface SidebarProps {}
 
 const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState("Quicknotes");
+  const [selectedTab, setSelectedTab] = useState(useLocation().pathname);
 
-  const tabs = ["Home", "Quicknotes", "Marknotes", "Settings"];
+  const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
 
   useEffect(() => {
     let selected = document.getElementById(selectedTab);
@@ -30,30 +30,30 @@ const Sidebar = () => {
           <li>
             <Link
               to="/"
-              onClick={() => setSelectedTab("Home")}
+              onClick={() => setSelectedTab("/")}
               title="Home"
             >
-              <div id="Home" className="nav-button" />
+              <div id="/" className="nav-button" />
               <TiHomeOutline className="nav-icon" />
             </Link>
           </li>
           <li>
             <Link
               to="/quicknotes"
-              onClick={() => setSelectedTab("Quicknotes")}
+              onClick={() => setSelectedTab("/quicknotes")}
               title="Quicknotes"
             >
-              <div id="Quicknotes" className="nav-button" />
+              <div id="/quicknotes" className="nav-button" />
               <BiNote className="nav-icon" />
             </Link>
           </li>
           <li>
             <Link
               to="/marknotes"
-              onClick={() => setSelectedTab("Marknotes")}
+              onClick={() => setSelectedTab("/marknotes")}
               title="Marknotes"
             >
-              <div id="Marknotes" className="nav-button" />
+              <div id="/marknotes" className="nav-button" />
               <BiNotepad className="nav-icon" />
             </Link>
           </li>
@@ -64,10 +64,10 @@ const Sidebar = () => {
           <li>
             <Link
               to="/settings"
-              onClick={() => setSelectedTab("Settings")}
+              onClick={() => setSelectedTab("/settings")}
               title="Settings"
             >
-              <div id="Settings" className="nav-button" />
+              <div id="/settings" className="nav-button" />
               <FiSettings className="nav-icon settings-icon" />
             </Link>
           </li>
