@@ -10,37 +10,32 @@ import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
+  // Props to store quicknote data
   id: string;
   title: string;
   body: string;
   lastModified: number;
   color: string;
+  
+  // Props for children of QuicknotesContent
   notes?: QuicknoteProps[];
-  handleDeleteNote?: (id: string) => void;
-  setQuicknotes?: React.Dispatch<React.SetStateAction<QuicknoteProps[]>>;
-  handleUpdateQuicknote?: any;
   currentNote?: any;
+  handleDeleteNote?: (id: string) => void;
+  handleUpdateQuicknote?: any;
 }
 
 const Quicknote = ({
-  id,
-  title,
-  body,
-  lastModified,
-  color,
-  notes,
-  handleDeleteNote,
-  setQuicknotes,
-  handleUpdateQuicknote,
   currentNote,
+  handleDeleteNote,
+  handleUpdateQuicknote,
 }: QuicknoteProps) => {
   // Character limits
   const titleCharLimit = 30;
   const bodyCharLimit = 300;
   let body_limit = bodyCharLimit;
 
-  if (body) {
-    body_limit -= body.length;
+  if (currentNote.body) {
+    body_limit -= currentNote.body.length;
   }
 
   /**
@@ -98,7 +93,7 @@ const Quicknote = ({
       <div className="quicknote-header" style={{backgroundColor: currentNote.color}}>
         <input
           className="quicknote-title"
-          value={title}
+          value={currentNote.title}
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
@@ -121,7 +116,7 @@ const Quicknote = ({
           onChange={(event) => handleEditField("body", event.target.value)}
         />
         <div className="quicknote-footer">
-          <small>{new Date(lastModified).toLocaleDateString()}</small>
+          <small>{new Date(currentNote.lastModified).toLocaleDateString()}</small>
           <div className="quicknote-footer-left">
             <small>
               {body_limit}/{bodyCharLimit}
@@ -135,8 +130,8 @@ const Quicknote = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        noteTitle={title}
-        noteId={id}
+        noteTitle={currentNote.title}
+        noteId={currentNote.id}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteNote}

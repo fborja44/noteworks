@@ -11,28 +11,27 @@ import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface MarknoteProps {
+  // Props to store marknote data
   id: string;
   title: string;
   color: string;
   body: string;
   lastModified: number;
+
+  // Props for children of MarknotesContent
+  currentNote?: any;
   handleUpdateMarknote?: (
     currentMarknote: MarknoteProps,
     updatedMarknote: any
   ) => void;
   handleDeleteMarknote?: (noteId: any) => void;
-  currentNote?: any;
 }
 
 const Marknote = ({
-  id,
-  title,
-  color,
-  body,
   lastModified,
+  currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
-  currentNote,
 }: MarknoteProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -74,8 +73,8 @@ const Marknote = ({
         style={{ backgroundColor: currentNote.color }}
       >
         <span className="marknote-name">
-          {title.trim().length !== 0 ? (
-            title
+          {currentNote.title.trim().length !== 0 ? (
+            currentNote.title
           ) : (
             <span className="italic">Untitled Note</span>
           )}
@@ -91,11 +90,11 @@ const Marknote = ({
           <TiDelete className="delete-icon" size="1.2em" />
         </button>
       </div>
-      <Link className="marknote-link" to={`/marknotes/${id}`}>
+      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
         <div className="marknote-content">
           <span>
-            {body.length > 0 ? (
-              body && body.substr(0, 150) + "..."
+            {currentNote.body.length > 0 ? (
+              currentNote.body && currentNote.body.substr(0, 150) + "..."
             ) : (
               <span className="italic">This note is empty.</span>
             )}
@@ -121,8 +120,8 @@ const Marknote = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        noteTitle={title}
-        noteId={id}
+        noteTitle={currentNote.title}
+        noteId={currentNote.id}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteMarknote}

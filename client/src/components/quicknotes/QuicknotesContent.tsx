@@ -112,7 +112,6 @@ const QuicknotesContent = () => {
             color={note.color}
             notes={quicknotes}
             handleDeleteNote={deleteQuicknote}
-            setQuicknotes={setQuicknotes}
             handleUpdateQuicknote={handleUpdateQuicknote}
             currentNote={note}
           />
