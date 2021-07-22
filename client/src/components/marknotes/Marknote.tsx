@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 // Component imports
-import ColorMenu from "../quicknotes/ColorMenu";
+import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
@@ -51,9 +51,16 @@ const Marknote = ({
 
   /**
    * Function to toggle the color menu
+   * TODO: Change event type
    */
-  const toggleColorMenu = () => {
-    setShowColorMenu((prev) => !prev); // Toggle off and on
+  const toggleColorMenu = (event: any) => {
+    // Prevent parent link from redirecting
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
+    // Toggle display of component
+    setShowColorMenu((prev) => !prev);
   };
 
   // Marknote Delete Menu state
@@ -61,13 +68,19 @@ const Marknote = ({
 
   /**
    * Function to toggle the confirm delete menu
+   * TODO: Change event type
    */
-  const toggleConfirmDelete = () => {
+  const toggleConfirmDelete = (event: any) => {
+    // Prevent parent link from redirecting
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
+    // Toggle display of component
     setShowConfirmDelete((prev) => !prev);
   };
 
   return (
-    
     <div className="marknote">
       <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
       <div
@@ -81,12 +94,12 @@ const Marknote = ({
             <span className="italic">Untitled Note</span>
           )}
         </span>
-        <button className="color-menu-button">
+        <button className="color-menu-button marknote-button">
           <IoMdMenu onClick={toggleColorMenu} />
         </button>
         <button
           title="Delete Note"
-          className="delete-note-button"
+          className="delete-note-button marknote-button"
           onClick={toggleConfirmDelete}
         >
           <TiDelete className="delete-icon" size="1.2em" />

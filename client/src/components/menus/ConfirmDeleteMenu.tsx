@@ -12,7 +12,7 @@ export interface ConfirmDeleteProps {
   showMenuState: any;
   setShowMenuState: any;
   handleDeleteNote?: (id: string) => void;
-  toggleConfirmDelete: () => void;
+  toggleConfirmDelete: (event: any) => void
 }
 
 const ConfirmDelete = ({
@@ -39,9 +39,9 @@ const ConfirmDelete = ({
           className="delete-menu-button"
           onClick={
             handleDeleteNote
-              ? () => {
+              ? (event) => {
                   handleDeleteNote(noteId);
-                  toggleConfirmDelete();
+                  toggleConfirmDelete(event);
                 }
               : undefined
           }

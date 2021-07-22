@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 // Component imports
-import ColorMenu from "./ColorMenu";
+import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports

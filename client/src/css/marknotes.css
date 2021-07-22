@@ -12,8 +12,10 @@
   --note-header-text-color: #333333;
   --note-header-text-color-hover: white;
   --note-text-color-primary: #333333;
-
+  
   --note-text-color-edit: #828282;
+
+  --note-border-color-hover: #333fe9;
 
   /* Color Definitions */
   --color-black: black;
@@ -39,22 +41,20 @@
 }
 
 /* Mark Notes List Styles */
-/** TODO: Fix link grid area **/
-
 .marknotes-list {
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(auto-fit, 250px);
-  grid-auto-rows: 150px;
+  grid-auto-rows: fit-content;
   max-width: 100vw;
-  row-gap: 2rem;
+  row-gap: 1rem;
   z-index: 1;
 }
 
 /* General Mark Note Styles */
 .marknote {
   background-color: var(--note-background-primary);
-  margin: 0 10px 10px 10px;
+  margin: 0 10px 0 10px;
   width: 230px;
   height: fit-content;
 
@@ -66,6 +66,8 @@
 
 .marknote-link {
   text-decoration: none;
+  position: relative;
+  z-index: 1;
 }
 
 .marknote-header {
@@ -82,7 +84,11 @@
   border-top: 1px solid #828282;
   border-left: 1px solid #828282;
   border-right: 1px solid #828282;
-  box-sizing: border-box;
+}
+
+.marknote-button {
+  position: relative;
+  z-index: 5;
 }
 
 .marknote-name {
@@ -101,6 +107,18 @@
 
   border: 1px solid #828282;
   height: calc(130px);
+}
+
+.marknote:hover .marknote-content {
+  border-left: 1px solid var(--note-border-color-hover);
+  border-right: 1px solid var(--note-border-color-hover);
+  border-bottom: 1px solid var(--note-border-color-hover);
+}
+
+.marknote:hover .marknote-header {
+  border-top: 1px solid var(--note-border-color-hover);
+  border-left: 1px solid var(--note-border-color-hover);
+  border-right: 1px solid var(--note-border-color-hover);
 }
 
 .marknote-content span {
@@ -137,7 +155,6 @@
   color: white;
   height: 100%;
   width: fit-content;
-  box-sizing: border-box;
   border: 0;
   font-size: 16px;
   font-weight: bold;
@@ -159,12 +176,10 @@
   background: white;
   height: 100%;
   flex: 1;
-  box-sizing: border-box;
 }
 
 .editor-body,
 .preview-body {
-  box-sizing: border-box;
   width: 100%;
   height: 100%;
   padding: 1rem;
@@ -181,7 +196,6 @@
   background: white;
   height: 100%;
   flex: 1;
-  box-sizing: border-box;
 
   border-left: solid 20px #c4c4c4;
 }

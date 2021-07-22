@@ -1,8 +1,12 @@
 /* Marknotes Main Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { nanoid } from "nanoid";
+
+// Common imports
+import { COLOR } from "../../common/color";
 
 // Component imports
 import Marknote, { MarknoteProps } from "./Marknote";
@@ -14,31 +18,78 @@ import Searchbar from "../Searchbar";
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface MarknotesContentProps {
-  marknotes: MarknoteProps[];
-  setMarknotes: React.Dispatch<
-    React.SetStateAction<
-      MarknoteProps[]
-    >
-  >;
-  handleAddMarknote: () => void;
-  handleDeleteMarknote: (noteId: any) => void;
-  handleUpdateMarknote: (
-    currentMarknote: MarknoteProps,
-    updatedMarknote: any
-  ) => void;
-}
+export interface MarknotesContentProps {}
 
 /**
  * Content for marknotes route
  */
-const MarknotesContent = ({
-  marknotes,
-  setMarknotes,
-  handleAddMarknote,
-  handleDeleteMarknote,
-  handleUpdateMarknote,
-}: MarknotesContentProps) => {
+const MarknotesContent = () => {
+  const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
+  const local = "denote_marknotes";
+
+  /**
+   * Effect hook to retrieve marknotes from local storage
+   */
+  useEffect(() => {
+    const savedMarknotes = JSON.parse(localStorage.getItem(local) || "{}");
+    // Check if notes were received
+    if (savedMarknotes) {
+      setMarknotes(savedMarknotes);
+    }
+  }, []); // Run on load
+
+  /**
+   * Effect hook to save marknotes to local storage when change is made
+   */
+  useEffect(() => {
+    localStorage.setItem(local, JSON.stringify(marknotes));
+  }, [marknotes]);
+
+  /**
+   * Marknote function to add a new empty marknote to the list
+   */
+  const handleAddMarknote = () => {
+    // Add new to state list
+    const newMarknote = {
+      id: nanoid(),
+      title: "",
+      body: "",
+      lastModified: Date.now(),
+      color: COLOR.GREY_DARK,
+    };
+
+    setMarknotes([...marknotes, newMarknote]);
+  };
+
+  /**
+   * Marknote function to delete a marknote from the list
+   * @param noteId The id of the marknote to be deleted
+   */
+  const handleDeleteMarknote = (noteId: any) => {
+    // Use filter to check if id is the one we're deleting
+    // If n ot, keep; Otherwise, remove
+    console.log(noteId);
+    setMarknotes(marknotes.filter((note: any) => note.id !== noteId));
+  };
+
+  /**
+   * Marknote function to update a marknote in the list
+   * @param currentMarknote The marknote being updated
+   * @param updatedMarknote The data to update the marknote with
+   */
+  const handleUpdateMarknote = (
+    currentMarknote: MarknoteProps,
+    updatedMarknote: any
+  ) => {
+    const updatedMarknotesArray = marknotes.map((note: any) => {
+      if (note.id === currentMarknote.id) {
+        return updatedMarknote;
+      }
+      return note;
+    });
+    setMarknotes(updatedMarknotesArray);
+  };
+
   // Sort notes in descending order from last modifed date
   const sortedMarknotes = marknotes.sort(
     (a: any, b: any) => b.lastModified - a.lastModified

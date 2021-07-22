@@ -7,7 +7,7 @@ import React from "react";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import ModalMenu from "../menus/ModalMenu";
+import ModalMenu from "./ModalMenu";
 
 // Image and icon imports
 
