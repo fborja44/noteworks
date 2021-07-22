@@ -50,8 +50,8 @@ const Quicknote = ({
   const handleEditField = (key: string, value: string) => {
     // Check character limit
     if (
-      (key === "title" && titleCharLimit - value.length > 0) ||
-      (key === "body" && bodyCharLimit - value.length > 0)
+      (key === "title" && titleCharLimit - value.length >= 0) ||
+      (key === "body" && bodyCharLimit - value.length >= 0)
     ) {
       handleUpdateQuicknote(currentNote, {
         ...currentNote,
