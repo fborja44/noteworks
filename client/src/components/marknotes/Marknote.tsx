@@ -67,7 +67,9 @@ const Marknote = ({
   };
 
   return (
+    
     <div className="marknote">
+      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
       <div
         className="marknote-header"
         style={{ backgroundColor: currentNote.color }}
@@ -90,7 +92,6 @@ const Marknote = ({
           <TiDelete className="delete-icon" size="1.2em" />
         </button>
       </div>
-      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
         <div className="marknote-content">
           <span>
             {currentNote.body.length > 0 ? (

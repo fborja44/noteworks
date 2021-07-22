@@ -66,14 +66,15 @@ const MarknotesContent = ({
         )
         .map((note) => (
           <Marknote
+            key={note.id}
             id={note.id}
             title={note.title}
             color={note.color}
             body={note.body}
             lastModified={note.lastModified}
+            currentNote={note}
             handleUpdateMarknote={handleUpdateMarknote}
             handleDeleteMarknote={handleDeleteMarknote}
-            currentNote={note}
           />
         ))}
     </div>
@@ -114,7 +115,7 @@ const MarknotesContent = ({
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
       {marknotes.map((note) => (
-        <Route path={`/marknotes/${note.id}`}>
+        <Route key={note.id} path={`/marknotes/${note.id}`}>
           <Editor
             note={note}
             handleDeleteMarknote={handleDeleteMarknote}

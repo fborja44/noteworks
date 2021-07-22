@@ -105,15 +105,16 @@ const QuicknotesContent = () => {
         )
         .map((note: any) => (
           <Quicknote
+            key={note.id}
             id={note.id}
             title={note.title}
             body={note.body}
             lastModified={note.lastModified}
             color={note.color}
             notes={quicknotes}
+            currentNote={note}
             handleDeleteNote={deleteQuicknote}
             handleUpdateQuicknote={handleUpdateQuicknote}
-            currentNote={note}
           />
         ))}
     </div>
