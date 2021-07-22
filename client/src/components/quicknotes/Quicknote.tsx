@@ -83,13 +83,6 @@ const Quicknote = ({
     setShowColorMenu((prev) => !prev); // Toggle off and on
   };
 
-  // Label color state
-  const [labelColor, setLabelColor] = useState(currentNote.color);
-
-  let label_color = {
-    backgroundColor: labelColor,
-  };
-
   // Quicknote Delete Menu state
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -99,7 +92,7 @@ const Quicknote = ({
 
   return (
     <div className="quicknote">
-      <div className="quicknote-header" style={label_color}>
+      <div className="quicknote-header" style={{backgroundColor: currentNote.color}}>
         <input
           className="quicknote-title"
           value={title}
@@ -136,7 +129,6 @@ const Quicknote = ({
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
-        setLabelColor={setLabelColor}
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete

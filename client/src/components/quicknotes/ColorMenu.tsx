@@ -15,14 +15,12 @@ import { MdClose } from "react-icons/md";
 export interface ColorMenuProps {
   showColorMenu: any;
   setShowColorMenu: any;
-  setLabelColor: any;
   handleEditColor: any;
 }
 
 const ColorMenu = ({
   showColorMenu,
   setShowColorMenu,
-  setLabelColor,
   handleEditColor,
 }: ColorMenuProps) => {
   /**
@@ -31,7 +29,6 @@ const ColorMenu = ({
    */
   const handleOnClick = (event: any) => {
     handleEditColor(event.target.dataset.color);
-    setLabelColor(event.target.dataset.color);
     setShowColorMenu(false);
   };
 

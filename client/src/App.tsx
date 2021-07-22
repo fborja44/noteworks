@@ -60,12 +60,12 @@ const App = () => {
     const newMarknote = {
       id: nanoid(),
       title: "",
-      color: COLOR.GREY_DARK,
       body: "",
       lastModified: Date.now(),
+      color: COLOR.GREY_DARK,
     };
 
-    setMarknotes([newMarknote, ...marknotes]);
+    setMarknotes([...marknotes, newMarknote]);
   };
 
   /**
@@ -75,6 +75,7 @@ const App = () => {
   const handleDeleteMarknote = (noteId: any) => {
     // Use filter to check if id is the one we're deleting
     // If n ot, keep; Otherwise, remove
+    console.log(noteId);
     setMarknotes(marknotes.filter((note: any) => note.id !== noteId));
   };
 

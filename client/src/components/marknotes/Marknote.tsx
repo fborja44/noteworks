@@ -44,13 +44,6 @@ const Marknote = ({
     setShowColorMenu((prev) => !prev); // Toggle off and on
   };
 
-  // Label color state
-  const [labelColor, setLabelColor] = useState(currentNote.color);
-
-  let label_color = {
-    backgroundColor: labelColor,
-  };
-
   /**
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
@@ -73,7 +66,7 @@ const Marknote = ({
 
   return (
     <div className="marknote">
-      <div className="marknote-header" style={label_color}>
+      <div className="marknote-header" style={{backgroundColor: currentNote.color}}>
         <span className="marknote-name">
           {title.trim().length !== 0 ? (
             title
@@ -119,7 +112,6 @@ const Marknote = ({
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
-        setLabelColor={setLabelColor}
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
