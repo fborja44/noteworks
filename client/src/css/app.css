@@ -92,6 +92,10 @@ input:focus, textarea:focus {
   margin: 0.5rem;
 }
 
+.italic {
+  font-style: italic;
+}
+
 /** Header and Title Bar Styles **/
 header {
   background-color: var(--header-bg-color);
@@ -148,7 +152,7 @@ header {
 .searchbar input {
   width: 200px;
   margin-left: 0.3rem;
-  padding: 0.2rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   font-size: 12px;
   background-color: var(--sub-header-background-hover);
   box-sizing: border-box;

@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { nanoid } from "nanoid";
 
+// Common imports
+import { COLOR } from "./common/color";
+
 // Component imports
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -56,7 +59,8 @@ const App = () => {
     // Add new to state list
     const newMarknote = {
       id: nanoid(),
-      title: "Untitled Note",
+      title: "",
+      color: COLOR.GREY_DARK,
       body: "",
       lastModified: Date.now(),
     };

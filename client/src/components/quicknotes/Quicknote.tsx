@@ -11,7 +11,6 @@ import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
   id: string;
-  currentNote?: any;
   title: string;
   body: string;
   lastModified: number;
@@ -20,11 +19,11 @@ export interface QuicknoteProps {
   handleDeleteNote?: (id: string) => void;
   setQuicknotes?: React.Dispatch<React.SetStateAction<QuicknoteProps[]>>;
   handleUpdateQuicknote?: any;
+  currentNote?: any;
 }
 
 const Quicknote = ({
   id,
-  currentNote,
   title,
   body,
   lastModified,
@@ -33,6 +32,7 @@ const Quicknote = ({
   handleDeleteNote,
   setQuicknotes,
   handleUpdateQuicknote,
+  currentNote,
 }: QuicknoteProps) => {
   // Character limits
   const titleCharLimit = 30;

@@ -4,6 +4,9 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// Common imports
+import { COLOR } from "../../common/color";
+
 // Component imports
 import Marknote, { MarknoteProps } from "./Marknote";
 import MNHelp from "./MNHelp";
@@ -13,17 +16,13 @@ import Searchbar from "../Searchbar";
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
+import ColorMenu from "../quicknotes/ColorMenu";
 
 export interface MarknotesContentProps {
   marknotes: MarknoteProps[];
   setMarknotes: React.Dispatch<
     React.SetStateAction<
-      {
-        id: string;
-        title: string;
-        body: string;
-        lastModified: number;
-      }[]
+      MarknoteProps[]
     >
   >;
   handleAddMarknote: () => void;
@@ -73,8 +72,11 @@ const MarknotesContent = ({
           <Marknote
             id={note.id}
             title={note.title}
+            color={note.color}
             body={note.body}
             lastModified={note.lastModified}
+            handleUpdateMarknote={handleUpdateMarknote}
+            currentNote={note}
           />
         ))}
     </div>

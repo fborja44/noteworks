@@ -70,6 +70,7 @@
   width: 100%;
   height: 25px;
   color: var(--note-header-text-color);
+  background: var(--color-grey);
   font-weight: 600;
 
   display: flex;

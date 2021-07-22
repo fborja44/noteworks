@@ -107,7 +107,6 @@ const QuicknotesContent = ({}: QuicknotesContentProps) => {
         .map((note: any) => (
           <Quicknote
             id={note.id}
-            currentNote={note}
             title={note.title}
             body={note.body}
             lastModified={note.lastModified}
@@ -116,6 +115,7 @@ const QuicknotesContent = ({}: QuicknotesContentProps) => {
             handleDeleteNote={deleteQuicknote}
             setQuicknotes={setQuicknotes}
             handleUpdateQuicknote={handleUpdateQuicknote}
+            currentNote={note}
           />
         ))}
     </div>
