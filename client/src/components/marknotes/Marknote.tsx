@@ -17,6 +17,7 @@ export interface MarknoteProps {
   color: string;
   body: string;
   lastModified: number;
+  favorited: Boolean;
 
   // Props for children of MarknotesContent
   currentNote?: any;
@@ -28,7 +29,6 @@ export interface MarknoteProps {
 }
 
 const Marknote = ({
-  lastModified,
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
@@ -119,7 +119,7 @@ const Marknote = ({
             </div>
             <div className="marknote-footer-right">
               <small>
-                {new Date(lastModified).toLocaleDateString("en-US", {
+                {new Date(currentNote.lastModified).toLocaleDateString("en-US", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}

@@ -348,7 +348,7 @@ header {
 
 .sub-header-buttons ul li:hover {
   cursor: pointer;
-  background: var(--sub-header-background-hover);
+  /* background: var(--sub-header-background-hover); */
   transition: background-color 0.2s ease 0s;
 }
 

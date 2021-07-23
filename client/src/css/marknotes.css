@@ -153,16 +153,16 @@
 .editor-title {
   background: #5f5e64;
   color: white;
-  height: 22px;
+  height: 24px;
   width: fit-content;
   border: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   padding: 0 1rem 0 1rem;
 }
 
 .editor-title::placeholder {
-  color: var(--color-grey);
+  color: white;
 }
 
 .editor-title:focus {

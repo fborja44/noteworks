@@ -13,9 +13,10 @@ export interface QuicknoteProps {
   // Props to store quicknote data
   id: string;
   title: string;
+  color: string;
   body: string;
   lastModified: number;
-  color: string;
+  favorited: boolean;
 
   // Props for children of QuicknotesContent
   notes?: QuicknoteProps[];

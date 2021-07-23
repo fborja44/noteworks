@@ -64,9 +64,10 @@ const QuicknotesContent = () => {
     const newQuicknote = {
       id: nanoid(),
       title: "",
+      color: COLOR.GREY_DARK,
       body: "",
       lastModified: Date.now(),
-      color: COLOR.GREY_DARK,
+      favorited: false,
     };
 
     setQuicknotes([...quicknotes, newQuicknote]);
@@ -108,9 +109,10 @@ const QuicknotesContent = () => {
             key={note.id}
             id={note.id}
             title={note.title}
+            color={note.color}
             body={note.body}
             lastModified={note.lastModified}
-            color={note.color}
+            favorited={note.favorited}
             notes={quicknotes}
             currentNote={note}
             handleDeleteNote={deleteQuicknote}

@@ -24,6 +24,10 @@ const MNHelp = ({ showMNHelp, setShowMNHelp }: MNHelpProps) => {
       </p>
       <p>To add a new note, click the + button in the menu.</p>
       <p>
+        To delete a note, click the delete button at the top right of the notes.
+        Deletions are permanent.
+      </p>
+      <p>
         To open the editor to edit and preview your marknotes, click the
         marknote in the menu.
       </p>

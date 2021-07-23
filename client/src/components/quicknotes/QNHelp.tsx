@@ -31,7 +31,7 @@ const QNHelp = ({ showQNHelp, setShowQNHelp }: QNHelpProps) => {
         top right of the note.
       </p>
       <p>
-        To delete a note, click the delete button at the bottom right of the
+        To delete a note, click the delete button at the top right of the
         notes. Deletions are permanent.
       </p>
       <p>

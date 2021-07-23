@@ -61,6 +61,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
       body: "",
       lastModified: Date.now(),
       color: COLOR.GREY_DARK,
+      favorited: false,
     };
 
     setMarknotes([...marknotes, newMarknote]);
@@ -130,6 +131,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
             color={note.color}
             body={note.body}
             lastModified={note.lastModified}
+            favorited={note.favorited}
             currentNote={note}
             handleUpdateMarknote={handleUpdateMarknote}
             handleDeleteMarknote={handleDeleteMarknote}
@@ -176,7 +178,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
       {marknotes.map((note) => (
         <Route key={note.id} path={`/marknotes/${note.id}`}>
           <Editor
-            note={note}
+            currentNote={note}
             handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
             setRedirect={setRedirect}
