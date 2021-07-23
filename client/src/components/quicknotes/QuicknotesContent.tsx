@@ -43,7 +43,7 @@ const QuicknotesContent = () => {
     localStorage.setItem(local, JSON.stringify(quicknotes));
   }, [quicknotes]); // Run on change in notes
 
-  const deleteQuicknote = (id: string) => {
+  const handleDeleteQuicknote = (id: string) => {
     const newQuicknotes = quicknotes.filter(
       (note: QuicknoteProps) => note.id !== id
     ); // don't need to make new array since filter returns new array
@@ -62,6 +62,7 @@ const QuicknotesContent = () => {
    */
   const handleAddQuicknote = () => {
     const newQuicknote = {
+      type: "quicknote",
       id: nanoid(),
       title: "",
       color: COLOR.GREY_DARK,
@@ -107,6 +108,7 @@ const QuicknotesContent = () => {
         .map((note: any) => (
           <Quicknote
             key={note.id}
+            type={note.type}
             id={note.id}
             title={note.title}
             color={note.color}
@@ -115,7 +117,7 @@ const QuicknotesContent = () => {
             favorited={note.favorited}
             notes={quicknotes}
             currentNote={note}
-            handleDeleteNote={deleteQuicknote}
+            handleDeleteQuicknote={handleDeleteQuicknote}
             handleUpdateQuicknote={handleUpdateQuicknote}
           />
         ))}

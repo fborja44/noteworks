@@ -12,6 +12,7 @@ import { IoMdMenu } from "react-icons/io";
 
 export interface MarknoteProps {
   // Props to store marknote data
+  type: string;
   id: string;
   title: string;
   color: string;
@@ -134,8 +135,7 @@ const Marknote = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        noteTitle={currentNote.title}
-        noteId={currentNote.id}
+        currentNote={currentNote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteMarknote}

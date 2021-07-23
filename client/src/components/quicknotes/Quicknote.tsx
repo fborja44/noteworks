@@ -11,6 +11,7 @@ import { IoMdMenu } from "react-icons/io";
 
 export interface QuicknoteProps {
   // Props to store quicknote data
+  type: string;
   id: string;
   title: string;
   color: string;
@@ -21,13 +22,13 @@ export interface QuicknoteProps {
   // Props for children of QuicknotesContent
   notes?: QuicknoteProps[];
   currentNote?: any;
-  handleDeleteNote?: (id: string) => void;
+  handleDeleteQuicknote?: (id: string) => void;
   handleUpdateQuicknote?: any;
 }
 
 const Quicknote = ({
   currentNote,
-  handleDeleteNote,
+  handleDeleteQuicknote,
   handleUpdateQuicknote,
 }: QuicknoteProps) => {
   // Character limits
@@ -101,11 +102,15 @@ const Quicknote = ({
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        <button onClick={toggleColorMenu} className="color-menu-button">
+        <button
+          title="Options"
+          onClick={toggleColorMenu}
+          className="color-menu-button"
+        >
           <IoMdMenu />
         </button>
         <button
-          title="Delete Note"
+          title="Delete"
           className="delete-note-button"
           onClick={toggleConfirmDelete}
         >
@@ -136,11 +141,10 @@ const Quicknote = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        noteTitle={currentNote.title}
-        noteId={currentNote.id}
+        currentNote={currentNote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDeleteNote={handleDeleteNote}
+        handleDeleteNote={handleDeleteQuicknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
     </div>

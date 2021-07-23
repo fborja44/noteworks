@@ -553,6 +553,9 @@ footer {
 }
 
 .delete-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 1rem auto 0 auto;
   width: 200px;
   background-color: var(--color-red);
@@ -560,6 +563,11 @@ footer {
   border: solid 1px #666666;
   height: 25px;
   border-radius: 5px;
+  text-decoration: none;
+}
+
+.delete-menu-button:visited {
+  color: var(--note-text-color-primary);
 }
 
 .delete-menu-button:hover {

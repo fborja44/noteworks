@@ -2,13 +2,15 @@
 ------------------------------------------------------------------------------*/
 // React import
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Component Imports
 import ModalMenu from "./ModalMenu";
+import { MarknoteProps } from "../marknotes/Marknote";
+import { QuicknoteProps } from "../quicknotes/Quicknote";
 
 export interface ConfirmDeleteProps {
-  noteTitle: string;
-  noteId: string;
+  currentNote: MarknoteProps | QuicknoteProps,
   showMenuState: any;
   setShowMenuState: any;
   handleDeleteNote?: (id: string) => void;
@@ -16,38 +18,39 @@ export interface ConfirmDeleteProps {
 }
 
 const ConfirmDelete = ({
-  noteTitle,
-  noteId,
+  currentNote,
   showMenuState,
   setShowMenuState,
   handleDeleteNote,
   toggleConfirmDelete,
 }: ConfirmDeleteProps) => {
-  if (noteTitle.trim().length === 0) {
-    noteTitle = "Untitled Note";
-  }
+  // Check if note title is empty
+  const title = currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;
+
+  // Check note type to determine redirect
+  const redirect = currentNote.type === "marknote" ? "marknotes" : "quicknotes";
 
   return (
     <ModalMenu
-      heading={`Delete "${noteTitle}"?`}
+      heading={`Delete "${title}"?`}
       showMenuState={showMenuState}
       setShowMenuState={setShowMenuState}
     >
       <div className="delete-menu-text">
         <p>This action cannot be reversed.</p>
-        <button
+        <Link to={`/${redirect}`}
           className="delete-menu-button"
           onClick={
             handleDeleteNote
               ? (event) => {
-                  handleDeleteNote(noteId);
+                  handleDeleteNote(currentNote.id);
                   toggleConfirmDelete(event);
                 }
               : undefined
           }
         >
           Confirm
-        </button>
+        </Link>
       </div>
     </ModalMenu>
   );

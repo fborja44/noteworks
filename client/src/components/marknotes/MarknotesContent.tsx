@@ -56,6 +56,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
   const handleAddMarknote = () => {
     // Add new to state list
     const newMarknote = {
+      type: "marknote",
       id: nanoid(),
       title: "",
       body: "",
@@ -126,6 +127,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
         .map((note) => (
           <Marknote
             key={note.id}
+            type={note.type}
             id={note.id}
             title={note.title}
             color={note.color}

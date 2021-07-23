@@ -1,5 +1,5 @@
 // React imports
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { css } from "@emotion/react";
@@ -10,9 +10,11 @@ import { COLOR } from "../../common/color";
 
 // Component imports
 import { MarknoteProps } from "./Marknote";
+import ColorMenu from "../menus/ColorMenu";
+import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
-import { IoClose } from "react-icons/io5";
+import { IoReturnUpForward } from "react-icons/io5";
 import { TiStarOutline } from "react-icons/ti"; //TiStar
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
@@ -30,7 +32,7 @@ export interface EditorProps {
 // Should declare outside of function component, but need to declare here for dynamic styles
 // Issue: input is rerendered each time input is given, losing focus
 // Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
-const SubheaderStyles = ({color}: {color: string}) =>
+const SubheaderStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
   `;
@@ -38,7 +40,7 @@ const Subheader = styled.section`
   ${SubheaderStyles}
 `;
 
-const TitleInputStyles = ({color}: {color: string}) =>
+const TitleInputStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
   `;
@@ -46,7 +48,13 @@ const TitleInput = styled.input`
   ${TitleInputStyles}
 `;
 
-const SubheaderButtonStyles = ({color, color2}: {color: string, color2: string}) =>
+const SubheaderButtonStyles = ({
+  color,
+  color2,
+}: {
+  color: string;
+  color2: string;
+}) =>
   css`
     backgrouund: ${color};
     &:hover {
@@ -55,7 +63,7 @@ const SubheaderButtonStyles = ({color, color2}: {color: string, color2: string})
   `;
 const SubheaderButton = styled.li`
   ${SubheaderButtonStyles}
-`
+`;
 
 const Editor = ({
   currentNote,
@@ -111,23 +119,35 @@ const Editor = ({
       break;
   }
 
-  // Style Definitions
-  // const styles = {
-  //   subheader: {
-  //     background: color,
-  //   },
+  // Menu state
+  const [showColorMenu, setShowColorMenu] = useState(false);
 
-  //   input: {
-  //     background: color_light,
-  //   },
+  /**
+   * Function to handle a change in the note's color.
+   * Does NOT change the last modified date.
+   */
+  const handleEditColor = (color: any) => {
+    if (handleUpdateMarknote) {
+      handleUpdateMarknote(currentNote, {
+        ...currentNote,
+        color: color,
+      });
+    }
+  };
 
-  //   button: {
-  //     background: color,
-  //     ":hover": {
-  //       background: color_light,
-  //     },
-  //   },
-  // };
+  /**
+   * Function to toggle the color menu
+   * TODO: Change event type
+   */
+  const toggleColorMenu = (event: any) => {
+    // Prevent parent link from redirecting
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
+    // Toggle display of component
+    setShowColorMenu((prev) => !prev);
+  };
 
   /**
    * Function to handle changes in a note's field
@@ -140,6 +160,16 @@ const Editor = ({
       [key]: value,
       lastModified: Date.now(),
     });
+  };
+
+  // Quicknote Delete Menu state
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleConfirmDelete = () => {
+    setShowConfirmDelete((prev) => !prev);
   };
 
   // Reset redirect when editor mounts
@@ -160,23 +190,36 @@ const Editor = ({
         />
         <div className="sub-header-buttons">
           <ul>
-            <SubheaderButton color={color} color2={color_light}>
+            <SubheaderButton
+              title="Options"
+              color={color}
+              color2={color_light}
+              onClick={toggleColorMenu}
+            >
               <RiEdit2Line />
             </SubheaderButton>
-            <SubheaderButton color={color} color2={color_light}>
-              <Link
-                to="/marknotes"
-                onClick={() => handleDeleteMarknote(currentNote.id)}
-              >
-                <MdDeleteForever />
-              </Link>
+            <SubheaderButton
+              title="Delete Note"
+              color={color}
+              color2={color_light}
+              onClick={toggleConfirmDelete}
+            >
+              <MdDeleteForever />
             </SubheaderButton>
-            <SubheaderButton color={color} color2={color_light}>
+            <SubheaderButton
+              title="Favorite"
+              color={color}
+              color2={color_light}
+            >
               <TiStarOutline />
             </SubheaderButton>
-            <SubheaderButton color={color} color2={color_light}>
+            <SubheaderButton
+              title="Return to Notes"
+              color={color}
+              color2={color_light}
+            >
               <Link to="/marknotes">
-                <IoClose />
+                <IoReturnUpForward />
               </Link>
             </SubheaderButton>
           </ul>
@@ -197,6 +240,18 @@ const Editor = ({
           </ReactMarkdown>
         </section>
       </div>
+      <ColorMenu
+        showColorMenu={showColorMenu}
+        setShowColorMenu={setShowColorMenu}
+        handleEditColor={handleEditColor}
+      />
+      <ConfirmDelete
+        currentNote={currentNote}
+        showMenuState={showConfirmDelete}
+        setShowMenuState={setShowConfirmDelete}
+        handleDeleteNote={handleDeleteMarknote}
+        toggleConfirmDelete={toggleConfirmDelete}
+      />
     </div>
   );
 };
