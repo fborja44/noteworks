@@ -19,6 +19,16 @@ import { TiStarOutline, TiStar } from "react-icons/ti";
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
 
+// Codemirror imports
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "codemirror/mode/markdown/markdown"; // import codemirror markdown
+
+import { Controlled as ControlledEditor } from "react-codemirror2"; // import text editor
+
+/**
+ * Editor component proptypes
+ */
 export interface EditorProps {
   currentNote: MarknoteProps;
   handleDeleteMarknote: (noteId: any) => void;
@@ -60,6 +70,7 @@ const SubheaderButtonStyles = ({
     &:hover {
       background: ${color2};
     }
+    -webkit-user-select: none;
   `;
 const SubheaderButton = styled.li`
   ${SubheaderButtonStyles}
@@ -149,19 +160,6 @@ const Editor = ({
     setShowColorMenu((prev) => !prev);
   };
 
-  /**
-   * Function to handle changes in a note's field
-   * @param key The field being changed
-   * @param value The new value of the field
-   */
-  const handleEditField = (key: string, value: string | Boolean) => {
-    handleUpdateMarknote(currentNote, {
-      ...currentNote,
-      [key]: value,
-      lastModified: Date.now(),
-    });
-  };
-
   // Quicknote Delete Menu state
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -176,6 +174,23 @@ const Editor = ({
   useEffect(() => {
     setRedirect(<></>);
   }, [setRedirect]);
+
+  /**
+   * Function to handle changes in a note's field
+   * @param key The field being changed
+   * @param value The new value of the field
+   */
+  const handleEditField = (key: string, value: string | Boolean) => {
+    handleUpdateMarknote(currentNote, {
+      ...currentNote,
+      [key]: value,
+      lastModified: Date.now(),
+    });
+  };
+
+  const handleChangeEditorBody = (editor: string, data: string, value: string) => {
+    handleEditField("body", value);
+  }
 
   return (
     <div className="editor-main">
@@ -210,7 +225,12 @@ const Editor = ({
               title="Favorite"
               color={color}
               color2={color_light}
-              onClick={() => handleEditField("favorited", currentNote.favorited === true ? false : true)}
+              onClick={() =>
+                handleEditField(
+                  "favorited",
+                  currentNote.favorited === true ? false : true
+                )
+              }
             >
               {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
             </SubheaderButton>
@@ -228,11 +248,15 @@ const Editor = ({
       </Subheader>
       <div className="editor-content">
         <section className="editor-container">
-          <textarea
+          <ControlledEditor
             className="editor-body"
-            placeholder="Write your note here!&#10;You can use markdown syntax to style your note."
             value={currentNote.body}
-            onChange={(event) => handleEditField("body", event.target.value)}
+            onBeforeChange={handleChangeEditorBody}
+            options={{
+              lineWrapping: true,
+              mode: "markdown",
+              lineNumbers: true,
+            }}
           />
         </section>
         <section className="preview-container">
