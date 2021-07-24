@@ -15,7 +15,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
 import { IoReturnUpForward } from "react-icons/io5";
-import { TiStarOutline } from "react-icons/ti"; //TiStar
+import { TiStarOutline, TiStar } from "react-icons/ti";
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -154,7 +154,7 @@ const Editor = ({
    * @param key The field being changed
    * @param value The new value of the field
    */
-  const handleEditField = (key: string, value: string) => {
+  const handleEditField = (key: string, value: string | Boolean) => {
     handleUpdateMarknote(currentNote, {
       ...currentNote,
       [key]: value,
@@ -210,8 +210,9 @@ const Editor = ({
               title="Favorite"
               color={color}
               color2={color_light}
+              onClick={() => handleEditField("favorited", currentNote.favorited === true ? false : true)}
             >
-              <TiStarOutline />
+              {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
             </SubheaderButton>
             <SubheaderButton
               title="Return to Notes"
