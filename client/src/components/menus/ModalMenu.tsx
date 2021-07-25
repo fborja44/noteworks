@@ -9,8 +9,8 @@ import { MdClose } from "react-icons/md";
 export interface ModalMenuProps {
   heading: string;
   children: any;
-  showMenuState: any;
-  setShowMenuState: any;
+  showMenuState: boolean;
+  setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalMenu = ({
@@ -25,7 +25,10 @@ const ModalMenu = ({
    * Closes the menu
    * TODO: Update event and setShowMenuState type
    */
-  const closeMenu = (event: any, setShowMenuState: any) => {
+  const closeMenu = (
+    event: any,
+    setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
     if (menuRef.current === event.target) {
       setShowMenuState(false);
     }
@@ -62,7 +65,7 @@ const ModalMenu = ({
               <MdClose
                 className="modal-menu-close-button"
                 aria-label="Close Menu"
-                onClick={() => setShowMenuState((prev: any) => !prev)}
+                onClick={() => setShowMenuState((prev: boolean) => !prev)}
               />
             </div>
             <div className="modal-menu-content-container">{children}</div>

@@ -28,11 +28,7 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link
-              to="/"
-              onClick={() => setSelectedTab("/")}
-              title="Home"
-            >
+            <Link to="/" onClick={() => setSelectedTab("/")} title="Home">
               <div id="/" className="nav-button" />
               <TiHomeOutline className="nav-icon" />
             </Link>

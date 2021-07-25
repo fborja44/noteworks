@@ -1,14 +1,15 @@
 /* Quicknotes Main Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
 // Common imports
+import { Quicknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import Quicknote, { QuicknoteProps } from "./Quicknote";
+import QNComponent from "./QNComponent";
 import QNHelp from "./QNHelp";
 import Searchbar from "../Searchbar";
 
@@ -16,36 +17,22 @@ import Searchbar from "../Searchbar";
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface QuicknotesContentProps {}
+export interface QNContentProps {
+  quicknotes: Quicknote[];
+  setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
+}
 
 /**
  * Content for the quicknotes route.
  */
-const QuicknotesContent = () => {
-  const [quicknotes, setQuicknotes] = useState<QuicknoteProps[]>([]);
-  const local = "denote_quicknotes";
-
+const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
   /**
-   * Effect hook to retrieve quicknotes from local storage
+   * Function to delete a quicknote from the list
+   * @param id The id of the quicknote to be deleted
    */
-  useEffect(() => {
-    const savedQuicknotes = JSON.parse(localStorage.getItem(local) || "{}");
-    // Check if notes were received
-    if (savedQuicknotes) {
-      setQuicknotes(savedQuicknotes);
-    }
-  }, []); // Run on load
-
-  /**
-   * Effect hook to save quicknotes to local storage when change is made
-   */
-  useEffect(() => {
-    localStorage.setItem(local, JSON.stringify(quicknotes));
-  }, [quicknotes]); // Run on change in notes
-
   const handleDeleteQuicknote = (id: string) => {
     const newQuicknotes = quicknotes.filter(
-      (note: QuicknoteProps) => note.id !== id
+      (note: Quicknote) => note.id !== id
     ); // don't need to make new array since filter returns new array
     setQuicknotes(newQuicknotes);
   };
@@ -80,8 +67,8 @@ const QuicknotesContent = () => {
    * @param updatedQuicknote The new information in update with
    */
   const handleUpdateQuicknote = (
-    currentQuicknote: QuicknoteProps,
-    updatedQuicknote: any
+    currentQuicknote: Quicknote,
+    updatedQuicknote: Quicknote
   ) => {
     const updatedQuicknotesArray = quicknotes.map((note: any) => {
       if (note.id === currentQuicknote.id) {
@@ -106,15 +93,8 @@ const QuicknotesContent = () => {
             note.body.toLowerCase().includes(QNSearchText.toLowerCase())
         )
         .map((note: any) => (
-          <Quicknote
+          <QNComponent
             key={note.id}
-            type={note.type}
-            id={note.id}
-            title={note.title}
-            color={note.color}
-            body={note.body}
-            lastModified={note.lastModified}
-            favorited={note.favorited}
             notes={quicknotes}
             currentNote={note}
             handleDeleteQuicknote={handleDeleteQuicknote}
@@ -159,4 +139,4 @@ const QuicknotesContent = () => {
   );
 };
 
-export default QuicknotesContent;
+export default QNContent;

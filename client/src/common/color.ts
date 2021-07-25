@@ -1,3 +1,5 @@
+/* Color Code definitions
+------------------------------------------------------------------------------*/
 const COLOR = {
   BLACK: "black",
   BLACK_HOVER: "#151515",

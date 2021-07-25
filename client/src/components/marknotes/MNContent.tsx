@@ -1,53 +1,34 @@
 /* Marknotes Main Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
+import { Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import Marknote, { MarknoteProps } from "./Marknote";
+import MNComponent from "./MNComponent";
 import MNHelp from "./MNHelp";
-import Editor from "./Editor";
-import Preview from "./Preview";
+import MNEditor from "./MNEditor";
+import Preview from "./MNPreview";
 import Searchbar from "../Searchbar";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface MarknotesContentProps {
-  history?: any;
+export interface MNContentProps {
+  marknotes: Marknote[];
+  setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 /**
  * Content for marknotes route
  */
-const MarknotesContent = ({ history }: MarknotesContentProps) => {
-  const [marknotes, setMarknotes] = useState<MarknoteProps[]>([]);
-  const local = "denote_marknotes";
-
-  /**
-   * Effect hook to retrieve marknotes from local storage
-   */
-  useEffect(() => {
-    const savedMarknotes = JSON.parse(localStorage.getItem(local) || "{}");
-    // Check if notes were received
-    if (savedMarknotes) {
-      setMarknotes(savedMarknotes);
-    }
-  }, []); // Run on load
-
-  /**
-   * Effect hook to save marknotes to local storage when change is made
-   */
-  useEffect(() => {
-    localStorage.setItem(local, JSON.stringify(marknotes));
-  }, [marknotes]);
-
+const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
 
@@ -76,10 +57,10 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
    * Marknote function to delete a marknote from the list
    * @param noteId The id of the marknote to be deleted
    */
-  const handleDeleteMarknote = (noteId: any) => {
+  const handleDeleteMarknote = (noteId: string) => {
     // Use filter to check if id is the one we're deleting
     // If n ot, keep; Otherwise, remove
-    setMarknotes(marknotes.filter((note: any) => note.id !== noteId));
+    setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
   };
 
   /**
@@ -88,10 +69,10 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
    * @param updatedMarknote The data to update the marknote with
    */
   const handleUpdateMarknote = (
-    currentMarknote: MarknoteProps,
-    updatedMarknote: any
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
   ) => {
-    const updatedMarknotesArray = marknotes.map((note: any) => {
+    const updatedMarknotesArray = marknotes.map((note: Marknote) => {
       if (note.id === currentMarknote.id) {
         return updatedMarknote;
       }
@@ -102,7 +83,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
 
   // Sort notes in descending order from last modifed date
   const sortedMarknotes = marknotes.sort(
-    (a: any, b: any) => b.lastModified - a.lastModified
+    (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
   );
 
   // Help menu state
@@ -126,15 +107,8 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
             note.body.toLowerCase().includes(MNSearchText.toLowerCase())
         )
         .map((note) => (
-          <Marknote
+          <MNComponent
             key={note.id}
-            type={note.type}
-            id={note.id}
-            title={note.title}
-            color={note.color}
-            body={note.body}
-            lastModified={note.lastModified}
-            favorited={note.favorited}
             currentNote={note}
             handleUpdateMarknote={handleUpdateMarknote}
             handleDeleteMarknote={handleDeleteMarknote}
@@ -143,7 +117,6 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
     </div>
   );
 
-  // TODO: Redirect to editor page when creating new marknote
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -181,7 +154,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
       {/** Routes for Editors */}
       {marknotes.map((note) => (
         <Route key={note.id} path={`/marknotes/${note.id}`}>
-          <Editor
+          <MNEditor
             currentNote={note}
             handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
@@ -199,4 +172,4 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
   );
 };
 
-export default MarknotesContent;
+export default MNContent;

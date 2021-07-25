@@ -4,6 +4,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Common imports
+import { Marknote } from "../../common/types";
+
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
@@ -12,30 +15,20 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
-export interface MarknoteProps {
-  // Props to store marknote data
-  type: string;
-  id: string;
-  title: string;
-  color: string;
-  body: string;
-  lastModified: number;
-  favorited: Boolean;
-
-  // Props for children of MarknotesContent
-  currentNote?: any;
-  handleUpdateMarknote?: (
-    currentMarknote: MarknoteProps,
-    updatedMarknote: any
+export interface MNComponentProps {
+  currentNote: Marknote;
+  handleUpdateMarknote: (
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
   ) => void;
-  handleDeleteMarknote?: (noteId: any) => void;
+  handleDeleteMarknote: (noteId: string) => void;
 }
 
-const Marknote = ({
+const MNComponent = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
-}: MarknoteProps) => {
+}: MNComponentProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -43,13 +36,11 @@ const Marknote = ({
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: any) => {
-    if (handleUpdateMarknote) {
-      handleUpdateMarknote(currentNote, {
-        ...currentNote,
-        color: color,
-      });
-    }
+  const handleEditColor = (color: string) => {
+    handleUpdateMarknote(currentNote, {
+      ...currentNote,
+      color: color,
+    });
   };
 
   /**
@@ -156,4 +147,4 @@ const Marknote = ({
   );
 };
 
-export default Marknote;
+export default MNComponent;

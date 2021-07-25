@@ -12,9 +12,9 @@ import ModalMenu from "./ModalMenu";
 // Image and icon imports
 
 export interface ColorMenuProps {
-  showColorMenu: any;
-  setShowColorMenu: any;
-  handleEditColor: any;
+  showColorMenu: boolean;
+  setShowColorMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  handleEditColor: (color: string) => void;
 }
 
 const ColorMenu = ({

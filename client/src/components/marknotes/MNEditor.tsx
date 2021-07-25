@@ -8,10 +8,10 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
+import { Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import { MarknoteProps } from "./Marknote";
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
@@ -71,22 +71,22 @@ const SubheaderButton = styled.li`
 /**
  * Editor component proptypes
  */
-export interface EditorProps {
-  currentNote: MarknoteProps;
-  handleDeleteMarknote: (noteId: any) => void;
+export interface MNEditorProps {
+  currentNote: Marknote;
+  handleDeleteMarknote: (noteId: string) => void;
   handleUpdateMarknote: (
-    currentMarknote: MarknoteProps,
-    updatedMarknote: any
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
   ) => void;
-  setRedirect?: any;
+  setRedirect: React.Dispatch<React.SetStateAction<JSX.Element>>;
 }
 
-const Editor = ({
+const MNEditor = ({
   currentNote,
   handleDeleteMarknote,
   handleUpdateMarknote,
   setRedirect,
-}: EditorProps) => {
+}: MNEditorProps) => {
   // Logic to determine colors
   /**
    * TODO: Change subheader text colors for Lemon and Lime
@@ -142,7 +142,7 @@ const Editor = ({
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: any) => {
+  const handleEditColor = (color: string) => {
     if (handleUpdateMarknote) {
       handleUpdateMarknote(currentNote, {
         ...currentNote,
@@ -291,4 +291,4 @@ const Editor = ({
   );
 };
 
-export default Editor;
+export default MNEditor;

@@ -4,15 +4,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Common imports
+import { Quicknote, Marknote } from "../../common/types";
+
 // Component Imports
 import ModalMenu from "./ModalMenu";
-import { MarknoteProps } from "../marknotes/Marknote";
-import { QuicknoteProps } from "../quicknotes/Quicknote";
 
 export interface ConfirmDeleteProps {
-  currentNote: MarknoteProps | QuicknoteProps,
-  showMenuState: any;
-  setShowMenuState: any;
+  currentNote: Marknote | Quicknote;
+  showMenuState: boolean;
+  setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeleteNote?: (id: string) => void;
   toggleConfirmDelete: (event: any) => void;
 }
@@ -25,7 +26,8 @@ const ConfirmDelete = ({
   toggleConfirmDelete,
 }: ConfirmDeleteProps) => {
   // Check if note title is empty
-  const title = currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;
+  const title =
+    currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;
 
   // Check note type to determine redirect
   const redirect = currentNote.type === "marknote" ? "marknotes" : "quicknotes";
@@ -38,7 +40,8 @@ const ConfirmDelete = ({
     >
       <div className="delete-menu-text">
         <p>This action cannot be reversed.</p>
-        <Link to={`/${redirect}`}
+        <Link
+          to={`/${redirect}`}
           className="delete-menu-button"
           onClick={
             handleDeleteNote

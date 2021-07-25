@@ -1,6 +1,9 @@
 // React imports
 import React, { useState } from "react";
 
+// Common imports
+import { Quicknote } from "../../common/types";
+
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
@@ -9,28 +12,22 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import { TiDelete } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
-export interface QuicknoteProps {
-  // Props to store quicknote data
-  type: string;
-  id: string;
-  title: string;
-  color: string;
-  body: string;
-  lastModified: number;
-  favorited: boolean;
-
+export interface QNComponentProps {
   // Props for children of QuicknotesContent
-  notes?: QuicknoteProps[];
-  currentNote?: any;
-  handleDeleteQuicknote?: (id: string) => void;
-  handleUpdateQuicknote?: any;
+  notes: Quicknote[];
+  currentNote: Quicknote;
+  handleDeleteQuicknote: (id: string) => void;
+  handleUpdateQuicknote: (
+    currentQuicknote: Quicknote,
+    updatedQuicknote: Quicknote
+  ) => void;
 }
 
-const Quicknote = ({
+const QNComponent = ({
   currentNote,
   handleDeleteQuicknote,
   handleUpdateQuicknote,
-}: QuicknoteProps) => {
+}: QNComponentProps) => {
   // Character limits
   const titleCharLimit = 30;
   const bodyCharLimit = 300;
@@ -63,7 +60,7 @@ const Quicknote = ({
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: any) => {
+  const handleEditColor = (color: string) => {
     handleUpdateQuicknote(currentNote, {
       ...currentNote,
       color: color,
@@ -151,4 +148,4 @@ const Quicknote = ({
   );
 };
 
-export default Quicknote;
+export default QNComponent;

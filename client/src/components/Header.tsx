@@ -63,19 +63,25 @@ const Header = () => {
         <div id="app-title">Denote!</div>
       </div>
       <div id="header-drag"></div>
-      <div id="title-bar-buttons">
-        <ul>
-          <li onClick={handleOnClickMinimize} title="Minimize">
-            <FaRegWindowMinimize id="minimize-icon" />
-          </li>
-          <li id="window-button" onClick={handleOnClickMaximizeRestore}>
-            {windowIcon}
-          </li>
-          <li onClick={handleOnClickClose} id="close-app-button" title="Close">
-            <TiPower id="power-icon" />
-          </li>
-        </ul>
-      </div>
+      {ipc ? (
+        <div id="title-bar-buttons">
+          <ul>
+            <li onClick={handleOnClickMinimize} title="Minimize">
+              <FaRegWindowMinimize id="minimize-icon" />
+            </li>
+            <li id="window-button" onClick={handleOnClickMaximizeRestore}>
+              {windowIcon}
+            </li>
+            <li
+              onClick={handleOnClickClose}
+              id="close-app-button"
+              title="Close"
+            >
+              <TiPower id="power-icon" />
+            </li>
+          </ul>
+        </div>
+      ) : null}
     </header>
   );
 };

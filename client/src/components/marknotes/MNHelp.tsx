@@ -7,8 +7,8 @@ import React from "react";
 import ModalMenu from "../menus/ModalMenu";
 
 export interface MNHelpProps {
-  showMNHelp: any;
-  setShowMNHelp: any;
+  showMNHelp: boolean;
+  setShowMNHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MNHelp = ({ showMNHelp, setShowMNHelp }: MNHelpProps) => {
