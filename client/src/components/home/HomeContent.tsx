@@ -47,6 +47,7 @@ export interface HomeContentProps {
     updatedQuicknote: Quicknote
   ) => void;
   handleDeleteQuicknote: (noteId: string) => void;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -60,6 +61,7 @@ const HomeContent = ({
   handleDeleteMarknote,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
+  setSelectedTab,
 }: HomeContentProps) => {
   const favoritedQuicknotes = quicknotes
     .filter((note) => note.favorited)
@@ -81,6 +83,7 @@ const HomeContent = ({
         currentNote={note}
         handleUpdateMarknote={handleUpdateMarknote}
         handleDeleteMarknote={handleDeleteMarknote}
+        setSelectedTab={setSelectedTab}
       />
     ));
 

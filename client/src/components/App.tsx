@@ -2,7 +2,12 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 // Common imports
 import { Quicknote, Marknote } from "../common/types";
@@ -133,53 +138,57 @@ const App = () => {
     setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
   };
 
+  /* Selected tab State
+  ------------------------------------------------------------------------------*/
+  const [selectedTab, setSelectedTab] = useState(useLocation().pathname);
+
   return (
     <div className="App">
       <Header />
-      <Router>
-        <div className="app-container">
-          <Sidebar />
-          <Switch>
-            <Route exact path="/">
-              <main>
-                <HomeContent
-                  quicknotes={quicknotes}
-                  marknotes={marknotes}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
-                  handleUpdateQuicknote={handleUpdateQuicknote}
-                  handleDeleteQuicknote={handleDeleteQuicknote}
-                />
-              </main>
-            </Route>
-            <Route path="/quicknotes">
-              <main>
-                <QNContent
-                  quicknotes={quicknotes}
-                  setQuicknotes={setQuicknotes}
-                  handleUpdateQuicknote={handleUpdateQuicknote}
-                  handleDeleteQuicknote={handleDeleteQuicknote}
-                />
-              </main>
-            </Route>
-            <Route path="/marknotes">
-              <main>
-                <MNContent
-                  marknotes={marknotes}
-                  setMarknotes={setMarknotes}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
-                />
-              </main>
-            </Route>
-            <Route path="/settings">
-              <main>
-                <SettingsContent />
-              </main>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <div className="app-container">
+        <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <Switch>
+          <Route exact path="/">
+            <main>
+              <HomeContent
+                quicknotes={quicknotes}
+                marknotes={marknotes}
+                handleUpdateMarknote={handleUpdateMarknote}
+                handleDeleteMarknote={handleDeleteMarknote}
+                handleUpdateQuicknote={handleUpdateQuicknote}
+                handleDeleteQuicknote={handleDeleteQuicknote}
+                setSelectedTab={setSelectedTab}
+              />
+            </main>
+          </Route>
+          <Route path="/quicknotes">
+            <main>
+              <QNContent
+                quicknotes={quicknotes}
+                setQuicknotes={setQuicknotes}
+                handleUpdateQuicknote={handleUpdateQuicknote}
+                handleDeleteQuicknote={handleDeleteQuicknote}
+              />
+            </main>
+          </Route>
+          <Route path="/marknotes">
+            <main>
+              <MNContent
+                marknotes={marknotes}
+                setMarknotes={setMarknotes}
+                handleUpdateMarknote={handleUpdateMarknote}
+                handleDeleteMarknote={handleDeleteMarknote}
+                setSelectedTab={setSelectedTab}
+              />
+            </main>
+          </Route>
+          <Route path="/settings">
+            <main>
+              <SettingsContent />
+            </main>
+          </Route>
+        </Switch>
+      </div>
       <Footer />
     </div>
   );

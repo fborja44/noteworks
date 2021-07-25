@@ -7,12 +7,14 @@ import { BiNote, BiNotepad } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { TiHomeOutline } from "react-icons/ti";
 
-export interface SidebarProps {}
+export interface SidebarProps {
+  selectedTab: string;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState(useLocation().pathname);
-
+const Sidebar = ({ selectedTab, setSelectedTab }: SidebarProps) => {
   const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
+  const location = useLocation().pathname;
 
   useEffect(() => {
     let selected = document.getElementById(selectedTab);

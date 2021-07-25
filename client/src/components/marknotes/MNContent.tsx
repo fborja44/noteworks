@@ -31,6 +31,7 @@ export interface MNContentProps {
     updatedMarknote: Marknote
   ) => void;
   handleDeleteMarknote: (noteId: string) => void;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -41,6 +42,7 @@ const MNContent = ({
   setMarknotes,
   handleUpdateMarknote,
   handleDeleteMarknote,
+  setSelectedTab
 }: MNContentProps) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
@@ -97,6 +99,7 @@ const MNContent = ({
           currentNote={note}
           handleUpdateMarknote={handleUpdateMarknote}
           handleDeleteMarknote={handleDeleteMarknote}
+          setSelectedTab={setSelectedTab}
         />
       ))}
     </div>

@@ -22,12 +22,14 @@ export interface MNComponentProps {
     updatedMarknote: Marknote
   ) => void;
   handleDeleteMarknote?: (noteId: string) => void;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNComponent = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
+  setSelectedTab
 }: MNComponentProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -83,7 +85,7 @@ const MNComponent = ({
 
   return (
     <div className="marknote">
-      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
+      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`} onClick={() => setSelectedTab("/marknotes")}>
         <div
           className="marknote-header"
           style={{ backgroundColor: currentNote.color }}
