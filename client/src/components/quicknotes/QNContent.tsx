@@ -20,23 +20,22 @@ import { MdHelpOutline } from "react-icons/md";
 export interface QNContentProps {
   quicknotes: Quicknote[];
   setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
+  handleUpdateQuicknote: (
+    currentQuicknote: Quicknote,
+    updatedQuicknote: Quicknote
+  ) => void;
+  handleDeleteQuicknote: (noteId: string) => void;
 }
 
 /**
  * Content for the quicknotes route.
  */
-const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
-  /**
-   * Function to delete a quicknote from the list
-   * @param id The id of the quicknote to be deleted
-   */
-  const handleDeleteQuicknote = (id: string) => {
-    const newQuicknotes = quicknotes.filter(
-      (note: Quicknote) => note.id !== id
-    ); // don't need to make new array since filter returns new array
-    setQuicknotes(newQuicknotes);
-  };
-
+const QNContent = ({
+  quicknotes,
+  setQuicknotes,
+  handleUpdateQuicknote,
+  handleDeleteQuicknote,
+}: QNContentProps) => {
   // Quicknotes Help Menu state
   const [showQNHelp, setShowQNHelp] = useState(false);
   const openQNHelp = () => {
@@ -58,24 +57,6 @@ const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
     };
 
     setQuicknotes([...quicknotes, newQuicknote]);
-  };
-
-  /**
-   * Function to update a quicknote in the list with updated information
-   * @param currentQuicknote The quicknote being updated
-   * @param updatedQuicknote The new information in update with
-   */
-  const handleUpdateQuicknote = (
-    currentQuicknote: Quicknote,
-    updatedQuicknote: Quicknote
-  ) => {
-    const updatedQuicknotesArray = quicknotes.map((note: any) => {
-      if (note.id === currentQuicknote.id) {
-        return updatedQuicknote;
-      }
-      return note;
-    });
-    setQuicknotes(updatedQuicknotesArray);
   };
 
   /**
@@ -139,7 +120,9 @@ const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
             <p>Create one now by pressing the + button in the menu above!</p>
           </div>
         )}
-        {(quicknotes.length !== 0 && filteredQuicknotes.length === 0) && searchEmpty}
+        {quicknotes.length !== 0 &&
+          filteredQuicknotes.length === 0 &&
+          searchEmpty}
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
     </React.Fragment>

@@ -37,20 +37,52 @@ const Empty = styled.div`
 export interface HomeContentProps {
   quicknotes: Quicknote[];
   marknotes: Marknote[];
+  handleUpdateMarknote: (
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
+  ) => void;
+  handleDeleteMarknote: (noteId: string) => void;
+  handleUpdateQuicknote: (
+    currentQuicknote: Quicknote,
+    updatedQuicknote: Quicknote
+  ) => void;
+  handleDeleteQuicknote: (noteId: string) => void;
 }
 
 /**
  * Home content renderer
  * TODO: Favorite function for quicknotes, add edit and delete functionality
  */
-const HomeContent = ({ quicknotes, marknotes }: HomeContentProps) => {
+const HomeContent = ({
+  quicknotes,
+  marknotes,
+  handleUpdateMarknote,
+  handleDeleteMarknote,
+  handleUpdateQuicknote,
+  handleDeleteQuicknote,
+}: HomeContentProps) => {
   const favoritedQuicknotes = quicknotes
     .filter((note) => note.favorited)
-    .map((note) => <MNComponent key={note.id} currentNote={note} />);
+    .map((note) => (
+      <QNComponent
+        key={note.id}
+        notes={quicknotes}
+        currentNote={note}
+        handleUpdateQuicknote={handleUpdateQuicknote}
+        handleDeleteQuicknote={handleDeleteQuicknote}
+      />
+    ));
 
   const favoritedMarknotes = marknotes
     .filter((note) => note.favorited)
-    .map((note) => <MNComponent key={note.id} currentNote={note} />);
+    .map((note) => (
+      <MNComponent
+        key={note.id}
+        currentNote={note}
+        handleUpdateMarknote={handleUpdateMarknote}
+        handleDeleteMarknote={handleDeleteMarknote}
+      />
+    ));
 
   return (
     <React.Fragment>

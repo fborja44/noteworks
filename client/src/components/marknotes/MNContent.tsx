@@ -26,12 +26,22 @@ import { MdHelpOutline } from "react-icons/md";
 export interface MNContentProps {
   marknotes: Marknote[];
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
+  handleUpdateMarknote: (
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
+  ) => void;
+  handleDeleteMarknote: (noteId: string) => void;
 }
 
 /**
  * Content for marknotes route
  */
-const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
+const MNContent = ({
+  marknotes,
+  setMarknotes,
+  handleUpdateMarknote,
+  handleDeleteMarknote,
+}: MNContentProps) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
 
@@ -54,34 +64,6 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
 
     // Redirect when new note is added
     setRedirect(<Redirect to={`/marknotes/${newMarknote.id}`} />);
-  };
-
-  /**
-   * Marknote function to delete a marknote from the list
-   * @param noteId The id of the marknote to be deleted
-   */
-  const handleDeleteMarknote = (noteId: string) => {
-    // Use filter to check if id is the one we're deleting
-    // If n ot, keep; Otherwise, remove
-    setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
-  };
-
-  /**
-   * Marknote function to update a marknote in the list
-   * @param currentMarknote The marknote being updated
-   * @param updatedMarknote The data to update the marknote with
-   */
-  const handleUpdateMarknote = (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => {
-    const updatedMarknotesArray = marknotes.map((note: Marknote) => {
-      if (note.id === currentMarknote.id) {
-        return updatedMarknote;
-      }
-      return note;
-    });
-    setMarknotes(updatedMarknotesArray);
   };
 
   // Help menu state
@@ -156,7 +138,9 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
               <p>Create one now by pressing the + button in the menu above!</p>
             </div>
           )}
-          {(marknotes.length !== 0 && filteredMarknotes.length === 0) && searchEmpty}
+          {marknotes.length !== 0 &&
+            filteredMarknotes.length === 0 &&
+            searchEmpty}
           {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
