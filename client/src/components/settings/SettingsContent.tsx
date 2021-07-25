@@ -11,7 +11,9 @@ const SettingsContent = () => {
         <h1>Settings</h1>
       </section>
       <div className="main-content-wrapper">
-        <div>Settings</div>
+        <div className="empty">
+          <p>Settings are currently unavailable.</p>
+        </div>
       </div>
     </React.Fragment>
   );

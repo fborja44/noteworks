@@ -17,11 +17,11 @@ import { IoMdMenu } from "react-icons/io";
 
 export interface MNComponentProps {
   currentNote: Marknote;
-  handleUpdateMarknote: (
+  handleUpdateMarknote?: (
     currentMarknote: Marknote,
     updatedMarknote: Marknote
   ) => void;
-  handleDeleteMarknote: (noteId: string) => void;
+  handleDeleteMarknote?: (noteId: string) => void;
 }
 
 const MNComponent = ({
@@ -37,10 +37,11 @@ const MNComponent = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateMarknote(currentNote, {
-      ...currentNote,
-      color: color,
-    });
+    if (handleUpdateMarknote)
+      handleUpdateMarknote(currentNote, {
+        ...currentNote,
+        color: color,
+      });
   };
 
   /**
@@ -94,16 +95,20 @@ const MNComponent = ({
               <span className="italic">Untitled Note</span>
             )}
           </span>
-          <button className="color-menu-button marknote-button">
-            <IoMdMenu onClick={toggleColorMenu} />
-          </button>
-          <button
-            title="Delete Note"
-            className="delete-note-button marknote-button"
-            onClick={toggleConfirmDelete}
-          >
-            <TiDelete className="delete-icon" size="1.2em" />
-          </button>
+          {handleUpdateMarknote && (
+            <button className="color-menu-button marknote-button">
+              <IoMdMenu onClick={toggleColorMenu} />
+            </button>
+          )}
+          {handleDeleteMarknote && (
+            <button
+              title="Delete Note"
+              className="delete-note-button marknote-button"
+              onClick={toggleConfirmDelete}
+            >
+              <TiDelete className="delete-icon" size="1.2em" />
+            </button>
+          )}
         </div>
         <div className="marknote-content">
           <span>

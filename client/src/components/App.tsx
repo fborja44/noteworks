@@ -85,7 +85,7 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <main>
-                <HomeContent />
+                <HomeContent quicknotes={quicknotes} marknotes={marknotes} />
               </main>
             </Route>
             <Route path="/quicknotes">

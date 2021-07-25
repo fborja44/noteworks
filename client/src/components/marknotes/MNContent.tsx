@@ -20,6 +20,9 @@ import Searchbar from "../Searchbar";
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
+/**
+ * Props for MNContent
+ */
 export interface MNContentProps {
   marknotes: Marknote[];
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
@@ -116,8 +119,6 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
       ))}
     </div>
   );
-
-  console.log(filteredMarknotes.length);
 
   const searchEmpty = (
     <div className="empty">

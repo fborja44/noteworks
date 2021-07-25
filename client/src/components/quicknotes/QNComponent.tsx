@@ -16,8 +16,8 @@ export interface QNComponentProps {
   // Props for children of QuicknotesContent
   notes: Quicknote[];
   currentNote: Quicknote;
-  handleDeleteQuicknote: (id: string) => void;
-  handleUpdateQuicknote: (
+  handleDeleteQuicknote?: (id: string) => void;
+  handleUpdateQuicknote?: (
     currentQuicknote: Quicknote,
     updatedQuicknote: Quicknote
   ) => void;
@@ -48,11 +48,12 @@ const QNComponent = ({
       (key === "title" && titleCharLimit - value.length >= 0) ||
       (key === "body" && bodyCharLimit - value.length >= 0)
     ) {
-      handleUpdateQuicknote(currentNote, {
-        ...currentNote,
-        [key]: value,
-        lastModified: Date.now(),
-      });
+      if (handleUpdateQuicknote)
+        handleUpdateQuicknote(currentNote, {
+          ...currentNote,
+          [key]: value,
+          lastModified: Date.now(),
+        });
     }
   };
 
@@ -61,10 +62,11 @@ const QNComponent = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateQuicknote(currentNote, {
-      ...currentNote,
-      color: color,
-    });
+    if (handleUpdateQuicknote)
+      handleUpdateQuicknote(currentNote, {
+        ...currentNote,
+        color: color,
+      });
   };
 
   // Menu state
@@ -99,20 +101,24 @@ const QNComponent = ({
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        <button
-          title="Options"
-          onClick={toggleColorMenu}
-          className="color-menu-button"
-        >
-          <IoMdMenu />
-        </button>
-        <button
-          title="Delete"
-          className="delete-note-button"
-          onClick={toggleConfirmDelete}
-        >
-          <TiDelete className="delete-icon" size="1.2em" />
-        </button>
+        {handleUpdateQuicknote && (
+          <button
+            title="Options"
+            onClick={toggleColorMenu}
+            className="color-menu-button"
+          >
+            <IoMdMenu />
+          </button>
+        )}
+        {handleDeleteQuicknote && (
+          <button
+            title="Delete"
+            className="delete-note-button"
+            onClick={toggleConfirmDelete}
+          >
+            <TiDelete className="delete-icon" size="1.2em" />
+          </button>
+        )}
       </div>
       <div className="quicknote-content">
         <textarea
