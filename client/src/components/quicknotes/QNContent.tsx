@@ -39,7 +39,6 @@ const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
 
   // Quicknotes Help Menu state
   const [showQNHelp, setShowQNHelp] = useState(false);
-
   const openQNHelp = () => {
     setShowQNHelp((prev) => !prev);
   };
@@ -84,23 +83,30 @@ const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
    */
   const [QNSearchText, setQNSearchText] = useState("");
 
+  // Filter notes
+  const filteredQuicknotes = quicknotes.filter(
+    (note: Quicknote) =>
+      note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
+      note.body.toLowerCase().includes(QNSearchText.toLowerCase())
+  );
+
   let notes_list = (
     <div className="quicknotes-list">
-      {quicknotes
-        .filter(
-          (note: any) =>
-            note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
-            note.body.toLowerCase().includes(QNSearchText.toLowerCase())
-        )
-        .map((note: any) => (
-          <QNComponent
-            key={note.id}
-            notes={quicknotes}
-            currentNote={note}
-            handleDeleteQuicknote={handleDeleteQuicknote}
-            handleUpdateQuicknote={handleUpdateQuicknote}
-          />
-        ))}
+      {filteredQuicknotes.map((note: any) => (
+        <QNComponent
+          key={note.id}
+          notes={quicknotes}
+          currentNote={note}
+          handleDeleteQuicknote={handleDeleteQuicknote}
+          handleUpdateQuicknote={handleUpdateQuicknote}
+        />
+      ))}
+    </div>
+  );
+
+  const searchEmpty = (
+    <div className="empty">
+      <p>{`No notes found for the search term "${QNSearchText}".`}</p>
     </div>
   );
 
@@ -133,6 +139,7 @@ const QNContent = ({ quicknotes, setQuicknotes }: QNContentProps) => {
             <p>Create one now by pressing the + button in the menu above!</p>
           </div>
         )}
+        {(quicknotes.length !== 0 && filteredQuicknotes.length === 0) && searchEmpty}
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
     </React.Fragment>

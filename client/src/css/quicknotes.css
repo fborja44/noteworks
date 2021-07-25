@@ -122,12 +122,24 @@
   padding: 0.5rem 0.5rem 0 0.5rem;
 }
 
+/* Scrollbar Styles */
+.quicknote textarea::-webkit-scrollbar {
+  width: 5px;
+}
+
+.quicknote textarea::-webkit-scrollbar-thumb {
+  background: var(--color-grey-dark);
+}
+
+.quicknote textarea::-webkit-scrollbar-thumb:hover {
+  cursor: default;
+}
+
 .quicknote-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5rem 0 0.5rem;
-  margin-bottom: 3px;
+  padding: 3px 0.5rem 3px 0.5rem;
   border-top: 1px solid #828282;
 }
 

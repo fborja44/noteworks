@@ -81,14 +81,8 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
     setMarknotes(updatedMarknotesArray);
   };
 
-  // Sort notes in descending order from last modifed date
-  const sortedMarknotes = marknotes.sort(
-    (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
-  );
-
   // Help menu state
   const [showMNHelp, setShowMNHelp] = useState(false);
-
   const openMNHelp = () => {
     setShowMNHelp((prev) => !prev);
   };
@@ -98,22 +92,36 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
    */
   const [MNSearchText, setMNSearchText] = useState("");
 
+  // Sort notes in descending order from last modifed date
+  const sortedMarknotes = marknotes.sort(
+    (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
+  );
+
+  // Filter notes
+  const filteredMarknotes = sortedMarknotes.filter(
+    (note: Marknote) =>
+      note.title.toLowerCase().includes(MNSearchText.toLowerCase()) ||
+      note.body.toLowerCase().includes(MNSearchText.toLowerCase())
+  );
+
   let notes_list = (
     <div className="marknotes-list">
-      {sortedMarknotes
-        .filter(
-          (note) =>
-            note.title.toLowerCase().includes(MNSearchText.toLowerCase()) ||
-            note.body.toLowerCase().includes(MNSearchText.toLowerCase())
-        )
-        .map((note) => (
-          <MNComponent
-            key={note.id}
-            currentNote={note}
-            handleUpdateMarknote={handleUpdateMarknote}
-            handleDeleteMarknote={handleDeleteMarknote}
-          />
-        ))}
+      {filteredMarknotes.map((note) => (
+        <MNComponent
+          key={note.id}
+          currentNote={note}
+          handleUpdateMarknote={handleUpdateMarknote}
+          handleDeleteMarknote={handleDeleteMarknote}
+        />
+      ))}
+    </div>
+  );
+
+  console.log(filteredMarknotes.length);
+
+  const searchEmpty = (
+    <div className="empty">
+      <p>{`No notes found for the search term "${MNSearchText}".`}</p>
     </div>
   );
 
@@ -147,6 +155,7 @@ const MNContent = ({ marknotes, setMarknotes }: MNContentProps) => {
               <p>Create one now by pressing the + button in the menu above!</p>
             </div>
           )}
+          {(marknotes.length !== 0 && filteredMarknotes.length === 0) && searchEmpty}
           {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
