@@ -12,7 +12,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
-import { TiDelete } from "react-icons/ti";
+import { TiDelete, TiStarOutline, TiStar } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface MNComponentProps {
@@ -29,7 +29,7 @@ const MNComponent = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
-  setSelectedTab
+  setSelectedTab,
 }: MNComponentProps) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -85,12 +85,21 @@ const MNComponent = ({
 
   return (
     <div className="marknote">
-      <Link className="marknote-link" to={`/marknotes/${currentNote.id}`} onClick={() => setSelectedTab("/marknotes")}>
+      <Link
+        className="marknote-link"
+        to={`/marknotes/${currentNote.id}`}
+        onClick={() => setSelectedTab("/marknotes")}
+      >
         <div
-          className="marknote-header"
+          className="marknote-header note-header"
           style={{ backgroundColor: currentNote.color }}
         >
-          <span className="marknote-name">
+          {handleUpdateMarknote && (
+            <button title="Favorite" className="favorite-note-button note-button">
+              <TiStarOutline onClick={toggleColorMenu} />
+            </button>
+          )}
+          <span className="marknote-name note-name">
             {currentNote.title.trim().length !== 0 ? (
               currentNote.title
             ) : (
@@ -98,33 +107,33 @@ const MNComponent = ({
             )}
           </span>
           {handleUpdateMarknote && (
-            <button className="color-menu-button marknote-button">
+            <button title="Options" className="color-menu-button note-button">
               <IoMdMenu onClick={toggleColorMenu} />
             </button>
           )}
           {handleDeleteMarknote && (
             <button
               title="Delete Note"
-              className="delete-note-button marknote-button"
+              className="delete-note-button note-button"
               onClick={toggleConfirmDelete}
             >
               <TiDelete className="delete-icon" size="1.2em" />
             </button>
           )}
         </div>
-        <div className="marknote-content">
-          <span>
+        <div className="marknote-content note-content">
+          <span className="note-body">
             {currentNote.body.length > 0 ? (
               currentNote.body
             ) : (
               <span className="italic">This note is empty.</span>
             )}
           </span>
-          <div className="marknote-footer">
-            <div className="marknote-footer-left">
+          <div className="marknote-footer note-footer">
+            <div className="marknote-footer-left note-footer-left">
               <small>Last Modifed:</small>
             </div>
-            <div className="marknote-footer-right">
+            <div className="marknote-footer-right note-footer-right">
               <small>
                 {new Date(currentNote.lastModified).toLocaleDateString(
                   "en-US",

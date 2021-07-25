@@ -9,7 +9,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
-import { TiDelete } from "react-icons/ti";
+import { TiDelete, TiStarOutline, TiStar } from "react-icons/ti";
 import { IoMdMenu } from "react-icons/io";
 
 export interface QNComponentProps {
@@ -92,11 +92,16 @@ const QNComponent = ({
   return (
     <div className="quicknote">
       <div
-        className="quicknote-header"
+        className="quicknote-header note-header"
         style={{ backgroundColor: currentNote.color }}
       >
+        {handleUpdateQuicknote && (
+          <button title="Favorite" className="favorite-note-button note-button">
+            <TiStarOutline onClick={toggleColorMenu} />
+          </button>
+        )}
         <input
-          className="quicknote-title"
+          className="quicknote-title note-name"
           value={currentNote.title}
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
@@ -105,7 +110,7 @@ const QNComponent = ({
           <button
             title="Options"
             onClick={toggleColorMenu}
-            className="color-menu-button"
+            className="color-menu-button note-button"
           >
             <IoMdMenu />
           </button>
@@ -113,25 +118,27 @@ const QNComponent = ({
         {handleDeleteQuicknote && (
           <button
             title="Delete"
-            className="delete-note-button"
+            className="delete-note-button note-button"
             onClick={toggleConfirmDelete}
           >
             <TiDelete className="delete-icon" size="1.2em" />
           </button>
         )}
       </div>
-      <div className="quicknote-content">
+      <div className="quicknote-content note-content">
         <textarea
-          className="quicknote-body"
+          className="quicknote-body note-body"
           placeholder="Write your note here..."
           value={currentNote.body}
           onChange={(event) => handleEditField("body", event.target.value)}
         />
-        <div className="quicknote-footer">
-          <small>
-            {new Date(currentNote.lastModified).toLocaleDateString()}
-          </small>
-          <div className="quicknote-footer-left">
+        <div className="quicknote-footer note-footer">
+          <div className="quicknote-footer-left note-footer-left">
+            <small>
+              {new Date(currentNote.lastModified).toLocaleDateString()}
+            </small>
+          </div>
+          <div className="quicknote-footer-right note-footer-right">
             <small>
               {body_limit}/{bodyCharLimit}
             </small>

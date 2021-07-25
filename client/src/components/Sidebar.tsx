@@ -1,6 +1,6 @@
 // React imports
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // Image and icon imports
 import { BiNote, BiNotepad } from "react-icons/bi";
@@ -14,7 +14,7 @@ export interface SidebarProps {
 
 const Sidebar = ({ selectedTab, setSelectedTab }: SidebarProps) => {
   const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
-  const location = useLocation().pathname;
+  // const location = useLocation().pathname;
 
   useEffect(() => {
     let selected = document.getElementById(selectedTab);

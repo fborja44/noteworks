@@ -64,31 +64,11 @@
   font-family: "Source Sans Pro", sans-serif !important;
 }
 
-.quicknote-header {
-  width: 100%;
-  height: 25px;
-  color: var(--note-header-text-color);
-  background: var(--color-grey);
-  font-weight: 600;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  border-top: 1px solid #828282;
-  border-left: 1px solid #828282;
-  border-right: 1px solid #828282;
-}
-
 .quicknote-title {
   border: none;
   background-color: inherit;
-  font-size: 13px;
   font-family: "Source Sans Pro", sans-serif;
-  font-weight: 700;
   color: var(--note-header-text-color);
-  width: 100%;
-  margin: 0 0.5rem 0 0.5rem;
 }
 
 .quicknote-title::placeholder {
@@ -96,28 +76,16 @@
 }
 
 .quicknote-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  white-space: pre-wrap; /* keep spacing added to text */
-  color: var(--note-text-color-primary);
-  font-weight: 500;
-
-  border: 1px solid #828282;
-  height: calc(170px);
+  height: 170px;
 }
 
 .quicknote textarea {
   border: none;
   resize: none;
   background-color: inherit;
-  height: 100%;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
-  color: var(--note-text-color-primary);
   font-weight: 500;
-  width: 100%;
-  padding: 0.5rem 0.5rem 0 0.5rem;
 }
 
 /* Scrollbar Styles */
@@ -131,17 +99,4 @@
 
 .quicknote textarea::-webkit-scrollbar-thumb:hover {
   cursor: default;
-}
-
-.quicknote-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 0.5rem 3px 0.5rem;
-  border-top: 1px solid #828282;
-}
-
-.quicknote-footer-left {
-  display: flex;
-  align-items: center;
 }
