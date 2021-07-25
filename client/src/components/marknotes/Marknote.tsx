@@ -1,3 +1,5 @@
+/* Marknote Component
+------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -81,6 +83,12 @@ const Marknote = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
+  const previewFrame = `
+    <html>
+      <body>${currentNote.body}</body>
+    </html>
+  `;
+
   return (
     <div className="marknote">
       <Link className="marknote-link" to={`/marknotes/${currentNote.id}`}>
@@ -109,7 +117,7 @@ const Marknote = ({
         <div className="marknote-content">
           <span>
             {currentNote.body.length > 0 ? (
-              currentNote.body && currentNote.body.substr(0, 150) + "..."
+              currentNote.body
             ) : (
               <span className="italic">This note is empty.</span>
             )}
@@ -120,10 +128,13 @@ const Marknote = ({
             </div>
             <div className="marknote-footer-right">
               <small>
-                {new Date(currentNote.lastModified).toLocaleDateString("en-US", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+                {new Date(currentNote.lastModified).toLocaleDateString(
+                  "en-US",
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
               </small>
             </div>
           </div>

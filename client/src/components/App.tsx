@@ -5,19 +5,19 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Component imports
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 
-import HomeContent from "./components/home/HomeContent";
-import QuicknotesContent from "./components/quicknotes/QuicknotesContent";
-import MarknotesContent from "./components/marknotes/MarknotesContent";
-import SettingsContent from "./components/settings/SettingsContent";
+import HomeContent from "./home/HomeContent";
+import QuicknotesContent from "./quicknotes/QuicknotesContent";
+import MarknotesContent from "./marknotes/MarknotesContent";
+import SettingsContent from "./settings/SettingsContent";
 
 // CSS imports
-import "./css/app.css";
-import "./css/quicknotes.css";
-import "./css/marknotes.css";
+import "../css/app.css";
+import "../css/quicknotes.css";
+import "../css/marknotes.css";
 
 /**
  * Main application component

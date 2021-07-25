@@ -17,6 +17,8 @@
 
   --note-border-color-hover: #5560ee;
 
+  --preview-code-block-background: rgb(241, 241, 241);
+
   /* Color Definitions */
   --color-black: black;
   --color-black-hover: #151515;
@@ -44,10 +46,11 @@
 .marknotes-list {
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(auto-fit, 250px);
+  grid-template-columns: repeat(auto-fit, 240px);
   grid-auto-rows: fit-content;
   max-width: 100vw;
   row-gap: 1rem;
+  column-gap: 1rem;
   z-index: 1;
 }
 
@@ -55,8 +58,8 @@
 .marknote {
   background-color: var(--note-background-primary);
   margin: 0 10px 0 10px;
-  width: 230px;
-  height: fit-content;
+  width: 240px;
+  height: 330px;
 
   justify-self: center;
 
@@ -101,12 +104,10 @@
   flex-direction: column;
   justify-content: space-between;
   white-space: pre-wrap; /* keep spacing added to text */
-  padding: 0.5rem 0.5rem 0 0.5rem;
   color: var(--note-text-color-primary);
   font-weight: 500;
-
   border: 1px solid #828282;
-  height: calc(130px);
+  height: calc(100% - 25px);
 }
 
 .marknote:hover .marknote-content {
@@ -127,6 +128,8 @@
   display: block;
   word-wrap: break-word;
   /* font-style: italic; */
+  overflow: hidden;
+  padding: 0.5rem;
 }
 
 .marknote-footer {
@@ -134,6 +137,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 3px;
+  padding: 0 0.5rem 0 0.5rem;
+  border-top: 1px solid #828282;
 }
 
 .marknote-footer-left {
@@ -176,6 +181,11 @@
   outline: none;
 }
 
+.editor-divider {
+  width: 20px;
+  background: #c4c4c4;
+}
+
 .editor-container {
   background: white;
   height: 100%;
@@ -190,10 +200,6 @@
   resize: none;
 }
 
-.preview-body {
-  padding: 1rem;
-}
-
 .editor-body:focus {
   outline: none;
 }
@@ -201,6 +207,7 @@
 .editor-body .CodeMirror {
   height: 100%;
   font-size: 14px;
+  padding-bottom: 10px;
 }
 
 .editor-body .CodeMirror.CodeMirror-wrap pre {
@@ -212,14 +219,52 @@
   background: white;
   height: 100%;
   flex: 1;
-
-  border-left: solid 20px #c4c4c4;
 }
 
 .preview-body {
   overflow: auto;
+  padding: 0.5in;
+}
+
+.preview-body h1, h2 {
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--color-grey);
+}
+
+.preview-body h1, h2, h3, h4, h5, h6 {
+  margin: 0.5em 0;
+}
+
+.preview-body h1 {
+  font-size: 24px;
+}
+
+.preview-body h2 {
+  font-size: 20px;
 }
 
 .preview-body p {
-  margin: 0;
+  margin: 0 0 0.5em 0;
+}
+
+.preview-body code {
+  display: block;
+  background: var(--preview-code-block-background);
+  padding: 0.2em 0.4em;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.preview-body blockquote {
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: solid 2px var(--color-grey);
+}
+
+.preview-body a {
+  text-decoration: none;
+}
+
+.preview-body a:hover {
+  text-decoration: underline;
 }

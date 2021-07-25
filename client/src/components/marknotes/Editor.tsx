@@ -1,3 +1,5 @@
+/* Marknote Editor Component
+------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -27,21 +29,11 @@ import "codemirror/mode/markdown/markdown"; // import codemirror markdown
 import { Controlled as ControlledEditor } from "react-codemirror2"; // import text editor
 
 /**
- * Editor component proptypes
+ * Dynamic Element Styles
+ * Should declare outside of function component, but need to declare here for dynamic styles
+ * Issue: input is rerendered each time input is given, losing focus
+ * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
  */
-export interface EditorProps {
-  currentNote: MarknoteProps;
-  handleDeleteMarknote: (noteId: any) => void;
-  handleUpdateMarknote: (
-    currentMarknote: MarknoteProps,
-    updatedMarknote: any
-  ) => void;
-  setRedirect?: any;
-}
-
-// Should declare outside of function component, but need to declare here for dynamic styles
-// Issue: input is rerendered each time input is given, losing focus
-// Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
 const SubheaderStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
@@ -75,6 +67,19 @@ const SubheaderButtonStyles = ({
 const SubheaderButton = styled.li`
   ${SubheaderButtonStyles}
 `;
+
+/**
+ * Editor component proptypes
+ */
+export interface EditorProps {
+  currentNote: MarknoteProps;
+  handleDeleteMarknote: (noteId: any) => void;
+  handleUpdateMarknote: (
+    currentMarknote: MarknoteProps,
+    updatedMarknote: any
+  ) => void;
+  setRedirect?: any;
+}
 
 const Editor = ({
   currentNote,
@@ -188,9 +193,13 @@ const Editor = ({
     });
   };
 
-  const handleChangeEditorBody = (editor: string, data: string, value: string) => {
+  const handleChangeEditorBody = (
+    editor: string,
+    data: string,
+    value: string
+  ) => {
     handleEditField("body", value);
-  }
+  };
 
   return (
     <div className="editor-main">
@@ -259,6 +268,7 @@ const Editor = ({
             }}
           />
         </section>
+        <section className="editor-divider" />
         <section className="preview-container">
           <ReactMarkdown className="preview-body">
             {currentNote.body}

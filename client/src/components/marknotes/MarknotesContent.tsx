@@ -12,6 +12,7 @@ import { COLOR } from "../../common/color";
 import Marknote, { MarknoteProps } from "./Marknote";
 import MNHelp from "./MNHelp";
 import Editor from "./Editor";
+import Preview from "./Preview";
 import Searchbar from "../Searchbar";
 
 // Image and icon impaorts
@@ -177,6 +178,7 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
+      {/** Routes for Editors */}
       {marknotes.map((note) => (
         <Route key={note.id} path={`/marknotes/${note.id}`}>
           <Editor
@@ -185,6 +187,12 @@ const MarknotesContent = ({ history }: MarknotesContentProps) => {
             handleUpdateMarknote={handleUpdateMarknote}
             setRedirect={setRedirect}
           />
+        </Route>
+      ))}
+      {/** Routes for Previews */}
+      {marknotes.map((note) => (
+        <Route key={note.id} path={`/marknotes/${note.id}`}>
+          <Preview currentNote={note} />
         </Route>
       ))}
     </Switch>

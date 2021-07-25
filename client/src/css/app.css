@@ -567,7 +567,7 @@ footer {
 }
 
 .delete-menu-button:visited {
-  color: var(--note-text-color-primary);
+  color: white;
 }
 
 .delete-menu-button:hover {
