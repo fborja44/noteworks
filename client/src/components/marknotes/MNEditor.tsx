@@ -20,6 +20,8 @@ import { IoReturnUpForward } from "react-icons/io5";
 import { TiStarOutline, TiStar } from "react-icons/ti";
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
+import { VscOpenPreview } from "react-icons/vsc";
+import { AiOutlineCode } from "react-icons/ai";
 
 // Codemirror imports
 import "codemirror/lib/codemirror.css";
@@ -58,7 +60,7 @@ const SubheaderButtonStyles = ({
   color2: string;
 }) =>
   css`
-    background: ${color};
+    background: ${color} !important;
     &:hover {
       background: ${color2} !important;
     }
@@ -201,6 +203,10 @@ const MNEditor = ({
     handleEditField("body", value);
   };
 
+  // States for Editor and Preview
+  const [showEditor, setShowEditor] = useState(true);
+  const [showPreview, setShowPreview] = useState(true);
+
   return (
     <div className="editor-main">
       <Subheader className="sub-header" color={color}>
@@ -214,6 +220,26 @@ const MNEditor = ({
         />
         <div className="sub-header-buttons">
           <ul>
+            <li>
+              <SubheaderButton
+                title="Toggle Preview"
+                color={showEditor ? color_light : color}
+                color2={color_light}
+                onClick={() => setShowEditor((prev) => !prev)}
+              >
+                <AiOutlineCode />
+              </SubheaderButton>
+            </li>
+            <li>
+              <SubheaderButton
+                title="Toggle Preview"
+                color={showPreview ? color_light : color}
+                color2={color_light}
+                onClick={() => setShowPreview((prev) => !prev)}
+              >
+                <VscOpenPreview />
+              </SubheaderButton>
+            </li>
             <li>
               <SubheaderButton
                 title="Options"
@@ -267,8 +293,20 @@ const MNEditor = ({
           </ul>
         </div>
       </Subheader>
+      {!showEditor && !showPreview ? (
+        <div className="main-content-wrapper">
+          <div className="empty">
+            <p>
+              To open the editor, click the <AiOutlineCode /> button.
+            </p>
+            <p>
+              To open the preview, click the <VscOpenPreview /> button.
+            </p>
+          </div>
+        </div>
+      ) : null}
       <div className="editor-content">
-        <section className="editor-container">
+        <section className={`editor-container ${showEditor ? "" : "hide"}`}>
           <ControlledEditor
             className="editor-body"
             value={currentNote.body}
@@ -280,8 +318,8 @@ const MNEditor = ({
             }}
           />
         </section>
-        <section className="editor-divider" />
-        <section className="preview-container">
+        {showEditor && showPreview && <section className="editor-divider" />}
+        <section className={`preview-container ${showPreview ? "" : "hide"}`}>
           <ReactMarkdown className="preview-body">
             {currentNote.body}
           </ReactMarkdown>

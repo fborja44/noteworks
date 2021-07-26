@@ -170,6 +170,11 @@
   word-break: break-word;
 }
 
+.editor-container.hide,
+.preview-container.hide {
+  display: none;
+}
+
 /** Preview Styles **/
 .preview-container {
   background: white;
