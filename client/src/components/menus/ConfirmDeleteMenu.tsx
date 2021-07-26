@@ -16,6 +16,7 @@ export interface ConfirmDeleteProps {
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeleteNote?: (id: string) => void;
   toggleConfirmDelete: (event: any) => void;
+  redirect?: Boolean;
 }
 
 const ConfirmDelete = ({
@@ -24,13 +25,14 @@ const ConfirmDelete = ({
   setShowMenuState,
   handleDeleteNote,
   toggleConfirmDelete,
+  redirect,
 }: ConfirmDeleteProps) => {
   // Check if note title is empty
   const title =
     currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;
 
-  // Check note type to determine redirect
-  const redirect = currentNote.type === "marknote" ? "marknotes" : "quicknotes";
+  // Check note type to determine route
+  const route = currentNote.type === "marknote" ? "marknotes" : "quicknotes";
 
   return (
     <ModalMenu
@@ -40,20 +42,36 @@ const ConfirmDelete = ({
     >
       <div className="delete-menu-text">
         <p>This action cannot be reversed.</p>
-        <Link
-          to={`/${redirect}`}
-          className="delete-menu-button"
-          onClick={
-            handleDeleteNote
-              ? (event) => {
-                  handleDeleteNote(currentNote.id);
-                  toggleConfirmDelete(event);
-                }
-              : undefined
-          }
-        >
-          Confirm
-        </Link>
+        {redirect ? (
+          <Link
+            to={`/${route}`}
+            className="delete-menu-button"
+            onClick={
+              handleDeleteNote
+                ? (event) => {
+                    handleDeleteNote(currentNote.id);
+                    toggleConfirmDelete(event);
+                  }
+                : undefined
+            }
+          >
+            Confirm
+          </Link>
+        ) : (
+          <button
+            className="delete-menu-button"
+            onClick={
+              handleDeleteNote
+                ? (event) => {
+                    handleDeleteNote(currentNote.id);
+                    toggleConfirmDelete(event);
+                  }
+                : undefined
+            }
+          >
+            Confirm
+          </button>
+        )}
       </div>
     </ModalMenu>
   );

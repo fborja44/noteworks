@@ -336,6 +336,7 @@ const MNEditor = ({
         setShowMenuState={setShowConfirmDelete}
         handleDeleteNote={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
+        redirect={true}
       />
     </div>
   );
