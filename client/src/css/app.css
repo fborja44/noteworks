@@ -491,7 +491,7 @@ footer {
 
 .modal-menu-wrapper {
   width: fit-content;
-  max-width: 450px;
+  max-width: 500px;
   height: fit-content;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
   background: #fff;

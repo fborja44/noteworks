@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote, Marknote } from "../../common/types";
+import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
 import QNComponent from "../quicknotes/QNComponent";
 import MNComponent from "../marknotes/MNComponent";
 
@@ -13,31 +14,6 @@ import MNComponent from "../marknotes/MNComponent";
 import { TiStar } from "react-icons/ti";
 
 // Styled components
-const SectionContainer = styled.section`
-  margin-bottom: 1em;
-`;
-
-const SectionHeader = styled.div`
-  border-bottom: solid 1px #5f5f5f;
-  margin-bottom: 1em;
-`;
-
-const SectionTitle = styled.h1`
-  margin: 0 0 0.5em 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #4f4f4f;
-  display: flex;
-  align-items: center;
-  * {
-    margin-right: 0.2em;
-  }
-  ,
-  svg {
-    font-size: 24px;
-  }
-`;
-
 const Empty = styled.div`
   width: 100%;
 `;

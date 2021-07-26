@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { Marknote } from "../../common/types";
+import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -137,6 +138,11 @@ const MNContent = ({
           </div>
         </section>
         <div className="main-content-wrapper">
+        <SectionHeader>
+            <SectionTitle>
+              My Marknotes
+            </SectionTitle>
+          </SectionHeader>
           {marknotes.length !== 0 ? (
             notes_list
           ) : (
