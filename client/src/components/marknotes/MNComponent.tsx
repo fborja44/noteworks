@@ -35,22 +35,54 @@ const MNComponent = ({
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
+   * Function to handle changes in a note's field
+   * @param key The field being changed
+   * @param value The new value of the field
+   * @param updateDate If true, updates the note's last modified date. [default=false]
+   */
+  const handleEditField = (
+    key: string,
+    value: string | Boolean,
+    updateDate: Boolean = true
+  ) => {
+    if (handleUpdateMarknote)
+      if (updateDate) {
+        handleUpdateMarknote(currentNote, {
+          ...currentNote,
+          [key]: value,
+          lastModified: Date.now(),
+        });
+      } else {
+        handleUpdateMarknote(currentNote, {
+          ...currentNote,
+          [key]: value,
+        });
+      }
+  };
+
+  /**
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    if (handleUpdateMarknote)
-      handleUpdateMarknote(currentNote, {
-        ...currentNote,
-        color: color,
-      });
+    handleEditField("color", color, false);
+  };
+
+  /**
+   * Function to toggle whether a note is favorited
+   * Does NOT change the last modified date.
+   */
+  const handleFavorite = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    handleEditField("favorited", currentNote.favorited ? false : true, false);
   };
 
   /**
    * Function to toggle the color menu
-   * TODO: Change event type
    */
-  const toggleColorMenu = (event: any) => {
+  const toggleColorMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     // Prevent parent link from redirecting
     event.preventDefault();
     event.stopPropagation();
@@ -65,9 +97,8 @@ const MNComponent = ({
 
   /**
    * Function to toggle the confirm delete menu
-   * TODO: Change event type
    */
-  const toggleConfirmDelete = (event: any) => {
+  const toggleConfirmDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     // Prevent parent link from redirecting
     event.preventDefault();
     event.stopPropagation();
@@ -95,8 +126,12 @@ const MNComponent = ({
           style={{ backgroundColor: currentNote.color }}
         >
           {handleUpdateMarknote && (
-            <button title="Favorite" className="favorite-note-button note-button">
-              <TiStarOutline onClick={toggleColorMenu} />
+            <button
+              title="Favorite"
+              className="favorite-note-button note-button"
+              onClick={(event) => handleFavorite(event)}
+            >
+              {currentNote.favorited ? <TiStar /> : <TiStarOutline />}
             </button>
           )}
           <span className="marknote-name note-name">
@@ -107,8 +142,12 @@ const MNComponent = ({
             )}
           </span>
           {handleUpdateMarknote && (
-            <button title="Options" className="color-menu-button note-button">
-              <IoMdMenu onClick={toggleColorMenu} />
+            <button
+              title="Options"
+              className="color-menu-button note-button"
+              onClick={toggleColorMenu}
+            >
+              <IoMdMenu />
             </button>
           )}
           {handleDeleteMarknote && (

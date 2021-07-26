@@ -51,7 +51,6 @@ export interface HomeContentProps {
 
 /**
  * Home content renderer
- * TODO: Favorite function for quicknotes, add edit and delete functionality
  */
 const HomeContent = ({
   quicknotes,

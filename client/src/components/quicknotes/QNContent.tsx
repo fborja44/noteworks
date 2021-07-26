@@ -101,11 +101,15 @@ const QNContent = ({
           <Searchbar handleSearchNote={setQNSearchText} />
           <div className="sub-header-buttons">
             <ul>
-              <li onClick={handleAddQuicknote} title="New Note">
-                <RiAddLine />
+              <li title="New Note">
+                <button onClick={handleAddQuicknote}>
+                  <RiAddLine />
+                </button>
               </li>
-              <li onClick={openQNHelp} title="Help">
-                <MdHelpOutline />
+              <li title="Help">
+                <button onClick={openQNHelp}>
+                  <MdHelpOutline />
+                </button>
               </li>
             </ul>
           </div>

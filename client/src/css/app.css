@@ -346,9 +346,23 @@ header {
   justify-content: center;
 }
 
-.sub-header-buttons ul li:hover {
+.sub-header-buttons ul li button {
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border: none;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sub-header-buttons ul li button:hover {
   cursor: pointer;
-  /* background: var(--sub-header-background-hover); */
+  background: var(--sub-header-background-hover);
   transition: background-color 0.2s ease 0s;
 }
 
@@ -478,7 +492,7 @@ footer {
   color: #000;
   position: relative;
   z-index: 10;
-  padding: 1rem 1rem 1.5rem 1rem;
+  padding: 1.5rem 2rem;
 }
 
 .modal-menu-header {
@@ -565,6 +579,7 @@ footer {
 }
 
 .note-body {
+  height: 100%;
   padding: 0.5rem;
   color: var(--note-text-color-primary);
 }
@@ -616,7 +631,11 @@ footer {
 
 .delete-menu-text {
   text-align: center;
-  margin: 1.5rem 1rem 0 1rem;
+  margin: 1rem 1rem 0 1rem;
+}
+
+.delete-menu-text p {
+  margin: 0;
 }
 
 .delete-menu-button {
@@ -680,7 +699,7 @@ footer {
 
   width: fit-content;
   margin: 0 auto 0 auto;
-  padding: 0 2rem 0 2rem;
+  padding: 0 2rem 1rem 2rem;
 }
 
 .color-option {

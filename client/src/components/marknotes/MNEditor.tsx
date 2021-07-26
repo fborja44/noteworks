@@ -58,13 +58,12 @@ const SubheaderButtonStyles = ({
   color2: string;
 }) =>
   css`
-    backgrouund: ${color};
+    background: ${color};
     &:hover {
-      background: ${color2};
+      background: ${color2} !important;
     }
-    -webkit-user-select: none;
   `;
-const SubheaderButton = styled.li`
+const SubheaderButton = styled.button`
   ${SubheaderButtonStyles}
 `;
 
@@ -153,9 +152,10 @@ const MNEditor = ({
 
   /**
    * Function to toggle the color menu
-   * TODO: Change event type
    */
-  const toggleColorMenu = (event: any) => {
+  const toggleColorMenu = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     // Prevent parent link from redirecting
     event.preventDefault();
     event.stopPropagation();
@@ -214,44 +214,56 @@ const MNEditor = ({
         />
         <div className="sub-header-buttons">
           <ul>
-            <SubheaderButton
-              title="Options"
-              color={color}
-              color2={color_light}
-              onClick={toggleColorMenu}
-            >
-              <RiEdit2Line />
-            </SubheaderButton>
-            <SubheaderButton
-              title="Delete Note"
-              color={color}
-              color2={color_light}
-              onClick={toggleConfirmDelete}
-            >
-              <MdDeleteForever />
-            </SubheaderButton>
-            <SubheaderButton
-              title="Favorite"
-              color={color}
-              color2={color_light}
-              onClick={() =>
-                handleEditField(
-                  "favorited",
-                  currentNote.favorited === true ? false : true
-                )
-              }
-            >
-              {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
-            </SubheaderButton>
-            <SubheaderButton
-              title="Return to Notes"
-              color={color}
-              color2={color_light}
-            >
-              <Link to="/marknotes">
-                <IoReturnUpForward />
-              </Link>
-            </SubheaderButton>
+            <li>
+              <SubheaderButton
+                title="Options"
+                color={color}
+                color2={color_light}
+                onClick={toggleColorMenu}
+              >
+                <RiEdit2Line />
+              </SubheaderButton>
+            </li>
+            <li>
+              <SubheaderButton
+                title="Delete Note"
+                color={color}
+                color2={color_light}
+                onClick={toggleConfirmDelete}
+              >
+                <MdDeleteForever />
+              </SubheaderButton>
+            </li>
+            <li>
+              <SubheaderButton
+                title="Favorite"
+                color={color}
+                color2={color_light}
+                onClick={() =>
+                  handleEditField(
+                    "favorited",
+                    currentNote.favorited === true ? false : true
+                  )
+                }
+              >
+                {currentNote.favorited === false ? (
+                  <TiStarOutline />
+                ) : (
+                  <TiStar />
+                )}
+              </SubheaderButton>
+            </li>
+            <li>
+              <SubheaderButton
+                title="Return to Notes"
+                color={color}
+                color2={color_light}
+              >
+                <Link to="/marknotes">
+                  <IoReturnUpForward />
+                </Link>
+              </SubheaderButton>
+            </li>
           </ul>
         </div>
       </Subheader>

@@ -23,8 +23,8 @@ const ColorMenu = ({
   handleEditColor,
 }: ColorMenuProps) => {
   /**
-   * On click handler to change color of note
-   * TODO: Update event type
+   * On click handler to change color of note.
+   * Event target needs dataset attribute.
    */
   const handleOnClick = (event: any) => {
     handleEditColor(event.target.dataset.color);
@@ -105,7 +105,7 @@ const ColorMenu = ({
           title="Grey"
         />
         <div
-          onClick={handleOnClick}
+          onClick={(event) => handleOnClick(event)}
           data-color={COLOR.GREY_DARK}
           className="color-option grey-dark"
           title="Dark Grey"

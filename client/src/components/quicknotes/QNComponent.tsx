@@ -41,19 +41,34 @@ const QNComponent = ({
    * Function to handle changes in a note's field.
    * @param key The field being changed
    * @param value The new value of the field
+   * @param updateDate If true, updates the note's last modified date. [default=false]
    */
-  const handleEditField = (key: string, value: string) => {
+  const handleEditField = (
+    key: string,
+    value: any,
+    updateDate: Boolean = true
+  ) => {
     // Check character limit
     if (
-      (key === "title" && titleCharLimit - value.length >= 0) ||
-      (key === "body" && bodyCharLimit - value.length >= 0)
+      (key === "title" && titleCharLimit - value.length < 0) ||
+      (key === "body" && bodyCharLimit - value.length < 0)
     ) {
-      if (handleUpdateQuicknote)
-        handleUpdateQuicknote(currentNote, {
-          ...currentNote,
-          [key]: value,
-          lastModified: Date.now(),
-        });
+      return;
+    } else {
+      if (handleUpdateQuicknote) {
+        if (updateDate) {
+          handleUpdateQuicknote(currentNote, {
+            ...currentNote,
+            [key]: value,
+            lastModified: Date.now(),
+          });
+        } else {
+          handleUpdateQuicknote(currentNote, {
+            ...currentNote,
+            [key]: value,
+          });
+        }
+      }
     }
   };
 
@@ -62,11 +77,15 @@ const QNComponent = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    if (handleUpdateQuicknote)
-      handleUpdateQuicknote(currentNote, {
-        ...currentNote,
-        color: color,
-      });
+    handleEditField("color", color, false);
+  };
+
+  /**
+   * Function to toggle whether a note is favorited
+   * Does NOT change the last modified date.
+   */
+  const handleFavorite = () => {
+    handleEditField("favorited", currentNote.favorited ? false : true, false);
   };
 
   // Menu state
@@ -96,8 +115,12 @@ const QNComponent = ({
         style={{ backgroundColor: currentNote.color }}
       >
         {handleUpdateQuicknote && (
-          <button title="Favorite" className="favorite-note-button note-button">
-            <TiStarOutline onClick={toggleColorMenu} />
+          <button
+            title="Favorite"
+            className="favorite-note-button note-button"
+            onClick={handleFavorite}
+          >
+            {currentNote.favorited ? <TiStar /> : <TiStarOutline />}
           </button>
         )}
         <input
@@ -135,7 +158,10 @@ const QNComponent = ({
         <div className="quicknote-footer note-footer">
           <div className="quicknote-footer-left note-footer-left">
             <small>
-              {new Date(currentNote.lastModified).toLocaleDateString()}
+              {new Date(currentNote.lastModified).toLocaleDateString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </small>
           </div>
           <div className="quicknote-footer-right note-footer-right">

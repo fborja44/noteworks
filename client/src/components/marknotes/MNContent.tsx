@@ -42,7 +42,7 @@ const MNContent = ({
   setMarknotes,
   handleUpdateMarknote,
   handleDeleteMarknote,
-  setSelectedTab
+  setSelectedTab,
 }: MNContentProps) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
@@ -122,11 +122,15 @@ const MNContent = ({
             <Searchbar handleSearchNote={setMNSearchText} />
             <div className="sub-header-buttons">
               <ul>
-                <li onClick={handleAddMarknote} title="New Note">
-                  <RiAddLine />
+                <li title="New Note">
+                  <button onClick={handleAddMarknote}>
+                    <RiAddLine />
+                  </button>
                 </li>
-                <li onClick={openMNHelp} title="Help">
-                  <MdHelpOutline />
+                <li title="Help">
+                  <button onClick={openMNHelp}>
+                    <MdHelpOutline />
+                  </button>
                 </li>
               </ul>
             </div>

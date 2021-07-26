@@ -23,7 +23,7 @@ const ModalMenu = ({
 
   /**
    * Closes the menu
-   * TODO: Update event and setShowMenuState type
+   * Event can be from any element
    */
   const closeMenu = (
     event: any,
