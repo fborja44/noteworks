@@ -74,7 +74,7 @@ main {
 }
 
 .main-content-wrapper {
-  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+  padding: 1.5rem;
   overflow: auto;
   height: calc(100vh - 80px);
   width: calc(100vw - 45px);
