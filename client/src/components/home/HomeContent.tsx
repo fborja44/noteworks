@@ -9,6 +9,9 @@ import { Quicknote, Marknote } from "../../common/types";
 import QNComponent from "../quicknotes/QNComponent";
 import MNComponent from "../marknotes/MNComponent";
 
+// Image and icon imports
+import { TiStar } from "react-icons/ti";
+
 // Styled components
 const SectionContainer = styled.section`
   margin-bottom: 1em;
@@ -24,6 +27,15 @@ const SectionTitle = styled.h1`
   font-size: 16px;
   font-weight: 700;
   color: #4f4f4f;
+  display: flex;
+  align-items: center;
+  * {
+    margin-right: 0.2em;
+  }
+  ,
+  svg {
+    font-size: 24px;
+  }
 `;
 
 const Empty = styled.div`
@@ -93,7 +105,10 @@ const HomeContent = ({
       <div className="main-content-wrapper">
         <SectionContainer>
           <SectionHeader>
-            <SectionTitle>Favorited Quicknotes</SectionTitle>
+            <SectionTitle>
+              <TiStar />
+              Favorited Quicknotes
+            </SectionTitle>
           </SectionHeader>
           <div>
             {favoritedQuicknotes.length !== 0 ? (
@@ -107,7 +122,10 @@ const HomeContent = ({
         </SectionContainer>
         <SectionContainer>
           <SectionHeader>
-            <SectionTitle>Favorited Marknotes</SectionTitle>
+            <SectionTitle>
+              <TiStar />
+              Favorited Marknotes
+            </SectionTitle>
           </SectionHeader>
           <div>
             {favoritedMarknotes.length !== 0 ? (

@@ -24,8 +24,16 @@ const MNHelp = ({ showMNHelp, setShowMNHelp }: MNHelpProps) => {
       </p>
       <p>To add a new note, click the + button in the menu.</p>
       <p>
-        To delete a note, click the delete button at the top right of the notes.
-        Deletions are permanent.
+        To change the label color of a quicknote, click the edit button at the
+        top right of the note, or at the top right of the editor.
+      </p>
+      <p>
+        To delete a note, click the delete button at the top right of the note,
+        or at the top right of the editor. Deletions are permanent.
+      </p>
+      <p>
+        To favorite or unfavorite a note, click the favorite button at the top
+        left of the note, or at the top right of the editor.
       </p>
       <p>
         To open the editor to edit and preview your marknotes, click the

@@ -22,17 +22,18 @@ const QNHelp = ({ showQNHelp, setShowQNHelp }: QNHelpProps) => {
         Quicknotes are small and quick notes similar to sticky notes for jotting
         down quick thoughts, notes, or ideas.
       </p>
-      <p>
-        To add a new note, enter some text in the new note field and click the +
-        button in the bottom right.
-      </p>
+      <p>To add a new note, click the + button in the page header.</p>
       <p>
         To change the label color of a quicknote, click the edit button at the
         top right of the note.
       </p>
       <p>
-        To delete a note, click the delete button at the top right of the
-        notes. Deletions are permanent.
+        To delete a note, click the delete button at the top right of the note.
+        Deletions are permanent.
+      </p>
+      <p>
+        To favorite or unfavorite a note, click the favorite button at the top
+        left of the note.
       </p>
       <p>
         All notes are automatically saved when they are edited, created, or

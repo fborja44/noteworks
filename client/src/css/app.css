@@ -289,7 +289,7 @@ header {
 .settings-icon {
   font-size: 23px;
   position: relative;
-  right: 0px;
+  right: 1px;
 }
 
 .selected {
@@ -622,6 +622,10 @@ footer {
   cursor: pointer;
   color: white;
   transition: color 0.2s ease 0s;
+}
+
+.favorite-note-button {
+  color: white;
 }
 
 /** Delete Menu **/
