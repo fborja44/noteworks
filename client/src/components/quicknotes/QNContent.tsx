@@ -6,6 +6,11 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { Quicknote } from "../../common/types";
+import {
+  SectionContainer,
+  SectionHeader,
+  SectionTitle,
+} from "../../common/styled";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -116,17 +121,22 @@ const QNContent = ({
         </div>
       </section>
       <div className="main-content-wrapper">
-        {quicknotes.length !== 0 ? (
-          notes_list
-        ) : (
-          <div className="empty">
-            <p>You have no saved quicknotes.</p>
-            <p>Create one now by pressing the + button in the menu above!</p>
-          </div>
-        )}
-        {quicknotes.length !== 0 &&
-          filteredQuicknotes.length === 0 &&
-          searchEmpty}
+        <SectionContainer>
+          <SectionHeader>
+            <SectionTitle>My Quicknotes</SectionTitle>
+          </SectionHeader>
+          {quicknotes.length !== 0 ? (
+            notes_list
+          ) : (
+            <div className="empty">
+              <p>You have no saved quicknotes.</p>
+              <p>Create one now by pressing the + button in the menu above!</p>
+            </div>
+          )}
+          {quicknotes.length !== 0 &&
+            filteredQuicknotes.length === 0 &&
+            searchEmpty}
+        </SectionContainer>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
     </React.Fragment>

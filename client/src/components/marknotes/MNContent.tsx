@@ -7,7 +7,11 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { Marknote } from "../../common/types";
-import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
+import {
+  SectionContainer,
+  SectionHeader,
+  SectionTitle,
+} from "../../common/styled";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -138,22 +142,24 @@ const MNContent = ({
           </div>
         </section>
         <div className="main-content-wrapper">
-        <SectionHeader>
-            <SectionTitle>
-              My Marknotes
-            </SectionTitle>
-          </SectionHeader>
-          {marknotes.length !== 0 ? (
-            notes_list
-          ) : (
-            <div className="empty">
-              <p>You have no saved marknotes.</p>
-              <p>Create one now by pressing the + button in the menu above!</p>
-            </div>
-          )}
-          {marknotes.length !== 0 &&
-            filteredMarknotes.length === 0 &&
-            searchEmpty}
+          <SectionContainer>
+            <SectionHeader>
+              <SectionTitle>My Marknotes</SectionTitle>
+            </SectionHeader>
+            {marknotes.length !== 0 ? (
+              notes_list
+            ) : (
+              <div className="empty">
+                <p>You have no saved marknotes.</p>
+                <p>
+                  Create one now by pressing the + button in the menu above!
+                </p>
+              </div>
+            )}
+            {marknotes.length !== 0 &&
+              filteredMarknotes.length === 0 &&
+              searchEmpty}
+          </SectionContainer>
           {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
