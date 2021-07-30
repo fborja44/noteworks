@@ -2,14 +2,16 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
+
+// Component imports
+import PageHeader from "../pageheader/PageHeader";
+
 export interface SettingsPageProps {}
 
 const SettingsPage = () => {
   return (
     <React.Fragment>
-      <section className="sub-header">
-        <h1>Settings</h1>
-      </section>
+      <PageHeader title="Settings" />
       <div className="main-content-wrapper">
         <div className="empty">
           <p>Settings are currently unavailable.</p>

@@ -13,7 +13,7 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 
 import HomeContent from "./home/HomePage";
-import QNPage from "./quicknotes/QNList";
+import QNPage from "./quicknotes/QNPage";
 import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
 

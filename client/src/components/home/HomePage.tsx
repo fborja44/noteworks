@@ -5,6 +5,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Common imports
+import PageHeader from "../pageheader/PageHeader";
 import { Quicknote, Marknote } from "../../common/types";
 import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
 import QNComponent from "../quicknotes/QNComponent";
@@ -76,9 +77,7 @@ const HomePage = ({
 
   return (
     <React.Fragment>
-      <section className="sub-header">
-        <h1>Home</h1>
-      </section>
+      <PageHeader title="Home" />
       <div className="main-content-wrapper">
         <SectionContainer>
           <SectionHeader>

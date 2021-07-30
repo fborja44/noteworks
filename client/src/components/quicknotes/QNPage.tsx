@@ -16,7 +16,8 @@ import { COLOR } from "../../common/color";
 // Component imports
 import QNComponent from "./QNComponent";
 import QNHelp from "./QNHelp";
-import Searchbar from "../Searchbar";
+import PageHeaderButton from "../pageheader/PageHeaderButton";
+import PageHeader from "../pageheader/PageHeader";
 
 // Image and icon imports
 import { RiAddLine } from "react-icons/ri";
@@ -98,28 +99,18 @@ const QNPage = ({
 
   return (
     <React.Fragment>
-      <section className="sub-header">
-        <div className="sub-header-left">
-          <h1>Quicknotes</h1>
-        </div>
-        <div className="sub-header-right">
-          <Searchbar handleSearchNote={setQNSearchText} />
-          <div className="sub-header-buttons">
-            <ul>
-              <li title="New Note">
-                <button onClick={handleAddQuicknote}>
-                  <RiAddLine />
-                </button>
-              </li>
-              <li title="Help">
-                <button onClick={openQNHelp}>
-                  <MdHelpOutline />
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        title="Quicknotes"
+        useSearch={true}
+        setSearchText={setQNSearchText}
+      >
+        <PageHeaderButton title={"New Note"} onClick={handleAddQuicknote}>
+          <RiAddLine />
+        </PageHeaderButton>
+        <PageHeaderButton title={"Help"} onClick={openQNHelp}>
+          <MdHelpOutline />
+        </PageHeaderButton>
+      </PageHeader>
       <div className="main-content-wrapper">
         <SectionContainer>
           <SectionHeader>

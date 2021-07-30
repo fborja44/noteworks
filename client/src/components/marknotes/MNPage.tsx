@@ -18,7 +18,8 @@ import { COLOR } from "../../common/color";
 import MNHelp from "./MNHelp";
 import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
-import Searchbar from "../Searchbar";
+import PageHeaderButton from "../pageheader/PageHeaderButton";
+import PageHeader from "../pageheader/PageHeader";
 
 import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
 
@@ -120,28 +121,18 @@ const MNPage = ({
   return (
     <Switch>
       <Route exact path="/marknotes">
-        <section className="sub-header">
-          <div className="sub-header-left">
-            <h1>Marknotes</h1>
-          </div>
-          <div className="sub-header-right">
-            <Searchbar handleSearchNote={setMNSearchText} />
-            <div className="sub-header-buttons">
-              <ul>
-                <li title="New Note">
-                  <button onClick={handleAddMarknote}>
-                    <RiAddLine />
-                  </button>
-                </li>
-                <li title="Help">
-                  <button onClick={openMNHelp}>
-                    <MdHelpOutline />
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+        <PageHeader
+          title="Marknotes"
+          useSearch={true}
+          setSearchText={setMNSearchText}
+        >
+          <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
+            <RiAddLine />
+          </PageHeaderButton>
+          <PageHeaderButton title="New Note" onClick={openMNHelp}>
+            <MdHelpOutline />
+          </PageHeaderButton>
+        </PageHeader>
         <div className="main-content-wrapper">
           <SectionContainer>
             <SectionHeader>
