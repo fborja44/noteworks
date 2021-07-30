@@ -7,13 +7,12 @@ import styled from "@emotion/styled";
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
 import { Quicknote, Marknote } from "../../common/types";
-import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
 import QNComponent from "../quicknotes/QNComponent";
 import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
+import Section from "../Section";
 
 // Image and icon imports
 import { TiStar } from "react-icons/ti";
-
 
 // Styled components
 const Empty = styled.div`
@@ -79,13 +78,7 @@ const HomePage = ({
     <React.Fragment>
       <PageHeader title="Home" />
       <div className="main-content-wrapper">
-        <SectionContainer>
-          <SectionHeader>
-            <SectionTitle>
-              <TiStar />
-              Favorited Quicknotes
-            </SectionTitle>
-          </SectionHeader>
+        <Section name={`Favorited Quicknotes`} icon={<TiStar />}>
           <div>
             {favoritedQuicknotes.length !== 0 ? (
               <div className="quicknotes-list">{favoritedQuicknotes}</div>
@@ -95,14 +88,8 @@ const HomePage = ({
               </Empty>
             )}
           </div>
-        </SectionContainer>
-        <SectionContainer>
-          <SectionHeader>
-            <SectionTitle>
-              <TiStar />
-              Favorited Marknotes
-            </SectionTitle>
-          </SectionHeader>
+        </Section>
+        <Section name={`Favorited Marknotes`} icon={<TiStar />}>
           <div>
             {favoritedMarknotes.length !== 0 ? (
               <div className="marknotes-list">{favoritedMarknotes}</div>
@@ -112,7 +99,7 @@ const HomePage = ({
               </Empty>
             )}
           </div>
-        </SectionContainer>
+        </Section>
       </div>
     </React.Fragment>
   );

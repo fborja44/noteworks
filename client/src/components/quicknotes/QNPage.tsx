@@ -6,11 +6,6 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { Quicknote } from "../../common/types";
-import {
-  SectionContainer,
-  SectionHeader,
-  SectionTitle,
-} from "../../common/styled";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -18,6 +13,7 @@ import QNComponent from "./QNComponent";
 import QNHelp from "./QNHelp";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
+import Section from "../Section";
 
 // Image and icon imports
 import { RiAddLine } from "react-icons/ri";
@@ -112,10 +108,7 @@ const QNPage = ({
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
-        <SectionContainer>
-          <SectionHeader>
-            <SectionTitle>My Quicknotes</SectionTitle>
-          </SectionHeader>
+        <Section name="My Quicknotes">
           {quicknotes.length !== 0 ? (
             notes_list
           ) : (
@@ -127,7 +120,7 @@ const QNPage = ({
           {quicknotes.length !== 0 &&
             filteredQuicknotes.length === 0 &&
             searchEmpty}
-        </SectionContainer>
+        </Section>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
     </React.Fragment>

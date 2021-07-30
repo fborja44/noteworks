@@ -7,11 +7,6 @@ import { nanoid } from "nanoid";
 
 // Common imports
 import { Marknote } from "../../common/types";
-import {
-  SectionContainer,
-  SectionHeader,
-  SectionTitle,
-} from "../../common/styled";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -20,6 +15,7 @@ import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
+import Section from "../Section";
 
 import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
 
@@ -134,10 +130,7 @@ const MNPage = ({
           </PageHeaderButton>
         </PageHeader>
         <div className="main-content-wrapper">
-          <SectionContainer>
-            <SectionHeader>
-              <SectionTitle>My Marknotes</SectionTitle>
-            </SectionHeader>
+          <Section name="My Marknotes">
             {marknotes.length !== 0 ? (
               notes_list
             ) : (
@@ -151,7 +144,7 @@ const MNPage = ({
             {marknotes.length !== 0 &&
               filteredMarknotes.length === 0 &&
               searchEmpty}
-          </SectionContainer>
+          </Section>
           {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
