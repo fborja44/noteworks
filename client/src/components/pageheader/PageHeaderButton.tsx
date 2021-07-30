@@ -3,9 +3,6 @@
 // React import
 import * as React from "react";
 
-// Component imports
-import Searchbar from "../Searchbar";
-
 export interface PageHeaderButtonProps {
   title: string;
   onClick: any;

@@ -4,11 +4,50 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
+
 // Common imports
 import { Quicknote, Marknote } from "../../common/types";
 
 // Component Imports
 import ModalMenu from "./ModalMenu";
+
+const MenuContent = styled.div`
+  text-align: center;
+  margin: 1rem 1rem 0 1rem;
+
+  p {
+    margin: 0;
+  }
+`;
+
+const DeleteButton = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto 0 auto;
+  width: 200px;
+  background-color: var(--color-red);
+  color: white;
+  border: solid 1px #666666;
+  height: 28px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 13px;
+
+  &:visited {
+    color: white;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-red-dark);
+    transition: background-color 0.1s ease 0s;
+  }
+`;
 
 export interface ConfirmDeleteProps {
   currentNote: Marknote | Quicknote;
@@ -40,12 +79,12 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
       showMenuState={showMenuState}
       setShowMenuState={setShowMenuState}
     >
-      <div className="delete-menu-text">
+      <MenuContent>
         <p>This action cannot be reversed.</p>
         {redirect ? (
           <Link
             to={`/${route}`}
-            className="delete-menu-button"
+            css={DeleteButton}
             onClick={
               handleDeleteNote
                 ? (event) => {
@@ -59,7 +98,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
           </Link>
         ) : (
           <button
-            className="delete-menu-button"
+            css={DeleteButton}
             onClick={
               handleDeleteNote
                 ? (event) => {
@@ -72,7 +111,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
             Confirm
           </button>
         )}
-      </div>
+      </MenuContent>
     </ModalMenu>
   );
 };

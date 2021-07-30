@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+// import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const SearchbarContainer = styled.div`

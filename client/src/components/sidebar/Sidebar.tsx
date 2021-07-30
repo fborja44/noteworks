@@ -2,7 +2,6 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 // Image and icon imports
 import { BiNote, BiNotepad } from "react-icons/bi";
@@ -12,7 +11,7 @@ import SidebarButton from "./SidebarButton";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+// import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export interface SidebarProps {

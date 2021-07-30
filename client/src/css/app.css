@@ -351,40 +351,6 @@ textarea:focus {
   font-size: 11px;
 }
 
-.delete-menu-text {
-  text-align: center;
-  margin: 1rem 1rem 0 1rem;
-}
-
-.delete-menu-text p {
-  margin: 0;
-}
-
-.delete-menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem auto 0 auto;
-  width: 200px;
-  background-color: var(--color-red);
-  color: white;
-  border: solid 1px #666666;
-  height: 28px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.delete-menu-button:visited {
-  color: white;
-}
-
-.delete-menu-button:hover {
-  cursor: pointer;
-  background-color: var(--color-red-dark);
-  transition: background-color 0.1s ease 0s;
-}
-
 /** Color Menu Styles **/
 .color-menu-wrapper {
   width: 260px;
