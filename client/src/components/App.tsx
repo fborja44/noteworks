@@ -9,7 +9,7 @@ import { Quicknote, Marknote } from "../common/types";
 
 // Component imports
 import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import Footer from "./Footer";
 
 import HomeContent from "./home/HomePage";
