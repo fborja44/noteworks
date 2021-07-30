@@ -2,17 +2,17 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
+// import ReactMarkdown from "react-markdown";
+// import { css } from "@emotion/react";
+// import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote } from "../../common/types";
 
-const Page = styled.section`
-  width: 8in;
-  height: 8in;
-`;
+// const Page = styled.section`
+//   width: 8in;
+//   height: 8in;
+// `;
 
 /**
  * Preview component proptypes

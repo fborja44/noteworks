@@ -36,12 +36,12 @@ import { Controlled as ControlledEditor } from "react-codemirror2"; // import te
  * Issue: input is rerendered each time input is given, losing focus
  * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
  */
-const SubheaderStyles = ({ color }: { color: string }) =>
+const EditorHeaderStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
   `;
-const Subheader = styled.section`
-  ${SubheaderStyles}
+const EditorHeader = styled.section`
+  ${EditorHeaderStyles}
 `;
 
 const TitleInputStyles = ({ color }: { color: string }) =>
@@ -52,7 +52,7 @@ const TitleInput = styled.input`
   ${TitleInputStyles}
 `;
 
-const SubheaderButtonStyles = ({
+const EditorHeaderButtonStyles = ({
   color,
   color2,
 }: {
@@ -65,8 +65,8 @@ const SubheaderButtonStyles = ({
       background: ${color2} !important;
     }
   `;
-const SubheaderButton = styled.button`
-  ${SubheaderButtonStyles}
+const EditorHeaderButton = styled.button`
+  ${EditorHeaderButtonStyles}
 `;
 
 /**
@@ -209,7 +209,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
 
   return (
     <div className="editor-main">
-      <Subheader className="sub-header" color={color}>
+      <EditorHeader className="sub-header" color={color}>
         <TitleInput
           type="text"
           className="editor-title"
@@ -221,47 +221,47 @@ const MNEditor: React.FC<MNEditorProps> = ({
         <div className="sub-header-buttons">
           <ul>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Toggle Preview"
                 color={showEditor ? color_light : color}
                 color2={color_light}
                 onClick={() => setShowEditor((prev) => !prev)}
               >
                 <AiOutlineCode />
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Toggle Preview"
                 color={showPreview ? color_light : color}
                 color2={color_light}
                 onClick={() => setShowPreview((prev) => !prev)}
               >
                 <VscOpenPreview />
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Options"
                 color={color}
                 color2={color_light}
                 onClick={toggleColorMenu}
               >
                 <RiEdit2Line />
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Delete Note"
                 color={color}
                 color2={color_light}
                 onClick={toggleConfirmDelete}
               >
                 <MdDeleteForever />
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Favorite"
                 color={color}
                 color2={color_light}
@@ -277,10 +277,10 @@ const MNEditor: React.FC<MNEditorProps> = ({
                 ) : (
                   <TiStar />
                 )}
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
             <li>
-              <SubheaderButton
+              <EditorHeaderButton
                 title="Return to Notes"
                 color={color}
                 color2={color_light}
@@ -288,11 +288,11 @@ const MNEditor: React.FC<MNEditorProps> = ({
                 <Link to="/marknotes">
                   <IoReturnUpForward />
                 </Link>
-              </SubheaderButton>
+              </EditorHeaderButton>
             </li>
           </ul>
         </div>
-      </Subheader>
+      </EditorHeader>
       {!showEditor && !showPreview ? (
         <div className="main-content-wrapper">
           <div className="empty">
