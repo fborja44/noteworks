@@ -122,7 +122,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       showColorMenu={showColorMenu}
       setShowColorMenu={setShowColorMenu}
       showConfirmDelete={showConfirmDelete}
-      setShowConfirmDelete={setShowColorMenu}
+      setShowConfirmDelete={setShowConfirmDelete}
       setSelectedTab={setSelectedTab}
     />
   );
