@@ -1,7 +1,7 @@
 /* Marknote Component
 ------------------------------------------------------------------------------*/
 // React imports
-import * as React from 'react';
+import * as React from "react";
 import { Link } from "react-router-dom";
 
 // Common imports
@@ -10,10 +10,9 @@ import { Marknote } from "../../common/types";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-
-// Image and icon imports
-import { TiDelete, TiStarOutline, TiStar } from "react-icons/ti";
-import { IoMdMenu } from "react-icons/io";
+import FavoriteButton from "../notes/FavoriteButton";
+import DeleteButton from "../notes/DeleteButton";
+import MenuButton from "../notes/MenuButton";
 
 export interface MNComponentProps {
   currentNote: Marknote;
@@ -65,13 +64,10 @@ const MNComponent: React.FC<MNComponentProps> = ({
           style={{ backgroundColor: currentNote.color }}
         >
           {handleUpdateMarknote && (
-            <button
-              title="Favorite"
-              className="favorite-note-button note-button"
+            <FavoriteButton
+              favorited={currentNote.favorited}
               onClick={(event) => handleFavorite(event)}
-            >
-              {currentNote.favorited ? <TiStar /> : <TiStarOutline />}
-            </button>
+            />
           )}
           <span className="marknote-name note-name">
             {currentNote.title.trim().length !== 0 ? (
@@ -80,23 +76,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
               <span className="italic">Untitled Note</span>
             )}
           </span>
-          {handleUpdateMarknote && (
-            <button
-              title="Options"
-              className="color-menu-button note-button"
-              onClick={toggleColorMenu}
-            >
-              <IoMdMenu />
-            </button>
-          )}
+          {handleUpdateMarknote && <MenuButton onClick={toggleColorMenu} />}
           {handleDeleteMarknote && (
-            <button
-              title="Delete Note"
-              className="delete-note-button note-button"
-              onClick={toggleConfirmDelete}
-            >
-              <TiDelete className="delete-icon" size="1.2em" />
-            </button>
+            <DeleteButton onClick={toggleConfirmDelete} />
           )}
         </div>
         <div className="marknote-content note-content">

@@ -9,9 +9,6 @@ import { FiSettings } from "react-icons/fi";
 import { TiHomeOutline } from "react-icons/ti";
 import SidebarButton from "./SidebarButton";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-// import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export interface SidebarProps {

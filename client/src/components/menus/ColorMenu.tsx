@@ -3,9 +3,6 @@
 // React imports
 import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-// import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports

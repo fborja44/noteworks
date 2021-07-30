@@ -74,7 +74,7 @@ main {
 }
 
 .main-content-wrapper {
-  padding: 1.5rem;
+  padding: 1.5rem 1.75rem;
   overflow: auto;
   height: calc(100vh - 80px);
   width: calc(100vw - 45px);
@@ -346,23 +346,7 @@ textarea:focus {
   color: white;
 }
 
-/** Delete Menu **/
-.delete-note-button {
-  font-size: 11px;
-}
-
 /** Color Menu Styles **/
-.color-menu-wrapper {
-  width: 260px;
-  height: fit-content;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
-  background: #fff;
-  color: #000;
-  position: relative;
-  z-index: 10;
-  padding: 1rem 1rem 1.5rem 1rem;
-}
-
 .favorite-note-button,
 .color-menu-button {
   margin-right: 0.4em;

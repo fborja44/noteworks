@@ -3,9 +3,6 @@
 // React import
 import * as React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-// import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const SectionContainer = styled.section`

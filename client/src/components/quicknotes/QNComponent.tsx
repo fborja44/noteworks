@@ -7,10 +7,9 @@ import { Quicknote } from "../../common/types";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-
-// Image and icon imports
-import { TiDelete, TiStarOutline, TiStar } from "react-icons/ti";
-import { IoMdMenu } from "react-icons/io";
+import FavoriteButton from "../notes/FavoriteButton";
+import DeleteButton from "../notes/DeleteButton";
+import MenuButton from "../notes/MenuButton";
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
@@ -115,13 +114,10 @@ const QNComponent: React.FC<QNComponentProps> = ({
         style={{ backgroundColor: currentNote.color }}
       >
         {handleUpdateQuicknote && (
-          <button
-            title="Favorite"
-            className="favorite-note-button note-button"
+          <FavoriteButton
+            favorited={currentNote.favorited}
             onClick={handleFavorite}
-          >
-            {currentNote.favorited ? <TiStar /> : <TiStarOutline />}
-          </button>
+          />
         )}
         <input
           className="quicknote-title note-name"
@@ -129,23 +125,9 @@ const QNComponent: React.FC<QNComponentProps> = ({
           placeholder="Enter a title..."
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        {handleUpdateQuicknote && (
-          <button
-            title="Options"
-            onClick={toggleColorMenu}
-            className="color-menu-button note-button"
-          >
-            <IoMdMenu />
-          </button>
-        )}
+        {handleUpdateQuicknote && <MenuButton onClick={toggleColorMenu} />}
         {handleDeleteQuicknote && (
-          <button
-            title="Delete"
-            className="delete-note-button note-button"
-            onClick={toggleConfirmDelete}
-          >
-            <TiDelete className="delete-icon" size="1.2em" />
-          </button>
+          <DeleteButton onClick={toggleConfirmDelete} />
         )}
       </div>
       <div className="quicknote-content note-content">
