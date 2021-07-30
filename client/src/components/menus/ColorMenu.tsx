@@ -17,11 +17,11 @@ export interface ColorMenuProps {
   handleEditColor: (color: string) => void;
 }
 
-const ColorMenu = ({
+const ColorMenu: React.FC<ColorMenuProps> = ({
   showColorMenu,
   setShowColorMenu,
   handleEditColor,
-}: ColorMenuProps) => {
+}) => {
   /**
    * On click handler to change color of note.
    * Event target needs dataset attribute.

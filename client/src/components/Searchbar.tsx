@@ -9,7 +9,7 @@ interface SearchbarProps {
   handleSearchNote: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Searchbar = ({ handleSearchNote }: SearchbarProps) => {
+const Searchbar: React.FC<SearchbarProps> = ({ handleSearchNote }) => {
   return (
     <div className="searchbar">
       <FaSearch className="search-icon" size="1.3em" />

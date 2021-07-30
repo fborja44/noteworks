@@ -20,12 +20,12 @@ export interface MNComponentContainerProps {
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MNComponentContainer = ({
+const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
-}: MNComponentContainerProps) => {
+}) => {
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 

@@ -8,7 +8,7 @@ import PageHeader from "../pageheader/PageHeader";
 
 export interface SettingsPageProps {}
 
-const SettingsPage = () => {
+const SettingsPage: React.FC<SettingsPageProps> = () => {
   return (
     <React.Fragment>
       <PageHeader title="Settings" />

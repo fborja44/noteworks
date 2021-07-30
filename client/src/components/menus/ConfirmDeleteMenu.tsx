@@ -19,14 +19,14 @@ export interface ConfirmDeleteProps {
   redirect?: Boolean;
 }
 
-const ConfirmDelete = ({
+const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   currentNote,
   showMenuState,
   setShowMenuState,
   handleDeleteNote,
   toggleConfirmDelete,
   redirect,
-}: ConfirmDeleteProps) => {
+}) => {
   // Check if note title is empty
   const title =
     currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;

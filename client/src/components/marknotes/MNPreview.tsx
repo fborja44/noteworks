@@ -21,7 +21,7 @@ export interface MNPreviewProps {
   currentNote: Marknote;
 }
 
-const MNPreview = ({ currentNote }: MNPreviewProps) => {
+const MNPreview: React.FC<MNPreviewProps> = ({ currentNote }) => {
   return <div></div>;
 };
 

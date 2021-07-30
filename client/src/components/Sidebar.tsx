@@ -12,7 +12,7 @@ export interface SidebarProps {
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Sidebar = ({ selectedTab, setSelectedTab }: SidebarProps) => {
+const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
   const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
   // const location = useLocation().pathname;
 

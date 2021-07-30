@@ -11,7 +11,7 @@ export interface QNHelpProps {
   setShowQNHelp: any;
 }
 
-const QNHelp = ({ showQNHelp, setShowQNHelp }: QNHelpProps) => {
+const QNHelp: React.FC<QNHelpProps> = ({ showQNHelp, setShowQNHelp }) => {
   return (
     <ModalMenu
       heading="Quicknotes Help"

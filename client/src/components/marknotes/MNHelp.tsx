@@ -11,7 +11,7 @@ export interface MNHelpProps {
   setShowMNHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MNHelp = ({ showMNHelp, setShowMNHelp }: MNHelpProps) => {
+const MNHelp: React.FC<MNHelpProps> = ({ showMNHelp, setShowMNHelp }) => {
   return (
     <ModalMenu
       heading="Marknotes Help"

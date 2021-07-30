@@ -39,7 +39,7 @@ export interface MNComponentProps {
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MNComponent = ({
+const MNComponent: React.FC<MNComponentProps> = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
@@ -52,7 +52,7 @@ const MNComponent = ({
   showConfirmDelete,
   setShowConfirmDelete,
   setSelectedTab,
-}: MNComponentProps) => {
+}) => {
   return (
     <div className="marknote">
       <Link

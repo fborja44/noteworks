@@ -23,11 +23,11 @@ export interface QNComponentProps {
   ) => void;
 }
 
-const QNComponent = ({
+const QNComponent: React.FC<QNComponentProps> = ({
   currentNote,
   handleDeleteQuicknote,
   handleUpdateQuicknote,
-}: QNComponentProps) => {
+}) => {
   // Character limits
   const titleCharLimit = 30;
   const bodyCharLimit = 300;

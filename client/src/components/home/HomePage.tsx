@@ -41,7 +41,7 @@ export interface HomePageProps {
 /**
  * Home content renderer
  */
-const HomePage = ({
+const HomePage: React.FC<HomePageProps> = ({
   quicknotes,
   marknotes,
   handleUpdateMarknote,
@@ -49,7 +49,7 @@ const HomePage = ({
   handleUpdateQuicknote,
   handleDeleteQuicknote,
   setSelectedTab,
-}: HomePageProps) => {
+}) => {
   const favoritedQuicknotes = quicknotes
     .filter((note) => note.favorited)
     .map((note) => (

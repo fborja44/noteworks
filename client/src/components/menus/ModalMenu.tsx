@@ -13,12 +13,12 @@ export interface ModalMenuProps {
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalMenu = ({
+const ModalMenu: React.FC<ModalMenuProps> = ({
   heading,
   children,
   showMenuState,
   setShowMenuState,
-}: ModalMenuProps) => {
+}) => {
   const menuRef: any = useRef();
 
   /**

@@ -40,13 +40,13 @@ export interface MNPageProps {
 /**
  * Content for marknotes route
  */
-const MNPage = ({
+const MNPage: React.FC<MNPageProps> = ({
   marknotes,
   setMarknotes,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
-}: MNPageProps) => {
+}) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
 

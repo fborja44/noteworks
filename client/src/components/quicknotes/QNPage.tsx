@@ -32,12 +32,12 @@ export interface QNPageProps {
 /**
  * Content for the quicknotes route.
  */
-const QNPage = ({
+const QNPage: React.FC<QNPageProps> = ({
   quicknotes,
   setQuicknotes,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
-}: QNPageProps) => {
+}) => {
   // Quicknotes Help Menu state
   const [showQNHelp, setShowQNHelp] = useState(false);
   const openQNHelp = () => {

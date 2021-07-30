@@ -82,12 +82,12 @@ export interface MNEditorProps {
   setRedirect: React.Dispatch<React.SetStateAction<JSX.Element>>;
 }
 
-const MNEditor = ({
+const MNEditor: React.FC<MNEditorProps> = ({
   currentNote,
   handleDeleteMarknote,
   handleUpdateMarknote,
   setRedirect,
-}: MNEditorProps) => {
+}) => {
   // Logic to determine colors
   /**
    * TODO: Change subheader text colors for Lemon and Lime
