@@ -8,10 +8,11 @@ import styled from "@emotion/styled";
 import { Quicknote, Marknote } from "../../common/types";
 import { SectionContainer, SectionHeader, SectionTitle } from "../../common/styled";
 import QNComponent from "../quicknotes/QNComponent";
-import MNComponent from "../marknotes/MNComponent";
+import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
 
 // Image and icon imports
 import { TiStar } from "react-icons/ti";
+
 
 // Styled components
 const Empty = styled.div`
@@ -21,7 +22,7 @@ const Empty = styled.div`
 /**
  * Home content props
  */
-export interface HomeContentProps {
+export interface HomePageProps {
   quicknotes: Quicknote[];
   marknotes: Marknote[];
   handleUpdateMarknote: (
@@ -40,7 +41,7 @@ export interface HomeContentProps {
 /**
  * Home content renderer
  */
-const HomeContent = ({
+const HomePage = ({
   quicknotes,
   marknotes,
   handleUpdateMarknote,
@@ -48,7 +49,7 @@ const HomeContent = ({
   handleUpdateQuicknote,
   handleDeleteQuicknote,
   setSelectedTab,
-}: HomeContentProps) => {
+}: HomePageProps) => {
   const favoritedQuicknotes = quicknotes
     .filter((note) => note.favorited)
     .map((note) => (
@@ -64,7 +65,7 @@ const HomeContent = ({
   const favoritedMarknotes = marknotes
     .filter((note) => note.favorited)
     .map((note) => (
-      <MNComponent
+      <MNComponentContainer
         key={note.id}
         currentNote={note}
         handleUpdateMarknote={handleUpdateMarknote}
@@ -118,4 +119,4 @@ const HomeContent = ({
   );
 };
 
-export default HomeContent;
+export default HomePage;

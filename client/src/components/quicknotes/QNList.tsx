@@ -22,7 +22,7 @@ import Searchbar from "../Searchbar";
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
-export interface QNContentProps {
+export interface QNPageProps {
   quicknotes: Quicknote[];
   setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
   handleUpdateQuicknote: (
@@ -35,12 +35,12 @@ export interface QNContentProps {
 /**
  * Content for the quicknotes route.
  */
-const QNContent = ({
+const QNPage = ({
   quicknotes,
   setQuicknotes,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
-}: QNContentProps) => {
+}: QNPageProps) => {
   // Quicknotes Help Menu state
   const [showQNHelp, setShowQNHelp] = useState(false);
   const openQNHelp = () => {
@@ -143,4 +143,4 @@ const QNContent = ({
   );
 };
 
-export default QNContent;
+export default QNPage;

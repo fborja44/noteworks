@@ -12,10 +12,10 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 
-import HomeContent from "./home/HomeContent";
-import QNContent from "./quicknotes/QNContent";
-import MNContent from "./marknotes/MNContent";
-import SettingsContent from "./settings/SettingsContent";
+import HomeContent from "./home/HomePage";
+import QNPage from "./quicknotes/QNList";
+import MNPage from "./marknotes/MNPage";
+import SettingsPage from "./settings/SettingsPage";
 
 // CSS imports
 import "../css/app.css";
@@ -158,7 +158,7 @@ const App = () => {
           </Route>
           <Route path="/quicknotes">
             <main>
-              <QNContent
+              <QNPage
                 quicknotes={quicknotes}
                 setQuicknotes={setQuicknotes}
                 handleUpdateQuicknote={handleUpdateQuicknote}
@@ -168,7 +168,7 @@ const App = () => {
           </Route>
           <Route path="/marknotes">
             <main>
-              <MNContent
+              <MNPage
                 marknotes={marknotes}
                 setMarknotes={setMarknotes}
                 handleUpdateMarknote={handleUpdateMarknote}
@@ -179,7 +179,7 @@ const App = () => {
           </Route>
           <Route path="/settings">
             <main>
-              <SettingsContent />
+              <SettingsPage />
             </main>
           </Route>
         </Switch>

@@ -2,9 +2,9 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
-export interface SettingsContentProps {}
+export interface SettingsPageProps {}
 
-const SettingsContent = () => {
+const SettingsPage = () => {
   return (
     <React.Fragment>
       <section className="sub-header">
@@ -19,4 +19,4 @@ const SettingsContent = () => {
   );
 };
 
-export default SettingsContent;
+export default SettingsPage;

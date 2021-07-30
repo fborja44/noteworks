@@ -21,8 +21,4 @@ export const SectionTitle = styled.h1`
   * {
     margin-right: 0.2em;
   }
-  ,
-  svg {
-    font-size: 24px;
-  }
 `;

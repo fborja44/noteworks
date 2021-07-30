@@ -15,20 +15,21 @@ import {
 import { COLOR } from "../../common/color";
 
 // Component imports
-import MNComponent from "./MNComponent";
 import MNHelp from "./MNHelp";
 import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
 import Searchbar from "../Searchbar";
+
+import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
 import { MdHelpOutline } from "react-icons/md";
 
 /**
- * Props for MNContent
+ * Props for MNPage
  */
-export interface MNContentProps {
+export interface MNPageProps {
   marknotes: Marknote[];
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
   handleUpdateMarknote: (
@@ -42,13 +43,13 @@ export interface MNContentProps {
 /**
  * Content for marknotes route
  */
-const MNContent = ({
+const MNPage = ({
   marknotes,
   setMarknotes,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
-}: MNContentProps) => {
+}: MNPageProps) => {
   // Redirect state
   const [redirect, setRedirect] = useState(<></>);
 
@@ -99,7 +100,7 @@ const MNContent = ({
   let notes_list = (
     <div className="marknotes-list">
       {filteredMarknotes.map((note) => (
-        <MNComponent
+        <MNComponentContainer
           key={note.id}
           currentNote={note}
           handleUpdateMarknote={handleUpdateMarknote}
@@ -185,4 +186,4 @@ const MNContent = ({
   );
 };
 
-export default MNContent;
+export default MNPage;
