@@ -7,9 +7,7 @@ import { Quicknote } from "../../common/types";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-import FavoriteButton from "../notes/FavoriteButton";
-import DeleteButton from "../notes/DeleteButton";
-import MenuButton from "../notes/MenuButton";
+import NoteHeader from "../notes/NoteHeader";
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
@@ -109,27 +107,13 @@ const QNComponent: React.FC<QNComponentProps> = ({
 
   return (
     <div className="quicknote">
-      <div
-        className="quicknote-header note-header"
-        style={{ backgroundColor: currentNote.color }}
-      >
-        {handleUpdateQuicknote && (
-          <FavoriteButton
-            favorited={currentNote.favorited}
-            onClick={handleFavorite}
-          />
-        )}
-        <input
-          className="quicknote-title note-name"
-          value={currentNote.title}
-          placeholder="Enter a title..."
-          onChange={(event) => handleEditField("title", event.target.value)}
-        />
-        {handleUpdateQuicknote && <MenuButton onClick={toggleColorMenu} />}
-        {handleDeleteQuicknote && (
-          <DeleteButton onClick={toggleConfirmDelete} />
-        )}
-      </div>
+      <NoteHeader
+        currentNote={currentNote}
+        handleFavorite={handleFavorite}
+        handleEditField={handleEditField}
+        toggleColorMenu={toggleColorMenu}
+        toggleConfirmDelete={toggleConfirmDelete}
+      />
       <div className="quicknote-content note-content">
         <textarea
           className="quicknote-body note-body"

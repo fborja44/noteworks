@@ -114,6 +114,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       currentNote={currentNote}
       handleUpdateMarknote={handleUpdateMarknote}
       handleDeleteMarknote={handleDeleteMarknote}
+      handleEditField={handleEditField}
       handleFavorite={handleFavorite}
       handleEditColor={handleEditColor}
       toggleConfirmDelete={toggleConfirmDelete}

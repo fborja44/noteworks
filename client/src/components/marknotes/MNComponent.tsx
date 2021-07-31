@@ -13,6 +13,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import FavoriteButton from "../notes/FavoriteButton";
 import DeleteButton from "../notes/DeleteButton";
 import MenuButton from "../notes/MenuButton";
+import NoteHeader from "../notes/NoteHeader";
 
 export interface MNComponentProps {
   currentNote: Marknote;
@@ -21,6 +22,7 @@ export interface MNComponentProps {
     updatedMarknote: Marknote
   ) => void;
   handleDeleteMarknote?: (noteId: string) => void;
+  handleEditField: (key: string, value: string | Boolean, updateDate?: Boolean) => void;
   handleFavorite: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
@@ -42,6 +44,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
+  handleEditField,
   handleFavorite,
   handleEditColor,
   toggleConfirmDelete,
@@ -59,28 +62,13 @@ const MNComponent: React.FC<MNComponentProps> = ({
         to={`/marknotes/${currentNote.id}`}
         onClick={() => setSelectedTab("/marknotes")}
       >
-        <div
-          className="marknote-header note-header"
-          style={{ backgroundColor: currentNote.color }}
-        >
-          {handleUpdateMarknote && (
-            <FavoriteButton
-              favorited={currentNote.favorited}
-              onClick={(event) => handleFavorite(event)}
-            />
-          )}
-          <span className="marknote-name note-name">
-            {currentNote.title.trim().length !== 0 ? (
-              currentNote.title
-            ) : (
-              <span className="italic">Untitled Note</span>
-            )}
-          </span>
-          {handleUpdateMarknote && <MenuButton onClick={toggleColorMenu} />}
-          {handleDeleteMarknote && (
-            <DeleteButton onClick={toggleConfirmDelete} />
-          )}
-        </div>
+        <NoteHeader
+          currentNote={currentNote}
+          handleFavorite={handleFavorite}
+          handleEditField={handleEditField}
+          toggleColorMenu={toggleColorMenu}
+          toggleConfirmDelete={toggleConfirmDelete}
+        />
         <div className="marknote-content note-content">
           <span className="note-body">
             {currentNote.body.length > 0 ? (

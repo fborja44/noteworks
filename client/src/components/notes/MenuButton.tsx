@@ -13,11 +13,11 @@ import NoteButton from "./NoteButton";
 // Image and icon imports
 import { IoMdMenu } from "react-icons/io";
 
-export interface DeleteButtonProps {
+export interface MenuButtonProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({ onClick }) => {
   return (
     <NoteButton
       title="Options"
@@ -31,4 +31,4 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {
   );
 };
 
-export default DeleteButton;
+export default MenuButton;
