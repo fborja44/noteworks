@@ -10,10 +10,8 @@ import { Marknote } from "../../common/types";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-import FavoriteButton from "../notes/FavoriteButton";
-import DeleteButton from "../notes/DeleteButton";
-import MenuButton from "../notes/MenuButton";
 import NoteHeader from "../notes/NoteHeader";
+import MNFooter from "./MNFooter";
 
 export interface MNComponentProps {
   currentNote: Marknote;
@@ -22,7 +20,11 @@ export interface MNComponentProps {
     updatedMarknote: Marknote
   ) => void;
   handleDeleteMarknote?: (noteId: string) => void;
-  handleEditField: (key: string, value: string | Boolean, updateDate?: Boolean) => void;
+  handleEditField: (
+    key: string,
+    value: string | Boolean,
+    updateDate?: Boolean
+  ) => void;
   handleFavorite: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
@@ -77,22 +79,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
               <span className="italic">This note is empty.</span>
             )}
           </span>
-          <div className="marknote-footer note-footer">
-            <div className="marknote-footer-left note-footer-left">
-              <small>Last Modifed:</small>
-            </div>
-            <div className="marknote-footer-right note-footer-right">
-              <small>
-                {new Date(currentNote.lastModified).toLocaleDateString(
-                  "en-US",
-                  {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }
-                )}
-              </small>
-            </div>
-          </div>
+          <MNFooter currentNote={currentNote} />
         </div>
       </Link>
       <ColorMenu

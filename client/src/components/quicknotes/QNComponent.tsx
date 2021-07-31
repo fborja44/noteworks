@@ -8,6 +8,7 @@ import { Quicknote } from "../../common/types";
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
+import QNFooter from "./QNFooter";
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
@@ -28,11 +29,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   // Character limits
   const titleCharLimit = 30;
   const bodyCharLimit = 300;
-  let body_limit = bodyCharLimit;
-
-  if (currentNote.body) {
-    body_limit -= currentNote.body.length;
-  }
+  const bodyCharRemaining = bodyCharLimit - currentNote.body.length;
 
   /**
    * Function to handle changes in a note's field.
@@ -121,21 +118,11 @@ const QNComponent: React.FC<QNComponentProps> = ({
           value={currentNote.body}
           onChange={(event) => handleEditField("body", event.target.value)}
         />
-        <div className="quicknote-footer note-footer">
-          <div className="quicknote-footer-left note-footer-left">
-            <small>
-              {new Date(currentNote.lastModified).toLocaleDateString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </small>
-          </div>
-          <div className="quicknote-footer-right note-footer-right">
-            <small>
-              {body_limit}/{bodyCharLimit}
-            </small>
-          </div>
-        </div>
+        <QNFooter
+          currentNote={currentNote}
+          remaining={bodyCharRemaining}
+          limit={bodyCharLimit}
+        />
       </div>
       <ColorMenu
         showColorMenu={showColorMenu}

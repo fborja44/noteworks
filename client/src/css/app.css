@@ -302,24 +302,6 @@ textarea:focus {
   color: var(--note-text-color-primary);
 }
 
-.note-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 0.5rem 3px 0.5rem;
-  border-top: 1px solid #828282;
-}
-
-.note-footer-left {
-  display: flex;
-  align-items: center;
-}
-
-.note-footer-right {
-  display: flex;
-  align-items: center;
-}
-
 /** Note Buttons **/
 .note-button {
   background: none;
