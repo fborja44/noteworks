@@ -4,6 +4,11 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
+
 // Common imports
 import { Marknote } from "../../common/types";
 
@@ -12,6 +17,24 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import MNFooter from "./MNFooter";
+import NoteContent from "../notes/NoteContent";
+
+const MarknoteContainer = styled.div`
+  background-color: var(--note-background-primary);
+  margin: 0 10px 0 10px;
+  width: 240px;
+  height: 330px;
+  justify-self: center;
+  font-size: 13px;
+  font-family: "Source Sans Pro", sans-serif !important;
+  border: 1px solid #828282;
+`;
+
+const MarknoteLink = css`
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+`;
 
 export interface MNComponentProps {
   currentNote: Marknote;
@@ -58,9 +81,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
   setSelectedTab,
 }) => {
   return (
-    <div className="marknote">
+    <MarknoteContainer>
       <Link
-        className="marknote-link"
+        css={MarknoteLink}
         to={`/marknotes/${currentNote.id}`}
         onClick={() => setSelectedTab("/marknotes")}
       >
@@ -71,7 +94,11 @@ const MNComponent: React.FC<MNComponentProps> = ({
           toggleColorMenu={toggleColorMenu}
           toggleConfirmDelete={toggleConfirmDelete}
         />
-        <div className="marknote-content note-content">
+        <NoteContent
+          css={css`
+            height: calc(100% - 25px);
+          `}
+        >
           <span className="note-body">
             {currentNote.body.length > 0 ? (
               currentNote.body
@@ -80,7 +107,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
             )}
           </span>
           <MNFooter currentNote={currentNote} />
-        </div>
+        </NoteContent>
       </Link>
       <ColorMenu
         showColorMenu={showColorMenu}
@@ -94,7 +121,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
         handleDeleteNote={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-    </div>
+    </MarknoteContainer>
   );
 };
 

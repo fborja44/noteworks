@@ -1,5 +1,13 @@
+/* 
+Quicknote Component
+------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
+
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote } from "../../common/types";
@@ -9,6 +17,28 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import QNFooter from "./QNFooter";
+import NoteContent from "../notes/NoteContent";
+
+// TODO: Fix borders on different monitors
+const QuicknoteContainer = styled.div`
+  background-color: var(--note-background-primary);
+  width: 230px;
+  height: fit-content;
+  justify-self: center;
+  font-size: 13px;
+  font-family: "Source Sans Pro", sans-serif !important;
+  border: 1px solid #828282;
+  box-sizing: border-box;
+
+  textarea {
+    border: none;
+    resize: none;
+    background-color: inherit;
+    font-size: 13px;
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 500;
+  }
+`;
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
@@ -103,7 +133,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   };
 
   return (
-    <div className="quicknote">
+    <QuicknoteContainer>
       <NoteHeader
         currentNote={currentNote}
         handleFavorite={handleFavorite}
@@ -111,7 +141,11 @@ const QNComponent: React.FC<QNComponentProps> = ({
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-      <div className="quicknote-content note-content">
+      <NoteContent
+        css={css`
+          height: 170px;
+        `}
+      >
         <textarea
           className="quicknote-body note-body"
           placeholder="Write your note here..."
@@ -123,7 +157,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
           remaining={bodyCharRemaining}
           limit={bodyCharLimit}
         />
-      </div>
+      </NoteContent>
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
@@ -136,7 +170,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         handleDeleteNote={handleDeleteQuicknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-    </div>
+    </QuicknoteContainer>
   );
 };
 

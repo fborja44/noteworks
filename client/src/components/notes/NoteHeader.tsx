@@ -26,9 +26,7 @@ const NoteHeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 0.5em;
-  border-top: 1px solid #828282;
-  border-left: 1px solid #828282;
-  border-right: 1px solid #828282;
+  border-bottom: 1px solid #828282;
 `;
 
 const NoteTitle = styled.input`
