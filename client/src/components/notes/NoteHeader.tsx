@@ -68,6 +68,12 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
   toggleConfirmDelete,
   children,
 }) => {
+  const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+  }
+
   return (
     <NoteHeaderContainer style={{ backgroundColor: currentNote.color }}>
       <FavoriteButton
@@ -78,6 +84,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
         value={currentNote.title}
         placeholder="Untitled Note"
         onChange={(event) => handleEditField("title", event.target.value)}
+        onClick={(event) => handleClick(event)}
       />
       <MenuButton onClick={toggleColorMenu} />
       <DeleteButton onClick={toggleConfirmDelete} />
