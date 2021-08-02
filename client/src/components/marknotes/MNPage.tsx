@@ -16,8 +16,7 @@ import Preview from "./MNPreview";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
-
-import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
+import MNList from "./MNList";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
@@ -82,38 +81,6 @@ const MNPage: React.FC<MNPageProps> = ({
    */
   const [MNSearchText, setMNSearchText] = useState("");
 
-  // Sort notes in descending order from last modifed date
-  const sortedMarknotes = marknotes.sort(
-    (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
-  );
-
-  // Filter notes
-  const filteredMarknotes = sortedMarknotes.filter(
-    (note: Marknote) =>
-      note.title.toLowerCase().includes(MNSearchText.toLowerCase()) ||
-      note.body.toLowerCase().includes(MNSearchText.toLowerCase())
-  );
-
-  let notes_list = (
-    <div className="marknotes-list">
-      {filteredMarknotes.map((note) => (
-        <MNComponentContainer
-          key={note.id}
-          currentNote={note}
-          handleUpdateMarknote={handleUpdateMarknote}
-          handleDeleteMarknote={handleDeleteMarknote}
-          setSelectedTab={setSelectedTab}
-        />
-      ))}
-    </div>
-  );
-
-  const searchEmpty = (
-    <div className="empty">
-      <p>{`No notes found for the search term "${MNSearchText}".`}</p>
-    </div>
-  );
-
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -131,19 +98,13 @@ const MNPage: React.FC<MNPageProps> = ({
         </PageHeader>
         <div className="main-content-wrapper">
           <Section name="My Marknotes">
-            {marknotes.length !== 0 ? (
-              notes_list
-            ) : (
-              <div className="empty">
-                <p>You have no saved marknotes.</p>
-                <p>
-                  Create one now by pressing the + button in the menu above!
-                </p>
-              </div>
-            )}
-            {marknotes.length !== 0 &&
-              filteredMarknotes.length === 0 &&
-              searchEmpty}
+            <MNList
+              MNSearchText={MNSearchText}
+              marknotes={marknotes}
+              handleUpdateMarknote={handleUpdateMarknote}
+              handleDeleteMarknote={handleDeleteMarknote}
+              setSelectedTab={setSelectedTab}
+            />
           </Section>
           {redirect}
         </div>

@@ -17,7 +17,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import QNFooter from "./QNFooter";
-import NoteContent from "../notes/NoteContent";
+import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 
 // TODO: Fix borders on different monitors
 const QuicknoteContainer = styled.div`
@@ -38,11 +38,22 @@ const QuicknoteContainer = styled.div`
     font-family: "Source Sans Pro", sans-serif !important;
     font-weight: 500;
   }
+
+  textarea::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background: var(--color-grey-dark);
+  }
+  
+  textarea::-webkit-scrollbar-thumb:hover {
+    cursor: default;
+  }
 `;
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
-  notes: Quicknote[];
   currentNote: Quicknote;
   handleDeleteQuicknote?: (id: string) => void;
   handleUpdateQuicknote?: (
@@ -146,8 +157,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
           height: 170px;
         `}
       >
-        <textarea
-          className="quicknote-body note-body"
+        <QuicknoteBody
           placeholder="Write your note here..."
           value={currentNote.body}
           onChange={(event) => handleEditField("body", event.target.value)}

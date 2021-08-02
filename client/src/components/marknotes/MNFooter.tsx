@@ -6,7 +6,6 @@ import * as React from "react";
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
-import styled from "@emotion/styled";
 
 // Component imports
 import NoteFooter, { NoteFooterSection } from "../notes/NoteFooter";
@@ -14,11 +13,11 @@ import NoteFooter, { NoteFooterSection } from "../notes/NoteFooter";
 // Common imports
 import { Marknote } from "../../common/types";
 
-export interface QNFooterrProps {
+export interface QNFooterProps {
   currentNote: Marknote;
 }
 
-const QNFooterr: React.FC<QNFooterrProps> = ({ currentNote }) => {
+const QNFooter: React.FC<QNFooterProps> = ({ currentNote }) => {
   return (
     <NoteFooter currentNote={currentNote}>
       <NoteFooterSection>
@@ -36,4 +35,4 @@ const QNFooterr: React.FC<QNFooterrProps> = ({ currentNote }) => {
   );
 };
 
-export default QNFooterr;
+export default QNFooter;

@@ -17,7 +17,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import MNFooter from "./MNFooter";
-import NoteContent from "../notes/NoteContent";
+import NoteContent, { MarknoteBody } from "../notes/NoteContent";
 
 const MarknoteContainer = styled.div`
   background-color: var(--note-background-primary);
@@ -99,13 +99,18 @@ const MNComponent: React.FC<MNComponentProps> = ({
             height: calc(100% - 25px);
           `}
         >
-          <span className="note-body">
+          <MarknoteBody
+            css={css`
+              height: calc(100% - 25px);
+              overflow: hidden;
+            `}
+          >
             {currentNote.body.length > 0 ? (
               currentNote.body
             ) : (
               <span className="italic">This note is empty.</span>
             )}
-          </span>
+          </MarknoteBody>
           <MNFooter currentNote={currentNote} />
         </NoteContent>
       </Link>

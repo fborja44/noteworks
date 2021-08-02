@@ -5,6 +5,18 @@
 // import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+export const MarknoteBody = styled.div`
+  height: 100%;
+  padding: 0.5rem;
+  color: var(--note-text-color-primary);
+`;
+
+export const QuicknoteBody = styled.textarea`
+  height: 100%;
+  padding: 0.5rem;
+  color: var(--note-text-color-primary);
+`;
+
 const NoteContent = styled.div`
   display: flex;
   flex-direction: column;

@@ -9,11 +9,11 @@ import { Quicknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import QNComponent from "./QNComponent";
 import QNHelp from "./QNHelp";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
+import QNList from "./QNList";
 
 // Image and icon imports
 import { RiAddLine } from "react-icons/ri";
@@ -66,33 +66,6 @@ const QNPage: React.FC<QNPageProps> = ({
    */
   const [QNSearchText, setQNSearchText] = useState("");
 
-  // Filter notes
-  const filteredQuicknotes = quicknotes.filter(
-    (note: Quicknote) =>
-      note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
-      note.body.toLowerCase().includes(QNSearchText.toLowerCase())
-  );
-
-  let notes_list = (
-    <div className="quicknotes-list">
-      {filteredQuicknotes.map((note: any) => (
-        <QNComponent
-          key={note.id}
-          notes={quicknotes}
-          currentNote={note}
-          handleDeleteQuicknote={handleDeleteQuicknote}
-          handleUpdateQuicknote={handleUpdateQuicknote}
-        />
-      ))}
-    </div>
-  );
-
-  const searchEmpty = (
-    <div className="empty">
-      <p>{`No notes found for the search term "${QNSearchText}".`}</p>
-    </div>
-  );
-
   return (
     <React.Fragment>
       <PageHeader
@@ -109,17 +82,12 @@ const QNPage: React.FC<QNPageProps> = ({
       </PageHeader>
       <div className="main-content-wrapper">
         <Section name="My Quicknotes">
-          {quicknotes.length !== 0 ? (
-            notes_list
-          ) : (
-            <div className="empty">
-              <p>You have no saved quicknotes.</p>
-              <p>Create one now by pressing the + button in the menu above!</p>
-            </div>
-          )}
-          {quicknotes.length !== 0 &&
-            filteredQuicknotes.length === 0 &&
-            searchEmpty}
+          <QNList
+            QNSearchText={QNSearchText}
+            quicknotes={quicknotes}
+            handleUpdateQuicknote={handleUpdateQuicknote}
+            handleDeleteQuicknote={handleDeleteQuicknote}
+          />
         </Section>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />
       </div>
