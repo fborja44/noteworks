@@ -144,11 +144,11 @@ const App = () => {
 
   /* Current theme state
   ------------------------------------------------------------------------------*/
-  const [theme, setTheme] = useState(lightTheme);
+  const [appTheme, setAppTheme] = useState(lightTheme);
 
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={appTheme}>
         <Header />
         <div className="app-container">
           <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
@@ -189,7 +189,7 @@ const App = () => {
             </Route>
             <Route path="/settings">
               <main>
-                <SettingsPage setTheme={setTheme} />
+                <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
               </main>
             </Route>
           </Switch>
