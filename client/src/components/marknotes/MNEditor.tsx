@@ -4,7 +4,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { css } from "@emotion/react";
+
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
@@ -30,6 +33,120 @@ import "codemirror/theme/material.css";
 import "codemirror/mode/markdown/markdown"; // import codemirror markdown
 
 import { Controlled as ControlledEditor } from "react-codemirror2"; // import text editor
+
+const EditorMain = styled.div`
+  height: 100%;
+`;
+
+const EditorContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: calc(100% - 30px);
+  outline: none;
+
+  /* Editor Scrollbars */
+  & *::-webkit-scrollbar {
+    width: 8px;
+    height: 100%;
+  }
+
+  & *::-webkit-scrollbar-thumb {
+    background: var(--color-grey-dark) !important;
+  }
+`;
+
+const EditorContainer = styled.section`
+  background: white;
+  height: 100%;
+  flex: 1;
+`;
+
+const PreviewContainer = styled.section`
+  background: white;
+  height: 100%;
+  flex: 1;
+  overflow: auto;
+`;
+
+const EditorBody = css`
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  .CodeMirror {
+    height: 100%;
+    font-size: 14px;
+    padding-bottom: 10px;
+    padding-right: 1em;
+  }
+
+  .CodeMirror.CodeMirror-wrap pre {
+    word-break: break-word;
+  }
+`;
+
+const PreviewBody = css`
+  overflow: auto;
+  padding: 0.3in 0.5in;
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+
+  h1,
+  h2 {
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid var(--color-grey);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0.5em 0;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    margin: 0 0 0.5em 0;
+  }
+
+  code {
+    display: block;
+    background: var(--preview-code-block-background);
+    padding: 0.2em 0.4em;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  blockquote {
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: solid 2px var(--color-grey);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+`;
 
 const Empty = styled.div`
   width: 100%;
@@ -142,7 +259,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
   const [showPreview, setShowPreview] = useState(true);
 
   return (
-    <div className="editor-main">
+    <EditorMain>
       <EditorHeader currentNote={currentNote} handleEditField={handleEditField}>
         <PageHeaderButton
           title="Toggle Preview"
@@ -191,10 +308,14 @@ const MNEditor: React.FC<MNEditorProps> = ({
           </Empty>
         </div>
       ) : null}
-      <div className="editor-content">
-        <section className={`editor-container ${showEditor ? "" : "hide"}`}>
+      <EditorContent>
+        <EditorContainer
+          css={css`
+            display: ${showEditor ? "default" : "none"};
+          `}
+        >
           <ControlledEditor
-            className="editor-body"
+            css={EditorBody}
             value={currentNote.body}
             onBeforeChange={handleChangeEditorBody}
             options={{
@@ -203,14 +324,23 @@ const MNEditor: React.FC<MNEditorProps> = ({
               lineNumbers: true,
             }}
           />
-        </section>
-        {showEditor && showPreview && <section className="editor-divider" />}
-        <section className={`preview-container ${showPreview ? "" : "hide"}`}>
-          <ReactMarkdown className="preview-body">
-            {currentNote.body}
-          </ReactMarkdown>
-        </section>
-      </div>
+        </EditorContainer>
+        {showEditor && showPreview && (
+          <section
+            css={css`
+              width: 20px;
+              background: #c4c4c4;
+            `}
+          />
+        )}
+        <PreviewContainer
+          css={css`
+            display: ${showPreview ? "default" : "none"};
+          `}
+        >
+          <ReactMarkdown css={PreviewBody}>{currentNote.body}</ReactMarkdown>
+        </PreviewContainer>
+      </EditorContent>
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
@@ -224,7 +354,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         toggleConfirmDelete={toggleConfirmDelete}
         redirect={true}
       />
-    </div>
+    </EditorMain>
   );
 };
 
