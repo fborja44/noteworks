@@ -1,6 +1,6 @@
 /* Color Code definitions
 ------------------------------------------------------------------------------*/
-const COLOR = {
+export const COLOR = {
   BLACK: "black",
   BLACK_HOVER: "#151515",
   WHITE: "white",
@@ -39,4 +39,56 @@ const COLOR = {
   LEMON_LIGHT: "#FDFF96",
 };
 
-export { COLOR };
+  /**
+   * TODO: Change subheader text colors for Lemon and Lime
+   */
+  /**
+   * Function to determine alternate color.
+   * @param color Primary color hex value
+   * @returns Alternate color hex value
+   */
+export const findAltColor = (color: string) => {
+  let color_light;
+  switch (color) {
+    case COLOR.RED:
+      color_light = COLOR.RED_LIGHT;
+      break;
+    case COLOR.ORANGE:
+      color_light = COLOR.ORANGE_LIGHT;
+      break;
+    case COLOR.YELLOW:
+      color_light = COLOR.YELLOW_LIGHT;
+      break;
+    case COLOR.GREEN:
+      color_light = COLOR.GREEN_LIGHT;
+      break;
+    case COLOR.BLUE:
+      color_light = COLOR.BLUE_LIGHT;
+      break;
+    case COLOR.PURPLE:
+      color_light = COLOR.PURPLE_LIGHT;
+      break;
+    case COLOR.PINK:
+      color_light = COLOR.PINK_LIGHT;
+      break;
+    case COLOR.CYAN:
+      color_light = COLOR.CYAN_LIGHT;
+      break;
+    case COLOR.LEMON:
+      color_light = COLOR.LEMON_LIGHT;
+      break;
+    case COLOR.LIME:
+      color_light = COLOR.LIME_LIGHT;
+      break;
+    case COLOR.GREY:
+      color_light = COLOR.GREY_LIGHT;
+      break;
+    case COLOR.GREY_DARK:
+      color_light = COLOR.GREY_DARK_LIGHT;
+      break;
+    default:
+      color_light = COLOR.GREY_LIGHT;
+      break;
+  }
+  return color_light;
+};

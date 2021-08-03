@@ -66,25 +66,6 @@
   height: 100%;
 }
 
-.editor-title {
-  background: #5f5e64;
-  color: white;
-  height: 24px;
-  width: fit-content;
-  border: 0;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 0 1rem 0 1rem;
-}
-
-.editor-title::placeholder {
-  color: white;
-}
-
-.editor-title:focus {
-  outline: none;
-}
-
 .editor-content {
   display: flex;
   flex-direction: row;

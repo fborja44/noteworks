@@ -9,11 +9,12 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote } from "../../common/types";
-import { COLOR } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
+import { EditorHeader } from "../pageheader/PageHeader";
+import PageHeaderButton from "../pageheader/PageHeaderButton";
 
 // Image and icon imports
 import { IoReturnUpForward } from "react-icons/io5";
@@ -30,43 +31,24 @@ import "codemirror/mode/markdown/markdown"; // import codemirror markdown
 
 import { Controlled as ControlledEditor } from "react-codemirror2"; // import text editor
 
-/**
- * Dynamic Element Styles
- * Should declare outside of function component, but need to declare here for dynamic styles
- * Issue: input is rerendered each time input is given, losing focus
- * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
- */
-const EditorHeaderStyles = ({ color }: { color: string }) =>
-  css`
-    background: ${color};
-  `;
-const EditorHeader = styled.section`
-  ${EditorHeaderStyles}
-`;
+const Empty = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  text-align: center;
 
-const TitleInputStyles = ({ color }: { color: string }) =>
-  css`
-    background: ${color};
-  `;
-const TitleInput = styled.input`
-  ${TitleInputStyles}
-`;
+  p {
+    margin: 0.5rem;
+  }
 
-const EditorHeaderButtonStyles = ({
-  color,
-  color2,
-}: {
-  color: string;
-  color2: string;
-}) =>
-  css`
-    background: ${color} !important;
-    &:hover {
-      background: ${color2} !important;
-    }
-  `;
-const EditorHeaderButton = styled.button`
-  ${EditorHeaderButtonStyles}
+  svg {
+    position: relative;
+    top: 3px;
+    margin: 0 0.2em;
+  }
 `;
 
 /**
@@ -88,54 +70,6 @@ const MNEditor: React.FC<MNEditorProps> = ({
   handleUpdateMarknote,
   setRedirect,
 }) => {
-  // Logic to determine colors
-  /**
-   * TODO: Change subheader text colors for Lemon and Lime
-   */
-  let color = currentNote.color;
-  let color_light;
-  switch (color) {
-    case COLOR.RED:
-      color_light = COLOR.RED_LIGHT;
-      break;
-    case COLOR.ORANGE:
-      color_light = COLOR.ORANGE_LIGHT;
-      break;
-    case COLOR.YELLOW:
-      color_light = COLOR.YELLOW_LIGHT;
-      break;
-    case COLOR.GREEN:
-      color_light = COLOR.GREEN_LIGHT;
-      break;
-    case COLOR.BLUE:
-      color_light = COLOR.BLUE_LIGHT;
-      break;
-    case COLOR.PURPLE:
-      color_light = COLOR.PURPLE_LIGHT;
-      break;
-    case COLOR.PINK:
-      color_light = COLOR.PINK_LIGHT;
-      break;
-    case COLOR.CYAN:
-      color_light = COLOR.CYAN_LIGHT;
-      break;
-    case COLOR.LEMON:
-      color_light = COLOR.LEMON_LIGHT;
-      break;
-    case COLOR.LIME:
-      color_light = COLOR.LIME_LIGHT;
-      break;
-    case COLOR.GREY:
-      color_light = COLOR.GREY_LIGHT;
-      break;
-    case COLOR.GREY_DARK:
-      color_light = COLOR.GREY_DARK_LIGHT;
-      break;
-    default:
-      color_light = COLOR.GREY_LIGHT;
-      break;
-  }
-
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -209,100 +143,52 @@ const MNEditor: React.FC<MNEditorProps> = ({
 
   return (
     <div className="editor-main">
-      <EditorHeader className="sub-header" color={color}>
-        <TitleInput
-          type="text"
-          className="editor-title"
-          placeholder="Enter a title..."
-          value={currentNote.title}
-          onChange={(event) => handleEditField("title", event.target.value)}
-          color={color_light}
-        />
-        <div className="sub-header-buttons">
-          <ul>
-            <li>
-              <EditorHeaderButton
-                title="Toggle Preview"
-                color={showEditor ? color_light : color}
-                color2={color_light}
-                onClick={() => setShowEditor((prev) => !prev)}
-              >
-                <AiOutlineCode />
-              </EditorHeaderButton>
-            </li>
-            <li>
-              <EditorHeaderButton
-                title="Toggle Preview"
-                color={showPreview ? color_light : color}
-                color2={color_light}
-                onClick={() => setShowPreview((prev) => !prev)}
-              >
-                <VscOpenPreview />
-              </EditorHeaderButton>
-            </li>
-            <li>
-              <EditorHeaderButton
-                title="Options"
-                color={color}
-                color2={color_light}
-                onClick={toggleColorMenu}
-              >
-                <RiEdit2Line />
-              </EditorHeaderButton>
-            </li>
-            <li>
-              <EditorHeaderButton
-                title="Delete Note"
-                color={color}
-                color2={color_light}
-                onClick={toggleConfirmDelete}
-              >
-                <MdDeleteForever />
-              </EditorHeaderButton>
-            </li>
-            <li>
-              <EditorHeaderButton
-                title="Favorite"
-                color={color}
-                color2={color_light}
-                onClick={() =>
-                  handleEditField(
-                    "favorited",
-                    currentNote.favorited === true ? false : true
-                  )
-                }
-              >
-                {currentNote.favorited === false ? (
-                  <TiStarOutline />
-                ) : (
-                  <TiStar />
-                )}
-              </EditorHeaderButton>
-            </li>
-            <li>
-              <EditorHeaderButton
-                title="Return to Notes"
-                color={color}
-                color2={color_light}
-              >
-                <Link to="/marknotes">
-                  <IoReturnUpForward />
-                </Link>
-              </EditorHeaderButton>
-            </li>
-          </ul>
-        </div>
+      <EditorHeader currentNote={currentNote} handleEditField={handleEditField}>
+        <PageHeaderButton
+          title="Toggle Preview"
+          onClick={() => setShowEditor((prev) => !prev)}
+        >
+          <AiOutlineCode />
+        </PageHeaderButton>
+        <PageHeaderButton
+          title="Toggle Preview"
+          onClick={() => setShowPreview((prev) => !prev)}
+        >
+          <VscOpenPreview />
+        </PageHeaderButton>
+        <PageHeaderButton title="Options" onClick={toggleColorMenu}>
+          <RiEdit2Line />
+        </PageHeaderButton>
+        <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
+          <MdDeleteForever />
+        </PageHeaderButton>
+        <PageHeaderButton
+          title="Favorite"
+          onClick={() =>
+            handleEditField(
+              "favorited",
+              currentNote.favorited === true ? false : true
+            )
+          }
+        >
+          {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
+        </PageHeaderButton>
+        <PageHeaderButton onClick={undefined} title="Return to Notes">
+          <Link to="/marknotes">
+            <IoReturnUpForward />
+          </Link>
+        </PageHeaderButton>
       </EditorHeader>
       {!showEditor && !showPreview ? (
         <div className="main-content-wrapper">
-          <div className="empty">
+          <Empty>
             <p>
               To open the editor, click the <AiOutlineCode /> button.
             </p>
             <p>
               To open the preview, click the <VscOpenPreview /> button.
             </p>
-          </div>
+          </Empty>
         </div>
       ) : null}
       <div className="editor-content">
