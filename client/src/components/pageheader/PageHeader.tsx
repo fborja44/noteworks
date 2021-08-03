@@ -35,6 +35,7 @@ const SubHeaderContainer = styled.section`
     margin: 0;
     position: relative;
     bottom: 1px;
+    user-select: none;
   }
 `;
 
@@ -47,6 +48,7 @@ const SubHeaderSection = styled.div`
 
 const SubHeaderButtonsContainer = styled.div`
   height: inherit;
+  user-select: none;
 
   ul {
     list-style: none;

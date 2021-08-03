@@ -3,10 +3,6 @@
 // React import
 import * as React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-
 export interface PageHeaderButtonProps {
   title: string;
   onClick: any;

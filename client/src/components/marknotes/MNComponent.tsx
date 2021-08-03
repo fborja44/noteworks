@@ -28,6 +28,10 @@ const MarknoteContainer = styled.div`
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid #828282;
+
+  &:hover {
+    border: 1px solid #26a7fd;
+  }
 `;
 
 const MarknoteLink = css`
@@ -81,7 +85,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
   setSelectedTab,
 }) => {
   return (
-    <MarknoteContainer>
+    <MarknoteContainer className="mncontainer">
       <Link
         css={MarknoteLink}
         to={`/marknotes/${currentNote.id}`}

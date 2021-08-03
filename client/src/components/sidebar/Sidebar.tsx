@@ -1,7 +1,7 @@
 /* Sidebar Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useEffect } from "react";
+import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -49,9 +49,6 @@ const SidebarContainer = styled.aside`
 `;
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
-  const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
-  // const location = useLocation().pathname;
-
   return (
     <SidebarContainer>
       <nav>
