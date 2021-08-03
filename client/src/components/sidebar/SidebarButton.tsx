@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const ButtonItem = styled.li`
@@ -50,6 +50,7 @@ const NavButton = styled.div`
 export interface SidebarButtonProps {
   title: string;
   route: string;
+  selectedTab: string;
   setSelectedTab: (value: React.SetStateAction<string>) => void;
 }
 
@@ -57,12 +58,21 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   title,
   route,
   children,
+  selectedTab,
   setSelectedTab,
 }) => {
+  console.log(selectedTab === route);
   return (
     <ButtonItem>
       <Link to={route} onClick={() => setSelectedTab(route)} title={title}>
-        <NavButton id={route} className="nav-button" />
+        <NavButton
+          id={route}
+          css={css`
+            border-left: ${selectedTab === route
+              ? "solid 2px white !important"
+              : "none"};
+          `}
+        />
         {children}
       </Link>
     </ButtonItem>

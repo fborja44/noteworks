@@ -3,18 +3,26 @@
 // React imports
 import React, { useEffect } from "react";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
+
 // Image and icon imports
 import { BiNote, BiNotepad } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { TiHomeOutline } from "react-icons/ti";
 import SidebarButton from "./SidebarButton";
 
-import styled from "@emotion/styled";
-
 export interface SidebarProps {
   selectedTab: string;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
+
+const NavIcon = css`
+  position: relative;
+  right: 1px;
+`;
 
 const SidebarContainer = styled.aside`
   background: var(--sidebar-bg-color);
@@ -34,7 +42,8 @@ const SidebarContainer = styled.aside`
     width: 100%;
   }
 
-  a, a:visited {
+  a,
+  a:visited {
     color: white;
   }
 `;
@@ -43,35 +52,33 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
   const tabs = ["/", "/quicknotes", "/marknotes", "/settings"];
   // const location = useLocation().pathname;
 
-  useEffect(() => {
-    let selected = document.getElementById(selectedTab);
-    if (selected !== null) selected.classList.add("selected");
-    for (const tab of tabs.filter((tab) => tab !== selectedTab)) {
-      let temp = document.getElementById(tab);
-      if (temp !== null) temp.classList.remove("selected");
-    }
-  });
-
   return (
     <SidebarContainer>
       <nav>
         <ul>
-          <SidebarButton title="Home" route="/" setSelectedTab={setSelectedTab}>
-            <TiHomeOutline className="nav-icon" />
+          <SidebarButton
+            title="Home"
+            route="/"
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+          >
+            <TiHomeOutline css={NavIcon} />
           </SidebarButton>
           <SidebarButton
             title="Quicknotes"
             route="/quicknotes"
+            selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
           >
-            <BiNote className="nav-icon" />
+            <BiNote css={NavIcon} />
           </SidebarButton>
           <SidebarButton
             title="Marknotes"
             route="/marknotes"
+            selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
           >
-            <BiNotepad className="nav-icon" />
+            <BiNotepad css={NavIcon} />
           </SidebarButton>
         </ul>
       </nav>
@@ -81,9 +88,19 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
             <SidebarButton
               title="Settings"
               route="/settings"
+              selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
             >
-              <FiSettings className="nav-icon settings-icon" />
+              <FiSettings
+                css={[
+                  NavIcon,
+                  css`
+                    font-size: 23px;
+                    position: relative;
+                    right: 1px;
+                  `,
+                ]}
+              />
             </SidebarButton>
           </li>
         </ul>
