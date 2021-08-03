@@ -21,6 +21,7 @@ export const SectionTitle = styled.h1`
   color: #4f4f4f;
   display: flex;
   align-items: center;
+  user-select: none;
   * {
     margin-right: 0.2em;
   }

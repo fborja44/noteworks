@@ -3,19 +3,25 @@
 // React imports
 import React from "react";
 
+// Common imports
+import { AppTheme } from "../../common/theme";
+
 // Component imports
 import PageHeader from "../pageheader/PageHeader";
+import Section from "../Section";
 
-export interface SettingsPageProps {}
+export interface SettingsPageProps {
+  setTheme: React.Dispatch<React.SetStateAction<AppTheme>>;
+}
 
 const SettingsPage: React.FC<SettingsPageProps> = () => {
   return (
     <React.Fragment>
       <PageHeader title="Settings" />
       <div className="main-content-wrapper">
-        <div className="empty">
-          <p>Settings are currently unavailable.</p>
-        </div>
+        <Section name="Appearance">
+
+        </Section>
       </div>
     </React.Fragment>
   );

@@ -4,8 +4,13 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, ThemeProvider } from "@emotion/react";
+
 // Common imports
 import { Quicknote, Marknote } from "../common/types";
+import { lightTheme } from "../common/theme";
 
 // Component imports
 import Header from "./Header";
@@ -137,54 +142,60 @@ const App = () => {
   ------------------------------------------------------------------------------*/
   const [selectedTab, setSelectedTab] = useState(useLocation().pathname);
 
+  /* Current theme state
+  ------------------------------------------------------------------------------*/
+  const [theme, setTheme] = useState(lightTheme);
+
   return (
     <div className="App">
-      <Header />
-      <div className="app-container">
-        <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <Switch>
-          <Route exact path="/">
-            <main>
-              <HomeContent
-                quicknotes={quicknotes}
-                marknotes={marknotes}
-                handleUpdateMarknote={handleUpdateMarknote}
-                handleDeleteMarknote={handleDeleteMarknote}
-                handleUpdateQuicknote={handleUpdateQuicknote}
-                handleDeleteQuicknote={handleDeleteQuicknote}
-                setSelectedTab={setSelectedTab}
-              />
-            </main>
-          </Route>
-          <Route path="/quicknotes">
-            <main>
-              <QNPage
-                quicknotes={quicknotes}
-                setQuicknotes={setQuicknotes}
-                handleUpdateQuicknote={handleUpdateQuicknote}
-                handleDeleteQuicknote={handleDeleteQuicknote}
-              />
-            </main>
-          </Route>
-          <Route path="/marknotes">
-            <main>
-              <MNPage
-                marknotes={marknotes}
-                setMarknotes={setMarknotes}
-                handleUpdateMarknote={handleUpdateMarknote}
-                handleDeleteMarknote={handleDeleteMarknote}
-                setSelectedTab={setSelectedTab}
-              />
-            </main>
-          </Route>
-          <Route path="/settings">
-            <main>
-              <SettingsPage />
-            </main>
-          </Route>
-        </Switch>
-      </div>
-      <Footer />
+      <ThemeProvider theme={theme}>
+        <Header />
+        <div className="app-container">
+          <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <Switch>
+            <Route exact path="/">
+              <main>
+                <HomeContent
+                  quicknotes={quicknotes}
+                  marknotes={marknotes}
+                  handleUpdateMarknote={handleUpdateMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
+                  handleUpdateQuicknote={handleUpdateQuicknote}
+                  handleDeleteQuicknote={handleDeleteQuicknote}
+                  setSelectedTab={setSelectedTab}
+                />
+              </main>
+            </Route>
+            <Route path="/quicknotes">
+              <main>
+                <QNPage
+                  quicknotes={quicknotes}
+                  setQuicknotes={setQuicknotes}
+                  handleUpdateQuicknote={handleUpdateQuicknote}
+                  handleDeleteQuicknote={handleDeleteQuicknote}
+                />
+              </main>
+            </Route>
+            <Route path="/marknotes">
+              <main>
+                <MNPage
+                  marknotes={marknotes}
+                  setMarknotes={setMarknotes}
+                  handleUpdateMarknote={handleUpdateMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
+                  setSelectedTab={setSelectedTab}
+                />
+              </main>
+            </Route>
+            <Route path="/settings">
+              <main>
+                <SettingsPage setTheme={setTheme} />
+              </main>
+            </Route>
+          </Switch>
+        </div>
+        <Footer />
+      </ThemeProvider>
     </div>
   );
 };

@@ -20,7 +20,7 @@ import MNFooter from "./MNFooter";
 import NoteContent, { MarknoteBody } from "../notes/NoteContent";
 
 const MarknoteContainer = styled.div`
-  background-color: var(--note-background-primary);
+  background-color: ${ (props) => props.theme.note.noteBackground};
   margin: 0 10px 0 10px;
   width: 240px;
   height: 330px;

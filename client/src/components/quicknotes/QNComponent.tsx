@@ -21,7 +21,7 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 
 // TODO: Fix borders on different monitors
 const QuicknoteContainer = styled.div`
-  background-color: var(--note-background-primary);
+  background-color: ${ (props) => props.theme.note.noteBackground};
   width: 230px;
   height: fit-content;
   justify-self: center;
