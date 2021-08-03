@@ -152,10 +152,14 @@ const EditorHeaderContainerStyles = ({
     padding: 0 0 0 1rem;
 
     button {
-      background: ${color} !important;
+      background: ${color};
       &:hover {
         background: ${color2} !important;
       }
+    }
+
+    .selected {
+      background: ${color2} !important;
     }
   `;
 const EditorHeaderContainer = styled.section`
@@ -176,7 +180,7 @@ const TitleInputStyles = ({ color }: { color: string }) =>
     &::placeholder {
       color: white;
     }
-    
+
     &:focus {
       outline: none;
     }

@@ -264,12 +264,14 @@ const MNEditor: React.FC<MNEditorProps> = ({
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowEditor((prev) => !prev)}
+          selected={showEditor}
         >
           <AiOutlineCode />
         </PageHeaderButton>
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowPreview((prev) => !prev)}
+          selected={showPreview}
         >
           <VscOpenPreview />
         </PageHeaderButton>
