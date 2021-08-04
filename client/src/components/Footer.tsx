@@ -12,8 +12,8 @@ import styled from "@emotion/styled";
 import { VscGithub } from "react-icons/vsc";
 
 const FooterContainer = styled.footer`
-  background-color: ${(props) => props.theme.header.background};
-  color: ${(props) => props.theme.header.textPrimary};
+  background-color: ${(props) => props.theme.title.background};
+  color: ${(props) => props.theme.title.textPrimary};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,19 +35,19 @@ const GithubLinkContainer = styled.div`
   align-items: center;
 
   &:hover {
-    background-color: ${(props) => props.theme.header.backgroundSecondary};
+    background-color: ${(props) => props.theme.title.backgroundSecondary};
     cursor: pointer;
     transition: background-color 0.2s ease 0s;
   }
 
   a {
-    color: ${(props) => props.theme.header.textPrimary};
+    color: ${(props) => props.theme.title.textPrimary};
     margin-left: 0.5em;
     text-decoration: none;
   }
 
   a:visited {
-    color: ${(props) => props.theme.header.textPrimary};
+    color: ${(props) => props.theme.title.textPrimary};
   }
 `;
 

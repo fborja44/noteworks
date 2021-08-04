@@ -98,6 +98,7 @@ const PreviewBody = css`
   height: 100%;
   border: none;
   resize: none;
+  color: black;
 
   h1,
   h2 {

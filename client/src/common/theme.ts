@@ -1,6 +1,7 @@
 export interface AppTheme {
   main: {
     background: string;
+    backgroundSecondary: string;
     textPrimary: string;
     textSecondary: string;
   };
@@ -28,11 +29,15 @@ export interface AppTheme {
       textSecondary: string;
     };
   };
+  menu: {
+    title: string;
+  }
 }
 
 export const lightTheme: AppTheme = {
   main: {
     background: "#E0E0E0",
+    backgroundSecondary: "#FFF",
     textPrimary: "#4f4f4f",
     textSecondary: "#000",
   },
@@ -60,11 +65,15 @@ export const lightTheme: AppTheme = {
       textSecondary: "#FFF",
     },
   },
+  menu: {
+    title: "#4f4f4f"
+  }
 };
 
 export const darkTheme: AppTheme = {
   main: {
     background: "#1b1a20",
+    backgroundSecondary: "#34333b",
     textPrimary: "#DDD",
     textSecondary: "#EEE",
   },
@@ -74,7 +83,7 @@ export const darkTheme: AppTheme = {
     textPrimary: "#FFF",
   },
   header: {
-    background: "#4b4a53",
+    background: "#3a3940",
     backgroundSecondary: "#636269",
     textPrimary: "#FFF",
   },
@@ -92,4 +101,7 @@ export const darkTheme: AppTheme = {
       textSecondary: "#FFF",
     },
   },
+  menu: {
+    title: "#FFF",
+  }
 };

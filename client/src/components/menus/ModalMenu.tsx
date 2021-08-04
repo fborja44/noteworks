@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { COLOR } from "../../common/color";
+import { lightTheme } from "../../common/theme";
 
 // Image and icon imports
 import { MdClose } from "react-icons/md";
@@ -32,8 +33,8 @@ const MenuContainer = styled.div`
   max-width: 500px;
   height: fit-content;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4);
-  background: #fff;
-  color: #000;
+  background: ${(props) => props.theme.main.backgroundSecondary};
+  color: ${(props) => props.theme.main.textPrimary};
   position: relative;
   z-index: 10;
   padding: 1.5rem 2rem;
@@ -52,7 +53,7 @@ const MenuHeader = styled.div`
 const Heading = styled.h1`
   margin: 0 2rem 0 0;
   font-size: 18px;
-  color: ${(props) => props.theme.header.textPrimary};
+  color: ${(props) => props.theme.menu.title};
 `;
 
 const Close = css`
