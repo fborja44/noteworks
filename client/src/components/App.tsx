@@ -14,7 +14,7 @@ import { Quicknote, Marknote } from "../common/types";
 import { lightTheme } from "../common/theme";
 
 // Component imports
-import Header from "./Header";
+import Titlebar from "./Titlebar";
 import Sidebar from "./sidebar/Sidebar";
 import Footer from "./Footer";
 
@@ -155,7 +155,7 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
-        <Header />
+        <Titlebar />
         <div className="app-container">
           <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
           <Switch>

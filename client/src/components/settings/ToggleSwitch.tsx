@@ -5,7 +5,7 @@ import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Tutorial from: https://www.youtube.com/watch?v=bztDMD4HSL0

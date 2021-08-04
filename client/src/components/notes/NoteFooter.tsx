@@ -16,7 +16,7 @@ const NoteFooterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 3px 0.5rem 3px 0.5rem;
-  border-top: 1px solid ${ (props) => props.theme.note.borderColor};
+  border-top: 1px solid ${(props) => props.theme.note.borderColor};
 `;
 
 export const NoteFooterSection = styled.div`

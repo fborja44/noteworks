@@ -12,8 +12,8 @@ import styled from "@emotion/styled";
 import { VscGithub } from "react-icons/vsc";
 
 const FooterContainer = styled.footer`
-  background-color: var(--header-bg-color);
-  color: var(--header-text-color-primary);
+  background-color: ${(props) => props.theme.header.background};
+  color: ${(props) => props.theme.header.textPrimary};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,7 +26,7 @@ const FooterContainer = styled.footer`
   z-index: 1000;
 `;
 
-const GithubLink = css`
+const GithubLinkContainer = styled.div`
   margin-left: 0.5rem;
   padding: 0 0.4rem 0 0.4rem;
   height: 100%;
@@ -35,29 +35,29 @@ const GithubLink = css`
   align-items: center;
 
   &:hover {
-    background-color: var(--header-bg-color-hover);
+    background-color: ${(props) => props.theme.header.backgroundSecondary};
     cursor: pointer;
     transition: background-color 0.2s ease 0s;
   }
 
   a {
-    color: var(--header-text-color-primary);
+    color: ${(props) => props.theme.header.textPrimary};
     margin-left: 0.5em;
     text-decoration: none;
   }
 
   a:visited {
-    color: var(--header-text-color-primary);
+    color: ${(props) => props.theme.header.textPrimary};
   }
 `;
 
 const Footer = () => {
   return (
     <FooterContainer>
-      <div css={GithubLink} id="github-link">
+      <GithubLinkContainer id="github-link">
         <VscGithub />
         <a href="https://github.com/fborja44/denote">Github Repo</a>
-      </div>
+      </GithubLinkContainer>
       <div
         css={css`
           margin-right: 1rem;

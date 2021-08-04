@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -51,7 +52,7 @@ const EditorContent = styled.div`
   }
 
   & *::-webkit-scrollbar-thumb {
-    background: var(--color-grey-dark) !important;
+    background: ${COLOR.GREY_DARK} !important;
   }
 `;
 
@@ -101,7 +102,7 @@ const PreviewBody = css`
   h1,
   h2 {
     padding-bottom: 0.2em;
-    border-bottom: 1px solid var(--color-grey);
+    border-bottom: 1px solid ${COLOR.GREY};
   }
 
   h1,
@@ -127,16 +128,18 @@ const PreviewBody = css`
 
   code {
     display: block;
-    background: var(--preview-code-block-background);
-    padding: 0.2em 0.4em;
+    background: rgb(241, 241, 241);
+    padding: 0.6em 0.8em;
     border-radius: 8px;
     box-sizing: border-box;
+    color: ${COLOR.BLUE};
+    line-height: 1.5em;
   }
 
   blockquote {
     margin-left: 1em;
     padding-left: 1em;
-    border-left: solid 2px var(--color-grey);
+    border-left: solid 2px ${COLOR.GREY};
   }
 
   a {

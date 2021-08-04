@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote, Marknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component Imports
 import ModalMenu from "./ModalMenu";
@@ -30,7 +31,7 @@ const DeleteButton = css`
   justify-content: center;
   margin: 1rem auto 0 auto;
   width: 200px;
-  background-color: var(--color-red);
+  background-color: ${COLOR.RED};
   color: white;
   border: solid 1px #666666;
   height: 28px;
@@ -44,7 +45,7 @@ const DeleteButton = css`
 
   &:hover {
     cursor: pointer;
-    background-color: var(--color-red-dark);
+    background-color: ${COLOR.RED_DARK};
     transition: background-color 0.1s ease 0s;
   }
 `;

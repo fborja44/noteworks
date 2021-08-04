@@ -20,8 +20,8 @@ export interface PageHeaderProps {
 }
 
 const SubHeaderContainer = styled.section`
-  background: var(--sub-header-background-primary);
-  color: var(--sub-header-text-color-primary);
+  background: ${(props) => props.theme.header.background};
+  color: ${(props) => props.theme.header.textPrimary};
   height: 30px;
   display: flex;
   align-items: center;
@@ -80,13 +80,13 @@ const SubHeaderButtonsContainer = styled.div`
 
         &:hover {
           cursor: pointer;
-          background: var(--sub-header-background-hover);
+          background: ${(props) => props.theme.header.backgroundSecondary};
           transition: background-color 0.2s ease 0s;
         }
       }
 
       a {
-        color: var(--sub-header-text-color-primary);
+        color: ${(props) => props.theme.header.textPrimary};
         width: 100%;
         height: 100%;
         display: flex;
@@ -94,7 +94,7 @@ const SubHeaderButtonsContainer = styled.div`
         justify-content: center;
 
         &::visited {
-          color: var(--sub-header-text-color-primary);
+          color: ${(props) => props.theme.header.textPrimary};
         }
       }
     }
@@ -145,7 +145,6 @@ const EditorHeaderContainerStyles = ({
 }) =>
   css`
     background: ${color};
-    color: var(--sub-header-text-color-primary);
     height: 30px;
     display: flex;
     align-items: center;
@@ -166,6 +165,7 @@ const EditorHeaderContainerStyles = ({
   `;
 const EditorHeaderContainer = styled.section`
   ${EditorHeaderContainerStyles}
+  color: ${(props) => props.theme.header.textPrimary};
 `;
 
 const TitleInputStyles = ({ color }: { color: string }) =>

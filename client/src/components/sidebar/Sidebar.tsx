@@ -25,11 +25,11 @@ const NavIcon = css`
 `;
 
 const SidebarContainer = styled.aside`
-  background: var(--sidebar-bg-color);
+  background: ${(props) => props.theme.sidebar.background};
   height: calc(100vh - 50px);
   width: 45px;
   min-width: 45px;
-  color: var(--header-text-color-primary);
+  color: ${(props) => props.theme.header.textPrimary};
   z-index: 0;
   display: flex;
   flex-direction: column;

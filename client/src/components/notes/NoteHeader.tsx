@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote, Quicknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import FavoriteButton from "./FavoriteButton";
@@ -19,8 +20,8 @@ import DeleteButton from "./DeleteButton";
 const NoteHeaderContainer = styled.div`
   width: 100%;
   height: 25px;
-  color: var(--note-header-text-color);
-  background: var(--color-grey);
+  color: ${(props) => props.theme.note.header.textPrimary};
+  background: ${COLOR.GREY};
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -36,10 +37,10 @@ const NoteTitle = styled.input`
   border: none;
   background-color: inherit;
   font-family: "Source Sans Pro", sans-serif;
-  color: var(--note-header-text-color);
+  color: ${(props) => props.theme.note.header.textPrimary};
 
   &::placeholder {
-    color: var(--note-header-text-color);
+    color: ${(props) => props.theme.note.header.textPrimary};
   }
 `;
 
@@ -68,11 +69,13 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
   toggleConfirmDelete,
   children,
 }) => {
-  const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
-  }
+  };
 
   return (
     <NoteHeaderContainer style={{ backgroundColor: currentNote.color }}>

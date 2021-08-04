@@ -8,6 +8,9 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common imports
+import { COLOR } from "../../common/color";
+
 // Image and icon imports
 import { MdClose } from "react-icons/md";
 
@@ -49,13 +52,13 @@ const MenuHeader = styled.div`
 const Heading = styled.h1`
   margin: 0 2rem 0 0;
   font-size: 18px;
-  color: var(--note-header-text-color);
+  color: ${(props) => props.theme.header.textPrimary};
 `;
 
 const Close = css`
   &:hover {
     cursor: pointer;
-    color: var(--color-blue-dark);
+    color: ${COLOR.BLUE_DARK};
     transition: color 0.2s linear 0s;
   }
 `;

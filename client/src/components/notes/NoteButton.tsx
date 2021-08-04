@@ -8,7 +8,7 @@ import styled from "@emotion/styled";
 const NoteButton = styled.button`
   background: none;
   border: none;
-  color: var(--note-header-text-color);
+  color: ${(props) => props.theme.note.header.textPrimary};
   height: 100%;
   width: fit-content;
   display: flex;
@@ -21,7 +21,7 @@ const NoteButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    color: white;
+    color: ${(props) => props.theme.note.header.textSecondary};
     transition: color 0.2s ease 0s;
   }
 `;

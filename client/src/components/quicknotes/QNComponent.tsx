@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -21,13 +22,13 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 
 // TODO: Fix borders on different monitors
 const QuicknoteContainer = styled.div`
-  background-color: ${ (props) => props.theme.note.background};
+  background-color: ${(props) => props.theme.note.background};
   width: 230px;
   height: fit-content;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
-  border: 1px solid ${ (props) => props.theme.note.borderColor};
+  border: 1px solid ${(props) => props.theme.note.borderColor};
   box-sizing: border-box;
 
   textarea {
@@ -39,18 +40,18 @@ const QuicknoteContainer = styled.div`
     font-weight: 500;
 
     &::placeholder {
-      color: ${ (props) => props.theme.note.textSecondary};
+      color: ${(props) => props.theme.note.textSecondary};
     }
   }
 
   textarea::-webkit-scrollbar {
     width: 5px;
   }
-  
+
   textarea::-webkit-scrollbar-thumb {
-    background: var(--color-grey-dark);
+    background: ${COLOR.GREY_DARK};
   }
-  
+
   textarea::-webkit-scrollbar-thumb:hover {
     cursor: default;
   }

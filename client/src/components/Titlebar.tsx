@@ -8,6 +8,9 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common imports
+import { COLOR } from "../common/color";
+
 // Image and icon imports
 import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
@@ -31,9 +34,9 @@ const Maximize = () => {
   return <BiWindow className="window-icon" />;
 };
 
-const HeaderContainer = styled.header`
-  background-color: var(--header-bg-color);
-  color: var(--header-text-color-primary);
+const TitlebarContainer = styled.header`
+  background-color: ${(props) => props.theme.title.background};
+  color: ${(props) => props.theme.title.textPrimary};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,7 +53,7 @@ const ButtonsContainer = styled.ul`
   list-style: none;
   margin: 0;
   height: 30px;
-  color: var(--header-text-color-primary);
+  color: ${(props) => props.theme.title.textPrimary};
   padding: 0;
 
   li {
@@ -65,7 +68,7 @@ const ButtonsContainer = styled.ul`
   }
 
   li:hover {
-    background-color: var(--header-bg-color-hover);
+    background-color: ${(props) => props.theme.title.backgroundSecondary};
     cursor: pointer;
     transition: background-color 0.2s ease 0s;F
   }
@@ -96,10 +99,9 @@ const Title = styled.div`
   font-size: 18px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
+`;
 
-`
-
-const Header = () => {
+const Titlebar = () => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);
@@ -127,7 +129,7 @@ const Header = () => {
   }, [windowMaximized, window_button]);
 
   return (
-    <HeaderContainer>
+    <TitlebarContainer>
       <TitleContainer>
         <Title>Denote!</Title>
       </TitleContainer>
@@ -150,7 +152,7 @@ const Header = () => {
           <li
             css={css`
               &:hover {
-                background-color: var(--color-red-dark) !important;
+                background-color: ${COLOR.RED_DARK} !important;
               }
             `}
             onClick={handleOnClickClose}
@@ -166,8 +168,8 @@ const Header = () => {
           </li>
         </ButtonsContainer>
       ) : null}
-    </HeaderContainer>
+    </TitlebarContainer>
   );
 };
 
-export default Header;
+export default Titlebar;

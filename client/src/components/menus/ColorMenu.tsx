@@ -50,11 +50,7 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
       setShowMenuState={setShowColorMenu}
     >
       <ColorMenuContent>
-        <ColorOption
-          handleClick={handleClick}
-          color={COLOR.RED}
-          title="Red"
-        />
+        <ColorOption handleClick={handleClick} color={COLOR.RED} title="Red" />
         <ColorOption
           handleClick={handleClick}
           color={COLOR.ORANGE}

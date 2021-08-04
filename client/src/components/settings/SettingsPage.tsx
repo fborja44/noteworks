@@ -6,7 +6,7 @@ import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, ThemeProvider } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports

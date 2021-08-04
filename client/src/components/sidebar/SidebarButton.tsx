@@ -29,7 +29,7 @@ const ButtonItem = styled.li`
   }
 
   &:hover {
-    background-color: var(--sidebar-bg-color-hover);
+    background-color: ${(props) => props.theme.sidebar.backgroundSecondary};
     transition: background-color 0.2s ease-out 0s;
   }
 
@@ -44,7 +44,7 @@ const NavButton = styled.div`
   width: 45px;
   height: 45px;
   position: absolute;
-  border-left: solid 2px var(--sidebar-bg-color);
+  border-left: solid 2px ${(props) => props.theme.sidebar.background};
 `;
 
 export interface SidebarButtonProps {
