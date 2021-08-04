@@ -54,7 +54,6 @@
 
 /** General Styles **/
 body {
-  background-color: var(--background-color-primary);
   height: 100vh;
   max-width: 100vw;
 }

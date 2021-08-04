@@ -20,14 +20,14 @@ import MNFooter from "./MNFooter";
 import NoteContent, { MarknoteBody } from "../notes/NoteContent";
 
 const MarknoteContainer = styled.div`
-  background-color: ${ (props) => props.theme.note.noteBackground};
+  background-color: ${ (props) => props.theme.note.background};
   margin: 0 10px 0 10px;
   width: 240px;
   height: 330px;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
-  border: 1px solid #828282;
+  border: 1px solid ${ (props) => props.theme.note.borderColor};
 
   &:hover {
     border: 1px solid #26a7fd;

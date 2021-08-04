@@ -18,7 +18,7 @@ export const SectionTitle = styled.h1`
   margin: 0 0 0.5em 0;
   font-size: 16px;
   font-weight: 700;
-  color: #4f4f4f;
+  color: ${(props) => props.theme.main.textPrimary};
   display: flex;
   align-items: center;
   user-select: none;

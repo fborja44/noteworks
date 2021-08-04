@@ -7,6 +7,7 @@ import { Switch, Route, useLocation } from "react-router-dom";
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, ThemeProvider } from "@emotion/react";
+import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote, Marknote } from "../common/types";
@@ -26,6 +27,11 @@ import SettingsPage from "./settings/SettingsPage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
+
+const RendererContainer = styled.div`
+  background-color: ${(props) => props.theme.main.background};
+  color: ${(props) => props.theme.main.textPrimary};
+`;
 
 /**
  * Main application component
@@ -147,8 +153,8 @@ const App = () => {
   const [appTheme, setAppTheme] = useState(lightTheme);
 
   return (
-    <div className="App">
-      <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={appTheme}>
+      <RendererContainer>
         <Header />
         <div className="app-container">
           <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
@@ -195,8 +201,8 @@ const App = () => {
           </Switch>
         </div>
         <Footer />
-      </ThemeProvider>
-    </div>
+      </RendererContainer>
+    </ThemeProvider>
   );
 };
 

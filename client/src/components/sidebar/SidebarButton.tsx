@@ -61,7 +61,6 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   selectedTab,
   setSelectedTab,
 }) => {
-  console.log(selectedTab === route);
   return (
     <ButtonItem>
       <Link to={route} onClick={() => setSelectedTab(route)} title={title}>

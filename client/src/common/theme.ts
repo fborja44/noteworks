@@ -1,35 +1,43 @@
 export interface AppTheme {
-  mainBackground: string;
-  mainTextPrimary: string;
-  mainTextSecondary: string;
-
+  main: {
+    background: string;
+    textPrimary: string;
+    textSecondary: string;
+  };
   note: {
-    noteBackground: string;
-    noteTextPrimary: string;
-    noteTextSecondary: string;
+    background: string;
+    textPrimary: string;
+    textSecondary: string;
+    borderColor: string;
   };
 }
 
 export const lightTheme: AppTheme = {
-  mainBackground: "#0E0E0",
-  mainTextPrimary: "#4f4f4f",
-  mainTextSecondary: "#000",
+  main: {
+    background: "#E0E0E0",
+    textPrimary: "#4f4f4f",
+    textSecondary: "#000",
+  },
 
   note: {
-    noteBackground: "#FFF",
-    noteTextPrimary: "#333333",
-    noteTextSecondary: "#828282",
+    background: "#FFF",
+    textPrimary: "#333333",
+    textSecondary: "#828282",
+    borderColor: "#828282",
   },
 };
 
 export const darkTheme: AppTheme = {
-  mainBackground: "#111111",
-  mainTextPrimary: "#FFF",
-  mainTextSecondary: "#EEE",
+  main: {
+    background: "#1E1E22",
+    textPrimary: "#DDD",
+    textSecondary: "#EEE",
+  },
 
   note: {
-    noteBackground: "#1F1F23",
-    noteTextPrimary: "#FFF",
-    noteTextSecondary: "#BDBDBD",
+    background: "#3C3B45",
+    textPrimary: "#DDD",
+    textSecondary: "#BDBDBD",
+    borderColor: "#5f5f5f",
   },
 };

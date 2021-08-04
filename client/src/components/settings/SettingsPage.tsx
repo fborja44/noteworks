@@ -4,6 +4,11 @@
 import { Theme } from "@emotion/react";
 import React from "react";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, ThemeProvider } from "@emotion/react";
+import styled from "@emotion/styled";
+
 // Common imports
 import { AppTheme, darkTheme, lightTheme } from "../../common/theme";
 
@@ -11,6 +16,17 @@ import { AppTheme, darkTheme, lightTheme } from "../../common/theme";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 import ToggleSwitch from "./ToggleSwitch";
+
+const Option = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: inherit;
+`;
+
+const OptionLabel = styled.div`
+  color: ${(props) => props.theme.main.textPrimary};
+  margin-right: 0.5em;
+`;
 
 export interface SettingsPageProps {
   appTheme: Theme;
@@ -26,14 +42,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       <PageHeader title="Settings" />
       <div className="main-content-wrapper">
         <Section name="Appearance">
-          <ToggleSwitch
-            isToggled={appTheme === lightTheme ? false : true}
-            onToggle={() =>
-              setAppTheme((prev) =>
-                prev === lightTheme ? darkTheme : lightTheme
-              )
-            }
-          />
+          <Option>
+            <OptionLabel>Dark Mode</OptionLabel>
+            <ToggleSwitch
+              isToggled={appTheme === lightTheme ? false : true}
+              onToggle={() =>
+                setAppTheme((prev) =>
+                  prev === lightTheme ? darkTheme : lightTheme
+                )
+              }
+            />
+          </Option>
         </Section>
       </div>
     </React.Fragment>

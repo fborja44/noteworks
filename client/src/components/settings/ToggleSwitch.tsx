@@ -12,8 +12,8 @@ import styled from "@emotion/styled";
 const Switch = styled.label`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 46px;
+  height: 26px;
 
   input {
     opacity: 0;
@@ -22,11 +22,11 @@ const Switch = styled.label`
   }
 
   input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(20px);
   }
 
   input:checked + .slider {
-    background-color: lightblue; /* Toggled on background color */
+    background-color: #424247; /* Toggled on background color */
   }
 `;
 
@@ -39,15 +39,13 @@ const Slider = styled.span`
   bottom: 0;
 
   background-color: #ccc;
-  transition: 0.4s;
-
   border-radius: 34px;
 
   &:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 18px;
+    width: 18px;
     left: 4px;
     bottom: 4px;
     background-color: white;

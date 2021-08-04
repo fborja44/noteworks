@@ -21,13 +21,13 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 
 // TODO: Fix borders on different monitors
 const QuicknoteContainer = styled.div`
-  background-color: ${ (props) => props.theme.note.noteBackground};
+  background-color: ${ (props) => props.theme.note.background};
   width: 230px;
   height: fit-content;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
-  border: 1px solid #828282;
+  border: 1px solid ${ (props) => props.theme.note.borderColor};
   box-sizing: border-box;
 
   textarea {
@@ -37,6 +37,10 @@ const QuicknoteContainer = styled.div`
     font-size: 13px;
     font-family: "Source Sans Pro", sans-serif !important;
     font-weight: 500;
+
+    &::placeholder {
+      color: ${ (props) => props.theme.note.textSecondary};
+    }
   }
 
   textarea::-webkit-scrollbar {

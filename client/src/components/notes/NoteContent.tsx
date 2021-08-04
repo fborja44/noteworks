@@ -8,13 +8,13 @@ import styled from "@emotion/styled";
 export const MarknoteBody = styled.div`
   height: 100%;
   padding: 0.5rem;
-  color: var(--note-text-color-primary);
+  color: ${(props) => props.theme.note.textPrimary};
 `;
 
 export const QuicknoteBody = styled.textarea`
   height: 100%;
   padding: 0.5rem;
-  color: var(--note-text-color-primary);
+  color: ${(props) => props.theme.note.textPrimary};
 `;
 
 const NoteContent = styled.div`
@@ -22,7 +22,7 @@ const NoteContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   white-space: pre-wrap; /* keep spacing added to text */
-  color: var(--note-text-color-primary);
+  color: ${(props) => props.theme.note.textPrimary};
   font-weight: 500;
   width: 100%;
   height: 100%;
