@@ -6,7 +6,7 @@ import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
@@ -17,15 +17,21 @@ import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 import ToggleSwitch from "./ToggleSwitch";
 
+// Image and icon imports
+import { FiMoon } from "react-icons/fi";
+import { ImSun } from "react-icons/im";
+
 const Option = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   background-color: inherit;
 `;
 
 const OptionLabel = styled.div`
   color: ${(props) => props.theme.main.textPrimary};
-  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-weight: 500;
 `;
 
 export interface SettingsPageProps {
@@ -43,15 +49,33 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       <div className="main-content-wrapper">
         <Section name="Appearance">
           <Option>
-            <OptionLabel>Dark Mode</OptionLabel>
-            <ToggleSwitch
-              isToggled={appTheme === lightTheme ? false : true}
-              onToggle={() =>
-                setAppTheme((prev) =>
-                  prev === lightTheme ? darkTheme : lightTheme
-                )
-              }
-            />
+            <OptionLabel>Switch Theme:</OptionLabel>
+            <div
+              css={css`
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+              `}
+            >
+              <ImSun
+                css={css`
+                  margin-right: 0.7em;
+                `}
+              />
+              <ToggleSwitch
+                isToggled={appTheme === lightTheme ? false : true}
+                onToggle={() =>
+                  setAppTheme((prev) =>
+                    prev === lightTheme ? darkTheme : lightTheme
+                  )
+                }
+              />
+              <FiMoon
+                css={css`
+                  margin-left: 0.7em;
+                `}
+              />
+            </div>
           </Option>
         </Section>
       </div>

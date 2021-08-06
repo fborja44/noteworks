@@ -8,6 +8,9 @@ import React from "react";
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common imports
+import { COLOR } from "../../common/color";
+
 // Tutorial from: https://www.youtube.com/watch?v=bztDMD4HSL0
 const Switch = styled.label`
   position: relative;
@@ -38,7 +41,7 @@ const Slider = styled.span`
   right: 0;
   bottom: 0;
 
-  background-color: #ccc;
+  background-color: ${COLOR.GREY};
   border-radius: 34px;
 
   &:before {

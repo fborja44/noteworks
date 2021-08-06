@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { COLOR } from "../../common/color";
-import { lightTheme } from "../../common/theme";
+// import { lightTheme } from "../../common/theme";
 
 // Image and icon imports
 import { MdClose } from "react-icons/md";

@@ -1,4 +1,5 @@
 export interface AppTheme {
+  id: string;
   main: {
     background: string;
     backgroundSecondary: string;
@@ -35,6 +36,7 @@ export interface AppTheme {
 }
 
 export const lightTheme: AppTheme = {
+  id: "light",
   main: {
     background: "#E0E0E0",
     backgroundSecondary: "#FFF",
@@ -71,6 +73,7 @@ export const lightTheme: AppTheme = {
 };
 
 export const darkTheme: AppTheme = {
+  id: "dark",
   main: {
     background: "#1b1a20",
     backgroundSecondary: "#34333b",

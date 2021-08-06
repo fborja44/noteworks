@@ -7,12 +7,13 @@ import ReactMarkdown from "react-markdown";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
+// import { lightTheme } from "../../common/theme";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -30,10 +31,10 @@ import { AiOutlineCode } from "react-icons/ai";
 
 // Codemirror imports
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
+import "codemirror/theme/material-darker.css";
 import "codemirror/mode/markdown/markdown"; // import codemirror markdown
 
-import { Controlled as ControlledEditor } from "react-codemirror2"; // import text editor
+import { Controlled as CodeMirror } from "react-codemirror2"; // import text editor
 
 const EditorMain = styled.div`
   height: 100%;
@@ -52,7 +53,8 @@ const EditorContent = styled.div`
   }
 
   & *::-webkit-scrollbar-thumb {
-    background: ${COLOR.GREY_DARK} !important;
+    background: ${(props) => props.theme.id === "light" ? COLOR.GREY_DARK : "#52525b"} !important;
+    border-radius: 2px;
   }
 `;
 
@@ -88,6 +90,26 @@ const EditorBody = css`
 
   .CodeMirror.CodeMirror-wrap pre {
     word-break: break-word;
+  }
+`;
+
+const EditorBodyDark = css`
+  .CodeMirror {
+    background: #1b1a20;
+    color: white;
+
+    .cm-comment {
+      color: ${COLOR.GREY};
+    }
+  }
+
+  .CodeMirror-linenumber {
+    color: ${COLOR.GREY};
+  }
+
+  .CodeMirror-gutters {
+    background: #1b1a20;
+    border-right: 1px solid #34333b;
   }
 `;
 
@@ -152,6 +174,23 @@ const PreviewBody = css`
   }
 `;
 
+const PreviewBodyDark = css`
+  background: #1b1a20;
+  color: white;
+  code {
+    background: #52525b;
+    color: lightblue;
+  }
+
+  a {
+    color: CornflowerBlue
+  }
+
+  a:visited {
+    color: violet;
+  }
+`;
+
 const Empty = styled.div`
   width: 100%;
   display: flex;
@@ -166,6 +205,7 @@ const Empty = styled.div`
   }
 
   svg {
+    font-size: 18px;
     position: relative;
     top: 3px;
     margin: 0 0.2em;
@@ -262,6 +302,8 @@ const MNEditor: React.FC<MNEditorProps> = ({
   const [showEditor, setShowEditor] = useState(true);
   const [showPreview, setShowPreview] = useState(true);
 
+  const appTheme = useTheme();
+
   return (
     <EditorMain>
       <EditorHeader currentNote={currentNote} handleEditField={handleEditField}>
@@ -320,13 +362,16 @@ const MNEditor: React.FC<MNEditorProps> = ({
             display: ${showEditor ? "default" : "none"};
           `}
         >
-          <ControlledEditor
-            css={EditorBody}
+          <CodeMirror
+            css={[EditorBody, appTheme.id === "light" ? null : EditorBodyDark]}
             value={currentNote.body}
             onBeforeChange={handleChangeEditorBody}
             options={{
               lineWrapping: true,
               mode: "markdown",
+              theme: `${
+                appTheme.id === "light" ? "default" : "material-darker"
+              }`,
               lineNumbers: true,
             }}
           />
@@ -335,7 +380,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
           <section
             css={css`
               width: 20px;
-              background: #c4c4c4;
+              background: ${appTheme.id === "light" ? "#c4c4c4" : "#34333b"};
             `}
           />
         )}
@@ -344,7 +389,14 @@ const MNEditor: React.FC<MNEditorProps> = ({
             display: ${showPreview ? "default" : "none"};
           `}
         >
-          <ReactMarkdown css={PreviewBody}>{currentNote.body}</ReactMarkdown>
+          <ReactMarkdown
+            css={[
+              PreviewBody,
+              appTheme.id === "light" ? null : PreviewBodyDark,
+            ]}
+          >
+            {currentNote.body}
+          </ReactMarkdown>
         </PreviewContainer>
       </EditorContent>
       <ColorMenu
