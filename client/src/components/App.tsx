@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Quicknote, Marknote } from "../common/types";
-import { lightTheme } from "../common/theme";
+import { darkTheme, lightTheme } from "../common/theme";
 
 // Component imports
 import Titlebar from "./Titlebar";
@@ -151,6 +151,25 @@ const App = () => {
   /* Current theme state
   ------------------------------------------------------------------------------*/
   const [appTheme, setAppTheme] = useState(lightTheme);
+
+  const themeLocal = "denote_theme";
+  /**
+   * Effect hook to retrieve theme from local storage
+   */
+  useEffect(() => {
+    const savedTheme = JSON.parse(localStorage.getItem(themeLocal) || "");
+    // Check if notes were received
+    if (savedTheme) {
+      setAppTheme(savedTheme === "light" ? lightTheme : darkTheme);
+    }
+  }, []); // Run on load
+
+  /**
+   * Effect hook to save theme to local storage
+   */
+  useEffect(() => {
+    localStorage.setItem(themeLocal, JSON.stringify(appTheme.id));
+  }, [appTheme]);
 
   return (
     <ThemeProvider theme={appTheme}>
