@@ -28,6 +28,7 @@ const MarknoteContainer = styled.div`
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid ${(props) => props.theme.note.borderColor};
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
     border: 1px solid #26a7fd;

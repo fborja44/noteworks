@@ -38,6 +38,7 @@ import { Controlled as CodeMirror } from "react-codemirror2"; // import text edi
 
 const EditorMain = styled.div`
   height: 100%;
+  width: 100%;
 `;
 
 const EditorContent = styled.div`
@@ -53,7 +54,8 @@ const EditorContent = styled.div`
   }
 
   & *::-webkit-scrollbar-thumb {
-    background: ${(props) => props.theme.id === "light" ? COLOR.GREY_DARK : "#52525b"} !important;
+    background: ${(props) =>
+      props.theme.id === "light" ? COLOR.GREY_DARK : "#52525b"} !important;
     border-radius: 2px;
   }
 `;
@@ -62,6 +64,7 @@ const EditorContainer = styled.section`
   background: white;
   height: 100%;
   flex: 1;
+  z-index: 1;
 `;
 
 const PreviewContainer = styled.section`
@@ -69,6 +72,7 @@ const PreviewContainer = styled.section`
   height: 100%;
   flex: 1;
   overflow: auto;
+  z-index: 1;
 `;
 
 const EditorBody = css`
@@ -183,7 +187,7 @@ const PreviewBodyDark = css`
   }
 
   a {
-    color: CornflowerBlue
+    color: CornflowerBlue;
   }
 
   a:visited {

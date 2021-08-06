@@ -23,11 +23,14 @@ const SubHeaderContainer = styled.section`
   background: ${(props) => props.theme.header.background};
   color: ${(props) => props.theme.header.textPrimary};
   height: 30px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: -5;
+  position: relative;
+  z-index: 10;
   padding: 0 0 0 1rem;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 
   h1 {
     margin-left: 1rem;
@@ -149,8 +152,10 @@ const EditorHeaderContainerStyles = ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: -5;
+    z-index: 10;
     padding: 0 0 0 1rem;
+    position: relative;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 
     button {
       background: ${color};

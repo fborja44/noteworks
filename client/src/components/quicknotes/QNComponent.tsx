@@ -30,6 +30,7 @@ const QuicknoteContainer = styled.div`
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid ${(props) => props.theme.note.borderColor};
   box-sizing: border-box;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 
   textarea {
     border: none;
