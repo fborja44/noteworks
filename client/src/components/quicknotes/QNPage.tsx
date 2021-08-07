@@ -48,7 +48,7 @@ const QNPage: React.FC<QNPageProps> = ({
    * Function to add new empty quicknote after add quicknote button is pressed
    */
   const handleAddQuicknote = () => {
-    const newQuicknote = {
+    const newQuicknote: Quicknote = {
       type: "quicknote",
       id: nanoid(),
       title: "",

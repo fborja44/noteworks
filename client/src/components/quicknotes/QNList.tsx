@@ -1,4 +1,4 @@
-/* Quicknotes Main Content Component
+/* Quicknotes List Component
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";

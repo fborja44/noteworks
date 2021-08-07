@@ -81,25 +81,23 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
       </nav>
       <nav>
         <ul>
-          <li>
-            <SidebarButton
-              title="Settings"
-              route="/settings"
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            >
-              <FiSettings
-                css={[
-                  NavIcon,
-                  css`
-                    font-size: 23px;
-                    position: relative;
-                    right: 1px;
-                  `,
-                ]}
-              />
-            </SidebarButton>
-          </li>
+          <SidebarButton
+            title="Settings"
+            route="/settings"
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+          >
+            <FiSettings
+              css={[
+                NavIcon,
+                css`
+                  font-size: 23px;
+                  position: relative;
+                  right: 1px;
+                `,
+              ]}
+            />
+          </SidebarButton>
         </ul>
       </nav>
     </SidebarContainer>

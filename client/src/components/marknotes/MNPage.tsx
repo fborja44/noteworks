@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
-import { Marknote } from "../../common/types";
+import { Group, Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -17,10 +17,11 @@ import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 import MNList from "./MNList";
+import GroupComponent from "../groups/GroupComponent";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
-import { MdHelpOutline } from "react-icons/md";
+import { MdCreateNewFolder, MdHelpOutline } from "react-icons/md";
 
 /**
  * Props for MNPage
@@ -28,6 +29,8 @@ import { MdHelpOutline } from "react-icons/md";
 export interface MNPageProps {
   marknotes: Marknote[];
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
+  groups: Group[];
+  setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleUpdateMarknote: (
     currentMarknote: Marknote,
     updatedMarknote: Marknote
@@ -42,6 +45,8 @@ export interface MNPageProps {
 const MNPage: React.FC<MNPageProps> = ({
   marknotes,
   setMarknotes,
+  groups,
+  setGroups,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
@@ -54,7 +59,7 @@ const MNPage: React.FC<MNPageProps> = ({
    */
   const handleAddMarknote = () => {
     // Add new to state list
-    const newMarknote = {
+    const newMarknote: Marknote = {
       type: "marknote",
       id: nanoid(),
       title: "",
@@ -81,6 +86,23 @@ const MNPage: React.FC<MNPageProps> = ({
    */
   const [MNSearchText, setMNSearchText] = useState("");
 
+  /**
+   * Group function to add a new empty group to the list
+   */
+  const handleAddGroup = () => {
+    const newGroup: Group = {
+      type: "group",
+      id: nanoid(),
+      title: "Untitled Group",
+      color: COLOR.GREY_DARK,
+      quicknotes: [],
+      marknotes: [],
+      favorited: false,
+    };
+
+    setGroups([...groups, newGroup]);
+  };
+
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -92,11 +114,19 @@ const MNPage: React.FC<MNPageProps> = ({
           <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
             <RiAddLine />
           </PageHeaderButton>
-          <PageHeaderButton title="New Note" onClick={openMNHelp}>
+          <PageHeaderButton title="New Group" onClick={handleAddGroup}>
+            <MdCreateNewFolder />
+          </PageHeaderButton>
+          <PageHeaderButton title="Help" onClick={openMNHelp}>
             <MdHelpOutline />
           </PageHeaderButton>
         </PageHeader>
         <div className="main-content-wrapper">
+          <Section name="Groups">
+            {groups.map((group) => (
+              <GroupComponent currentGroup={group} />
+            ))}
+          </Section>
           <Section name="My Marknotes">
             <MNList
               MNSearchText={MNSearchText}

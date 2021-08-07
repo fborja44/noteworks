@@ -10,7 +10,7 @@ import { jsx, ThemeProvider } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Quicknote, Marknote } from "../common/types";
+import { Quicknote, Marknote, Group } from "../common/types";
 import { darkTheme, lightTheme } from "../common/theme";
 
 // Component imports
@@ -91,7 +91,7 @@ const App = () => {
     setQuicknotes(newQuicknotes);
   };
 
-  /* Marknote State
+  /* Marknotes State
   ------------------------------------------------------------------------------*/
   const [marknotes, setMarknotes] = useState<Marknote[]>([]);
   const marknotesLocal = "denote_marknotes";
@@ -171,6 +171,10 @@ const App = () => {
     localStorage.setItem(themeLocal, JSON.stringify(appTheme.id));
   }, [appTheme]);
 
+  /* Groups state
+  ------------------------------------------------------------------------------*/
+  const [groups, setGroups] = useState<Group[]>([]);
+
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
@@ -206,6 +210,8 @@ const App = () => {
                 <MNPage
                   marknotes={marknotes}
                   setMarknotes={setMarknotes}
+                  groups={groups}
+                  setGroups={setGroups}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
