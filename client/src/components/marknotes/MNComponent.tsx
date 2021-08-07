@@ -125,10 +125,10 @@ const MNComponent: React.FC<MNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        currentNote={currentNote}
+        item={currentNote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDeleteNote={handleDeleteMarknote}
+        handleDelete={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
     </MarknoteContainer>

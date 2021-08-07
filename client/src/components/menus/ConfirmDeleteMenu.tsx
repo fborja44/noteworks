@@ -10,7 +10,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Quicknote, Marknote } from "../../common/types";
+import { Quicknote, Marknote, Group } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component Imports
@@ -51,28 +51,28 @@ const DeleteButton = css`
 `;
 
 export interface ConfirmDeleteProps {
-  currentNote: Marknote | Quicknote;
+  item: Marknote | Quicknote | Group;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDeleteNote?: (id: string) => void;
+  handleDelete?: (id: string) => void;
   toggleConfirmDelete: (event: any) => void;
   redirect?: Boolean;
 }
 
 const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
-  currentNote,
+  item,
   showMenuState,
   setShowMenuState,
-  handleDeleteNote,
+  handleDelete,
   toggleConfirmDelete,
   redirect,
 }) => {
   // Check if note title is empty
   const title =
-    currentNote.title.trim().length === 0 ? "Untitled Note" : currentNote.title;
+    item.title.trim().length === 0 ? "Untitled Note" : item.title;
 
   // Check note type to determine route
-  const route = currentNote.type === "marknote" ? "marknotes" : "quicknotes";
+  const route = item.type === "marknote" ? "marknotes" : "quicknotes";
 
   return (
     <ModalMenu
@@ -87,9 +87,9 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
             to={`/${route}`}
             css={DeleteButton}
             onClick={
-              handleDeleteNote
+              handleDelete
                 ? (event) => {
-                    handleDeleteNote(currentNote.id);
+                    handleDelete(item.id);
                     toggleConfirmDelete(event);
                   }
                 : undefined
@@ -101,9 +101,9 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
           <button
             css={DeleteButton}
             onClick={
-              handleDeleteNote
+              handleDelete
                 ? (event) => {
-                    handleDeleteNote(currentNote.id);
+                    handleDelete(item.id);
                     toggleConfirmDelete(event);
                   }
                 : undefined

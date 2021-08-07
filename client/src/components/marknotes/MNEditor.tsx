@@ -235,7 +235,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
   handleUpdateMarknote,
   setRedirect,
 }) => {
-  // Menu state
+  // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
@@ -243,12 +243,10 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    if (handleUpdateMarknote) {
-      handleUpdateMarknote(currentNote, {
-        ...currentNote,
-        color: color,
-      });
-    }
+    handleUpdateMarknote(currentNote, {
+      ...currentNote,
+      color: color,
+    });
   };
 
   /**
@@ -257,11 +255,6 @@ const MNEditor: React.FC<MNEditorProps> = ({
   const toggleColorMenu = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // Prevent parent link from redirecting
-    event.preventDefault();
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
-
     // Toggle display of component
     setShowColorMenu((prev) => !prev);
   };
@@ -409,10 +402,10 @@ const MNEditor: React.FC<MNEditorProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        currentNote={currentNote}
+        item={currentNote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDeleteNote={handleDeleteMarknote}
+        handleDelete={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
         redirect={true}
       />

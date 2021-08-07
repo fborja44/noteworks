@@ -22,6 +22,7 @@ import HomeContent from "./home/HomePage";
 import QNPage from "./quicknotes/QNPage";
 import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
+import GroupPage from "./groups/GroupPage";
 
 // CSS imports
 import "../css/app.css";
@@ -82,11 +83,11 @@ const App = () => {
 
   /**
    * Function to delete a quicknote from the list
-   * @param id The id of the quicknote to be deleted
+   * @param noteId The id of the quicknote to be deleted
    */
-  const handleDeleteQuicknote = (id: string) => {
+  const handleDeleteQuicknote = (noteId: string) => {
     const newQuicknotes = quicknotes.filter(
-      (note: Quicknote) => note.id !== id
+      (note: Quicknote) => note.id !== noteId
     ); // don't need to make new array since filter returns new array
     setQuicknotes(newQuicknotes);
   };
@@ -140,7 +141,7 @@ const App = () => {
    */
   const handleDeleteMarknote = (noteId: string) => {
     // Use filter to check if id is the one we're deleting
-    // If n ot, keep; Otherwise, remove
+    // If not, keep; Otherwise, remove
     setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
   };
 
@@ -174,6 +175,29 @@ const App = () => {
   /* Groups state
   ------------------------------------------------------------------------------*/
   const [groups, setGroups] = useState<Group[]>([]);
+
+  /**
+   * Group function to update a group in the list
+   * @param currentGroup The group being updated
+   * @param updatedGroup The data to update the group with
+   */
+  const handleUpdateGroup = (currentGroup: Group, updatedGroup: Group) => {
+    const updatedGroupsArray = groups.map((group: Group) => {
+      if (group.id === currentGroup.id) {
+        return updatedGroup;
+      }
+      return group;
+    });
+    setGroups(updatedGroupsArray);
+  };
+
+  /**
+   * Group function to delete a group from the list
+   * @param groupId The id of the group to be deleted
+   */
+  const handleDeleteGroup = (groupId: string) => {
+    setGroups(groups.filter((group: Group) => group.id !== groupId));
+  };
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -223,6 +247,17 @@ const App = () => {
                 <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
               </main>
             </Route>
+            {groups.map((group) => (
+              <Route path={`/groups/${group.id}`}>
+                <main>
+                  <GroupPage
+                    currentGroup={group}
+                    handleUpdateGroup={handleUpdateGroup}
+                    handleDeleteGroup={handleDeleteGroup}
+                  />
+                </main>
+              </Route>
+            ))}
           </Switch>
         </div>
         <Footer />

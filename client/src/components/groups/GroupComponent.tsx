@@ -25,6 +25,10 @@ const GroupContainer = styled.div`
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid ${(props) => props.theme.note.borderColor};
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    border: 1px solid #26a7fd;
+  }
 `;
 
 const GroupContent = styled.div`
@@ -32,7 +36,7 @@ const GroupContent = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0.2em 0.8em;
+  padding: 0.2em 0.6rem;
 `;
 
 const GroupContentSection = styled.div`
@@ -41,9 +45,16 @@ const GroupContentSection = styled.div`
 `;
 
 const GroupName = styled.div`
-  margin-left: 0.8em;
+  margin-left: 0.6rem;
   font-size: 14px;
   font-weight: 500;
+  color: ${(props) => props.theme.note.textPrimary} !important;
+`;
+
+const GroupLink = css`
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
 `;
 
 export interface GroupComponentProps {
@@ -53,17 +64,19 @@ export interface GroupComponentProps {
 const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
   return (
     <GroupContainer>
-      <GroupContent>
-        <GroupContentSection>
-          <MdFolder
-            size="1.5em"
-            css={css`
-              color: ${currentGroup.color};
-            `}
-          />
-          <GroupName>{currentGroup.title}</GroupName>
-        </GroupContentSection>
-      </GroupContent>
+      <Link css={GroupLink} to={`/groups/${currentGroup.id}`}>
+        <GroupContent>
+          <GroupContentSection>
+            <MdFolder
+              size="1.5em"
+              css={css`
+                color: ${currentGroup.color};
+              `}
+            />
+            <GroupName>{currentGroup.title}</GroupName>
+          </GroupContentSection>
+        </GroupContent>
+      </Link>
     </GroupContainer>
   );
 };
