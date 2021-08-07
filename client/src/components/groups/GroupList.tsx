@@ -6,15 +6,18 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Marknote, Quicknote } from "../../common/types";
+import { Group } from "../../common/types";
 
 // Component imports
-import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
+import GroupComponent from "./GroupComponent";
+
+// Image and icon imports
+import { MdCreateNewFolder } from "react-icons/md";
 
 const List = styled.div`
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(auto-fit, 240px);
+  grid-template-columns: repeat(auto-fit, 180px);
   grid-auto-rows: fit-content;
   max-width: 100vw;
   row-gap: 1rem;
@@ -42,25 +45,31 @@ const Empty = styled.div`
   }
 `;
 
-export interface GroupListProps {}
+export interface GroupListProps {
+  groups: Group[];
+}
 
-const GroupList: React.FC<GroupListProps> = ({}) => {
-  const notesList = (
+const GroupList: React.FC<GroupListProps> = ({ groups }) => {
+  const groupsList = (
     <List>
-
+      {groups.map((group) => (
+        <GroupComponent key={group.id} currentGroup={group} />
+      ))}
     </List>
   );
 
-  const notesEmpty = (
+  const groupsEmpty = (
     <Empty>
       <p>You have no groups.</p>
-      <p>Create one now by pressing the + button in the menu above!</p>
+      <p>
+        Create one now by pressing the <MdCreateNewFolder /> button in the menu above!
+      </p>
     </Empty>
   );
 
   return (
     <React.Fragment>
-
+      {groups.length !== 0 ? groupsList : groupsEmpty}
     </React.Fragment>
   );
 };

@@ -32,7 +32,7 @@ const GroupContent = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0.2em 0.7em;
+  padding: 0.2em 0.8em;
 `;
 
 const GroupContentSection = styled.div`
@@ -41,7 +41,7 @@ const GroupContentSection = styled.div`
 `;
 
 const GroupName = styled.div`
-  margin-left: 0.6em;
+  margin-left: 0.8em;
   font-size: 14px;
   font-weight: 500;
 `;
@@ -55,7 +55,12 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
     <GroupContainer>
       <GroupContent>
         <GroupContentSection>
-          <MdFolder size="1.5em" />
+          <MdFolder
+            size="1.5em"
+            css={css`
+              color: ${currentGroup.color};
+            `}
+          />
           <GroupName>{currentGroup.title}</GroupName>
         </GroupContentSection>
       </GroupContent>

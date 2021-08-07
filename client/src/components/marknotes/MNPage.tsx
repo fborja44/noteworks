@@ -17,7 +17,7 @@ import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 import MNList from "./MNList";
-import GroupComponent from "../groups/GroupComponent";
+import GroupList from "../groups/GroupList";
 
 // Image and icon impaorts
 import { RiAddLine } from "react-icons/ri";
@@ -123,9 +123,7 @@ const MNPage: React.FC<MNPageProps> = ({
         </PageHeader>
         <div className="main-content-wrapper">
           <Section name="Groups">
-            {groups.map((group) => (
-              <GroupComponent currentGroup={group} />
-            ))}
+            <GroupList groups={groups} />
           </Section>
           <Section name="My Marknotes">
             <MNList
