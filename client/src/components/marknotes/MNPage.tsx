@@ -31,6 +31,7 @@ export interface MNPageProps {
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
   groups: Group[];
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
+  handleAddGroup: () => void
   handleUpdateMarknote: (
     currentMarknote: Marknote,
     updatedMarknote: Marknote
@@ -47,6 +48,7 @@ const MNPage: React.FC<MNPageProps> = ({
   setMarknotes,
   groups,
   setGroups,
+  handleAddGroup,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
@@ -86,23 +88,6 @@ const MNPage: React.FC<MNPageProps> = ({
    */
   const [MNSearchText, setMNSearchText] = useState("");
 
-  /**
-   * Group function to add a new empty group to the list
-   */
-  const handleAddGroup = () => {
-    const newGroup: Group = {
-      type: "group",
-      id: nanoid(),
-      title: "Untitled Group",
-      color: COLOR.GREY_DARK,
-      quicknotes: [],
-      marknotes: [],
-      favorited: false,
-    };
-
-    setGroups([...groups, newGroup]);
-  };
-
   return (
     <Switch>
       <Route exact path="/marknotes">
@@ -122,10 +107,10 @@ const MNPage: React.FC<MNPageProps> = ({
           </PageHeaderButton>
         </PageHeader>
         <div className="main-content-wrapper">
-          <Section name="Groups">
+          <Section name="Groups" handleClick={handleAddGroup}>
             <GroupList groups={groups} />
           </Section>
-          <Section name="My Marknotes">
+          <Section name="My Marknotes" handleClick={handleAddMarknote}>
             <MNList
               MNSearchText={MNSearchText}
               marknotes={marknotes}

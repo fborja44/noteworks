@@ -68,8 +68,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   redirect,
 }) => {
   // Check if note title is empty
-  const title =
-    item.title.trim().length === 0 ? "Untitled Note" : item.title;
+  const title = item.title.trim().length === 0 ? "Untitled Note" : item.title;
 
   // Check note type to determine route
   const route = item.type === "marknote" ? "marknotes" : "quicknotes";

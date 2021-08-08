@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 import { Switch, Route, useLocation } from "react-router-dom";
 
 /** @jsxRuntime classic */
@@ -12,6 +13,7 @@ import styled from "@emotion/styled";
 // Common imports
 import { Quicknote, Marknote, Group } from "../common/types";
 import { darkTheme, lightTheme } from "../common/theme";
+import { COLOR } from "../common/color";
 
 // Component imports
 import Titlebar from "./Titlebar";
@@ -159,7 +161,7 @@ const App = () => {
    */
   useEffect(() => {
     const savedTheme = JSON.parse(localStorage.getItem(themeLocal) || "");
-    // Check if notes were received
+    // Check if theme was received
     if (savedTheme) {
       setAppTheme(savedTheme === "light" ? lightTheme : darkTheme);
     }
@@ -175,6 +177,42 @@ const App = () => {
   /* Groups state
   ------------------------------------------------------------------------------*/
   const [groups, setGroups] = useState<Group[]>([]);
+  const groupsLocal = "denote_groups";
+
+  /**
+   * Effect hook to retrieve groups from local storage
+   */
+  useEffect(() => {
+    const savedGroups = JSON.parse(localStorage.getItem(groupsLocal) || "{}");
+    // Check if groups were received
+    if (savedGroups) {
+      setGroups(savedGroups);
+    }
+  }, []); // Run on load
+
+  /**
+   * Effect hook to save groups to local storage
+   */
+  useEffect(() => {
+    localStorage.setItem(groupsLocal, JSON.stringify(groups));
+  }, [groups]);
+
+  /**
+   * Group function to add a new empty group to the list
+   */
+  const handleAddGroup = () => {
+    const newGroup: Group = {
+      type: "group",
+      id: nanoid(),
+      title: "Untitled Group",
+      color: COLOR.GREY_DARK,
+      quicknotes: [],
+      marknotes: [],
+      favorited: false,
+    };
+
+    setGroups([...groups, newGroup]);
+  };
 
   /**
    * Group function to update a group in the list
@@ -224,6 +262,9 @@ const App = () => {
                 <QNPage
                   quicknotes={quicknotes}
                   setQuicknotes={setQuicknotes}
+                  groups={groups}
+                  setGroups={setGroups}
+                  handleAddGroup={handleAddGroup}
                   handleUpdateQuicknote={handleUpdateQuicknote}
                   handleDeleteQuicknote={handleDeleteQuicknote}
                 />
@@ -236,6 +277,7 @@ const App = () => {
                   setMarknotes={setMarknotes}
                   groups={groups}
                   setGroups={setGroups}
+                  handleAddGroup={handleAddGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
