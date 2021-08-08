@@ -18,6 +18,7 @@ import ColorMenu from "../menus/ColorMenu";
 import { MdDeleteForever } from "react-icons/md";
 import { IoReturnUpForward } from "react-icons/io5";
 import { RiEdit2Line } from "react-icons/ri";
+import { TiStar, TiStarOutline } from "react-icons/ti";
 
 /**
  * Props for GroupPage
@@ -29,7 +30,7 @@ export interface GroupPageProps {
 }
 
 /**
- * Content for marknotes route
+ * Group page component
  */
 const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
@@ -38,6 +39,31 @@ const GroupPage: React.FC<GroupPageProps> = ({
 }) => {
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
+
+  /**
+   * Function to handle changes in a note's field.
+   * @param key The field being changed
+   * @param value The new value of the field
+   * @param updateDate If true, updates the note's last modified date. [default=false]
+   */
+  const handleEditField = (
+    key: string,
+    value: any,
+    updateDate: Boolean = true
+  ) => {
+    if (updateDate) {
+      handleUpdateGroup(currentGroup, {
+        ...currentGroup,
+        [key]: value,
+        lastModified: Date.now(),
+      });
+    } else {
+      handleUpdateGroup(currentGroup, {
+        ...currentGroup,
+        [key]: value,
+      });
+    }
+  };
 
   /**
    * Function to handle a change in the note's color.
@@ -73,12 +99,23 @@ const GroupPage: React.FC<GroupPageProps> = ({
   // TODO: Redirect to proper location on delete
   return (
     <React.Fragment>
-      <PageHeader title={currentGroup.title}>
+      <PageHeader title={currentGroup.title} color={currentGroup.color}>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <RiEdit2Line />
         </PageHeaderButton>
         <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
           <MdDeleteForever />
+        </PageHeaderButton>
+        <PageHeaderButton
+          title="Favorite"
+          onClick={() =>
+            handleEditField(
+              "favorited",
+              currentGroup.favorited === true ? false : true
+            )
+          }
+        >
+          {currentGroup.favorited === false ? <TiStarOutline /> : <TiStar />}
         </PageHeaderButton>
         <PageHeaderButton onClick={undefined} title="Return to Notes">
           <Link to="/marknotes">

@@ -4,7 +4,7 @@
 import * as React from "react";
 
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 
 // Common imports
 import { Marknote } from "../../common/types";
@@ -13,14 +13,12 @@ import { findAltColor } from "../../common/color";
 // Component imports
 import Searchbar from "../Searchbar";
 
-export interface PageHeaderProps {
-  title: string;
-  useSearch?: boolean;
-  setSearchText?: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const SubHeaderContainer = styled.section`
-  background: ${(props) => props.theme.header.background};
+const PageHeaderColor = ({ color }: { color: string }) =>
+  css`
+    background: ${color};
+  `;
+const PageHeaderContainer = styled.section`
+  ${PageHeaderColor};
   color: ${(props) => props.theme.header.textPrimary};
   height: 30px;
   width: 100%;
@@ -30,7 +28,7 @@ const SubHeaderContainer = styled.section`
   position: relative;
   z-index: 10;
   padding: 0 0 0 1rem;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 
   h1 {
     margin-left: 1rem;
@@ -42,14 +40,14 @@ const SubHeaderContainer = styled.section`
   }
 `;
 
-const SubHeaderSection = styled.div`
+const PageHeaderSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 100%;
 `;
 
-const SubHeaderButtonsContainer = styled.div`
+const PageHeaderButtonsContainer = styled.div`
   height: inherit;
   user-select: none;
 
@@ -104,26 +102,35 @@ const SubHeaderButtonsContainer = styled.div`
   }
 `;
 
+export interface PageHeaderProps {
+  title: string;
+  color?: string;
+  useSearch?: boolean;
+  setSearchText?: React.Dispatch<React.SetStateAction<string>>;
+}
+
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   useSearch,
   setSearchText,
+  color,
   children,
 }) => {
+  const appTheme = useTheme();
   return (
-    <SubHeaderContainer>
-      <SubHeaderSection>
+    <PageHeaderContainer color={color ? color : appTheme.header.background}>
+      <PageHeaderSection>
         <h1>{title}</h1>
-      </SubHeaderSection>
-      <SubHeaderSection>
+      </PageHeaderSection>
+      <PageHeaderSection>
         {useSearch && setSearchText && (
           <Searchbar handleSearchNote={setSearchText} />
         )}
-        <SubHeaderButtonsContainer>
+        <PageHeaderButtonsContainer>
           <ul>{children}</ul>
-        </SubHeaderButtonsContainer>
-      </SubHeaderSection>
-    </SubHeaderContainer>
+        </PageHeaderButtonsContainer>
+      </PageHeaderSection>
+    </PageHeaderContainer>
   );
 };
 
@@ -218,9 +225,9 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
         onChange={(event) => handleEditField("title", event.target.value)}
         color={color_alt}
       />
-      <SubHeaderButtonsContainer>
+      <PageHeaderButtonsContainer>
         <ul>{children}</ul>
-      </SubHeaderButtonsContainer>
+      </PageHeaderButtonsContainer>
     </EditorHeaderContainer>
   );
 };
