@@ -13,12 +13,33 @@ import { findAltColor } from "../../common/color";
 // Component imports
 import Searchbar from "../Searchbar";
 
-const PageHeaderColor = ({ color }: { color: string }) =>
+/**
+ * Dynamic Element Styles
+ * Issue: input is rerendered each time input is given, losing focus
+ * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
+ */
+const PageHeaderColors = ({
+  color,
+  color2,
+}: {
+  color: string;
+  color2: string;
+}) =>
   css`
     background: ${color};
+    button {
+      background: ${color};
+      &:hover {
+        background: ${color2} !important;
+      }
+    }
+
+    .selected {
+      background: ${color2} !important;
+    }
   `;
 const PageHeaderContainer = styled.section`
-  ${PageHeaderColor};
+  ${PageHeaderColors};
   color: ${(props) => props.theme.header.textPrimary};
   height: 30px;
   width: 100%;
@@ -28,7 +49,7 @@ const PageHeaderContainer = styled.section`
   position: relative;
   z-index: 10;
   padding: 0 0 0 1rem;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 
   h1 {
     margin-left: 1rem;
@@ -118,7 +139,10 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const appTheme = useTheme();
   return (
-    <PageHeaderContainer color={color ? color : appTheme.header.background}>
+    <PageHeaderContainer
+      color={color ? color : appTheme.header.background}
+      color2={color ? findAltColor(color) : appTheme.header.backgroundSecondary}
+    >
       <PageHeaderSection>
         <h1>{title}</h1>
       </PageHeaderSection>
@@ -140,51 +164,11 @@ PageHeader.defaultProps = {
 
 export default PageHeader;
 
-/**
- * Dynamic Element Styles
- * Should declare outside of function component, but need to declare here for dynamic styles
- * Issue: input is rerendered each time input is given, losing focus
- * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
- */
-const EditorHeaderContainerStyles = ({
-  color,
-  color2,
-}: {
-  color: string;
-  color2: string;
-}) =>
-  css`
-    background: ${color};
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 10;
-    padding: 0 0 0 1rem;
-    position: relative;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
-
-    button {
-      background: ${color};
-      &:hover {
-        background: ${color2} !important;
-      }
-    }
-
-    .selected {
-      background: ${color2} !important;
-    }
-  `;
-const EditorHeaderContainer = styled.section`
-  ${EditorHeaderContainerStyles}
-  color: ${(props) => props.theme.header.textPrimary};
-`;
-
 const TitleInputStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
     color: white;
-    height: 24px;
+    height: 100%;
     width: fit-content;
     border: 0;
     font-size: 14px;
@@ -217,7 +201,7 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
   const color_alt = findAltColor(color);
 
   return (
-    <EditorHeaderContainer color={color} color2={color_alt}>
+    <PageHeaderContainer color={color} color2={color_alt}>
       <TitleInput
         type="text"
         placeholder="Enter a title..."
@@ -228,6 +212,6 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
       <PageHeaderButtonsContainer>
         <ul>{children}</ul>
       </PageHeaderButtonsContainer>
-    </EditorHeaderContainer>
+    </PageHeaderContainer>
   );
 };
