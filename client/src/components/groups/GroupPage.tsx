@@ -10,7 +10,7 @@ import { Group } from "../../common/types";
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
-import Section from "../Section";
+import Section, { Empty } from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
 
@@ -87,8 +87,16 @@ const GroupPage: React.FC<GroupPageProps> = ({
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
-        <Section name="Quicknotes"></Section>
-        <Section name="Marknotes"></Section>
+        {currentGroup.quicknotes.length > 0 ? (
+          <Section name="Quicknotes"></Section>
+        ) : null}
+        {currentGroup.marknotes.length > 0 ? (
+          <Section name="Marknotes"></Section>
+        ) : null}
+        {currentGroup.quicknotes.length === 0 &&
+        currentGroup.marknotes.length === 0 ? (
+          <Empty>This group is empty.</Empty>
+        ) : null}
       </div>
       <ColorMenu
         showColorMenu={showColorMenu}
