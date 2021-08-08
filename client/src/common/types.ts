@@ -10,7 +10,6 @@ export type Quicknote = {
   favorited: boolean;
 };
 
-
 export type Marknote = {
   type: string;
   id: string;
@@ -28,5 +27,6 @@ export type Group = {
   color: string;
   quicknotes: string[];
   marknotes: string[];
+  lastModified: number;
   favorited: boolean;
 }

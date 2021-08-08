@@ -16,11 +16,13 @@ import { TiStarOutline, TiStar } from "react-icons/ti";
 export interface FavoriteButtonProps {
   favorited: Boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  color?: string;
 }
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   favorited,
   onClick,
+  color,
 }) => {
   return (
     <NoteButton
@@ -28,8 +30,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
       className="favorite-note-button note-button"
       onClick={(event) => onClick(event)}
       css={css`
-        color: white;
+        color: ${color ? color : "white"};
         margin-right: 0.5em;
+        &:hover {
+          color: ${color ? color : "white"};
+        }
       `}
     >
       {favorited ? <TiStar /> : <TiStarOutline />}

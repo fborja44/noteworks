@@ -28,13 +28,27 @@ const List = styled.div`
 
 export interface GroupListProps {
   groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  favorites?: boolean;
 }
 
-const GroupList: React.FC<GroupListProps> = ({ groups }) => {
+const GroupList: React.FC<GroupListProps> = ({
+  groups,
+  handleUpdateGroup,
+  favorites,
+}) => {
+  if (favorites) {
+    groups = groups.filter((group) => group.favorited);
+  }
+
   const groupsList = (
     <List>
       {groups.map((group) => (
-        <GroupComponent key={group.id} currentGroup={group} />
+        <GroupComponent
+          key={group.id}
+          currentGroup={group}
+          handleUpdateGroup={handleUpdateGroup}
+        />
       ))}
     </List>
   );

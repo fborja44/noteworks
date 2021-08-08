@@ -208,6 +208,7 @@ const App = () => {
       color: COLOR.GREY_DARK,
       quicknotes: [],
       marknotes: [],
+      lastModified: Date.now(),
       favorited: false,
     };
 
@@ -247,8 +248,10 @@ const App = () => {
             <Route exact path="/">
               <main>
                 <HomeContent
+                  groups={groups}
                   quicknotes={quicknotes}
                   marknotes={marknotes}
+                  handleUpdateGroup={handleUpdateGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   handleUpdateQuicknote={handleUpdateQuicknote}
@@ -265,6 +268,7 @@ const App = () => {
                   groups={groups}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
+                  handleUpdateGroup={handleUpdateGroup}
                   handleUpdateQuicknote={handleUpdateQuicknote}
                   handleDeleteQuicknote={handleDeleteQuicknote}
                 />
@@ -278,6 +282,7 @@ const App = () => {
                   groups={groups}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
+                  handleUpdateGroup={handleUpdateGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
