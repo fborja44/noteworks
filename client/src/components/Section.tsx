@@ -46,7 +46,28 @@ export const SectionHeaderButton = styled.button`
   height: 1.5em;
 
   &:hover {
-    background: #EDEDED;
+    background: #ededed;
+  }
+`;
+
+export const Empty = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  text-align: center;
+  user-select: none;
+
+  p {
+    margin: 0.5rem;
+  }
+
+  svg {
+    position: relative;
+    top: 3px;
+    margin: 0 0.2em;
   }
 `;
 

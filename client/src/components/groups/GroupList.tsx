@@ -10,6 +10,7 @@ import { Group } from "../../common/types";
 
 // Component imports
 import GroupComponent from "./GroupComponent";
+import { Empty } from "../Section";
 
 // Image and icon imports
 import { MdCreateNewFolder } from "react-icons/md";
@@ -23,26 +24,6 @@ const List = styled.div`
   row-gap: 1rem;
   column-gap: 1rem;
   z-index: 1;
-`;
-
-const Empty = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  text-align: center;
-
-  p {
-    margin: 0.5rem;
-  }
-
-  svg {
-    position: relative;
-    top: 3px;
-    margin: 0 0.2em;
-  }
 `;
 
 export interface GroupListProps {
@@ -62,7 +43,8 @@ const GroupList: React.FC<GroupListProps> = ({ groups }) => {
     <Empty>
       <p>You have no groups.</p>
       <p>
-        Create one now by pressing the <MdCreateNewFolder /> button in the menu above!
+        Create one now by pressing the <MdCreateNewFolder /> button in the menu
+        above!
       </p>
     </Empty>
   );

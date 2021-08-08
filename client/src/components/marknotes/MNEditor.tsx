@@ -28,6 +28,7 @@ import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
 import { VscOpenPreview } from "react-icons/vsc";
 import { AiOutlineCode } from "react-icons/ai";
+import { Empty } from "../Section";
 
 // Codemirror imports
 import "codemirror/lib/codemirror.css";
@@ -195,27 +196,6 @@ const PreviewBodyDark = css`
   }
 `;
 
-const Empty = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  text-align: center;
-
-  p {
-    margin: 0.5rem;
-  }
-
-  svg {
-    font-size: 18px;
-    position: relative;
-    top: 3px;
-    margin: 0 0.2em;
-  }
-`;
-
 /**
  * Editor component proptypes
  */
@@ -353,7 +333,11 @@ const MNEditor: React.FC<MNEditorProps> = ({
           </Empty>
         </div>
       ) : null}
-      <EditorContent>
+      <EditorContent
+        css={css`
+          display: ${!showEditor && !showPreview ? "none" : "default"};
+        `}
+      >
         <EditorContainer
           css={css`
             display: ${showEditor ? "default" : "none"};

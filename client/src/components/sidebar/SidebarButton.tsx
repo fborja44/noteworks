@@ -18,6 +18,8 @@ const ButtonItem = styled.li`
   align-items: center;
   justify-content: center;
 
+  user-drag: none;
+
   a {
     display: flex;
     justify-content: center;
@@ -45,6 +47,7 @@ const NavButton = styled.div`
   height: 45px;
   position: absolute;
   border-left: solid 2px ${(props) => props.theme.sidebar.background};
+  user-drag: none;
 `;
 
 export interface SidebarButtonProps {

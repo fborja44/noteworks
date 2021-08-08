@@ -10,6 +10,7 @@ import { Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
+import { Empty } from "../Section";
 
 const List = styled.div`
   display: grid;
@@ -20,26 +21,6 @@ const List = styled.div`
   row-gap: 1rem;
   column-gap: 1rem;
   z-index: 1;
-`;
-
-const Empty = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  text-align: center;
-
-  p {
-    margin: 0.5rem;
-  }
-
-  svg {
-    position: relative;
-    top: 3px;
-    margin: 0 0.2em;
-  }
 `;
 
 export interface MNListProps {
