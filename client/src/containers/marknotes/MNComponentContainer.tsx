@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // Common imports
 import { Marknote } from "../../common/types";
@@ -25,6 +26,9 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // History
+  const history = useHistory();
+
   // Menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -124,6 +128,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       showConfirmDelete={showConfirmDelete}
       setShowConfirmDelete={setShowConfirmDelete}
       setSelectedTab={setSelectedTab}
+      history={history}
     />
   );
 };

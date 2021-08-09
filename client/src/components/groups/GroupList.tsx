@@ -53,7 +53,9 @@ const GroupList: React.FC<GroupListProps> = ({
     </List>
   );
 
-  const groupsEmpty = (
+  const groupsEmpty = favorites ? (
+    <Empty>You have no favorited groups.</Empty>
+  ) : (
     <Empty>
       <p>You have no groups.</p>
       <p>

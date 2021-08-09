@@ -68,6 +68,7 @@ export interface MNComponentProps {
   showConfirmDelete: boolean;
   setShowConfirmDelete: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  history: any;
 }
 
 const MNComponent: React.FC<MNComponentProps> = ({
@@ -84,13 +85,17 @@ const MNComponent: React.FC<MNComponentProps> = ({
   showConfirmDelete,
   setShowConfirmDelete,
   setSelectedTab,
+  history,
 }) => {
   return (
     <MarknoteContainer className="mncontainer">
       <Link
         css={MarknoteLink}
         to={`/marknotes/${currentNote.id}`}
-        onClick={() => setSelectedTab("/marknotes")}
+        onClick={() => {
+          setSelectedTab("/marknotes");
+          history.push("/marknotes");
+        }}
       >
         <NoteHeader
           currentNote={currentNote}

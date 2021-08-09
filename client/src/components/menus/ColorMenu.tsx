@@ -45,7 +45,7 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
 
   return (
     <ModalMenu
-      heading="Choose Note Color"
+      heading="Choose Label Color:"
       showMenuState={showColorMenu}
       setShowMenuState={setShowColorMenu}
     >

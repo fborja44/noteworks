@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // Common imports
 import { Group } from "../../common/types";
@@ -37,6 +37,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
   handleUpdateGroup,
   handleDeleteGroup,
 }) => {
+  // History
+  const history = useHistory();
+
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -117,10 +120,11 @@ const GroupPage: React.FC<GroupPageProps> = ({
         >
           {currentGroup.favorited === false ? <TiStarOutline /> : <TiStar />}
         </PageHeaderButton>
-        <PageHeaderButton onClick={undefined} title="Return to Notes">
-          <Link to="/marknotes">
-            <IoReturnUpForward />
-          </Link>
+        <PageHeaderButton
+          onClick={() => history.goBack()}
+          title="Return to Notes"
+        >
+          <IoReturnUpForward />
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">

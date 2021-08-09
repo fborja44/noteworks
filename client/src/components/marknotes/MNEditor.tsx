@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
 /** @jsxRuntime classic */
@@ -215,6 +215,9 @@ const MNEditor: React.FC<MNEditorProps> = ({
   handleUpdateMarknote,
   setRedirect,
 }) => {
+  // History
+  const history = useHistory();
+
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -315,10 +318,11 @@ const MNEditor: React.FC<MNEditorProps> = ({
         >
           {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
         </PageHeaderButton>
-        <PageHeaderButton onClick={undefined} title="Return to Notes">
-          <Link to="/marknotes">
-            <IoReturnUpForward />
-          </Link>
+        <PageHeaderButton
+          onClick={() => history.goBack()}
+          title="Return to Notes"
+        >
+          <IoReturnUpForward />
         </PageHeaderButton>
       </EditorHeader>
       {!showEditor && !showPreview ? (

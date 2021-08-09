@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React import
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -67,11 +67,11 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   toggleConfirmDelete,
   redirect,
 }) => {
+  // History
+  const history = useHistory();
+
   // Check if note title is empty
   const title = item.title.trim().length === 0 ? "Untitled Note" : item.title;
-
-  // Check note type to determine route
-  const route = item.type === "marknote" ? "marknotes" : "quicknotes";
 
   return (
     <ModalMenu
@@ -81,36 +81,22 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
     >
       <MenuContent>
         <p>This action cannot be reversed.</p>
-        {redirect ? (
-          <Link
-            to={`/${route}`}
-            css={DeleteButton}
-            onClick={
-              handleDelete
-                ? (event) => {
-                    handleDelete(item.id);
-                    toggleConfirmDelete(event);
+        <button
+          css={DeleteButton}
+          onClick={
+            handleDelete
+              ? (event) => {
+                  handleDelete(item.id);
+                  if (redirect) {
+                    history.goBack();
                   }
-                : undefined
-            }
-          >
-            Confirm
-          </Link>
-        ) : (
-          <button
-            css={DeleteButton}
-            onClick={
-              handleDelete
-                ? (event) => {
-                    handleDelete(item.id);
-                    toggleConfirmDelete(event);
-                  }
-                : undefined
-            }
-          >
-            Confirm
-          </button>
-        )}
+                  toggleConfirmDelete(event);
+                }
+              : undefined
+          }
+        >
+          Confirm
+        </button>
       </MenuContent>
     </ModalMenu>
   );
