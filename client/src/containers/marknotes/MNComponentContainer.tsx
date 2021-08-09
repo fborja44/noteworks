@@ -86,9 +86,10 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     // Prevent parent link from redirecting
-    event.preventDefault();
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
+    // event.nativeEvent.stopImmediatePropagation();
+    console.log("toggle");
 
     // Toggle display of component
     setShowColorMenu((prev) => !prev);

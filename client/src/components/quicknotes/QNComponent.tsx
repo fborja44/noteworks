@@ -31,6 +31,8 @@ const QuicknoteContainer = styled.div`
   border: 1px solid ${(props) => props.theme.note.borderColor};
   box-sizing: border-box;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  position: relative;
 
   textarea {
     border: none;

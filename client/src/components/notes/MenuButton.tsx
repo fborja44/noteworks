@@ -1,7 +1,7 @@
 /* Menu Button Component
 ------------------------------------------------------------------------------*/
 // React imports
-import * as React from "react";
+import React, { useState } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -12,22 +12,53 @@ import NoteButton from "./NoteButton";
 
 // Image and icon imports
 import { IoMdMenu } from "react-icons/io";
+import DropdownMenu from "../dropdown/DropdownMenu";
 
 export interface MenuButtonProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  toggleColorMenu:
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ onClick }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({
+  toggleColorMenu,
+  children,
+}) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <NoteButton
-      title="Options"
-      onClick={(event) => onClick(event)}
-      css={css`
-        margin-right: 0.4em;
-      `}
-    >
-      <IoMdMenu />
-    </NoteButton>
+    <React.Fragment>
+      <NoteButton
+        title="Options"
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          event.nativeEvent.stopImmediatePropagation();
+          setOpen(!open);
+        }}
+        css={css`
+          margin-right: 0.4em;
+          ${open ? "z-index: 1000" : null}
+        `}
+      >
+        <IoMdMenu
+          css={
+            open
+              ? css`
+                  color: white;
+                `
+              : null
+          }
+        />
+      </NoteButton>
+      {open && (
+        <DropdownMenu
+          open={open}
+          setOpen={setOpen}
+          toggleColorMenu={toggleColorMenu}
+        />
+      )}
+    </React.Fragment>
   );
 };
 

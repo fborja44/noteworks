@@ -38,6 +38,7 @@ const MenuContainer = styled.div`
   position: relative;
   z-index: 10;
   padding: 1.5rem 2rem;
+  border-radius: 5px;
 `;
 
 const MenuHeader = styled.div`

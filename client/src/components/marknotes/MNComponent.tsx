@@ -29,6 +29,8 @@ const MarknoteContainer = styled.div`
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid ${(props) => props.theme.note.borderColor};
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  position: relative;
 
   &:hover {
     border: 1px solid #26a7fd;
@@ -37,7 +39,9 @@ const MarknoteContainer = styled.div`
 
 const MarknoteLink = css`
   text-decoration: none;
-  position: relative;
+  position: absolute;
+  width: 240px;
+  height: 330px;
   z-index: 1;
 `;
 
@@ -96,34 +100,33 @@ const MNComponent: React.FC<MNComponentProps> = ({
           setSelectedTab("/marknotes");
           history.push("/marknotes");
         }}
+      />
+      <NoteHeader
+        currentNote={currentNote}
+        handleFavorite={handleFavorite}
+        handleEditField={handleEditField}
+        toggleColorMenu={toggleColorMenu}
+        toggleConfirmDelete={toggleConfirmDelete}
+      />
+      <NoteContent
+        css={css`
+          height: calc(100% - 25px);
+        `}
       >
-        <NoteHeader
-          currentNote={currentNote}
-          handleFavorite={handleFavorite}
-          handleEditField={handleEditField}
-          toggleColorMenu={toggleColorMenu}
-          toggleConfirmDelete={toggleConfirmDelete}
-        />
-        <NoteContent
+        <MarknoteBody
           css={css`
             height: calc(100% - 25px);
+            overflow: hidden;
           `}
         >
-          <MarknoteBody
-            css={css`
-              height: calc(100% - 25px);
-              overflow: hidden;
-            `}
-          >
-            {currentNote.body.length > 0 ? (
-              currentNote.body
-            ) : (
-              <span className="italic">This note is empty.</span>
-            )}
-          </MarknoteBody>
-          <MNFooter currentNote={currentNote} />
-        </NoteContent>
-      </Link>
+          {currentNote.body.length > 0 ? (
+            currentNote.body
+          ) : (
+            <span className="italic">This note is empty.</span>
+          )}
+        </MarknoteBody>
+        <MNFooter currentNote={currentNote} />
+      </NoteContent>
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}
