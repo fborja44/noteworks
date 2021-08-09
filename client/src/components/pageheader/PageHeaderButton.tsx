@@ -15,8 +15,10 @@ const PageHeaderButton: React.FC<PageHeaderButtonProps> = ({
   children,
 }) => {
   return (
-    <li title={`${title}`} className={`${selected && "selected"}`}>
-      <button onClick={onClick}>{children}</button>
+    <li title={`${title}`}>
+      <button onClick={onClick} className={`${selected && "selected"}`}>
+        {children}
+      </button>
     </li>
   );
 };

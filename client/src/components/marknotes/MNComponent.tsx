@@ -34,6 +34,7 @@ const MarknoteContainer = styled.div`
 
   &:hover {
     border: 1px solid #26a7fd;
+    transition: border 0.2s ease;
   }
 `;
 

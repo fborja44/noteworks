@@ -78,17 +78,19 @@ const PageHeaderButtonsContainer = styled.div`
     margin: 0;
     padding: 0;
     height: inherit;
+    display: flex;
+    align-items: center;
 
     li {
       width: 40px;
-      height: 100%;
+      height: 78%;
       float: left;
       display: flex;
       align-items: center;
       justify-content: center;
 
       button {
-        width: 100%;
+        width: 80%;
         height: 100%;
         background: inherit;
         border: none;
@@ -99,6 +101,7 @@ const PageHeaderButtonsContainer = styled.div`
         justify-content: center;
         user-select: none;
         -webkit-user-select: none;
+        border-radius: 3px;
 
         &:hover {
           cursor: pointer;

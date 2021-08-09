@@ -18,10 +18,14 @@ export interface MenuButtonProps {
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+  toggleConfirmDelete:
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
   toggleColorMenu,
+  toggleConfirmDelete,
   children,
 }) => {
   const [open, setOpen] = useState(false);
@@ -37,7 +41,6 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           setOpen(!open);
         }}
         css={css`
-          margin-right: 0.4em;
           ${open ? "z-index: 1000" : null}
         `}
       >
@@ -51,13 +54,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           }
         />
       </NoteButton>
-      {open && (
-        <DropdownMenu
-          open={open}
-          setOpen={setOpen}
-          toggleColorMenu={toggleColorMenu}
-        />
-      )}
+      <DropdownMenu
+        open={open}
+        setOpen={setOpen}
+        toggleColorMenu={toggleColorMenu}
+        toggleConfirmDelete={toggleConfirmDelete}
+      />
     </React.Fragment>
   );
 };

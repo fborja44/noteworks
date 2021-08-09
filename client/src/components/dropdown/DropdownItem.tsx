@@ -1,27 +1,30 @@
 /* Dropdown Item Component
 ------------------------------------------------------------------------------*/
 // React import
-import React, { useState } from "react";
+import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const Item = styled.div`
   color: ${(props) => props.theme.main.textPrimary};
-  height: 25px;
-  width: fit-content;
+  height: 28px;
+  flex: 1;
   display: flex;
   align-items: center;
   border-radius: 3px;
   transition: background 0.2s;
-  padding: 0 0.5em;
+  padding: 0.2em 0.5em;
   cursor: pointer;
   user-select: none;
 
   &:hover {
-    background: #e6e6e6;
+    background: ${(props) =>
+      props.theme.id === "light"
+        ? "#e6e6e6"
+        : props.theme.main.backgroundSecondary};
   }
 `;
 
@@ -44,6 +47,7 @@ const Text = styled.div`
 export interface DropdownItemProps {
   icon?: any;
   goToMenu?: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveMenu?: React.Dispatch<React.SetStateAction<string>>;
   onClick: any;
 }
@@ -51,10 +55,16 @@ export interface DropdownItemProps {
 const DropdownItem: React.FC<DropdownItemProps> = ({
   icon,
   onClick,
+  setOpen,
   children,
 }) => {
   return (
-    <Item onClick={onClick()}>
+    <Item
+      onClick={() => {
+        setOpen((prev) => !prev);
+        onClick();
+      }}
+    >
       <IconContainer>{icon}</IconContainer>
       <Text>{children}</Text>
     </Item>

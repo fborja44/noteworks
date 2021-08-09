@@ -15,8 +15,7 @@ import { COLOR } from "../../common/color";
 // Component imports
 import FavoriteButton from "./FavoriteButton";
 import MenuButton from "./MenuButton";
-import DeleteButton from "./DeleteButton";
-import DropdownMenu from "../dropdown/DropdownMenu";
+// import DeleteButton from "./DeleteButton";
 
 const NoteHeaderContainer = styled.div`
   width: 100%;
@@ -90,8 +89,11 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
         onChange={(event) => handleEditField("title", event.target.value)}
         onClick={(event) => handleClick(event)}
       />
-      <MenuButton toggleColorMenu={toggleColorMenu} />
-      <DeleteButton onClick={toggleConfirmDelete} />
+      <MenuButton
+        toggleColorMenu={toggleColorMenu}
+        toggleConfirmDelete={toggleConfirmDelete}
+      />
+      {/* <DeleteButton onClick={toggleConfirmDelete} /> */}
     </NoteHeaderContainer>
   );
 };

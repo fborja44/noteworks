@@ -33,7 +33,9 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
         color: ${color ? color : "white"};
         margin-right: 0.5em;
         &:hover {
-          color: ${color ? color : "white"};
+          svg {
+            color: ${color ? color : "white"} !important;
+          }
         }
       `}
     >

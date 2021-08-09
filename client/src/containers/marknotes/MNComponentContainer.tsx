@@ -105,9 +105,9 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     // Prevent parent link from redirecting
-    event.preventDefault();
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
+    // event.nativeEvent.stopImmediatePropagation();
 
     // Toggle display of component
     setShowConfirmDelete((prev) => !prev);

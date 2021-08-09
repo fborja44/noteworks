@@ -1,7 +1,7 @@
 /* Dropdown Menu Component
 ------------------------------------------------------------------------------*/
 // React import
-import React, { useState } from "react";
+import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -12,7 +12,7 @@ import styled from "@emotion/styled";
 import DropdownItem from "./DropdownItem";
 
 // Image and icon imports
-import { MdColorLens, MdFolderOpen } from "react-icons/md";
+import { MdColorLens, MdDeleteForever, MdFolderOpen } from "react-icons/md";
 
 const Background = styled.div`
   width: 100%;
@@ -31,18 +31,18 @@ const Background = styled.div`
 
 const DropdownContainer = styled.div`
   position: absolute;
-  top: 25px;
+  top: 24px;
   left: 260px;
   width: fit-content;
   transform: translateX(-45%);
-  background-color: white;
-  border: 1px solid #828282;
+  background: ${(props) =>
+    props.theme.id === "light" ? "white" : props.theme.main.background};
   border-radius: 2px;
   padding: 0.5em 0.6em;
+  border: 1px solid #828282;
   overflow: hidden;
   transition: height 500ms ease;
   font-size: 12px;
-  z-index: 200;
   cursor: default;
 `;
 
@@ -56,41 +56,71 @@ export interface DropdownMenuProps {
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+  toggleConfirmDelete:
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   open,
   setOpen,
   toggleColorMenu,
+  toggleConfirmDelete,
 }) => {
-  const [activeMenu, setActiveMenu] = useState("");
-  const [menuHeight, setMenuHeight] = useState(null);
+  // const [activeMenu, setActiveMenu] = useState("");
+  // const [menuHeight, setMenuHeight] = useState(null);
 
   /**
    * Function to set the element height state
    * @param el Menu element
    */
-  const calcHeight = (el: any) => {
-    const height = el.offsetHeight;
-    setMenuHeight(height);
-  };
+  // const calcHeight = (el: any) => {
+  //   const height = el.offsetHeight;
+  //   setMenuHeight(height);
+  // };
 
   return (
     <React.Fragment>
-      <Background
-        onClick={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          event.nativeEvent.stopImmediatePropagation();
-          setOpen(!open);
-        }}
-      />
-      <DropdownContainer>
+      {open && (
+        <Background
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            event.nativeEvent.stopImmediatePropagation();
+            setOpen(!open);
+          }}
+        />
+      )}
+      <DropdownContainer
+        css={css`
+          opacity: ${open ? "1" : "0"};
+          max-height: ${open ? "500px" : "0px"};
+          z-index: ${open ? "200" : "0"};
+          transition: max-height 1s ease, opacity 0.1s ease;
+        `}
+      >
         <Menu>
-          <DropdownItem icon={<MdColorLens />} onClick={() => {}}>
+          <DropdownItem
+            setOpen={setOpen}
+            icon={<MdColorLens />}
+            onClick={toggleColorMenu}
+          >
             Change Label Color
           </DropdownItem>
-          <DropdownItem onClick={toggleColorMenu}>Add to Group</DropdownItem>
+          <DropdownItem
+            setOpen={setOpen}
+            icon={<MdFolderOpen />}
+            onClick={() => null}
+          >
+            Add to Group
+          </DropdownItem>
+          <DropdownItem
+            setOpen={setOpen}
+            icon={<MdDeleteForever />}
+            onClick={toggleConfirmDelete}
+          >
+            Delete Note
+          </DropdownItem>
         </Menu>
       </DropdownContainer>
     </React.Fragment>
