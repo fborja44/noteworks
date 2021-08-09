@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 // Common imports
@@ -55,8 +55,8 @@ const MNPage: React.FC<MNPageProps> = ({
   handleDeleteMarknote,
   setSelectedTab,
 }) => {
-  // Redirect state
-  const [redirect, setRedirect] = useState(<></>);
+  // History
+  const history = useHistory();
 
   /**
    * Marknote function to add a new empty marknote to the list
@@ -76,7 +76,8 @@ const MNPage: React.FC<MNPageProps> = ({
     setMarknotes([...marknotes, newMarknote]);
 
     // Redirect when new note is added
-    setRedirect(<Redirect to={`/marknotes/${newMarknote.id}`} />);
+    history.push("/marknotes");
+    history.push(`/marknotes/${newMarknote.id}`);
   };
 
   // Help menu state
@@ -121,7 +122,6 @@ const MNPage: React.FC<MNPageProps> = ({
               setSelectedTab={setSelectedTab}
             />
           </Section>
-          {redirect}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
@@ -132,7 +132,6 @@ const MNPage: React.FC<MNPageProps> = ({
             currentNote={note}
             handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
-            setRedirect={setRedirect}
           />
         </Route>
       ))}

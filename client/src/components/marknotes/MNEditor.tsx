@@ -1,8 +1,8 @@
 /* Marknote Editor Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
 /** @jsxRuntime classic */
@@ -206,14 +206,12 @@ export interface MNEditorProps {
     currentMarknote: Marknote,
     updatedMarknote: Marknote
   ) => void;
-  setRedirect: React.Dispatch<React.SetStateAction<JSX.Element>>;
 }
 
 const MNEditor: React.FC<MNEditorProps> = ({
   currentNote,
   handleDeleteMarknote,
   handleUpdateMarknote,
-  setRedirect,
 }) => {
   // History
   const history = useHistory();
@@ -251,11 +249,6 @@ const MNEditor: React.FC<MNEditorProps> = ({
   const toggleConfirmDelete = () => {
     setShowConfirmDelete((prev) => !prev);
   };
-
-  // Reset redirect when editor mounts
-  useEffect(() => {
-    setRedirect(<></>);
-  }, [setRedirect]);
 
   /**
    * Function to handle changes in a note's field
