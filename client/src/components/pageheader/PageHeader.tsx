@@ -8,7 +8,7 @@ import { css, useTheme } from "@emotion/react";
 
 // Common imports
 import { Marknote } from "../../common/types";
-import { findAltColor } from "../../common/color";
+import { findDarkColor } from "../../common/color";
 
 // Component imports
 import Searchbar from "../Searchbar";
@@ -144,7 +144,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   return (
     <PageHeaderContainer
       color={color ? color : appTheme.header.background}
-      color2={color ? findAltColor(color) : appTheme.header.backgroundSecondary}
+      color2={color ? findDarkColor(color) : appTheme.header.backgroundSecondary}
     >
       <PageHeaderSection>
         <h1>{title}</h1>
@@ -171,12 +171,13 @@ const TitleInputStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
     color: white;
-    height: 100%;
+    height: 80%;
     width: fit-content;
-    border: 0;
+    border: none;
+    border-radius: 3px;
     font-size: 14px;
     font-weight: bold;
-    padding: 0 1rem 0 1rem;
+    padding: 0 0.5rem 0 0.7rem;
 
     &::placeholder {
       color: white;
@@ -201,7 +202,7 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
   children,
 }) => {
   const color = currentNote.color;
-  const color_alt = findAltColor(color);
+  const color_alt = findDarkColor(color);
 
   return (
     <PageHeaderContainer color={color} color2={color_alt}>
