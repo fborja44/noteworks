@@ -19,12 +19,13 @@ const SearchInput = styled.input`
   margin-left: 0.3rem;
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   font-size: 12px;
-  background-color: var(--sub-header-background-hover);
+  background-color: ${(props) => props.theme.header.backgroundSecondary};
   border: none;
-  color: var(--header-text-color-primary);
+  border-radius: 2px;
+  color: ${(props) => props.theme.header.textPrimary};
 
   &::placeholder {
-    color: var(--header-text-color-primary);
+    color: ${(props) => props.theme.header.textPrimary};
   }
 
   &:focus {

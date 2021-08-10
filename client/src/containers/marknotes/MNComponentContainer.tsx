@@ -5,12 +5,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 // Common imports
-import { Marknote } from "../../common/types";
+import { Group, Marknote } from "../../common/types";
 
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
 
 export interface MNComponentContainerProps {
+  groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
   handleUpdateMarknote?: (
     currentMarknote: Marknote,
@@ -21,6 +23,8 @@ export interface MNComponentContainerProps {
 }
 
 const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
+  groups,
+  handleUpdateGroup,
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
@@ -29,7 +33,25 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   // History
   const history = useHistory();
 
-  // Menu state
+  // Group menu state
+  const [showGroupMenu, setShowGroupMenu] = useState(false);
+
+  /**
+   * Function to toggle the group menu
+   */
+  const toggleGroupMenu = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // Prevent parent link from redirecting
+    // event.preventDefault();
+    // event.stopPropagation();
+    // event.nativeEvent.stopImmediatePropagation();
+
+    // Toggle display of component
+    setShowGroupMenu((prev) => !prev);
+  };
+
+  // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
@@ -116,6 +138,8 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   return (
     <MNComponent
       key={currentNote.id}
+      groups={groups}
+      handleUpdateGroup={handleUpdateGroup}
       currentNote={currentNote}
       handleUpdateMarknote={handleUpdateMarknote}
       handleDeleteMarknote={handleDeleteMarknote}
@@ -124,6 +148,9 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       handleEditColor={handleEditColor}
       toggleConfirmDelete={toggleConfirmDelete}
       toggleColorMenu={toggleColorMenu}
+      toggleGroupMenu={toggleGroupMenu}
+      showGroupMenu={showGroupMenu}
+      setShowGroupMenu={setShowGroupMenu}
       showColorMenu={showColorMenu}
       setShowColorMenu={setShowColorMenu}
       showConfirmDelete={showConfirmDelete}

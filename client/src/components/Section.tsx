@@ -47,6 +47,7 @@ export const SectionHeaderButton = styled.button`
 
   &:hover {
     background: #ededed;
+    transition: background 0.2s ease;
   }
 `;
 

@@ -6,7 +6,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Marknote, Quicknote } from "../../common/types";
+import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
@@ -26,6 +26,8 @@ const List = styled.div`
 export interface MNListProps {
   MNSearchText?: string;
   marknotes: Quicknote[] | Marknote[];
+  groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateMarknote: (
     currentMarknote: Marknote,
@@ -38,6 +40,8 @@ export interface MNListProps {
 const MNList: React.FC<MNListProps> = ({
   MNSearchText,
   marknotes,
+  groups,
+  handleUpdateGroup,
   favorites,
   handleUpdateMarknote,
   handleDeleteMarknote,
@@ -67,6 +71,8 @@ const MNList: React.FC<MNListProps> = ({
       {notes.map((note) => (
         <MNComponentContainer
           key={note.id}
+          groups={groups}
+          handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
           handleUpdateMarknote={handleUpdateMarknote}
           handleDeleteMarknote={handleDeleteMarknote}

@@ -6,7 +6,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Marknote, Quicknote } from "../../common/types";
+import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import QNComponent from "./QNComponent";
@@ -25,7 +25,9 @@ const List = styled.div`
 
 export interface QNListProps {
   QNSearchText?: string;
-  quicknotes: Quicknote[] | Marknote[];
+  quicknotes: Quicknote[];
+  groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateQuicknote: (
     currentQuicknote: Quicknote,
@@ -38,6 +40,8 @@ export interface QNListProps {
 const QNList: React.FC<QNListProps> = ({
   QNSearchText,
   quicknotes,
+  groups,
+  handleUpdateGroup,
   favorites,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
@@ -62,6 +66,8 @@ const QNList: React.FC<QNListProps> = ({
       {notes.map((note: any) => (
         <QNComponent
           key={note.id}
+          groups={groups}
+          handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
           handleUpdateQuicknote={handleUpdateQuicknote}
           handleDeleteQuicknote={handleDeleteQuicknote}

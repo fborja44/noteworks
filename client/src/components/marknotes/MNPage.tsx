@@ -117,6 +117,8 @@ const MNPage: React.FC<MNPageProps> = ({
             <MNList
               MNSearchText={MNSearchText}
               marknotes={marknotes}
+              groups={groups}
+              handleUpdateGroup={handleUpdateGroup}
               handleUpdateMarknote={handleUpdateMarknote}
               handleDeleteMarknote={handleDeleteMarknote}
               setSelectedTab={setSelectedTab}

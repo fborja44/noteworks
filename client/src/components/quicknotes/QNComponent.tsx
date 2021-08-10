@@ -10,7 +10,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Quicknote } from "../../common/types";
+import { Group, Quicknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -19,6 +19,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import QNFooter from "./QNFooter";
 import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
+import GroupMenu from "../menus/GroupMenu";
 
 // TODO: Fix borders on different monitors
 const QuicknoteContainer = styled.div`
@@ -62,6 +63,8 @@ const QuicknoteContainer = styled.div`
 
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
+  groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Quicknote;
   handleDeleteQuicknote?: (id: string) => void;
   handleUpdateQuicknote?: (
@@ -71,6 +74,8 @@ export interface QNComponentProps {
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
+  groups,
+  handleUpdateGroup,
   currentNote,
   handleDeleteQuicknote,
   handleUpdateQuicknote,
@@ -151,12 +156,23 @@ const QNComponent: React.FC<QNComponentProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
+  // Quicknote Group Menu state
+  const [showGroupMenu, setShowGroupMenu] = useState(false);
+
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleGroupMenu = () => {
+    setShowGroupMenu((prev) => !prev);
+  };
+
   return (
     <QuicknoteContainer>
       <NoteHeader
         currentNote={currentNote}
         handleFavorite={handleFavorite}
         handleEditField={handleEditField}
+        toggleGroupMenu={toggleGroupMenu}
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
@@ -176,6 +192,13 @@ const QNComponent: React.FC<QNComponentProps> = ({
           limit={bodyCharLimit}
         />
       </NoteContent>
+      <GroupMenu
+        item={currentNote}
+        groups={groups}
+        showGroupMenu={showGroupMenu}
+        setShowGroupMenu={setShowGroupMenu}
+        handleUpdateGroup={handleUpdateGroup}
+      />
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}

@@ -100,6 +100,8 @@ const QNPage: React.FC<QNPageProps> = ({
           <QNList
             QNSearchText={QNSearchText}
             quicknotes={quicknotes}
+            groups={groups}
+            handleUpdateGroup={handleUpdateGroup}
             handleUpdateQuicknote={handleUpdateQuicknote}
             handleDeleteQuicknote={handleDeleteQuicknote}
           />

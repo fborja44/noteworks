@@ -50,6 +50,9 @@ export interface NoteHeaderProps {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
   handleEditField: (key: string, value: any, updateDate?: Boolean) => void;
+  toggleGroupMenu:
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
@@ -65,6 +68,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
   currentNote,
   handleFavorite,
   handleEditField,
+  toggleGroupMenu,
   toggleColorMenu,
   toggleConfirmDelete,
   children,
@@ -90,6 +94,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
         onClick={(event) => handleClick(event)}
       />
       <MenuButton
+        toggleGroupMenu={toggleGroupMenu}
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />

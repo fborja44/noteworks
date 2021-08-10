@@ -15,6 +15,9 @@ import { IoMdMenu } from "react-icons/io";
 import DropdownMenu from "../dropdown/DropdownMenu";
 
 export interface MenuButtonProps {
+  toggleGroupMenu:
+  | (() => void)
+  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
@@ -24,6 +27,7 @@ export interface MenuButtonProps {
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
+  toggleGroupMenu,
   toggleColorMenu,
   toggleConfirmDelete,
   children,
@@ -57,6 +61,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       <DropdownMenu
         open={open}
         setOpen={setOpen}
+        toggleGroupMenu={toggleGroupMenu}
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />

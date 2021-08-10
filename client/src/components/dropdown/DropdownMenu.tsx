@@ -53,6 +53,9 @@ const Menu = styled.div`
 export interface DropdownMenuProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleGroupMenu:
+  | (() => void)
+  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
@@ -64,6 +67,7 @@ export interface DropdownMenuProps {
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   open,
   setOpen,
+  toggleGroupMenu,
   toggleColorMenu,
   toggleConfirmDelete,
 }) => {
@@ -110,7 +114,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           <DropdownItem
             setOpen={setOpen}
             icon={<MdFolderOpen />}
-            onClick={() => null}
+            onClick={toggleGroupMenu}
           >
             Add to Group
           </DropdownItem>

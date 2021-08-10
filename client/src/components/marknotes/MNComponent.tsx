@@ -10,7 +10,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Marknote } from "../../common/types";
+import { Group, Marknote } from "../../common/types";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -18,6 +18,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import NoteHeader from "../notes/NoteHeader";
 import MNFooter from "./MNFooter";
 import NoteContent, { MarknoteBody } from "../notes/NoteContent";
+import GroupMenu from "../menus/GroupMenu";
 
 const MarknoteContainer = styled.div`
   background-color: ${(props) => props.theme.note.background};
@@ -47,6 +48,8 @@ const MarknoteLink = css`
 `;
 
 export interface MNComponentProps {
+  groups: Group[];
+  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
   handleUpdateMarknote?: (
     currentMarknote: Marknote,
@@ -68,6 +71,11 @@ export interface MNComponentProps {
   toggleColorMenu: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  toggleGroupMenu: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  showGroupMenu: boolean;
+  setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
   showColorMenu: boolean;
   setShowColorMenu: React.Dispatch<React.SetStateAction<boolean>>;
   showConfirmDelete: boolean;
@@ -77,6 +85,8 @@ export interface MNComponentProps {
 }
 
 const MNComponent: React.FC<MNComponentProps> = ({
+  groups,
+  handleUpdateGroup,
   currentNote,
   handleUpdateMarknote,
   handleDeleteMarknote,
@@ -85,6 +95,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
   handleEditColor,
   toggleConfirmDelete,
   toggleColorMenu,
+  toggleGroupMenu,
+  showGroupMenu,
+  setShowGroupMenu,
   showColorMenu,
   setShowColorMenu,
   showConfirmDelete,
@@ -106,6 +119,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
         currentNote={currentNote}
         handleFavorite={handleFavorite}
         handleEditField={handleEditField}
+        toggleGroupMenu={toggleGroupMenu}
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
@@ -128,6 +142,13 @@ const MNComponent: React.FC<MNComponentProps> = ({
         </MarknoteBody>
         <MNFooter currentNote={currentNote} />
       </NoteContent>
+      <GroupMenu
+        item={currentNote}
+        groups={groups}
+        showGroupMenu={showGroupMenu}
+        setShowGroupMenu={setShowGroupMenu}
+        handleUpdateGroup={handleUpdateGroup}
+      />
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}

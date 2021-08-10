@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 // Common imports
-import { Group } from "../../common/types";
+import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -13,6 +13,7 @@ import PageHeader from "../pageheader/PageHeader";
 import Section, { Empty } from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
+import MNList from "../marknotes/MNList";
 
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
@@ -25,8 +26,17 @@ import { TiStar, TiStarOutline } from "react-icons/ti";
  */
 export interface GroupPageProps {
   currentGroup: Group;
+  groups: Group[];
+  quicknotes: Quicknote[];
+  marknotes: Marknote[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
+  handleUpdateMarknote: (
+    currentMarknote: Marknote,
+    updatedMarknote: Marknote
+  ) => void;
+  handleDeleteMarknote: (noteId: string) => void;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -34,8 +44,14 @@ export interface GroupPageProps {
  */
 const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
+  groups,
+  quicknotes,
+  marknotes,
   handleUpdateGroup,
   handleDeleteGroup,
+  handleUpdateMarknote,
+  handleDeleteMarknote,
+  setSelectedTab,
 }) => {
   // History
   const history = useHistory();
@@ -99,6 +115,13 @@ const GroupPage: React.FC<GroupPageProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
+  console.log("Marknotes", currentGroup.marknotes);
+  console.log("Quicknotes", currentGroup.quicknotes);
+
+  console.log(currentGroup.marknotes[0]);
+  console.log(marknotes[0].id);
+  console.log(currentGroup.marknotes.includes(marknotes[0].id));
+
   // TODO: Redirect to proper location on delete
   return (
     <React.Fragment>
@@ -132,7 +155,18 @@ const GroupPage: React.FC<GroupPageProps> = ({
           <Section name="Quicknotes"></Section>
         ) : null}
         {currentGroup.marknotes.length > 0 ? (
-          <Section name="Marknotes"></Section>
+          <Section name="Marknotes">
+            <MNList
+              marknotes={marknotes.filter((note: Marknote) =>
+                currentGroup.marknotes.includes(note.id)
+              )}
+              groups={groups}
+              handleUpdateGroup={handleUpdateGroup}
+              handleUpdateMarknote={handleUpdateMarknote}
+              handleDeleteMarknote={handleDeleteMarknote}
+              setSelectedTab={setSelectedTab}
+            ></MNList>
+          </Section>
         ) : null}
         {currentGroup.quicknotes.length === 0 &&
         currentGroup.marknotes.length === 0 ? (

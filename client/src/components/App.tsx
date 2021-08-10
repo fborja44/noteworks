@@ -299,8 +299,14 @@ const App = () => {
                 <main>
                   <GroupPage
                     currentGroup={group}
+                    groups={groups}
+                    quicknotes={quicknotes}
+                    marknotes={marknotes}
                     handleUpdateGroup={handleUpdateGroup}
                     handleDeleteGroup={handleDeleteGroup}
+                    handleUpdateMarknote={handleUpdateMarknote}
+                    handleDeleteMarknote={handleDeleteMarknote}
+                    setSelectedTab={setSelectedTab}
                   />
                 </main>
               </Route>
