@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
 
 // Common imports
-import { Marknote } from "../../common/types";
+import { Group, Marknote } from "../../common/types";
 import { findDarkColor } from "../../common/color";
 
 // Component imports
@@ -144,7 +144,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   return (
     <PageHeaderContainer
       color={color ? color : appTheme.header.background}
-      color2={color ? findDarkColor(color) : appTheme.header.backgroundSecondary}
+      color2={
+        color ? findDarkColor(color) : appTheme.header.backgroundSecondary
+      }
     >
       <PageHeaderSection>
         <h1>{title}</h1>
@@ -191,25 +193,27 @@ const TitleInput = styled.input`
   ${TitleInputStyles}
 `;
 
-interface EditorHeaderProps {
-  currentNote: Marknote;
+interface InputPageHeaderProps {
+  item: Marknote | Group;
   handleEditField: (key: string, value: string | Boolean) => void;
 }
 
-export const EditorHeader: React.FC<EditorHeaderProps> = ({
-  currentNote,
+export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
+  item,
   handleEditField,
   children,
 }) => {
-  const color = currentNote.color;
+  const color = item.color;
   const color_alt = findDarkColor(color);
 
   return (
     <PageHeaderContainer color={color} color2={color_alt}>
       <TitleInput
         type="text"
-        placeholder="Enter a title..."
-        value={currentNote.title}
+        placeholder={
+          item.type === "marknote" ? "Untitled Note" : "Untitled Group"
+        }
+        value={item.title}
         onChange={(event) => handleEditField("title", event.target.value)}
         color={color_alt}
       />

@@ -18,7 +18,7 @@ import { COLOR } from "../../common/color";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-import { EditorHeader } from "../pageheader/PageHeader";
+import { InputPageHeader } from "../pageheader/PageHeader";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 
 // Image and icon imports
@@ -279,7 +279,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
 
   return (
     <EditorMain>
-      <EditorHeader currentNote={currentNote} handleEditField={handleEditField}>
+      <InputPageHeader item={currentNote} handleEditField={handleEditField}>
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowEditor((prev) => !prev)}
@@ -317,7 +317,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         >
           <IoReturnUpForward />
         </PageHeaderButton>
-      </EditorHeader>
+      </InputPageHeader>
       {!showEditor && !showPreview ? (
         <div className="main-content-wrapper">
           <Empty>

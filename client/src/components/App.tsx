@@ -212,7 +212,7 @@ const App = () => {
     const newGroup: Group = {
       type: "group",
       id: nanoid(),
-      title: "Untitled Group",
+      title: "",
       color: COLOR.GREY_DARK,
       quicknotes: [],
       marknotes: [],

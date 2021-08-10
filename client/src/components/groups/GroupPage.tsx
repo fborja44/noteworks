@@ -9,7 +9,7 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
-import PageHeader from "../pageheader/PageHeader";
+import PageHeader, { InputPageHeader } from "../pageheader/PageHeader";
 import Section, { Empty } from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
@@ -125,7 +125,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
 
   return (
     <React.Fragment>
-      <PageHeader title={currentGroup.title} color={currentGroup.color}>
+      <InputPageHeader item={currentGroup} handleEditField={handleEditField}>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <RiEdit2Line />
         </PageHeaderButton>
@@ -149,7 +149,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         >
           <IoReturnUpForward />
         </PageHeaderButton>
-      </PageHeader>
+      </InputPageHeader>
       <div className="main-content-wrapper">
         {currentGroup.quicknotes.length > 0 ? (
           <Section name="Quicknotes">

@@ -127,7 +127,11 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
                 right: 2px;
               `}
             />
-            <GroupName>{currentGroup.title}</GroupName>
+            <GroupName>
+              {currentGroup.title || (
+                <span className="italic">Untitled Group</span>
+              )}
+            </GroupName>
           </GroupContentSection>
         </GroupContent>
       </Link>
