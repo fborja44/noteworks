@@ -304,6 +304,8 @@ const App = () => {
                     marknotes={marknotes}
                     handleUpdateGroup={handleUpdateGroup}
                     handleDeleteGroup={handleDeleteGroup}
+                    handleUpdateQuicknote={handleUpdateQuicknote}
+                    handleDeleteQuicknote={handleDeleteQuicknote}
                     handleUpdateMarknote={handleUpdateMarknote}
                     handleDeleteMarknote={handleDeleteMarknote}
                     setSelectedTab={setSelectedTab}

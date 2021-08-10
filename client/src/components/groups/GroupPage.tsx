@@ -14,6 +14,7 @@ import Section, { Empty } from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
 import MNList from "../marknotes/MNList";
+import QNList from "../quicknotes/QNList";
 
 // Image and icon imports
 import { MdDeleteForever } from "react-icons/md";
@@ -31,6 +32,11 @@ export interface GroupPageProps {
   marknotes: Marknote[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
+  handleUpdateQuicknote: (
+    currentQuicknote: Quicknote,
+    updatedQuicknote: Quicknote
+  ) => void;
+  handleDeleteQuicknote: (noteId: string) => void;
   handleUpdateMarknote: (
     currentMarknote: Marknote,
     updatedMarknote: Marknote
@@ -49,6 +55,8 @@ const GroupPage: React.FC<GroupPageProps> = ({
   marknotes,
   handleUpdateGroup,
   handleDeleteGroup,
+  handleUpdateQuicknote,
+  handleDeleteQuicknote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
@@ -152,7 +160,18 @@ const GroupPage: React.FC<GroupPageProps> = ({
       </PageHeader>
       <div className="main-content-wrapper">
         {currentGroup.quicknotes.length > 0 ? (
-          <Section name="Quicknotes"></Section>
+          <Section name="Quicknotes">
+            <QNList
+              quicknotes={quicknotes.filter((note: Quicknote) =>
+                currentGroup.quicknotes.includes(note.id)
+              )}
+              groups={groups}
+              handleUpdateGroup={handleUpdateGroup}
+              handleUpdateQuicknote={handleUpdateQuicknote}
+              handleDeleteQuicknote={handleDeleteQuicknote}
+              setSelectedTab={setSelectedTab}
+            ></QNList>
+          </Section>
         ) : null}
         {currentGroup.marknotes.length > 0 ? (
           <Section name="Marknotes">
@@ -165,7 +184,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               handleUpdateMarknote={handleUpdateMarknote}
               handleDeleteMarknote={handleDeleteMarknote}
               setSelectedTab={setSelectedTab}
-            ></MNList>
+            />
           </Section>
         ) : null}
         {currentGroup.quicknotes.length === 0 &&

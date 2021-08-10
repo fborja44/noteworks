@@ -111,11 +111,19 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
     const groupId = event.target.dataset.id;
     const group = groups.filter((group) => group.id === groupId)[0];
 
-    handleEditField(
-      group,
-      "marknotes",
-      (group.marknotes = [...group.marknotes, item.id])
-    );
+    if (item.type === "marknote") {
+      handleEditField(
+        group,
+        "marknotes",
+        (group.marknotes = [...group.marknotes, item.id])
+      );
+    } else if (item.type === "quicknote") {
+      handleEditField(
+        group,
+        "quicknotes",
+        (group.quicknotes = [...group.quicknotes, item.id])
+      );
+    }
   };
 
   return (
