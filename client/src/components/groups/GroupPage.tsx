@@ -123,7 +123,6 @@ const GroupPage: React.FC<GroupPageProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
-  // TODO: Redirect to proper location on delete
   return (
     <React.Fragment>
       <PageHeader title={currentGroup.title} color={currentGroup.color}>

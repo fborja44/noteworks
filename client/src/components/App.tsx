@@ -30,6 +30,7 @@ import GroupPage from "./groups/GroupPage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
+import { group } from "console";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
@@ -92,6 +93,9 @@ const App = () => {
       (note: Quicknote) => note.id !== noteId
     ); // don't need to make new array since filter returns new array
     setQuicknotes(newQuicknotes);
+
+    // Remove note id from every group
+    removeNotesFromGroups("quicknote", noteId);
   };
 
   /* Marknotes State
@@ -145,6 +149,10 @@ const App = () => {
     // Use filter to check if id is the one we're deleting
     // If not, keep; Otherwise, remove
     setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
+
+    // Remove note id from every group
+    // NOTE: do not update state in a loop; will only update once
+    removeNotesFromGroups("marknote", noteId);
   };
 
   /* Selected tab State
@@ -226,6 +234,38 @@ const App = () => {
         return updatedGroup;
       }
       return group;
+    });
+    setGroups(updatedGroupsArray);
+  };
+
+  /**
+   * Function to remove a note from all groups
+   * @param noteId The id of the note to be removed
+   */
+  const removeNotesFromGroups = (noteType: string, noteId: string) => {
+    const updatedGroupsArray = groups.map((group) => {
+      // Quicknotes
+      if (noteType === "quicknote") {
+        if (group.quicknotes.includes(noteId)) {
+          return {
+            ...group,
+            quicknotes: group.quicknotes.filter((id) => id !== noteId),
+            lastModified: Date.now(),
+          };
+        }
+        return group;
+      } else if (noteType === "marknote") {
+        if (group.marknotes.includes(noteId)) {
+          return {
+            ...group,
+            marknotes: group.marknotes.filter((id) => id !== noteId),
+            lastModified: Date.now(),
+          };
+        }
+        return group;
+      } else {
+        return group;
+      }
     });
     setGroups(updatedGroupsArray);
   };

@@ -30,10 +30,32 @@ const GroupMenuContent = styled.div`
 
   & > div:nth-child(odd) {
     background: #fff;
+    &.selected {
+      background: #bbd0f2 !important;
+    }
+
+    &:hover {
+      background: ${(props) =>
+        props.theme.id === "light"
+          ? "#d3e0f5"
+          : props.theme.main.backgroundSecondary} !important;
+      transition: background-color 0.2s ease, color 0.1s ease;
+    }
   }
 
   & > div:nth-child(even) {
     background: #f0f0f0;
+    &.selected {
+      background: #a6bde3 !important;
+    }
+
+    &:hover {
+      background: ${(props) =>
+        props.theme.id === "light"
+          ? "#d3e0f5"
+          : props.theme.main.backgroundSecondary} !important;
+      transition: background-color 0.2s ease, color 0.1s ease;
+    }
   }
 
   &::-webkit-scrollbar {
@@ -45,14 +67,9 @@ const GroupMenuItem = styled.div`
   width: 100%;
   cursor: pointer;
   padding: 1em;
-  border-radius: 3px;
   display: flex;
   align-items: center;
   font-weight: 600;
-
-  &.selected {
-    background: #bbd0f2 !important;
-  }
 
   &:hover {
     background: ${(props) =>
