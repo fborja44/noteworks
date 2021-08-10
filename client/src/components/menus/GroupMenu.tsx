@@ -46,17 +46,18 @@ const GroupMenuItem = styled.div`
   cursor: pointer;
   padding: 1em;
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
 
   &.selected {
-    color: white;
-    background: ${COLOR.GREY_DARK};
+    background: #bbd0f2 !important;
   }
 
   &:hover {
-    color: white;
     background: ${(props) =>
       props.theme.id === "light"
-        ? COLOR.GREY_DARK_LIGHT
+        ? "#d3e0f5"
         : props.theme.main.backgroundSecondary} !important;
     transition: background-color 0.2s ease, color 0.1s ease;
   }
@@ -112,17 +113,29 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
     const group = groups.filter((group) => group.id === groupId)[0];
 
     if (item.type === "marknote") {
-      handleEditField(
-        group,
-        "marknotes",
-        (group.marknotes = [...group.marknotes, item.id])
-      );
+      if (group.marknotes.includes(item.id)) {
+        // Remove
+        handleEditField(
+          group,
+          "marknotes",
+          group.marknotes.filter((id) => id !== item.id)
+        );
+      } else {
+        // Add
+        handleEditField(group, "marknotes", [...group.marknotes, item.id]);
+      }
     } else if (item.type === "quicknote") {
-      handleEditField(
-        group,
-        "quicknotes",
-        (group.quicknotes = [...group.quicknotes, item.id])
-      );
+      if (group.quicknotes.includes(item.id)) {
+        // Remove
+        handleEditField(
+          group,
+          "quicknotes",
+          group.quicknotes.filter((id) => id !== item.id)
+        );
+      } else {
+        // Add
+        handleEditField(group, "quicknotes", [...group.quicknotes, item.id]);
+      }
     }
   };
 
@@ -138,10 +151,18 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
             key={group.id}
             data-id={group.id}
             onClick={handleClick}
+            className={`${
+              group.quicknotes.includes(item.id) ||
+              group.marknotes.includes(item.id)
+                ? "selected"
+                : ""
+            }`}
           >
             <MdFolder
               css={css`
                 color: ${group.color};
+                font-size: 18px;
+                margin-right: 0.7em;
               `}
             />
             {group.title}

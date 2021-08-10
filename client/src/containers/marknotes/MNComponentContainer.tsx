@@ -111,7 +111,6 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     // event.preventDefault();
     // event.stopPropagation();
     // event.nativeEvent.stopImmediatePropagation();
-    console.log("toggle");
 
     // Toggle display of component
     setShowColorMenu((prev) => !prev);

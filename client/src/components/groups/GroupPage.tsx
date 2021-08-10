@@ -123,13 +123,6 @@ const GroupPage: React.FC<GroupPageProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
-  console.log("Marknotes", currentGroup.marknotes);
-  console.log("Quicknotes", currentGroup.quicknotes);
-
-  console.log(currentGroup.marknotes[0]);
-  console.log(marknotes[0].id);
-  console.log(currentGroup.marknotes.includes(marknotes[0].id));
-
   // TODO: Redirect to proper location on delete
   return (
     <React.Fragment>
