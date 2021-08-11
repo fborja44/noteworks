@@ -182,7 +182,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
                 margin-right: 0.7em;
               `}
             />
-            {group.title}
+            {group.title || <span className="italic">Untitled Group</span>}
           </GroupMenuItem>
         ))}
       </GroupMenuContent>

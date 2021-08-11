@@ -22,8 +22,8 @@ const NoteButton = styled.button`
   &:hover {
     cursor: pointer;
     svg {
-      color: ${(props) => props.theme.note.header.textSecondary};
-      transition: color 0.2s ease 0s;
+      // color: ${(props) => props.theme.note.header.textSecondary};
+      // transition: color 0.2s ease 0s;
     }
   }
 `;

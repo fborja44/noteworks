@@ -50,7 +50,7 @@ export const lightTheme: AppTheme = {
   },
   header: {
     background: "#4b4a53",
-    backgroundSecondary: "#636269",
+    backgroundSecondary: "#383740",
     textPrimary: "#FFF",
   },
   sidebar: {
@@ -87,7 +87,7 @@ export const darkTheme: AppTheme = {
   },
   header: {
     background: "#3a3940",
-    backgroundSecondary: "#636269",
+    backgroundSecondary: "#383740",
     textPrimary: "#FFF",
   },
   sidebar: {

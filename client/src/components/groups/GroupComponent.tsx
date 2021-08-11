@@ -1,7 +1,7 @@
 /* Group Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 /** @jsxRuntime classic */
@@ -12,9 +12,14 @@ import styled from "@emotion/styled";
 // Common imports
 import { Group } from "../../common/types";
 
+// Component imports
+import FavoriteButton from "../notes/FavoriteButton";
+import MenuButton from "../notes/MenuButton";
+import ColorMenu from "../menus/ColorMenu";
+import ConfirmDelete from "../menus/ConfirmDeleteMenu";
+
 // Image and icon imports
 import { MdFolder } from "react-icons/md";
-import FavoriteButton from "../notes/FavoriteButton";
 
 const GroupContainer = styled.div`
   background-color: ${(props) => props.theme.note.background};
@@ -40,6 +45,7 @@ const GroupContent = styled.div`
   justify-content: space-between;
   height: 100%;
   padding: 0.2em 0.5rem;
+  position: relative;
 `;
 
 const GroupContentSection = styled.div`
@@ -56,18 +62,22 @@ const GroupName = styled.div`
 
 const GroupLink = css`
   text-decoration: none;
-  position: relative;
+  position: absolute;
+  width: 180px;
+  height: 35px;
   z-index: 1;
 `;
 
 export interface GroupComponentProps {
   currentGroup: Group;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleDeleteGroup: (groupId: string) => void;
 }
 
 const GroupComponent: React.FC<GroupComponentProps> = ({
   currentGroup,
   handleUpdateGroup,
+  handleDeleteGroup,
 }) => {
   /**
    * Function to handle changes in a note's field.
@@ -109,9 +119,54 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
 
   const appTheme = useTheme();
 
+  // Quicknote Group Menu state
+  const [showGroupMenu, setShowGroupMenu] = useState(false);
+
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleGroupMenu = () => {
+    setShowGroupMenu((prev) => !prev);
+  };
+
+  // Color menu state
+  const [showColorMenu, setShowColorMenu] = useState(false);
+
+  /**
+   * Function to handle a change in the note's color.
+   * Does NOT change the last modified date.
+   */
+  const handleEditColor = (color: string) => {
+    handleUpdateGroup(currentGroup, {
+      ...currentGroup,
+      color: color,
+    });
+  };
+
+  /**
+   * Function to toggle the color menu
+   */
+  const toggleColorMenu = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // Toggle display of component
+    setShowColorMenu((prev) => !prev);
+  };
+
+  // Group Delete Menu state
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  /**
+   * Function to toggle the confirm delete menu
+   */
+  const toggleConfirmDelete = () => {
+    setShowConfirmDelete((prev) => !prev);
+  };
+
   return (
-    <GroupContainer>
-      <Link css={GroupLink} to={`/groups/${currentGroup.id}`}>
+    <React.Fragment>
+      <GroupContainer>
+        <Link css={GroupLink} to={`/groups/${currentGroup.id}`}></Link>
         <GroupContent>
           <GroupContentSection>
             <FavoriteButton
@@ -133,9 +188,30 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
               )}
             </GroupName>
           </GroupContentSection>
+          <GroupContentSection>
+            <MenuButton
+              item={currentGroup}
+              toggleGroupMenu={toggleGroupMenu}
+              toggleColorMenu={toggleColorMenu}
+              toggleConfirmDelete={toggleConfirmDelete}
+            />
+          </GroupContentSection>
         </GroupContent>
-      </Link>
-    </GroupContainer>
+      </GroupContainer>
+      <ColorMenu
+        showColorMenu={showColorMenu}
+        setShowColorMenu={setShowColorMenu}
+        handleEditColor={handleEditColor}
+      />
+      <ConfirmDelete
+        item={currentGroup}
+        showMenuState={showConfirmDelete}
+        setShowMenuState={setShowConfirmDelete}
+        handleDelete={handleDeleteGroup}
+        toggleConfirmDelete={toggleConfirmDelete}
+        redirect={true}
+      />
+    </React.Fragment>
   );
 };
 

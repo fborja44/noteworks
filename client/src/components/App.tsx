@@ -292,6 +292,7 @@ const App = () => {
                   quicknotes={quicknotes}
                   marknotes={marknotes}
                   handleUpdateGroup={handleUpdateGroup}
+                  handleDeleteGroup={handleDeleteGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   handleUpdateQuicknote={handleUpdateQuicknote}
@@ -309,6 +310,7 @@ const App = () => {
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
+                  handleDeleteGroup={handleDeleteGroup}
                   handleUpdateQuicknote={handleUpdateQuicknote}
                   handleDeleteQuicknote={handleDeleteQuicknote}
                 />
@@ -323,6 +325,7 @@ const App = () => {
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
+                  handleDeleteGroup={handleDeleteGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}

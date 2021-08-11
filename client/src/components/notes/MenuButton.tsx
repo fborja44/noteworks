@@ -7,6 +7,9 @@ import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
+// Common imports
+import { Group, Marknote, Quicknote } from "../../common/types";
+
 // Component imports
 import NoteButton from "./NoteButton";
 
@@ -15,9 +18,10 @@ import { IoMdMenu } from "react-icons/io";
 import DropdownMenu from "../dropdown/DropdownMenu";
 
 export interface MenuButtonProps {
+  item: Quicknote | Marknote | Group;
   toggleGroupMenu:
-  | (() => void)
-  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
@@ -27,6 +31,7 @@ export interface MenuButtonProps {
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
+  item,
   toggleGroupMenu,
   toggleColorMenu,
   toggleConfirmDelete,
@@ -52,13 +57,14 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           css={
             open
               ? css`
-                  color: white;
+                  // color: white;
                 `
               : null
           }
         />
       </NoteButton>
       <DropdownMenu
+        item={item}
         open={open}
         setOpen={setOpen}
         toggleGroupMenu={toggleGroupMenu}

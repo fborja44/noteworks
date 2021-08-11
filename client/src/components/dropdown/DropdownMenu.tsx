@@ -8,6 +8,9 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common imports
+import { Group, Marknote, Quicknote } from "../../common/types";
+
 // Component imports
 import DropdownItem from "./DropdownItem";
 
@@ -51,11 +54,12 @@ const Menu = styled.div`
 `;
 
 export interface DropdownMenuProps {
+  item: Quicknote | Marknote | Group;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleGroupMenu:
-  | (() => void)
-  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+    | (() => void)
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
@@ -65,6 +69,7 @@ export interface DropdownMenuProps {
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  item,
   open,
   setOpen,
   toggleGroupMenu,
@@ -101,6 +106,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           max-height: ${open ? "500px" : "0px"};
           z-index: ${open ? "200" : "0"};
           transition: max-height 1s ease, opacity 0.1s ease;
+          ${item.type === "group" ? "left: 200px; top: 33px;" : ""}
         `}
       >
         <Menu>
@@ -111,19 +117,21 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           >
             Change Label Color
           </DropdownItem>
-          <DropdownItem
-            setOpen={setOpen}
-            icon={<MdFolderOpen />}
-            onClick={toggleGroupMenu}
-          >
-            Add to Group
-          </DropdownItem>
+          {item.type !== "group" && (
+            <DropdownItem
+              setOpen={setOpen}
+              icon={<MdFolderOpen />}
+              onClick={toggleGroupMenu}
+            >
+              Add to Group
+            </DropdownItem>
+          )}
           <DropdownItem
             setOpen={setOpen}
             icon={<MdDeleteForever />}
             onClick={toggleConfirmDelete}
           >
-            Delete Note
+            Delete {item.type !== "group" ? "Note" : "Group"}
           </DropdownItem>
         </Menu>
       </DropdownContainer>

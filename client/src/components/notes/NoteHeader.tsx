@@ -94,6 +94,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
         onClick={(event) => handleClick(event)}
       />
       <MenuButton
+        item={currentNote}
         toggleGroupMenu={toggleGroupMenu}
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
