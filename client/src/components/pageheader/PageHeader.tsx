@@ -173,7 +173,7 @@ const TitleInputStyles = ({ color }: { color: string }) =>
   css`
     background: ${color};
     color: white;
-    height: 80%;
+    height: 75%;
     width: fit-content;
     border: none;
     border-radius: 3px;

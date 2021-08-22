@@ -54,13 +54,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({
         `}
       >
         <IoMdMenu
-          css={
-            open
-              ? css`
-                  // color: white;
-                `
-              : null
-          }
+          css={(theme) => css`
+            ${theme.id === "dark" && item.type === "group"
+              ? "color: white;"
+              : ""}
+          `}
         />
       </NoteButton>
       <DropdownMenu

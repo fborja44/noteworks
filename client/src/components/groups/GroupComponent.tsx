@@ -209,7 +209,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
         setShowMenuState={setShowConfirmDelete}
         handleDelete={handleDeleteGroup}
         toggleConfirmDelete={toggleConfirmDelete}
-        redirect={true}
+        redirect={false}
       />
     </React.Fragment>
   );
