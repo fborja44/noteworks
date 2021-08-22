@@ -30,7 +30,6 @@ import GroupPage from "./groups/GroupPage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
-import { group } from "console";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};

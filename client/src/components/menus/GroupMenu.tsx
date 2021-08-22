@@ -9,12 +9,10 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { COLOR } from "../../common/color";
 import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import ModalMenu from "./ModalMenu";
-import GroupList from "../groups/GroupList";
 
 // Image and icon imports
 import { MdFolder } from "react-icons/md";

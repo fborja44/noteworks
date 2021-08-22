@@ -120,7 +120,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   const appTheme = useTheme();
 
   // Quicknote Group Menu state
-  const [showGroupMenu, setShowGroupMenu] = useState(false);
+  const [, setShowGroupMenu] = useState(false);
 
   /**
    * Function to toggle the confirm delete menu
@@ -147,7 +147,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
    * Function to toggle the color menu
    */
   const toggleColorMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     // Toggle display of component
     setShowColorMenu((prev) => !prev);

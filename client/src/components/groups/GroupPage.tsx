@@ -9,7 +9,7 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
-import PageHeader, { InputPageHeader } from "../pageheader/PageHeader";
+import { InputPageHeader } from "../pageheader/PageHeader";
 import Section, { Empty } from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";

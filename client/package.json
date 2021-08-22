@@ -9,18 +9,18 @@
   "main": "public/electron.js",
   "homepage": "./",
   "dependencies": {
-    "@emotion/react": "^11.4.0",
+    "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.3.1",
-    "@types/react": "^17.0.14",
+    "@types/node": "^16.7.1",
+    "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "axios": "^0.21.1",
-    "codemirror": "^5.62.2",
+    "codemirror": "^5.62.3",
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
     "path": "^0.12.7",
@@ -28,7 +28,7 @@
     "react-codemirror2": "^7.2.1",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
-    "react-markdown": "^6.0.2",
+    "react-markdown": "^6.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
@@ -74,8 +74,8 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^6.2.0",
-    "electron": "^13.1.4",
+    "concurrently": "^6.2.1",
+    "electron": "^13.2.1",
     "electron-builder": "^22.11.7",
     "typescript": "^4.3.5",
     "wait-on": "^6.0.0"
