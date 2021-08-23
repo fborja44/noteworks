@@ -1,7 +1,11 @@
-const mongoCollections = require("../config/mongoCollections");
-let { ObjectId } = require('mongodb');
-const usersData = require('./users');
+const groups = require("./groups");
+const quicknotes = require("./quicknotes");
+const marknotes = require("./marknotes");
 
 module.exports = {
-  users: usersData,
+  groups: groups,
+  quicknotes: quicknotes,
+  marknotes: marknotes,
 };
+
+export {};

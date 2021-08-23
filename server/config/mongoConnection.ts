@@ -2,8 +2,8 @@ const MongoClient = require("mongodb").MongoClient;
 const settings = require("./settings");
 const mongoConfig = settings.mongoConfig;
 
-let _connection = undefined;
-let _db = undefined;
+let _connection: any = undefined;
+let _db: any = undefined;
 
 module.exports = async () => {
   if (!_connection) {
@@ -16,3 +16,5 @@ module.exports = async () => {
 
   return _db;
 };
+
+export {};

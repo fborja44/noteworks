@@ -1,8 +1,8 @@
 const dbConnection = require("./mongoConnection");
 
 /* Allows one reference to each collection per app */
-const getCollectionFn = (collection) => {
-  let _col = undefined;
+const getCollectionFn = (collection: any) => {
+  let _col: undefined = undefined;
 
   return async () => {
     if (!_col) {
@@ -20,3 +20,5 @@ module.exports = {
   quicknotes: getCollectionFn("quicknotes"),
   marknotes: getCollectionFn("marknotes"),
 };
+
+export {};

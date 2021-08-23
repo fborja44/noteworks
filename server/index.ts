@@ -17,6 +17,9 @@ const path = require("path");
 let bodyParser = require("body-parser");
 const chalk = require("chalk");
 
+const mongoCollections = require('./config/mongoCollections');
+const dbConnection = require('./config/mongoConnection');
+
 app.use("/", router);
 server.listen(PORT);
 
@@ -26,3 +29,5 @@ console.log(chalk.bold.cyan("--------- Denote --------- "));
 console.log(chalk.bold.cyan(` Created by Francis Borja `));
 console.log(chalk.gray(`Server running at port 3001`));
 console.log(chalk.gray("---------------------------"));
+
+export {}
