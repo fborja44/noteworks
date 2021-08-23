@@ -4,7 +4,7 @@
   "description": "Backend for Denote notes application.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.ts"
   },
   "author": "Francis Borja",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "https": "^1.0.0"
   },
   "devDependencies": {
+    "@types/node": "^16.7.1",
     "typescript": "^4.3.5"
   }
 }
