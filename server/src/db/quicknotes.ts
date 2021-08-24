@@ -1,6 +1,5 @@
 import { Quicknote } from "note-types";
 import { ObjectId } from "mongodb";
-import { nanoid } from "nanoid";
 
 const mongoCollections = require("../config/mongoCollections");
 const quicknotes = mongoCollections.quicknotes;
@@ -21,7 +20,8 @@ const createQuicknote = async (title: string, color: string, body: string) => {
   const quicknotesCollection = await quicknotes();
 
   const insertInfo = await quicknotesCollection.insertOne(newQuicknote);
-  if (insertInfo.insertedCount === 0) throw "Could not create game";
+  if (insertInfo.insertedCount === 0)
+    throw "createQuicknote: Could not create new quicknote";
   const id = insertInfo.insertedId.toString();
 
   return newQuicknote;
@@ -33,7 +33,7 @@ const getAllQuicknotes = async () => {
 
   if (quicknotesList.length === 0) return [];
   for (const note of quicknotesList) {
-    note._id = note.id.toString();
+    note._id = note._id.toString();
   }
   return quicknotesList;
 };
@@ -44,12 +44,13 @@ const getQuicknoteById = async (id: string) => {
   const quicknote = await quicknotesCollection.findOne({ _id: parsed_id });
 
   if (quicknote === null)
-    throw `getGameById: No quicknote found with id '${id}'`;
+    throw `getQuicknoteById: No quicknote found with id '${id}'`;
   quicknote._id = quicknote._id.toString();
 
   return quicknote;
 };
 
+// TODO: check length of title and body
 const updateQuicknoteById = async (id: string, updatedQuicknote: Quicknote) => {
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(id.trim());
@@ -73,6 +74,10 @@ const deleteQuicknoteById = async (id: string) => {
 
 module.exports = {
   createQuicknote,
+  getAllQuicknotes,
+  getQuicknoteById,
+  updateQuicknoteById,
+  deleteQuicknoteById,
 };
 
 export {};
