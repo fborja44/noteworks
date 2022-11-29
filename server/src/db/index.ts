@@ -7,5 +7,3 @@ module.exports = {
   quicknotes: quicknotes,
   marknotes: marknotes,
 };
-
-export {};

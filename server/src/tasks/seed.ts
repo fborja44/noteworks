@@ -89,7 +89,7 @@ const main = async () => {
   group1 = await groups.updateGroupById(group1._id.toString(), group1)
 
   // Get
-
+  
   let groupget = await groups.getGroupById(group1._id.toString());
   console.log(groupget)
 
@@ -103,9 +103,44 @@ const main = async () => {
 
   console.log(await groups.getAllGroups());
 
-  console.log(chalk.yellow("\nDatabase seeding complete."));
+  // Add Note To Group
 
+  let groupadd1 = await groups.addToGroup(group2._id.toString(), qn2._id.toString(), qn2.type)
+  let groupadd2 = await groups.addToGroup(group2._id.toString(), mn2._id.toString(), mn2.type)
+
+  console.log(await groups.getGroupById(group2._id.toString()))
+  console.log(await quicknotes.getAllQuicknotes());
+  console.log(await marknotes.getAllMarknotes());
+
+  // Delete group with notes added to it
+
+  // let groupdelete2 = await groups.deleteGroupById(group2._id.toString());
+  // console.log(groupdelete2);
+
+  // console.log(await groups.getGroupById(group2._id.toString()))
+  // console.log(await quicknotes.getAllQuicknotes());
+  // console.log(await marknotes.getAllMarknotes());
+
+  // Delete note that's in a group
+
+  let notedelete1 = await quicknotes.deleteQuicknoteById(qn2._id.toString());
+  let notedelete2 = await marknotes.deleteMarknoteById(mn2._id.toString());
+
+  console.log(await groups.getGroupById(group2._id.toString()))
+
+  // Remove Note from Group
+
+  // let groupremove1 = await groups.removeFromGroup(group2._id.toString(), qn2._id.toString(), qn2.type)
+  // let groupremove2 = await groups.removeFromGroup(group2._id.toString(), mn2._id.toString(), mn2.type)
+
+  // console.log(await groups.getGroupById(group2._id.toString()))
+  // console.log(await quicknotes.getAllQuicknotes());
+
+  /* END OF SEED
+  ---------------------------------------------------------------------------*/
   await db.serverConfig.close();
+
+  console.log(chalk.yellow("\nDatabase seeding complete."));
 };
 
 

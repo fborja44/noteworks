@@ -7,6 +7,7 @@ declare module "note-types" {
     body: string;
     lastModified: number;
     favorited: boolean;
+    groups: string[]
   };
 
   export type Marknote = {
@@ -17,6 +18,7 @@ declare module "note-types" {
     body: string;
     lastModified: number;
     favorited: boolean;
+    groups: string[]
   };
 
   export type Group = {
