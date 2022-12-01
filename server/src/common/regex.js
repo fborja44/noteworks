@@ -9,8 +9,6 @@ let isHex = function (string) {
     return hexRegEx.test(string);
 };
 
-console.log(isHex("#AAA"));
-
 module.exports = {
     hexRegEx,
     isHex

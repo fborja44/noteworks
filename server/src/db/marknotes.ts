@@ -15,7 +15,7 @@ const groups = require("./groups");
  */
 export const createMarknote = async (title: string, color: string, body: string) => {
   if (color.trim().length === 0) throw "createMarknote: must provide a color";
-  if (!isHex(color)) throw `createMarknote: '${color}}' is not a valid hex code`
+  if (!isHex(color)) throw `createMarknote: '${color}' is not a valid hex code`
   const newMarknote: Marknote = {
     type: "marknote",
     _id: new ObjectId(),
@@ -70,7 +70,7 @@ export const getMarknoteById = async (id: string) => {
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
 export const updateMarknoteById = async (id: string, updatedMarknote: Marknote) => {
-  if (!isHex(updatedMarknote.color)) throw `updateMarknote: '${updatedMarknote.color}}' is not a valid hex code`
+  if (!isHex(updatedMarknote.color)) throw `updateMarknote: '${updatedMarknote.color}' is not a valid hex code`
   const marknotesCollection = await marknotes();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await marknotesCollection.updateOne(

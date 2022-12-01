@@ -123,10 +123,10 @@ const main = async () => {
 
   // Delete note that's in a group
 
-  let notedelete1 = await quicknotes.deleteQuicknoteById(qn2._id.toString());
-  let notedelete2 = await marknotes.deleteMarknoteById(mn2._id.toString());
+  // let notedelete1 = await quicknotes.deleteQuicknoteById(qn2._id.toString());
+  // let notedelete2 = await marknotes.deleteMarknoteById(mn2._id.toString());
 
-  console.log(await groups.getGroupById(group2._id.toString()))
+  // console.log(await groups.getGroupById(group2._id.toString()))
 
   // Remove Note from Group
 

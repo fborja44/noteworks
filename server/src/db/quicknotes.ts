@@ -19,9 +19,9 @@ export const createQuicknote = async (title: string, color: string, body: string
   if (title.length > 30)
     throw "createQuicknote: Title length cannot exceed 30 characters";
   if (body.length > 300)
-    throw "createQuicknote: Body length cannot exceed 30 characters";
+    throw "createQuicknote: Body length cannot exceed 300 characters";
   if (!isHex(color))
-    throw `createQuicknote: '${color}}' is not a valid hex code`;
+    throw `createQuicknote: '${color}' is not a valid hex code`;
   const newQuicknote: Quicknote = {
     type: "quicknote",
     _id: new ObjectId(),
@@ -48,7 +48,7 @@ export const createQuicknote = async (title: string, color: string, body: string
  */
 export const getAllQuicknotes = async () => {
   const quicknotesCollection = await quicknotes();
-  const quicknotesList = await quicknotesCollection.find({}).toArray();
+  const quicknotesList = await quicknotesCollection.find().toArray();
 
   if (quicknotesList.length === 0) return [];
   for (const note of quicknotesList) {
@@ -79,9 +79,9 @@ export const updateQuicknoteById = async (id: string, updatedQuicknote: Quicknot
   if (updatedQuicknote.title.length > 30)
     throw "updateQuicknoteById: Title length cannot exceed 30 characters.";
   if (updatedQuicknote.body.length > 300)
-    throw "updateQuicknoteById: Body length cannot exceed 30 characters.";
+    throw "updateQuicknoteById: Body length cannot exceed 300 characters.";
   if (!isHex(updatedQuicknote.color))
-    throw `updateQuicknoteById: '${updatedQuicknote.color}}' is not a valid hex code`;
+    throw `updateQuicknoteById: '${updatedQuicknote.color}' is not a valid hex code`;
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await quicknotesCollection.updateOne(
