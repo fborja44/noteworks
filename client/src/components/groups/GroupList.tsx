@@ -47,7 +47,7 @@ const GroupList: React.FC<GroupListProps> = ({
     <List>
       {groups.map((group) => (
         <GroupComponent
-          key={group.id}
+          key={group._id}
           currentGroup={group}
           handleUpdateGroup={handleUpdateGroup}
           handleDeleteGroup={handleDeleteGroup}

@@ -109,7 +109,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
     <MarknoteContainer className="mncontainer">
       <Link
         css={MarknoteLink}
-        to={`/marknotes/${currentNote.id}`}
+        to={`/marknotes/${currentNote._id}`}
         onClick={() => {
           setSelectedTab("/marknotes");
           history.push("/marknotes");

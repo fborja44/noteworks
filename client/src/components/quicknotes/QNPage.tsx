@@ -20,6 +20,10 @@ import GroupList from "../groups/GroupList";
 import { RiAddLine } from "react-icons/ri";
 import { MdCreateNewFolder, MdHelpOutline } from "react-icons/md";
 
+import axios from "axios";
+
+const BASE_ADDR = "http://localhost:3001";
+
 export interface QNPageProps {
   quicknotes: Quicknote[];
   setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
@@ -58,18 +62,22 @@ const QNPage: React.FC<QNPageProps> = ({
   /**
    * Function to add new empty quicknote after add quicknote button is pressed
    */
-  const handleAddQuicknote = () => {
-    const newQuicknote: Quicknote = {
-      type: "quicknote",
-      id: nanoid(),
-      title: "",
-      color: COLOR.GREY_DARK,
-      body: "",
-      lastModified: Date.now(),
-      favorited: false,
-    };
-
-    setQuicknotes([...quicknotes, newQuicknote]);
+  const handleAddQuicknote = async () => {
+    try {
+      const { data: newQuicknote } = await axios({
+        baseURL: BASE_ADDR,
+        url: "/quicknotes",
+        method: "POST",
+        data: {
+          title: "",
+          color: COLOR.GREY_DARK,
+          body: "",
+        },
+      });
+      setQuicknotes([...quicknotes, newQuicknote]);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**

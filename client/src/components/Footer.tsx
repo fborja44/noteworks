@@ -9,7 +9,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Image and icon imports
-import { VscGithub } from "react-icons/vsc";
+import { BiRefresh } from "react-icons/bi";
 
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.title.background};
@@ -26,21 +26,12 @@ const FooterContainer = styled.footer`
   z-index: 1000;
 `;
 
-const GithubLinkContainer = styled.div`
-  margin-left: 0.5rem;
-  padding: 0 0.4rem 0 0.4rem;
-  height: 100%;
-
+const OptionContainer = styled.div`
   display: flex;
-  align-items: center;
-
-  &:hover {
-    background-color: ${(props) => props.theme.title.backgroundSecondary};
-    cursor: pointer;
-    transition: background-color 0.2s ease 0s;
-  }
-
-  a {
+  flex-direction: row;
+  height: 100%;
+  a,
+  span {
     color: ${(props) => props.theme.title.textPrimary};
     margin-left: 0.5em;
     text-decoration: none;
@@ -51,13 +42,50 @@ const GithubLinkContainer = styled.div`
   }
 `;
 
-const Footer = () => {
+const FooterOption = styled.button`
+  margin-left: 0.5rem;
+  padding: 0 0.4rem 0 0.4rem;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  background: inherit;
+  color: inherit;
+  font-size: inherit;
+  border: 0;
+
+  &:hover {
+    background-color: ${(props) => props.theme.title.backgroundSecondary};
+    cursor: pointer;
+    transition: background-color 0.2s ease 0s;
+  }
+`;
+
+interface FooterProps {
+  fetchQuicknotes: Function;
+  fetchMarknotes: Function;
+  fetchGroups: Function;
+}
+
+const Footer = ({
+  fetchQuicknotes,
+  fetchMarknotes,
+  fetchGroups,
+}: FooterProps) => {
   return (
     <FooterContainer>
-      <GithubLinkContainer id="github-link">
-        <VscGithub />
-        <a href="https://github.com/fborja44/denote">Github Repo</a>
-      </GithubLinkContainer>
+      <OptionContainer>
+        <FooterOption
+          onClick={async () => {
+            await fetchQuicknotes();
+            await fetchMarknotes();
+            await fetchGroups();
+          }}
+        >
+          <BiRefresh size={14} />
+          <span>Refresh Notes</span>
+        </FooterOption>
+      </OptionContainer>
       <div
         css={css`
           margin-right: 1rem;

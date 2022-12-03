@@ -65,7 +65,7 @@ const QNList: React.FC<QNListProps> = ({
     <List>
       {notes.map((note: any) => (
         <QNComponent
-          key={note.id}
+          key={note._id}
           groups={groups}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}

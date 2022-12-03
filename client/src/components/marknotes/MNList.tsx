@@ -70,7 +70,7 @@ const MNList: React.FC<MNListProps> = ({
     <List>
       {notes.map((note) => (
         <MNComponentContainer
-          key={note.id}
+          key={note._id}
           groups={groups}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}

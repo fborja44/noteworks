@@ -8,6 +8,7 @@ const PORT = 3001;
 const server = http.createServer(app);
 const router = express.Router();
 const configRoutes = require("./routes");
+const cors = require("cors")
 
 var date = new Date();
 
@@ -34,6 +35,7 @@ const chalk = require("chalk");
 const mongoCollections = require("./config/mongoCollections.ts");
 const dbConnection = require("./config/mongoConnection");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);

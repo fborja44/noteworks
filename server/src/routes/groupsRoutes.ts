@@ -66,6 +66,8 @@ router.patch("/:id", async (req: any, res: any) => {
   const id = req.params.id;
   const title = req.body.title;
   const color = req.body.color;
+  const favorited = req.body.favorited;
+  const lastModified = req.body.lastModified;
 
   if (!isHex(color)) {
     return res.status(400).json({
@@ -95,7 +97,12 @@ router.patch("/:id", async (req: any, res: any) => {
   if (color) {
     group.color = color;
   }
-  group.lastModified = Date.now();
+  if (favorited !== null) {
+    group.favorited = favorited;
+  }
+  if (lastModified) {
+    group.lastModified = lastModified;
+  }
 
   // Update the group
   try {
@@ -110,7 +117,7 @@ router.patch("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /groups/:id/:noteId]
+ * [PATCH /groups/:id/quicknotes/:noteId]
  */
 router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
   const id = req.params.id;

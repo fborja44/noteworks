@@ -1,8 +1,8 @@
 /* Type Definitions
 ------------------------------------------------------------------------------*/
 export type Quicknote = {
+  _id: string;
   type: string;
-  id: string;
   title: string;
   color: string;
   body: string;
@@ -11,8 +11,8 @@ export type Quicknote = {
 };
 
 export type Marknote = {
+  _id: string;
   type: string;
-  id: string;
   title: string;
   color: string;
   body: string;
@@ -21,8 +21,8 @@ export type Marknote = {
 };
 
 export type Group = {
+  _id: string;
   type: string;
-  id: string;
   title: string;
   color: string;
   quicknotes: string[];

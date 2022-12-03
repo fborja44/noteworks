@@ -31,10 +31,14 @@ import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
 
+import axios from "axios";
+
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
   color: ${(props) => props.theme.main.textPrimary};
 `;
+
+const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Main application component
@@ -49,14 +53,20 @@ const App = () => {
    * Effect hook to retrieve quicknotes from local storage
    */
   useEffect(() => {
-    const savedQuicknotes = JSON.parse(
-      localStorage.getItem(quicknotesLocal) || "{}"
-    );
+    fetchQuicknotes();
+  }, []); // Run on load
+
+  const fetchQuicknotes = async () => {
+    const { data: savedQuicknotes } = await axios({
+      baseURL: BASE_ADDR,
+      url: "/quicknotes",
+      method: "GET",
+    });
     // Check if notes were received
     if (savedQuicknotes) {
       setQuicknotes(savedQuicknotes);
     }
-  }, []); // Run on load
+  };
 
   /**
    * Effect hook to save quicknotes to local storage when change is made
@@ -70,31 +80,41 @@ const App = () => {
    * @param currentQuicknote The quicknote being updated
    * @param updatedQuicknote The new information in update with
    */
-  const handleUpdateQuicknote = (
+  const handleUpdateQuicknote = async (
     currentQuicknote: Quicknote,
     updatedQuicknote: Quicknote
   ) => {
-    const updatedQuicknotesArray = quicknotes.map((note: any) => {
-      if (note.id === currentQuicknote.id) {
-        return updatedQuicknote;
-      }
-      return note;
-    });
-    setQuicknotes(updatedQuicknotesArray);
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/quicknotes/${currentQuicknote._id}`,
+        method: "PATCH",
+        data: updatedQuicknote,
+      });
+      fetchQuicknotes();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**
    * Function to delete a quicknote from the list
    * @param noteId The id of the quicknote to be deleted
    */
-  const handleDeleteQuicknote = (noteId: string) => {
-    const newQuicknotes = quicknotes.filter(
-      (note: Quicknote) => note.id !== noteId
-    ); // don't need to make new array since filter returns new array
-    setQuicknotes(newQuicknotes);
-
-    // Remove note id from every group
-    removeNotesFromGroups("quicknote", noteId);
+  const handleDeleteQuicknote = async (noteId: string) => {
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/quicknotes/${noteId}`,
+        method: "DELETE",
+      });
+      const newQuicknotes = quicknotes.filter(
+        (note: Quicknote) => note._id !== noteId
+      ); // don't need to make new array since filter returns new array
+      setQuicknotes(newQuicknotes);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /* Marknotes State
@@ -106,14 +126,20 @@ const App = () => {
    * Effect hook to retrieve marknotes from local storage
    */
   useEffect(() => {
-    const savedMarknotes = JSON.parse(
-      localStorage.getItem(marknotesLocal) || "{}"
-    );
+    fetchMarknotes();
+  }, []); // Run on load
+
+  const fetchMarknotes = async () => {
+    const { data: savedMarknotes } = await axios({
+      baseURL: BASE_ADDR,
+      url: "/marknotes",
+      method: "GET",
+    });
     // Check if notes were received
     if (savedMarknotes) {
       setMarknotes(savedMarknotes);
     }
-  }, []); // Run on load
+  };
 
   /**
    * Effect hook to save marknotes to local storage when change is made
@@ -132,7 +158,7 @@ const App = () => {
     updatedMarknote: Marknote
   ) => {
     const updatedMarknotesArray = marknotes.map((note: Marknote) => {
-      if (note.id === currentMarknote.id) {
+      if (note._id === currentMarknote._id) {
         return updatedMarknote;
       }
       return note;
@@ -144,14 +170,20 @@ const App = () => {
    * Marknote function to delete a marknote from the list
    * @param noteId The id of the marknote to be deleted
    */
-  const handleDeleteMarknote = (noteId: string) => {
-    // Use filter to check if id is the one we're deleting
-    // If not, keep; Otherwise, remove
-    setMarknotes(marknotes.filter((note: Marknote) => note.id !== noteId));
-
-    // Remove note id from every group
-    // NOTE: do not update state in a loop; will only update once
-    removeNotesFromGroups("marknote", noteId);
+  const handleDeleteMarknote = async (noteId: string) => {
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/marknotes/${noteId}`,
+        method: "DELETE",
+      });
+      const newMarknotes = marknotes.filter(
+        (note: Marknote) => note._id !== noteId
+      ); // don't need to make new array since filter returns new array
+      setMarknotes(newMarknotes);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /* Selected tab State
@@ -190,12 +222,20 @@ const App = () => {
    * Effect hook to retrieve groups from local storage
    */
   useEffect(() => {
-    const savedGroups = JSON.parse(localStorage.getItem(groupsLocal) || "{}");
-    // Check if groups were received
+    fetchGroups();
+  }, []); // Run on load
+
+  const fetchGroups = async () => {
+    const { data: savedGroups } = await axios({
+      baseURL: BASE_ADDR,
+      url: "/groups",
+      method: "GET",
+    });
+    // Check if notes were received
     if (savedGroups) {
       setGroups(savedGroups);
     }
-  }, []); // Run on load
+  };
 
   /**
    * Effect hook to save groups to local storage
@@ -207,19 +247,21 @@ const App = () => {
   /**
    * Group function to add a new empty group to the list
    */
-  const handleAddGroup = () => {
-    const newGroup: Group = {
-      type: "group",
-      id: nanoid(),
-      title: "",
-      color: COLOR.GREY_DARK,
-      quicknotes: [],
-      marknotes: [],
-      lastModified: Date.now(),
-      favorited: false,
-    };
-
-    setGroups([...groups, newGroup]);
+  const handleAddGroup = async () => {
+    try {
+      const { data: newGroup } = await axios({
+        baseURL: BASE_ADDR,
+        url: "/groups",
+        method: "POST",
+        data: {
+          title: "",
+          color: COLOR.GREY_DARK,
+        },
+      });
+      setGroups([...groups, newGroup]);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**
@@ -229,7 +271,7 @@ const App = () => {
    */
   const handleUpdateGroup = (currentGroup: Group, updatedGroup: Group) => {
     const updatedGroupsArray = groups.map((group: Group) => {
-      if (group.id === currentGroup.id) {
+      if (group._id === currentGroup._id) {
         return updatedGroup;
       }
       return group;
@@ -238,43 +280,21 @@ const App = () => {
   };
 
   /**
-   * Function to remove a note from all groups
-   * @param noteId The id of the note to be removed
-   */
-  const removeNotesFromGroups = (noteType: string, noteId: string) => {
-    const updatedGroupsArray = groups.map((group) => {
-      // Quicknotes
-      if (noteType === "quicknote") {
-        if (group.quicknotes.includes(noteId)) {
-          return {
-            ...group,
-            quicknotes: group.quicknotes.filter((id) => id !== noteId),
-            lastModified: Date.now(),
-          };
-        }
-        return group;
-      } else if (noteType === "marknote") {
-        if (group.marknotes.includes(noteId)) {
-          return {
-            ...group,
-            marknotes: group.marknotes.filter((id) => id !== noteId),
-            lastModified: Date.now(),
-          };
-        }
-        return group;
-      } else {
-        return group;
-      }
-    });
-    setGroups(updatedGroupsArray);
-  };
-
-  /**
    * Group function to delete a group from the list
    * @param groupId The id of the group to be deleted
    */
-  const handleDeleteGroup = (groupId: string) => {
-    setGroups(groups.filter((group: Group) => group.id !== groupId));
+  const handleDeleteGroup = async (groupId: string) => {
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/groups/${groupId}`,
+        method: "DELETE",
+      });
+      const newGroups = groups.filter((group: Group) => group._id !== groupId); // don't need to make new array since filter returns new array
+      setGroups(newGroups);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -337,7 +357,7 @@ const App = () => {
               </main>
             </Route>
             {groups.map((group) => (
-              <Route path={`/groups/${group.id}`}>
+              <Route path={`/groups/${group._id}`}>
                 <main>
                   <GroupPage
                     currentGroup={group}
@@ -357,7 +377,11 @@ const App = () => {
             ))}
           </Switch>
         </div>
-        <Footer />
+        <Footer
+          fetchQuicknotes={fetchQuicknotes}
+          fetchMarknotes={fetchMarknotes}
+          fetchGroups={fetchGroups}
+        />
       </RendererContainer>
     </ThemeProvider>
   );

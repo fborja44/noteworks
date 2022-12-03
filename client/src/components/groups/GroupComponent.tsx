@@ -165,7 +165,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   return (
     <React.Fragment>
       <GroupContainer>
-        <Link css={GroupLink} to={`/groups/${currentGroup.id}`}></Link>
+        <Link css={GroupLink} to={`/groups/${currentGroup._id}`}></Link>
         <GroupContent>
           <GroupContentSection>
             <FavoriteButton

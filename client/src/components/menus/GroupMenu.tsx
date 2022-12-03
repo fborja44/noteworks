@@ -124,32 +124,32 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    * Event target needs dataset attribute.
    */
   const handleClick = (event: any) => {
-    const groupId = event.target.dataset.id;
-    const group = groups.filter((group) => group.id === groupId)[0];
+    const groupId = event.target.dataset._id;
+    const group = groups.filter((group) => group._id === groupId)[0];
 
     if (item.type === "marknote") {
-      if (group.marknotes.includes(item.id)) {
+      if (group.marknotes.includes(item._id)) {
         // Remove
         handleEditField(
           group,
           "marknotes",
-          group.marknotes.filter((id) => id !== item.id)
+          group.marknotes.filter((id) => id !== item._id)
         );
       } else {
         // Add
-        handleEditField(group, "marknotes", [...group.marknotes, item.id]);
+        handleEditField(group, "marknotes", [...group.marknotes, item._id]);
       }
     } else if (item.type === "quicknote") {
-      if (group.quicknotes.includes(item.id)) {
+      if (group.quicknotes.includes(item._id)) {
         // Remove
         handleEditField(
           group,
           "quicknotes",
-          group.quicknotes.filter((id) => id !== item.id)
+          group.quicknotes.filter((id) => id !== item._id)
         );
       } else {
         // Add
-        handleEditField(group, "quicknotes", [...group.quicknotes, item.id]);
+        handleEditField(group, "quicknotes", [...group.quicknotes, item._id]);
       }
     }
   };
@@ -163,12 +163,12 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
       <GroupMenuContent>
         {groups.map((group) => (
           <GroupMenuItem
-            key={group.id}
-            data-id={group.id}
+            key={group._id}
+            data-id={group._id}
             onClick={handleClick}
             className={`${
-              group.quicknotes.includes(item.id) ||
-              group.marknotes.includes(item.id)
+              group.quicknotes.includes(item._id) ||
+              group.marknotes.includes(item._id)
                 ? "selected"
                 : ""
             }`}

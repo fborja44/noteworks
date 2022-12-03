@@ -136,7 +136,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
 
   return (
     <MNComponent
-      key={currentNote.id}
+      key={currentNote._id}
       groups={groups}
       handleUpdateGroup={handleUpdateGroup}
       currentNote={currentNote}

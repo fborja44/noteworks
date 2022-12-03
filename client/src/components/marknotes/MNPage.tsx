@@ -23,6 +23,10 @@ import GroupList from "../groups/GroupList";
 import { RiAddLine } from "react-icons/ri";
 import { MdCreateNewFolder, MdHelpOutline } from "react-icons/md";
 
+import axios from "axios";
+
+const BASE_ADDR = "http://localhost:3001";
+
 /**
  * Props for MNPage
  */
@@ -63,23 +67,26 @@ const MNPage: React.FC<MNPageProps> = ({
   /**
    * Marknote function to add a new empty marknote to the list
    */
-  const handleAddMarknote = () => {
+  const handleAddMarknote = async () => {
     // Add new to state list
-    const newMarknote: Marknote = {
-      type: "marknote",
-      id: nanoid(),
-      title: "",
-      body: "",
-      lastModified: Date.now(),
-      color: COLOR.GREY_DARK,
-      favorited: false,
-    };
-
-    setMarknotes([...marknotes, newMarknote]);
-
-    // Redirect when new note is added
-    history.push("/marknotes");
-    history.push(`/marknotes/${newMarknote.id}`);
+    try {
+      const { data: newMarknote } = await axios({
+        baseURL: BASE_ADDR,
+        url: "/marknotes",
+        method: "POST",
+        data: {
+          title: "",
+          color: COLOR.GREY_DARK,
+          body: "",
+        },
+      });
+      setMarknotes([...marknotes, newMarknote]);
+      // Redirect when new note is added
+      history.push("/marknotes");
+      history.push(`/marknotes/${newMarknote._id}`);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // Help menu state
@@ -135,7 +142,7 @@ const MNPage: React.FC<MNPageProps> = ({
       </Route>
       {/** Routes for Editors */}
       {marknotes.map((note) => (
-        <Route key={note.id} path={`/marknotes/${note.id}`}>
+        <Route key={note._id} path={`/marknotes/${note._id}`}>
           <MNEditor
             currentNote={note}
             handleDeleteMarknote={handleDeleteMarknote}
@@ -145,7 +152,7 @@ const MNPage: React.FC<MNPageProps> = ({
       ))}
       {/** Routes for Previews */}
       {marknotes.map((note) => (
-        <Route key={note.id} path={`/marknotes/${note.id}`}>
+        <Route key={note._id} path={`/marknotes/${note._id}`}>
           <Preview currentNote={note} />
         </Route>
       ))}

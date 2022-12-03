@@ -155,7 +155,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
           <Section name="Quicknotes">
             <QNList
               quicknotes={quicknotes.filter((note: Quicknote) =>
-                currentGroup.quicknotes.includes(note.id)
+                currentGroup.quicknotes.includes(note._id)
               )}
               groups={groups}
               handleUpdateGroup={handleUpdateGroup}
@@ -169,7 +169,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
           <Section name="Marknotes">
             <MNList
               marknotes={marknotes.filter((note: Marknote) =>
-                currentGroup.marknotes.includes(note.id)
+                currentGroup.marknotes.includes(note._id)
               )}
               groups={groups}
               handleUpdateGroup={handleUpdateGroup}

@@ -86,7 +86,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
           onClick={
             handleDelete
               ? (event) => {
-                  handleDelete(item.id);
+                  handleDelete(item._id);
                   if (redirect) {
                     history.goBack();
                   }
