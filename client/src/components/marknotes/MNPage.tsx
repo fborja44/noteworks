@@ -3,7 +3,6 @@
 // React imports
 import React, { useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-import { nanoid } from "nanoid";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";

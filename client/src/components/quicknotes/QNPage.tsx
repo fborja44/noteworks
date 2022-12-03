@@ -2,7 +2,6 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { nanoid } from "nanoid";
 
 // Common imports
 import { Group, Quicknote } from "../../common/types";

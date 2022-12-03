@@ -2,7 +2,6 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 import { Switch, Route, useLocation } from "react-router-dom";
 
 /** @jsxRuntime classic */
