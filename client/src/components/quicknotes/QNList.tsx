@@ -84,7 +84,7 @@ const QNList: React.FC<QNListProps> = ({
 
   const notesEmpty = !favorites ? (
     <Empty>
-      <p>You have no saved marknotes.</p>
+      <p>You have no saved quicknotes.</p>
       <p>Create one now by pressing the + button in the menu above!</p>
     </Empty>
   ) : (

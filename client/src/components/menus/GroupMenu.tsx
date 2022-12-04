@@ -124,9 +124,10 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    * Event target needs dataset attribute.
    */
   const handleClick = (event: any) => {
-    const groupId = event.target.dataset._id;
+    const groupId = event.target.dataset.id;
+    console.log(groupId);
     const group = groups.filter((group) => group._id === groupId)[0];
-
+    console.log(group);
     if (item.type === "marknote") {
       if (group.marknotes.includes(item._id)) {
         // Remove

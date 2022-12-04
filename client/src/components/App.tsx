@@ -68,13 +68,6 @@ const App = () => {
   };
 
   /**
-   * Effect hook to save quicknotes to local storage when change is made
-   */
-  useEffect(() => {
-    localStorage.setItem(quicknotesLocal, JSON.stringify(quicknotes));
-  }, [quicknotes]); // Run on change in notes
-
-  /**
    * Function to update a quicknote in the list with updated information
    * @param currentQuicknote The quicknote being updated
    * @param updatedQuicknote The new information in update with
@@ -141,28 +134,25 @@ const App = () => {
   };
 
   /**
-   * Effect hook to save marknotes to local storage when change is made
-   */
-  useEffect(() => {
-    localStorage.setItem(marknotesLocal, JSON.stringify(marknotes));
-  }, [marknotes]);
-
-  /**
    * Marknote function to update a marknote in the list
    * @param currentMarknote The marknote being updated
    * @param updatedMarknote The data to update the marknote with
    */
-  const handleUpdateMarknote = (
+  const handleUpdateMarknote = async (
     currentMarknote: Marknote,
     updatedMarknote: Marknote
   ) => {
-    const updatedMarknotesArray = marknotes.map((note: Marknote) => {
-      if (note._id === currentMarknote._id) {
-        return updatedMarknote;
-      }
-      return note;
-    });
-    setMarknotes(updatedMarknotesArray);
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/marknotes/${currentMarknote._id}`,
+        method: "PATCH",
+        data: updatedMarknote,
+      });
+      fetchMarknotes();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**
@@ -237,13 +227,6 @@ const App = () => {
   };
 
   /**
-   * Effect hook to save groups to local storage
-   */
-  useEffect(() => {
-    localStorage.setItem(groupsLocal, JSON.stringify(groups));
-  }, [groups]);
-
-  /**
    * Group function to add a new empty group to the list
    */
   const handleAddGroup = async () => {
@@ -268,14 +251,18 @@ const App = () => {
    * @param currentGroup The group being updated
    * @param updatedGroup The data to update the group with
    */
-  const handleUpdateGroup = (currentGroup: Group, updatedGroup: Group) => {
-    const updatedGroupsArray = groups.map((group: Group) => {
-      if (group._id === currentGroup._id) {
-        return updatedGroup;
-      }
-      return group;
-    });
-    setGroups(updatedGroupsArray);
+  const handleUpdateGroup = async (currentGroup: Group, updatedGroup: Group) => {
+    try {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/groups/${currentGroup._id}`,
+        method: "PATCH",
+        data: updatedGroup,
+      });
+      fetchGroups();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**
@@ -363,6 +350,9 @@ const App = () => {
                     groups={groups}
                     quicknotes={quicknotes}
                     marknotes={marknotes}
+                    fetchQuicknotes={fetchQuicknotes}
+                    fetchMarknotes={fetchMarknotes}
+                    fetchGroups={fetchGroups}
                     handleUpdateGroup={handleUpdateGroup}
                     handleDeleteGroup={handleDeleteGroup}
                     handleUpdateQuicknote={handleUpdateQuicknote}

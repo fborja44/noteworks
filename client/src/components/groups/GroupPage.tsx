@@ -1,7 +1,7 @@
 /* Individual Group Page Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // Common imports
@@ -30,6 +30,9 @@ export interface GroupPageProps {
   groups: Group[];
   quicknotes: Quicknote[];
   marknotes: Marknote[];
+  fetchGroups: Function;
+  fetchQuicknotes: Function;
+  fetchMarknotes: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (
@@ -53,6 +56,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
   groups,
   quicknotes,
   marknotes,
+  fetchGroups,
+  fetchQuicknotes,
+  fetchMarknotes,
   handleUpdateGroup,
   handleDeleteGroup,
   handleUpdateQuicknote,
@@ -122,6 +128,15 @@ const GroupPage: React.FC<GroupPageProps> = ({
   const toggleConfirmDelete = () => {
     setShowConfirmDelete((prev) => !prev);
   };
+
+  /**
+   * Effect hook to update group page when groups change (i.e. note is deleted);
+   */
+  useEffect(() => {
+    fetchGroups();
+    fetchQuicknotes();
+    fetchMarknotes();
+  }, [groups])
 
   return (
     <React.Fragment>

@@ -88,6 +88,7 @@ router.patch("/:id", async (req: any, res: any) => {
   const id = req.params.id;
   const title = req.body.title;
   const color = req.body.color;
+  const favorited = req.body.favorited;
   const body = req.body.body;
 
   if (title && title.length > 30) {
@@ -122,14 +123,17 @@ router.patch("/:id", async (req: any, res: any) => {
     });
   }
 
-  if (title) {
+  if (title != null) {
     quicknote.title = title;
   }
-  if (color) {
+  if (color != null) {
     quicknote.color = color;
   }
-  if (body) {
-    quicknote.body = color;
+  if (body != null) {
+    quicknote.body = body;
+  }
+  if (favorited != null) {
+    quicknote.favorited = favorited;
   }
   quicknote.lastModified = Date.now();
 

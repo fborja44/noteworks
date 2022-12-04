@@ -91,16 +91,16 @@ router.patch("/:id", async (req: any, res: any) => {
     });
   }
 
-  if (title) {
+  if (title != null) {
     group.title = title;
   }
-  if (color) {
+  if (color != null) {
     group.color = color;
   }
   if (favorited !== null) {
     group.favorited = favorited;
   }
-  if (lastModified) {
+  if (lastModified != null) {
     group.lastModified = lastModified;
   }
 

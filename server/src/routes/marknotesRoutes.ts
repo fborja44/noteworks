@@ -70,6 +70,7 @@ router.patch("/:id", async (req: any, res: any) => {
   const title = req.body.title;
   const color = req.body.color;
   const body = req.body.body;
+  const favorited = req.body.favorited;
   const id = req.params.id;
 
   if (color && !isHex(color)) {
@@ -94,20 +95,23 @@ router.patch("/:id", async (req: any, res: any) => {
     });
   }
 
-  if (title) {
+  if (title != null) {
     marknote.title = title;
   }
-  if (color) {
+  if (color != null) {
     marknote.color = color;
   }
-  if (body) {
-    marknote.body = color;
+  if (body != null) {
+    marknote.body = body;
+  }
+  if (favorited != null) {
+    marknote.favorited = favorited;
   }
   marknote.lastModified = Date.now()
 
   // Update the marknote
   try {
-    let updated_marknote = await marknotesData.updatedMarknote(
+    let updated_marknote = await marknotesData.updateMarknoteById(
       id.trim(),
       marknote
     );
