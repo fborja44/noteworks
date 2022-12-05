@@ -26,6 +26,7 @@ const List = styled.div`
 export interface MNListProps {
   MNSearchText?: string;
   marknotes: Quicknote[] | Marknote[];
+  updateMarknotesList: Function;
   groups: Group[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
@@ -37,6 +38,7 @@ export interface MNListProps {
 const MNList: React.FC<MNListProps> = ({
   MNSearchText,
   marknotes,
+  updateMarknotesList,
   groups,
   handleUpdateGroup,
   favorites,
@@ -71,6 +73,7 @@ const MNList: React.FC<MNListProps> = ({
           groups={groups}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
+          updateMarknotesList={updateMarknotesList}
           handleUpdateMarknote={handleUpdateMarknote}
           handleDeleteMarknote={handleDeleteMarknote}
           setSelectedTab={setSelectedTab}

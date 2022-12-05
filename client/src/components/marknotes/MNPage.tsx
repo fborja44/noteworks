@@ -31,6 +31,7 @@ const BASE_ADDR = "http://localhost:3001";
  */
 export interface MNPageProps {
   marknotes: Marknote[];
+  updateMarknotesList: Function;
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
   groups: Group[];
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
@@ -47,6 +48,7 @@ export interface MNPageProps {
  */
 const MNPage: React.FC<MNPageProps> = ({
   marknotes,
+  updateMarknotesList,
   setMarknotes,
   groups,
   setGroups,
@@ -126,6 +128,7 @@ const MNPage: React.FC<MNPageProps> = ({
             <MNList
               MNSearchText={MNSearchText}
               marknotes={marknotes}
+              updateMarknotesList={updateMarknotesList}
               groups={groups}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateMarknote={handleUpdateMarknote}
@@ -141,6 +144,7 @@ const MNPage: React.FC<MNPageProps> = ({
         <Route key={note._id} path={`/marknotes/${note._id}`}>
           <MNEditor
             currentNote={note}
+            updateMarknotesList={updateMarknotesList}
             handleDeleteMarknote={handleDeleteMarknote}
             handleUpdateMarknote={handleUpdateMarknote}
           />

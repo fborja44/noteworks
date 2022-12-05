@@ -19,7 +19,7 @@ import Titlebar from "./Titlebar";
 import Sidebar from "./sidebar/Sidebar";
 import Footer from "./Footer";
 
-import HomeContent from "./home/HomePage";
+import HomePage from "./home/HomePage";
 import QNPage from "./quicknotes/QNPage";
 import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
@@ -154,7 +154,7 @@ const App = () => {
    * @param updatedMarknote The data to update the marknote with
    */
   const updateMarknotesList = (noteId: string, updatedMarknote: Marknote) => {
-    const updatedMarknotesArray = quicknotes.map((note: any) => {
+    const updatedMarknotesArray = marknotes.map((note: any) => {
       if (note._id === noteId) {
         return updatedMarknote;
       }
@@ -322,11 +322,12 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <main>
-                <HomeContent
+                <HomePage
                   groups={groups}
                   quicknotes={quicknotes}
                   updateQuicknotesList={updateQuicknotesList}
                   marknotes={marknotes}
+                  updateMarknotesList={updateMarknotesList}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
@@ -357,6 +358,7 @@ const App = () => {
               <main>
                 <MNPage
                   marknotes={marknotes}
+                  updateMarknotesList={updateMarknotesList}
                   setMarknotes={setMarknotes}
                   groups={groups}
                   setGroups={setGroups}
@@ -383,6 +385,7 @@ const App = () => {
                     quicknotes={quicknotes}
                     updateQuicknotesList={updateQuicknotesList}
                     marknotes={marknotes}
+                    updateMarknotesList={updateMarknotesList}
                     fetchQuicknotes={fetchQuicknotes}
                     fetchMarknotes={fetchMarknotes}
                     fetchGroups={fetchGroups}

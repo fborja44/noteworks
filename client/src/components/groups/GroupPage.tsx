@@ -31,6 +31,7 @@ export interface GroupPageProps {
   quicknotes: Quicknote[];
   updateQuicknotesList: Function;
   marknotes: Marknote[];
+  updateMarknotesList: Function;
   fetchGroups: Function;
   fetchQuicknotes: Function;
   fetchMarknotes: Function;
@@ -52,6 +53,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
   quicknotes,
   updateQuicknotesList,
   marknotes,
+  updateMarknotesList,
   fetchGroups,
   fetchQuicknotes,
   fetchMarknotes,
@@ -183,6 +185,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               marknotes={marknotes.filter((note: Marknote) =>
                 currentGroup.marknotes.includes(note._id)
               )}
+              updateMarknotesList={updateMarknotesList}
               groups={groups}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateMarknote={handleUpdateMarknote}

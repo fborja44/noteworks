@@ -1,7 +1,7 @@
 /* Marknote Editor Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
@@ -201,17 +201,24 @@ const PreviewBodyDark = css`
  */
 export interface MNEditorProps {
   currentNote: Marknote;
+  updateMarknotesList: Function;
   handleDeleteMarknote: (noteId: string) => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
 }
 
 const MNEditor: React.FC<MNEditorProps> = ({
   currentNote,
+  updateMarknotesList,
   handleDeleteMarknote,
   handleUpdateMarknote,
 }) => {
   // History
   const history = useHistory();
+
+  /**
+   * State for current note info
+   */
+  const [note, setNote] = useState(currentNote);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -221,10 +228,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateMarknote(currentNote._id, {
-      ...currentNote,
-      color: color,
-    });
+    handleEditField("color", color, false);
   };
 
   /**
@@ -252,12 +256,25 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * @param key The field being changed
    * @param value The new value of the field
    */
-  const handleEditField = (key: string, value: string | Boolean) => {
-    handleUpdateMarknote(currentNote._id, {
-      ...currentNote,
-      [key]: value,
-      lastModified: Date.now(),
-    });
+  const handleEditField = (
+    key: string,
+    value: string | Boolean,
+    updateDate: Boolean = true
+  ) => {
+    let updatedNote;
+    if (updateDate) {
+      updatedNote = {
+        ...note,
+        [key]: value,
+        lastModified: Date.now(),
+      };
+    } else {
+      updatedNote = {
+        ...note,
+        [key]: value,
+      };
+    }
+    setNote(updatedNote);
   };
 
   const handleChangeEditorBody = (
@@ -274,9 +291,21 @@ const MNEditor: React.FC<MNEditorProps> = ({
 
   const appTheme = useTheme();
 
+  /**
+   * Effect hook to delay saving to the database.
+   */
+  useEffect(() => {
+    const delayDBUpdate = setTimeout(() => {
+      handleUpdateMarknote(note._id, note);
+      updateMarknotesList(note._id, note);
+    }, 1000);
+
+    return () => clearTimeout(delayDBUpdate);
+  }, [note, handleUpdateMarknote, updateMarknotesList]);
+
   return (
     <EditorMain>
-      <InputPageHeader item={currentNote} handleEditField={handleEditField}>
+      <InputPageHeader item={note} handleEditField={handleEditField}>
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowEditor((prev) => !prev)}
@@ -300,13 +329,10 @@ const MNEditor: React.FC<MNEditorProps> = ({
         <PageHeaderButton
           title="Favorite"
           onClick={() =>
-            handleEditField(
-              "favorited",
-              currentNote.favorited === true ? false : true
-            )
+            handleEditField("favorited", note.favorited === true ? false : true)
           }
         >
-          {currentNote.favorited === false ? <TiStarOutline /> : <TiStar />}
+          {note.favorited === false ? <TiStarOutline /> : <TiStar />}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
@@ -339,7 +365,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         >
           <CodeMirror
             css={[EditorBody, appTheme.id === "light" ? null : EditorBodyDark]}
-            value={currentNote.body}
+            value={note.body}
             onBeforeChange={handleChangeEditorBody}
             options={{
               lineWrapping: true,
@@ -370,7 +396,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
               appTheme.id === "light" ? null : PreviewBodyDark,
             ]}
           >
-            {currentNote.body}
+            {note.body}
           </ReactMarkdown>
         </PreviewContainer>
       </EditorContent>
@@ -380,7 +406,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={currentNote}
+        item={note}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDelete={handleDeleteMarknote}
