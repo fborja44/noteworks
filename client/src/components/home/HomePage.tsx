@@ -20,18 +20,13 @@ import GroupList from "../groups/GroupList";
 export interface HomePageProps {
   groups: Group[];
   quicknotes: Quicknote[];
+  updateQuicknotesList: Function;
   marknotes: Marknote[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (
-    currentQuicknote: Quicknote,
-    updatedQuicknote: Quicknote
-  ) => void;
+  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
-  handleUpdateMarknote: (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -42,6 +37,7 @@ export interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({
   groups,
   quicknotes,
+  updateQuicknotesList,
   marknotes,
   handleUpdateGroup,
   handleDeleteGroup,
@@ -66,6 +62,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <Section name={`Favorited Quicknotes`} icon={<TiStar />}>
           <QNList
             quicknotes={quicknotes}
+            updateQuicknotesList={updateQuicknotesList}
             groups={groups}
             handleUpdateGroup={handleUpdateGroup}
             favorites={true}

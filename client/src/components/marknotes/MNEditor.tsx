@@ -202,10 +202,7 @@ const PreviewBodyDark = css`
 export interface MNEditorProps {
   currentNote: Marknote;
   handleDeleteMarknote: (noteId: string) => void;
-  handleUpdateMarknote: (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
 }
 
 const MNEditor: React.FC<MNEditorProps> = ({
@@ -224,7 +221,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateMarknote(currentNote, {
+    handleUpdateMarknote(currentNote._id, {
       ...currentNote,
       color: color,
     });
@@ -256,7 +253,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * @param value The new value of the field
    */
   const handleEditField = (key: string, value: string | Boolean) => {
-    handleUpdateMarknote(currentNote, {
+    handleUpdateMarknote(currentNote._id, {
       ...currentNote,
       [key]: value,
       lastModified: Date.now(),

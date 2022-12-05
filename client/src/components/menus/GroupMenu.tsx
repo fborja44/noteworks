@@ -17,6 +17,10 @@ import ModalMenu from "./ModalMenu";
 // Image and icon imports
 import { MdFolder } from "react-icons/md";
 
+import axios from "axios";
+
+const BASE_ADDR = "http://localhost:3001";
+
 const GroupMenuContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -91,67 +95,25 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
   groups,
   showGroupMenu,
   setShowGroupMenu,
-  handleUpdateGroup,
 }) => {
-  /**
-   * Function to handle changes in a note's field.
-   * @param key The field being changed
-   * @param value The new value of the field
-   * @param updateDate If true, updates the note's last modified date. [default=false]
-   */
-  const handleEditField = (
-    group: Group,
-    key: string,
-    value: any,
-    updateDate: Boolean = true
-  ) => {
-    if (updateDate) {
-      handleUpdateGroup(group, {
-        ...group,
-        [key]: value,
-        lastModified: Date.now(),
-      });
-    } else {
-      handleUpdateGroup(group, {
-        ...group,
-        [key]: value,
-      });
-    }
-  };
-
   /**
    * On click handler to add/remove note from group.
    * Event target needs dataset attribute.
    */
-  const handleClick = (event: any) => {
+  const handleClick = async (event: any) => {
     const groupId = event.target.dataset.id;
-    console.log(groupId);
-    const group = groups.filter((group) => group._id === groupId)[0];
-    console.log(group);
     if (item.type === "marknote") {
-      if (group.marknotes.includes(item._id)) {
-        // Remove
-        handleEditField(
-          group,
-          "marknotes",
-          group.marknotes.filter((id) => id !== item._id)
-        );
-      } else {
-        // Add
-        handleEditField(group, "marknotes", [...group.marknotes, item._id]);
-      }
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/groups/${groupId}/marknotes/${item._id}`,
+        method: "PATCH",
+      });
     } else if (item.type === "quicknote") {
-      if (group.quicknotes.includes(item._id)) {
-        // Remove
-        handleEditField(
-          group,
-          "quicknotes",
-          group.quicknotes.filter((id) => id !== item._id)
-        );
-      } else {
-        // Add
-        handleEditField(group, "quicknotes", [...group.quicknotes, item._id]);
-      }
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/groups/${groupId}/quicknotes/${item._id}`,
+        method: "PATCH",
+      });
     }
   };
 
@@ -168,8 +130,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
             data-id={group._id}
             onClick={handleClick}
             className={`${
-              group.quicknotes.includes(item._id) ||
-              group.marknotes.includes(item._id)
+              item.groups.includes(group._id)
                 ? "selected"
                 : ""
             }`}

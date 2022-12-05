@@ -8,6 +8,7 @@ export type Quicknote = {
   body: string;
   lastModified: number;
   favorited: boolean;
+  groups: string[];
 };
 
 export type Marknote = {
@@ -18,6 +19,7 @@ export type Marknote = {
   body: string;
   lastModified: number;
   favorited: boolean;
+  groups: string[];
 };
 
 export type Group = {

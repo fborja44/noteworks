@@ -2,7 +2,7 @@
 Quicknote Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -66,17 +66,16 @@ export interface QNComponentProps {
   groups: Group[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Quicknote;
+  updateQuicknotesList: Function;
   handleDeleteQuicknote?: (id: string) => void;
-  handleUpdateQuicknote?: (
-    currentQuicknote: Quicknote,
-    updatedQuicknote: Quicknote
-  ) => void;
+  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
   groups,
   handleUpdateGroup,
   currentNote,
+  updateQuicknotesList,
   handleDeleteQuicknote,
   handleUpdateQuicknote,
 }) => {
@@ -84,6 +83,11 @@ const QNComponent: React.FC<QNComponentProps> = ({
   const titleCharLimit = 30;
   const bodyCharLimit = 300;
   const bodyCharRemaining = bodyCharLimit - currentNote.body.length;
+
+  /**
+   * State for current note info
+   */
+  const [note, setNote] = useState(currentNote);
 
   /**
    * Function to handle changes in a note's field.
@@ -103,20 +107,21 @@ const QNComponent: React.FC<QNComponentProps> = ({
     ) {
       return;
     } else {
-      if (handleUpdateQuicknote) {
-        if (updateDate) {
-          handleUpdateQuicknote(currentNote, {
-            ...currentNote,
-            [key]: value,
-            lastModified: Date.now(),
-          });
-        } else {
-          handleUpdateQuicknote(currentNote, {
-            ...currentNote,
-            [key]: value,
-          });
+      let updatedNote;
+      if (updateDate) {
+        updatedNote = {
+          ...note,
+          [key]: value,
+          lastModified: Date.now(),
+        }
+      } else {
+        updatedNote = {
+          ...note,
+          [key]: value,
         }
       }
+      setNote(updatedNote)
+      updateQuicknotesList(note._id, updatedNote)
     }
   };
 
@@ -133,7 +138,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
-    handleEditField("favorited", currentNote.favorited ? false : true, false);
+    handleEditField("favorited", note.favorited ? false : true, false);
   };
 
   // Menu state
@@ -166,10 +171,18 @@ const QNComponent: React.FC<QNComponentProps> = ({
     setShowGroupMenu((prev) => !prev);
   };
 
+  useEffect(() => {
+    const delayDBUpdate = setTimeout(() => {
+      handleUpdateQuicknote(note._id, note);
+    }, 3000);
+
+    return () => clearTimeout(delayDBUpdate);
+  }, [note, handleUpdateQuicknote]);
+
   return (
     <QuicknoteContainer>
       <NoteHeader
-        currentNote={currentNote}
+        currentNote={note}
         handleFavorite={handleFavorite}
         handleEditField={handleEditField}
         toggleGroupMenu={toggleGroupMenu}
@@ -183,17 +196,19 @@ const QNComponent: React.FC<QNComponentProps> = ({
       >
         <QuicknoteBody
           placeholder="Write your note here..."
-          value={currentNote.body}
-          onChange={(event) => handleEditField("body", event.target.value)}
+          value={note.body}
+          onChange={(event) =>
+            handleEditField("body", event.target.value, true)
+          }
         />
         <QNFooter
-          currentNote={currentNote}
+          currentNote={note}
           remaining={bodyCharRemaining}
           limit={bodyCharLimit}
         />
       </NoteContent>
       <GroupMenu
-        item={currentNote}
+        item={note}
         groups={groups}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
@@ -205,7 +220,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={currentNote}
+        item={note}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDelete={handleDeleteQuicknote}

@@ -29,21 +29,16 @@ export interface GroupPageProps {
   currentGroup: Group;
   groups: Group[];
   quicknotes: Quicknote[];
+  updateQuicknotesList: Function;
   marknotes: Marknote[];
   fetchGroups: Function;
   fetchQuicknotes: Function;
   fetchMarknotes: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (
-    currentQuicknote: Quicknote,
-    updatedQuicknote: Quicknote
-  ) => void;
+  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
-  handleUpdateMarknote: (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -55,6 +50,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
   groups,
   quicknotes,
+  updateQuicknotesList,
   marknotes,
   fetchGroups,
   fetchQuicknotes,
@@ -130,13 +126,13 @@ const GroupPage: React.FC<GroupPageProps> = ({
   };
 
   /**
-   * Effect hook to update group page when groups change (i.e. note is deleted);
+   * Effect hook to update group page when groups change (i.e. note is deleted, groups are updated);
    */
   useEffect(() => {
     fetchGroups();
     fetchQuicknotes();
     fetchMarknotes();
-  }, [groups])
+  }, [groups, fetchGroups, fetchMarknotes, fetchQuicknotes]);
 
   return (
     <React.Fragment>
@@ -172,6 +168,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               quicknotes={quicknotes.filter((note: Quicknote) =>
                 currentGroup.quicknotes.includes(note._id)
               )}
+              updateQuicknotesList={updateQuicknotesList}
               groups={groups}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateQuicknote={handleUpdateQuicknote}

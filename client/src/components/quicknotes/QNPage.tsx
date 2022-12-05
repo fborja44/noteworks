@@ -26,13 +26,14 @@ const BASE_ADDR = "http://localhost:3001";
 export interface QNPageProps {
   quicknotes: Quicknote[];
   setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
+  updateQuicknotesList: Function;
   groups: Group[];
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (
-    currentQuicknote: Quicknote,
+    noteId: string,
     updatedQuicknote: Quicknote
   ) => void;
   handleDeleteQuicknote: (noteId: string) => void;
@@ -46,6 +47,7 @@ const QNPage: React.FC<QNPageProps> = ({
   setQuicknotes,
   groups,
   setGroups,
+  updateQuicknotesList,
   handleAddGroup,
   handleUpdateGroup,
   handleDeleteGroup,
@@ -113,6 +115,7 @@ const QNPage: React.FC<QNPageProps> = ({
           <QNList
             QNSearchText={QNSearchText}
             quicknotes={quicknotes}
+            updateQuicknotesList={updateQuicknotesList}
             groups={groups}
             handleUpdateGroup={handleUpdateGroup}
             handleUpdateQuicknote={handleUpdateQuicknote}

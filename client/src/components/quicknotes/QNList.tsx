@@ -26,13 +26,11 @@ const List = styled.div`
 export interface QNListProps {
   QNSearchText?: string;
   quicknotes: Quicknote[];
+  updateQuicknotesList: Function;
   groups: Group[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
-  handleUpdateQuicknote: (
-    currentQuicknote: Quicknote,
-    updatedQuicknote: Quicknote
-  ) => void;
+  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
   setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -40,6 +38,7 @@ export interface QNListProps {
 const QNList: React.FC<QNListProps> = ({
   QNSearchText,
   quicknotes,
+  updateQuicknotesList,
   groups,
   handleUpdateGroup,
   favorites,
@@ -69,6 +68,7 @@ const QNList: React.FC<QNListProps> = ({
           groups={groups}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
+          updateQuicknotesList={updateQuicknotesList}
           handleUpdateQuicknote={handleUpdateQuicknote}
           handleDeleteQuicknote={handleDeleteQuicknote}
         />

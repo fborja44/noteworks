@@ -37,10 +37,7 @@ export interface MNPageProps {
   handleAddGroup: () => void;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateMarknote: (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }

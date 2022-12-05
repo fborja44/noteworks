@@ -1,7 +1,7 @@
 /* Marknote Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // Common imports
@@ -14,10 +14,7 @@ export interface MNComponentContainerProps {
   groups: Group[];
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
-  handleUpdateMarknote?: (
-    currentMarknote: Marknote,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote?: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -32,6 +29,11 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
 }) => {
   // History
   const history = useHistory();
+
+  /**
+   * State for current note info
+   */
+  const [note, setNote] = useState(currentNote);
 
   // Group menu state
   const [showGroupMenu, setShowGroupMenu] = useState(false);
@@ -65,19 +67,18 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     value: string | Boolean,
     updateDate: Boolean = true
   ) => {
-    if (handleUpdateMarknote)
-      if (updateDate) {
-        handleUpdateMarknote(currentNote, {
-          ...currentNote,
-          [key]: value,
-          lastModified: Date.now(),
-        });
-      } else {
-        handleUpdateMarknote(currentNote, {
-          ...currentNote,
-          [key]: value,
-        });
-      }
+    if (updateDate) {
+      setNote({
+        ...note,
+        [key]: value,
+        lastModified: Date.now(),
+      });
+    } else {
+      setNote({
+        ...note,
+        [key]: value,
+      });
+    }
   };
 
   /**
@@ -98,7 +99,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
-    handleEditField("favorited", currentNote.favorited ? false : true, false);
+    handleEditField("favorited", note.favorited ? false : true, false);
   };
 
   /**
@@ -134,12 +135,20 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
+  useEffect(() => {
+    const delayDBUpdate = setTimeout(() => {
+      handleUpdateMarknote(note._id, note);
+    }, 3000);
+
+    return () => clearTimeout(delayDBUpdate);
+  }, [note, handleUpdateMarknote]);
+
   return (
     <MNComponent
-      key={currentNote._id}
+      key={note._id}
       groups={groups}
       handleUpdateGroup={handleUpdateGroup}
-      currentNote={currentNote}
+      currentNote={note}
       handleUpdateMarknote={handleUpdateMarknote}
       handleDeleteMarknote={handleDeleteMarknote}
       handleEditField={handleEditField}

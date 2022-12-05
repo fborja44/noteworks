@@ -52,7 +52,7 @@ export interface MNComponentProps {
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
   handleUpdateMarknote?: (
-    currentMarknote: Marknote,
+    noteId: string,
     updatedMarknote: Marknote
   ) => void;
   handleDeleteMarknote?: (noteId: string) => void;

@@ -46,7 +46,6 @@ const App = () => {
   /* Quicknotes State
   ------------------------------------------------------------------------------*/
   const [quicknotes, setQuicknotes] = useState<Quicknote[]>([]);
-  const quicknotesLocal = "denote_quicknotes";
 
   /**
    * Effect hook to retrieve quicknotes from local storage
@@ -68,22 +67,39 @@ const App = () => {
   };
 
   /**
-   * Function to update a quicknote in the list with updated information
-   * @param currentQuicknote The quicknote being updated
+   * Quicknote function to update the marknotes list in app state
+   * @param noteId The marknote id
+   * @param updatedQuicknote The data to update the marknote with
+   */
+  const updateQuicknotesList = (
+    noteId: string,
+    updatedQuicknote: Quicknote
+  ) => {
+    const updatedQuicknotesArray = quicknotes.map((note: any) => {
+      if (note._id === noteId) {
+        return updatedQuicknote;
+      }
+      return note;
+    });
+    setQuicknotes(updatedQuicknotesArray);
+  };
+
+  /**
+   * Function to update a quicknote in the database with updated information
+   * @param noteId The quicknote id
    * @param updatedQuicknote The new information in update with
    */
   const handleUpdateQuicknote = async (
-    currentQuicknote: Quicknote,
+    noteId: string,
     updatedQuicknote: Quicknote
   ) => {
     try {
       await axios({
         baseURL: BASE_ADDR,
-        url: `/quicknotes/${currentQuicknote._id}`,
+        url: `/quicknotes/${noteId}`,
         method: "PATCH",
         data: updatedQuicknote,
       });
-      fetchQuicknotes();
     } catch (e) {
       console.log(e);
     }
@@ -112,7 +128,6 @@ const App = () => {
   /* Marknotes State
   ------------------------------------------------------------------------------*/
   const [marknotes, setMarknotes] = useState<Marknote[]>([]);
-  const marknotesLocal = "denote_marknotes";
 
   /**
    * Effect hook to retrieve marknotes from local storage
@@ -134,22 +149,36 @@ const App = () => {
   };
 
   /**
-   * Marknote function to update a marknote in the list
-   * @param currentMarknote The marknote being updated
+   * Marknote function to update the marknotes list in app state
+   * @param noteId The marknote id
+   * @param updatedMarknote The data to update the marknote with
+   */
+  const updateMarknotesList = (noteId: string, updatedMarknote: Marknote) => {
+    const updatedMarknotesArray = quicknotes.map((note: any) => {
+      if (note._id === noteId) {
+        return updatedMarknote;
+      }
+      return note;
+    });
+    setMarknotes(updatedMarknotesArray);
+  };
+
+  /**
+   * Marknote function to update a marknote in the database
+   * @param noteId The marknote id
    * @param updatedMarknote The data to update the marknote with
    */
   const handleUpdateMarknote = async (
-    currentMarknote: Marknote,
+    noteId: string,
     updatedMarknote: Marknote
   ) => {
     try {
       await axios({
         baseURL: BASE_ADDR,
-        url: `/marknotes/${currentMarknote._id}`,
+        url: `/marknotes/${noteId}`,
         method: "PATCH",
         data: updatedMarknote,
       });
-      fetchMarknotes();
     } catch (e) {
       console.log(e);
     }
@@ -205,7 +234,6 @@ const App = () => {
   /* Groups state
   ------------------------------------------------------------------------------*/
   const [groups, setGroups] = useState<Group[]>([]);
-  const groupsLocal = "denote_groups";
 
   /**
    * Effect hook to retrieve groups from local storage
@@ -247,11 +275,14 @@ const App = () => {
   };
 
   /**
-   * Group function to update a group in the list
+   * Group function to update a group in the database
    * @param currentGroup The group being updated
    * @param updatedGroup The data to update the group with
    */
-  const handleUpdateGroup = async (currentGroup: Group, updatedGroup: Group) => {
+  const handleUpdateGroup = async (
+    currentGroup: Group,
+    updatedGroup: Group
+  ) => {
     try {
       await axios({
         baseURL: BASE_ADDR,
@@ -259,7 +290,6 @@ const App = () => {
         method: "PATCH",
         data: updatedGroup,
       });
-      fetchGroups();
     } catch (e) {
       console.log(e);
     }
@@ -295,6 +325,7 @@ const App = () => {
                 <HomeContent
                   groups={groups}
                   quicknotes={quicknotes}
+                  updateQuicknotesList={updateQuicknotesList}
                   marknotes={marknotes}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
@@ -311,6 +342,7 @@ const App = () => {
                 <QNPage
                   quicknotes={quicknotes}
                   setQuicknotes={setQuicknotes}
+                  updateQuicknotesList={updateQuicknotesList}
                   groups={groups}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
@@ -349,6 +381,7 @@ const App = () => {
                     currentGroup={group}
                     groups={groups}
                     quicknotes={quicknotes}
+                    updateQuicknotesList={updateQuicknotesList}
                     marknotes={marknotes}
                     fetchQuicknotes={fetchQuicknotes}
                     fetchMarknotes={fetchMarknotes}
