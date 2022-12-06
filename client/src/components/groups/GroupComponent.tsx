@@ -70,39 +70,21 @@ const GroupLink = css`
 
 export interface GroupComponentProps {
   currentGroup: Group;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  updateGroupsList: Function;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
 }
 
 const GroupComponent: React.FC<GroupComponentProps> = ({
   currentGroup,
+  updateGroupsList,
   handleUpdateGroup,
   handleDeleteGroup,
 }) => {
   /**
-   * Function to handle changes in a note's field.
-   * @param key The field being changed
-   * @param value The new value of the field
-   * @param updateDate If true, updates the note's last modified date. [default=false]
+   * State for current group info
    */
-  const handleEditField = (
-    key: string,
-    value: any,
-    updateDate: Boolean = true
-  ) => {
-    if (updateDate) {
-      handleUpdateGroup(currentGroup, {
-        ...currentGroup,
-        [key]: value,
-        lastModified: Date.now(),
-      });
-    } else {
-      handleUpdateGroup(currentGroup, {
-        ...currentGroup,
-        [key]: value,
-      });
-    }
-  };
+  const [groupComponent, setGroupComponent] = useState(currentGroup);
 
   /**
    * Function to toggle whether a group is favorited
@@ -114,7 +96,13 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
-    handleEditField("favorited", currentGroup.favorited ? false : true, false);
+    const updatedGroup = {
+      ...currentGroup,
+      favorited: !groupComponent.favorited,
+    };
+    setGroupComponent(updatedGroup);
+    handleUpdateGroup(groupComponent._id, updatedGroup);
+    updateGroupsList(groupComponent._id, updatedGroup);
   };
 
   const appTheme = useTheme();
@@ -137,17 +125,19 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateGroup(currentGroup, {
+    const updatedGroup = {
       ...currentGroup,
       color: color,
-    });
+    };
+    setGroupComponent(updatedGroup);
+    handleUpdateGroup(groupComponent._id, updatedGroup);
+    updateGroupsList(groupComponent._id, updatedGroup);
   };
 
   /**
    * Function to toggle the color menu
    */
-  const toggleColorMenu = (
-  ) => {
+  const toggleColorMenu = () => {
     // Toggle display of component
     setShowColorMenu((prev) => !prev);
   };
@@ -165,31 +155,31 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   return (
     <React.Fragment>
       <GroupContainer>
-        <Link css={GroupLink} to={`/groups/${currentGroup._id}`}></Link>
+        <Link css={GroupLink} to={`/groups/${groupComponent._id}`}></Link>
         <GroupContent>
           <GroupContentSection>
             <FavoriteButton
-              favorited={currentGroup.favorited}
+              favorited={groupComponent.favorited}
               onClick={handleFavorite}
               color={appTheme.main.textPrimary}
             />
             <MdFolder
               size="1.5em"
               css={css`
-                color: ${currentGroup.color};
+                color: ${groupComponent.color};
                 position: relative;
                 right: 2px;
               `}
             />
             <GroupName>
-              {currentGroup.title || (
+              {groupComponent.title || (
                 <span className="italic">Untitled Group</span>
               )}
             </GroupName>
           </GroupContentSection>
           <GroupContentSection>
             <MenuButton
-              item={currentGroup}
+              item={groupComponent}
               toggleGroupMenu={toggleGroupMenu}
               toggleColorMenu={toggleColorMenu}
               toggleConfirmDelete={toggleConfirmDelete}
@@ -203,7 +193,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={currentGroup}
+        item={groupComponent}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDelete={handleDeleteGroup}

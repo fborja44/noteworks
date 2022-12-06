@@ -31,7 +31,7 @@ export interface QNPageProps {
   updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (
     noteId: string,
@@ -109,6 +109,7 @@ const QNPage: React.FC<QNPageProps> = ({
         <Section name="Groups" handleClick={handleAddGroup}>
           <GroupList
             groups={groups}
+            updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             handleDeleteGroup={handleDeleteGroup}
           />

@@ -65,7 +65,7 @@ export interface QNComponentProps {
   // Props for children of QuicknotesContent
   groups: Group[];
   updateGroupsList: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   currentNote: Quicknote;
   updateQuicknotesList: Function;
   handleDeleteQuicknote?: (id: string) => void;
@@ -131,7 +131,13 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleEditField("color", color, false);
+    const updatedQuicknote = {
+      ...quicknote,
+      color: color,
+    };
+    setQuicknote(updatedQuicknote);
+    handleUpdateQuicknote(quicknote._id, updatedQuicknote);
+    updateQuicknotesList(quicknote._id, updatedQuicknote);
   };
 
   /**
@@ -139,7 +145,13 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
-    handleEditField("favorited", quicknote.favorited ? false : true, false);
+    const updatedQuicknote = {
+      ...quicknote,
+      favorited: !quicknote.favorited,
+    };
+    setQuicknote(updatedQuicknote);
+    handleUpdateQuicknote(quicknote._id, updatedQuicknote);
+    updateQuicknotesList(quicknote._id, updatedQuicknote);
   };
 
   // Menu state

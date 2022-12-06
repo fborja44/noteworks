@@ -88,7 +88,7 @@ export interface GroupMenuProps {
   updateGroupsList: Function;
   showGroupMenu: boolean;
   setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
 }
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
@@ -120,7 +120,6 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
         });
       }
       updatedGroup = updatedGroup.data;
-      console.log(`group: ${updatedGroup}`);
       if (updatedGroup) {
         updateGroupsList(groupId, updatedGroup);
       }

@@ -295,13 +295,13 @@ const App = () => {
    * @param updatedGroup The data to update the group with
    */
   const handleUpdateGroup = async (
-    currentGroup: Group,
+    groupId: string,
     updatedGroup: Group
   ) => {
     try {
       await axios({
         baseURL: BASE_ADDR,
-        url: `/groups/${currentGroup._id}`,
+        url: `/groups/${groupId}`,
         method: "PATCH",
         data: updatedGroup,
       });

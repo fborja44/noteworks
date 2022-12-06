@@ -29,7 +29,7 @@ export interface QNListProps {
   updateQuicknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;

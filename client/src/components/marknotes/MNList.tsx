@@ -29,7 +29,7 @@ export interface MNListProps {
   updateMarknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;

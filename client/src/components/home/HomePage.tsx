@@ -24,7 +24,7 @@ export interface HomePageProps {
   updateQuicknotesList: Function;
   marknotes: Marknote[];
   updateMarknotesList: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
@@ -58,6 +58,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <Section name={`Favorited Groups`} icon={<TiStar />}>
           <GroupList
             groups={groups}
+            updateGroupsList={updateGroupsList}
             favorites={true}
             handleUpdateGroup={handleUpdateGroup}
             handleDeleteGroup={handleDeleteGroup}

@@ -37,7 +37,7 @@ export interface MNPageProps {
   updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
@@ -122,6 +122,7 @@ const MNPage: React.FC<MNPageProps> = ({
           <Section name="Groups" handleClick={handleAddGroup}>
             <GroupList
               groups={groups}
+              updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
               handleDeleteGroup={handleDeleteGroup}
             />

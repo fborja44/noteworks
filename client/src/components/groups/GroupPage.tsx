@@ -36,7 +36,7 @@ export interface GroupPageProps {
   fetchGroups: Function;
   fetchQuicknotes: Function;
   fetchMarknotes: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
@@ -70,6 +70,11 @@ const GroupPage: React.FC<GroupPageProps> = ({
   // History
   const history = useHistory();
 
+  /**
+   * State for current group info
+   */
+  const [group, setGroup] = useState(currentGroup);
+
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
@@ -84,18 +89,20 @@ const GroupPage: React.FC<GroupPageProps> = ({
     value: any,
     updateDate: Boolean = true
   ) => {
+    let updatedGroup;
     if (updateDate) {
-      handleUpdateGroup(currentGroup, {
-        ...currentGroup,
+      updatedGroup = {
+        ...group,
         [key]: value,
         lastModified: Date.now(),
-      });
+      };
     } else {
-      handleUpdateGroup(currentGroup, {
-        ...currentGroup,
+      updatedGroup = {
+        ...group,
         [key]: value,
-      });
+      };
     }
+    setGroup(updatedGroup);
   };
 
   /**
@@ -103,8 +110,8 @@ const GroupPage: React.FC<GroupPageProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: string) => {
-    handleUpdateGroup(currentGroup, {
-      ...currentGroup,
+    handleUpdateGroup(group._id, {
+      ...group,
       color: color,
     });
   };
@@ -138,9 +145,17 @@ const GroupPage: React.FC<GroupPageProps> = ({
     fetchMarknotes();
   }, [groups, fetchGroups, fetchMarknotes, fetchQuicknotes]);
 
+  useEffect(() => {
+    const delayDBUpdate = setTimeout(() => {
+      handleUpdateGroup(group._id, group);
+      updateGroupsList(group._id, group);
+    }, 1000);
+    return () => clearTimeout(delayDBUpdate);
+  }, [group, handleUpdateGroup, updateGroupsList]);
+
   return (
     <React.Fragment>
-      <InputPageHeader item={currentGroup} handleEditField={handleEditField}>
+      <InputPageHeader item={group} handleEditField={handleEditField}>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <RiEdit2Line />
         </PageHeaderButton>
@@ -149,14 +164,14 @@ const GroupPage: React.FC<GroupPageProps> = ({
         </PageHeaderButton>
         <PageHeaderButton
           title="Favorite"
-          onClick={() =>
-            handleEditField(
-              "favorited",
-              currentGroup.favorited === true ? false : true
-            )
-          }
+          onClick={() => {
+            handleUpdateGroup(group._id, {
+              ...group,
+              favorited: !group.favorited,
+            });
+          }}
         >
-          {currentGroup.favorited === false ? <TiStarOutline /> : <TiStar />}
+          {group.favorited === false ? <TiStarOutline /> : <TiStar />}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
@@ -166,11 +181,11 @@ const GroupPage: React.FC<GroupPageProps> = ({
         </PageHeaderButton>
       </InputPageHeader>
       <div className="main-content-wrapper">
-        {currentGroup.quicknotes.length > 0 ? (
+        {group.quicknotes.length > 0 ? (
           <Section name="Quicknotes">
             <QNList
               quicknotes={quicknotes.filter((note: Quicknote) =>
-                currentGroup.quicknotes.includes(note._id)
+                group.quicknotes.includes(note._id)
               )}
               updateQuicknotesList={updateQuicknotesList}
               groups={groups}
@@ -182,11 +197,11 @@ const GroupPage: React.FC<GroupPageProps> = ({
             ></QNList>
           </Section>
         ) : null}
-        {currentGroup.marknotes.length > 0 ? (
+        {group.marknotes.length > 0 ? (
           <Section name="Marknotes">
             <MNList
               marknotes={marknotes.filter((note: Marknote) =>
-                currentGroup.marknotes.includes(note._id)
+                group.marknotes.includes(note._id)
               )}
               updateMarknotesList={updateMarknotesList}
               groups={groups}
@@ -198,8 +213,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
             />
           </Section>
         ) : null}
-        {currentGroup.quicknotes.length === 0 &&
-        currentGroup.marknotes.length === 0 ? (
+        {group.quicknotes.length === 0 && group.marknotes.length === 0 ? (
           <Empty>This group is empty.</Empty>
         ) : null}
       </div>
@@ -209,7 +223,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={currentGroup}
+        item={group}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         handleDelete={handleDeleteGroup}

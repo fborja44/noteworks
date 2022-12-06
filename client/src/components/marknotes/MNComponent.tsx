@@ -50,7 +50,7 @@ const MarknoteLink = css`
 export interface MNComponentProps {
   groups: Group[];
   updateGroupsList: Function;
-  handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
+  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   currentNote: Marknote;
   handleUpdateMarknote?: (
     noteId: string,
