@@ -28,6 +28,7 @@ import { TiStar, TiStarOutline } from "react-icons/ti";
 export interface GroupPageProps {
   currentGroup: Group;
   groups: Group[];
+  updateGroupsList: Function;
   quicknotes: Quicknote[];
   updateQuicknotesList: Function;
   marknotes: Marknote[];
@@ -50,6 +51,7 @@ export interface GroupPageProps {
 const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
   groups,
+  updateGroupsList,
   quicknotes,
   updateQuicknotesList,
   marknotes,
@@ -172,6 +174,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               )}
               updateQuicknotesList={updateQuicknotesList}
               groups={groups}
+              updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateQuicknote={handleUpdateQuicknote}
               handleDeleteQuicknote={handleDeleteQuicknote}
@@ -187,6 +190,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               )}
               updateMarknotesList={updateMarknotesList}
               groups={groups}
+              updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateMarknote={handleUpdateMarknote}
               handleDeleteMarknote={handleDeleteMarknote}

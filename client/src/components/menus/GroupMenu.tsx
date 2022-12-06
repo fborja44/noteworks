@@ -85,6 +85,7 @@ const GroupMenuItem = styled.div`
 export interface GroupMenuProps {
   item: Quicknote | Marknote;
   groups: Group[];
+  updateGroupsList: Function;
   showGroupMenu: boolean;
   setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
@@ -93,6 +94,7 @@ export interface GroupMenuProps {
 const GroupMenu: React.FC<GroupMenuProps> = ({
   item,
   groups,
+  updateGroupsList,
   showGroupMenu,
   setShowGroupMenu,
 }) => {
@@ -100,20 +102,30 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    * On click handler to add/remove note from group.
    * Event target needs dataset attribute.
    */
-  const handleClick = async (event: any) => {
+  const handleSelectGroup = async (event: any) => {
     const groupId = event.target.dataset.id;
-    if (item.type === "marknote") {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/groups/${groupId}/marknotes/${item._id}`,
-        method: "PATCH",
-      });
-    } else if (item.type === "quicknote") {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/groups/${groupId}/quicknotes/${item._id}`,
-        method: "PATCH",
-      });
+    let updatedGroup = null;
+    try {
+      if (item.type === "marknote") {
+        updatedGroup = await axios({
+          baseURL: BASE_ADDR,
+          url: `/groups/${groupId}/marknotes/${item._id}`,
+          method: "PATCH",
+        });
+      } else {
+        updatedGroup = await axios({
+          baseURL: BASE_ADDR,
+          url: `/groups/${groupId}/quicknotes/${item._id}`,
+          method: "PATCH",
+        });
+      }
+      updatedGroup = updatedGroup.data;
+      console.log(`group: ${updatedGroup}`);
+      if (updatedGroup) {
+        updateGroupsList(groupId, updatedGroup);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -128,9 +140,10 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
           <GroupMenuItem
             key={group._id}
             data-id={group._id}
-            onClick={handleClick}
+            onClick={(event) => handleSelectGroup(event)}
             className={`${
-              item.groups.includes(group._id)
+              group.quicknotes.includes(item._id) ||
+              group.marknotes.includes(item._id)
                 ? "selected"
                 : ""
             }`}

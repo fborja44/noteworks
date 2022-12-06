@@ -28,6 +28,7 @@ export interface MNListProps {
   marknotes: Quicknote[] | Marknote[];
   updateMarknotesList: Function;
   groups: Group[];
+  updateGroupsList: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
@@ -40,6 +41,7 @@ const MNList: React.FC<MNListProps> = ({
   marknotes,
   updateMarknotesList,
   groups,
+  updateGroupsList,
   handleUpdateGroup,
   favorites,
   handleUpdateMarknote,
@@ -71,6 +73,7 @@ const MNList: React.FC<MNListProps> = ({
         <MNComponentContainer
           key={note._id}
           groups={groups}
+          updateGroupsList={updateGroupsList}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
           updateMarknotesList={updateMarknotesList}

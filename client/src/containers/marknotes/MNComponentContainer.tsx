@@ -12,6 +12,7 @@ import MNComponent from "../../components/marknotes/MNComponent";
 
 export interface MNComponentContainerProps {
   groups: Group[];
+  updateGroupsList: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
   updateMarknotesList: Function;
@@ -22,6 +23,7 @@ export interface MNComponentContainerProps {
 
 const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   groups,
+  updateGroupsList,
   handleUpdateGroup,
   currentNote,
   updateMarknotesList,
@@ -145,6 +147,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     <MNComponent
       key={marknote._id}
       groups={groups}
+      updateGroupsList={updateGroupsList}
       handleUpdateGroup={handleUpdateGroup}
       currentNote={marknote}
       handleUpdateMarknote={handleUpdateMarknote}

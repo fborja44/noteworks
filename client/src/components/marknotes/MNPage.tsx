@@ -34,6 +34,7 @@ export interface MNPageProps {
   updateMarknotesList: Function;
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
   groups: Group[];
+  updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
@@ -51,6 +52,7 @@ const MNPage: React.FC<MNPageProps> = ({
   updateMarknotesList,
   setMarknotes,
   groups,
+  updateGroupsList,
   setGroups,
   handleAddGroup,
   handleUpdateGroup,
@@ -130,6 +132,7 @@ const MNPage: React.FC<MNPageProps> = ({
               marknotes={marknotes}
               updateMarknotesList={updateMarknotesList}
               groups={groups}
+              updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
               handleUpdateMarknote={handleUpdateMarknote}
               handleDeleteMarknote={handleDeleteMarknote}

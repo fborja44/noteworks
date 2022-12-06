@@ -19,6 +19,7 @@ import GroupList from "../groups/GroupList";
  */
 export interface HomePageProps {
   groups: Group[];
+  updateGroupsList: Function;
   quicknotes: Quicknote[];
   updateQuicknotesList: Function;
   marknotes: Marknote[];
@@ -37,6 +38,7 @@ export interface HomePageProps {
  */
 const HomePage: React.FC<HomePageProps> = ({
   groups,
+  updateGroupsList,
   quicknotes,
   updateQuicknotesList,
   marknotes,
@@ -66,6 +68,7 @@ const HomePage: React.FC<HomePageProps> = ({
             quicknotes={quicknotes}
             updateQuicknotesList={updateQuicknotesList}
             groups={groups}
+            updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             favorites={true}
             handleUpdateQuicknote={handleUpdateQuicknote}
@@ -77,6 +80,7 @@ const HomePage: React.FC<HomePageProps> = ({
             marknotes={marknotes}
             updateMarknotesList={updateMarknotesList}
             groups={groups}
+            updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             favorites={true}
             handleUpdateMarknote={handleUpdateMarknote}

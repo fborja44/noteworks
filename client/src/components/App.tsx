@@ -275,6 +275,21 @@ const App = () => {
   };
 
   /**
+   * Group function to update the marknotes list in app state
+   * @param groupId The marknote id
+   * @param updatedGroup The data to update the marknote with
+   */
+     const updateGroupsList = (groupId: string, updatedGroup: Group) => {
+      const updatedGroupsArray = groups.map((note: any) => {
+        if (note._id === groupId) {
+          return updatedGroup;
+        }
+        return note;
+      });
+      setGroups(updatedGroupsArray);
+    };
+
+  /**
    * Group function to update a group in the database
    * @param currentGroup The group being updated
    * @param updatedGroup The data to update the group with
@@ -324,6 +339,7 @@ const App = () => {
               <main>
                 <HomePage
                   groups={groups}
+                  updateGroupsList={updateGroupsList}
                   quicknotes={quicknotes}
                   updateQuicknotesList={updateQuicknotesList}
                   marknotes={marknotes}
@@ -345,6 +361,7 @@ const App = () => {
                   setQuicknotes={setQuicknotes}
                   updateQuicknotesList={updateQuicknotesList}
                   groups={groups}
+                  updateGroupsList={updateGroupsList}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
@@ -361,6 +378,7 @@ const App = () => {
                   updateMarknotesList={updateMarknotesList}
                   setMarknotes={setMarknotes}
                   groups={groups}
+                  updateGroupsList={updateGroupsList}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
@@ -382,6 +400,7 @@ const App = () => {
                   <GroupPage
                     currentGroup={group}
                     groups={groups}
+                    updateGroupsList={updateGroupsList}
                     quicknotes={quicknotes}
                     updateQuicknotesList={updateQuicknotesList}
                     marknotes={marknotes}

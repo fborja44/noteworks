@@ -28,6 +28,7 @@ export interface QNPageProps {
   setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
   updateQuicknotesList: Function;
   groups: Group[];
+  updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
@@ -46,6 +47,7 @@ const QNPage: React.FC<QNPageProps> = ({
   quicknotes,
   setQuicknotes,
   groups,
+  updateGroupsList,
   setGroups,
   updateQuicknotesList,
   handleAddGroup,
@@ -117,6 +119,7 @@ const QNPage: React.FC<QNPageProps> = ({
             quicknotes={quicknotes}
             updateQuicknotesList={updateQuicknotesList}
             groups={groups}
+            updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             handleUpdateQuicknote={handleUpdateQuicknote}
             handleDeleteQuicknote={handleDeleteQuicknote}

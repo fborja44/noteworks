@@ -49,6 +49,7 @@ const MarknoteLink = css`
 
 export interface MNComponentProps {
   groups: Group[];
+  updateGroupsList: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Marknote;
   handleUpdateMarknote?: (
@@ -86,6 +87,7 @@ export interface MNComponentProps {
 
 const MNComponent: React.FC<MNComponentProps> = ({
   groups,
+  updateGroupsList,
   handleUpdateGroup,
   currentNote,
   handleUpdateMarknote,
@@ -145,6 +147,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
       <GroupMenu
         item={currentNote}
         groups={groups}
+        updateGroupsList={updateGroupsList}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
         handleUpdateGroup={handleUpdateGroup}

@@ -64,6 +64,7 @@ const QuicknoteContainer = styled.div`
 export interface QNComponentProps {
   // Props for children of QuicknotesContent
   groups: Group[];
+  updateGroupsList: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   currentNote: Quicknote;
   updateQuicknotesList: Function;
@@ -73,6 +74,7 @@ export interface QNComponentProps {
 
 const QNComponent: React.FC<QNComponentProps> = ({
   groups,
+  updateGroupsList,
   handleUpdateGroup,
   currentNote,
   updateQuicknotesList,
@@ -209,6 +211,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
       <GroupMenu
         item={quicknote}
         groups={groups}
+        updateGroupsList={updateGroupsList}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
         handleUpdateGroup={handleUpdateGroup}

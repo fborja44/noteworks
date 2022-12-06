@@ -28,6 +28,7 @@ export interface QNListProps {
   quicknotes: Quicknote[];
   updateQuicknotesList: Function;
   groups: Group[];
+  updateGroupsList: Function;
   handleUpdateGroup: (currentGroup: Group, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
@@ -40,6 +41,7 @@ const QNList: React.FC<QNListProps> = ({
   quicknotes,
   updateQuicknotesList,
   groups,
+  updateGroupsList,
   handleUpdateGroup,
   favorites,
   handleUpdateQuicknote,
@@ -66,6 +68,7 @@ const QNList: React.FC<QNListProps> = ({
         <QNComponent
           key={note._id}
           groups={groups}
+          updateGroupsList={updateGroupsList}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
           updateQuicknotesList={updateQuicknotesList}
