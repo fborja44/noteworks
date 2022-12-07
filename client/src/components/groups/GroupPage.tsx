@@ -33,9 +33,6 @@ export interface GroupPageProps {
   updateQuicknotesList: Function;
   marknotes: Marknote[];
   updateMarknotesList: Function;
-  fetchGroups: Function;
-  fetchQuicknotes: Function;
-  fetchMarknotes: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
@@ -56,9 +53,6 @@ const GroupPage: React.FC<GroupPageProps> = ({
   updateQuicknotesList,
   marknotes,
   updateMarknotesList,
-  fetchGroups,
-  fetchQuicknotes,
-  fetchMarknotes,
   handleUpdateGroup,
   handleDeleteGroup,
   handleUpdateQuicknote,
@@ -73,7 +67,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
   /**
    * State for current group info
    */
-  const [group, setGroup] = useState(currentGroup);
+  const [group, setGroupPage] = useState(currentGroup);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -102,7 +96,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         [key]: value,
       };
     }
-    setGroup(updatedGroup);
+    setGroupPage(updatedGroup);
   };
 
   /**
@@ -136,22 +130,13 @@ const GroupPage: React.FC<GroupPageProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
-  /**
-   * Effect hook to update group page when groups change (i.e. note is deleted, groups are updated);
-   */
-  useEffect(() => {
-    fetchGroups();
-    fetchQuicknotes();
-    fetchMarknotes();
-  }, [groups, fetchGroups, fetchMarknotes, fetchQuicknotes]);
-
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
       handleUpdateGroup(group._id, group);
       updateGroupsList(group._id, group);
     }, 1000);
     return () => clearTimeout(delayDBUpdate);
-  }, [group, handleUpdateGroup, updateGroupsList]);
+  }, [group, quicknotes, marknotes]);
 
   return (
     <React.Fragment>
@@ -185,7 +170,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
           <Section name="Quicknotes">
             <QNList
               quicknotes={quicknotes.filter((note: Quicknote) =>
-                group.quicknotes.includes(note._id)
+                note.groups.includes(group._id)
               )}
               updateQuicknotesList={updateQuicknotesList}
               groups={groups}
@@ -194,6 +179,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               handleUpdateQuicknote={handleUpdateQuicknote}
               handleDeleteQuicknote={handleDeleteQuicknote}
               setSelectedTab={setSelectedTab}
+              setGroupPage={setGroupPage}
             ></QNList>
           </Section>
         ) : null}
@@ -201,7 +187,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
           <Section name="Marknotes">
             <MNList
               marknotes={marknotes.filter((note: Marknote) =>
-                group.marknotes.includes(note._id)
+                note.groups.includes(group._id)
               )}
               updateMarknotesList={updateMarknotesList}
               groups={groups}
@@ -210,6 +196,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               handleUpdateMarknote={handleUpdateMarknote}
               handleDeleteMarknote={handleDeleteMarknote}
               setSelectedTab={setSelectedTab}
+              setGroupPage={setGroupPage}
             />
           </Section>
         ) : null}

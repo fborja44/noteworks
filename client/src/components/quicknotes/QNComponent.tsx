@@ -66,6 +66,7 @@ export interface QNComponentProps {
   groups: Group[];
   updateGroupsList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
+  setGroupPage?: Function;
   currentNote: Quicknote;
   updateQuicknotesList: Function;
   handleDeleteQuicknote?: (id: string) => void;
@@ -76,6 +77,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   groups,
   updateGroupsList,
   handleUpdateGroup,
+  setGroupPage,
   currentNote,
   updateQuicknotesList,
   handleDeleteQuicknote,
@@ -190,7 +192,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
       updateQuicknotesList(quicknote._id, quicknote);
     }, 1000);
     return () => clearTimeout(delayDBUpdate);
-  }, [quicknote, handleUpdateQuicknote, updateQuicknotesList]);
+  }, [quicknote]);
 
   return (
     <QuicknoteContainer>
@@ -222,8 +224,10 @@ const QNComponent: React.FC<QNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={quicknote}
+        updateQuicknotesList={updateQuicknotesList}
         groups={groups}
         updateGroupsList={updateGroupsList}
+        setGroupPage={setGroupPage}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
         handleUpdateGroup={handleUpdateGroup}

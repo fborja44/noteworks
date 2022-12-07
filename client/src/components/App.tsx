@@ -405,9 +405,6 @@ const App = () => {
                     updateQuicknotesList={updateQuicknotesList}
                     marknotes={marknotes}
                     updateMarknotesList={updateMarknotesList}
-                    fetchQuicknotes={fetchQuicknotes}
-                    fetchMarknotes={fetchMarknotes}
-                    fetchGroups={fetchGroups}
                     handleUpdateGroup={handleUpdateGroup}
                     handleDeleteGroup={handleDeleteGroup}
                     handleUpdateQuicknote={handleUpdateQuicknote}

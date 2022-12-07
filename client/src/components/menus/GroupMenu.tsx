@@ -84,8 +84,11 @@ const GroupMenuItem = styled.div`
 
 export interface GroupMenuProps {
   item: Quicknote | Marknote;
+  updateQuicknotesList?: Function;
+  updateMarknotesList?: Function;
   groups: Group[];
   updateGroupsList: Function;
+  setGroupPage?: Function;
   showGroupMenu: boolean;
   setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
@@ -93,10 +96,14 @@ export interface GroupMenuProps {
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
   item,
+  updateQuicknotesList,
+  updateMarknotesList,
   groups,
   updateGroupsList,
+  setGroupPage,
   showGroupMenu,
   setShowGroupMenu,
+  handleUpdateGroup,
 }) => {
   /**
    * On click handler to add/remove note from group.
@@ -104,24 +111,29 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    */
   const handleSelectGroup = async (event: any) => {
     const groupId = event.target.dataset.id;
-    let updatedGroup = null;
+    let data: any = null;
     try {
-      if (item.type === "marknote") {
-        updatedGroup = await axios({
+      if (item.type === "marknote" && updateMarknotesList) {
+        data = await axios({
           baseURL: BASE_ADDR,
           url: `/groups/${groupId}/marknotes/${item._id}`,
           method: "PATCH",
         });
-      } else {
-        updatedGroup = await axios({
+        updateMarknotesList(item._id, data.data.updatedNote);
+      } else if (item.type === "quicknote" && updateQuicknotesList) {
+        data = await axios({
           baseURL: BASE_ADDR,
           url: `/groups/${groupId}/quicknotes/${item._id}`,
           method: "PATCH",
         });
+        updateQuicknotesList(item._id, data.data.updatedNote);
       }
-      updatedGroup = updatedGroup.data;
-      if (updatedGroup) {
-        updateGroupsList(groupId, updatedGroup);
+      if (data) {
+        if (setGroupPage) {
+          setGroupPage(data.data.updatedGroup);
+        }
+        handleUpdateGroup(groupId, data.data.updatedGroup);
+        updateGroupsList(groupId, data.data.updatedGroup);
       }
     } catch (e) {
       console.log(e);

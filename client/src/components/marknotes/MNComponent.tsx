@@ -51,7 +51,9 @@ export interface MNComponentProps {
   groups: Group[];
   updateGroupsList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
+  setGroupPage?: Function;
   currentNote: Marknote;
+  updateMarknotesList: Function;
   handleUpdateMarknote?: (
     noteId: string,
     updatedMarknote: Marknote
@@ -89,7 +91,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
   groups,
   updateGroupsList,
   handleUpdateGroup,
+  setGroupPage,
   currentNote,
+  updateMarknotesList,
   handleUpdateMarknote,
   handleDeleteMarknote,
   handleEditField,
@@ -146,8 +150,10 @@ const MNComponent: React.FC<MNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={currentNote}
+        updateMarknotesList={updateMarknotesList}
         groups={groups}
         updateGroupsList={updateGroupsList}
+        setGroupPage={setGroupPage}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
         handleUpdateGroup={handleUpdateGroup}

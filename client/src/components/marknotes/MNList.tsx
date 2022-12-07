@@ -29,6 +29,7 @@ export interface MNListProps {
   updateMarknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
+  setGroupPage?: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   favorites?: boolean;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
@@ -42,6 +43,7 @@ const MNList: React.FC<MNListProps> = ({
   updateMarknotesList,
   groups,
   updateGroupsList,
+  setGroupPage,
   handleUpdateGroup,
   favorites,
   handleUpdateMarknote,
@@ -75,6 +77,7 @@ const MNList: React.FC<MNListProps> = ({
           groups={groups}
           updateGroupsList={updateGroupsList}
           handleUpdateGroup={handleUpdateGroup}
+          setGroupPage={setGroupPage}
           currentNote={note}
           updateMarknotesList={updateMarknotesList}
           handleUpdateMarknote={handleUpdateMarknote}

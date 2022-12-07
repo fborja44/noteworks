@@ -14,6 +14,7 @@ export interface MNComponentContainerProps {
   groups: Group[];
   updateGroupsList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
+  setGroupPage?: Function;
   currentNote: Marknote;
   updateMarknotesList: Function;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
@@ -25,6 +26,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   groups,
   updateGroupsList,
   handleUpdateGroup,
+  setGroupPage,
   currentNote,
   updateMarknotesList,
   handleUpdateMarknote,
@@ -161,7 +163,9 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       groups={groups}
       updateGroupsList={updateGroupsList}
       handleUpdateGroup={handleUpdateGroup}
+      setGroupPage={setGroupPage}
       currentNote={currentNote}
+      updateMarknotesList={updateMarknotesList}
       handleUpdateMarknote={handleUpdateMarknote}
       handleDeleteMarknote={handleDeleteMarknote}
       handleEditField={handleEditField}

@@ -301,7 +301,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
     }, 1000);
 
     return () => clearTimeout(delayDBUpdate);
-  }, [marknote, handleUpdateMarknote, updateMarknotesList]);
+  }, [marknote]);
 
   return (
     <EditorMain>

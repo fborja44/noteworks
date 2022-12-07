@@ -145,16 +145,22 @@ router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
   }
 
   // If note is in group, remove the group, otherwise, add it
-  let updatedGroup = null;
+  let updatedGroup = null,
+    updatedNote = null;
   if (group.quicknotes.includes(noteId.trim())) {
     try {
-      await quicknotesData.removeGroupFromQuicknote(noteId, id.trim());
       updatedGroup = await groupsData.removeFromGroup(
         id.trim(),
         noteId.trim(),
         "quicknote"
       );
-      return res.status(200).json(updatedGroup);
+      updatedNote = await quicknotesData.removeGroupFromQuicknote(
+        noteId,
+        id.trim()
+      );
+      return res
+        .status(200)
+        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to remove quicknote to group.",
@@ -163,13 +169,15 @@ router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
     }
   } else {
     try {
-      await quicknotesData.addGroupToQuicknote(noteId, id.trim());
       updatedGroup = await groupsData.addToGroup(
         id.trim(),
         noteId.trim(),
         "quicknote"
       );
-      return res.status(200).json(updatedGroup);
+      updatedNote = await quicknotesData.addGroupToQuicknote(noteId, id.trim());
+      return res
+        .status(200)
+        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to add quicknote to group.",
@@ -202,16 +210,22 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
   }
 
   // If note is in group, remove the group, otherwise, add it
-  let updatedGroup = null;
+  let updatedGroup = null,
+    updatedNote = null;
   if (group.marknotes.includes(noteId.trim())) {
     try {
-      await marknotesData.removeGroupFromMarknote(noteId, id.trim());
       updatedGroup = await groupsData.removeFromGroup(
         id.trim(),
         noteId.trim(),
         "marknote"
       );
-      return res.status(200).json(updatedGroup);
+      updatedNote = await marknotesData.removeGroupFromMarknote(
+        noteId,
+        id.trim()
+      );
+      return res
+        .status(200)
+        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to remove marknote from group.",
@@ -220,13 +234,15 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
     }
   } else {
     try {
-      await marknotesData.addGroupToMarknote(noteId, id.trim());
       updatedGroup = await groupsData.addToGroup(
         id.trim(),
         noteId.trim(),
         "marknote"
       );
-      return res.status(200).json(updatedGroup);
+      updatedNote = await marknotesData.addGroupToMarknote(noteId, id.trim());
+      return res
+        .status(200)
+        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to add marknote from group.",
