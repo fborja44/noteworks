@@ -41,15 +41,15 @@ const PageHeaderColors = ({
 const PageHeaderContainer = styled.section`
   ${PageHeaderColors};
   color: ${(props) => props.theme.header.textPrimary};
-  height: 30px;
-  width: 100%;
+  border-bottom: 1px solid ${(props) => props.theme.header.borderColor};
+  height: 35px;
+  width: calc(100vw - 100px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   z-index: 10;
   padding: 0 0 0 1rem;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 
   h1 {
     margin-left: 1rem;
@@ -80,49 +80,6 @@ const PageHeaderButtonsContainer = styled.div`
     height: inherit;
     display: flex;
     align-items: center;
-
-    li {
-      width: 40px;
-      height: 78%;
-      float: left;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      button {
-        width: 80%;
-        height: 100%;
-        background: inherit;
-        border: none;
-        color: white;
-        font-size: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        user-select: none;
-        -webkit-user-select: none;
-        border-radius: 3px;
-
-        &:hover {
-          cursor: pointer;
-          background: ${(props) => props.theme.header.backgroundSecondary};
-          transition: background-color 0.2s ease 0s;
-        }
-      }
-
-      a {
-        color: ${(props) => props.theme.header.textPrimary};
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &::visited {
-          color: ${(props) => props.theme.header.textPrimary};
-        }
-      }
-    }
   }
 `;
 
@@ -217,9 +174,7 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
         onChange={(event) => handleEditField("title", event.target.value)}
         color={color_alt}
       />
-      <PageHeaderButtonsContainer>
-        <ul>{children}</ul>
-      </PageHeaderButtonsContainer>
+      <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
     </PageHeaderContainer>
   );
 };

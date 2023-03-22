@@ -53,7 +53,7 @@ const HomePage: React.FC<HomePageProps> = ({
 }) => {
   return (
     <React.Fragment>
-      <PageHeader title="Home" />
+      <PageHeader title="Dashboard" />
       <div className="main-content-wrapper">
         <Section name={`Favorited Groups`} icon={<TiStar />}>
           <GroupList

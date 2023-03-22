@@ -31,4 +31,11 @@ export type Group = {
   marknotes: string[];
   lastModified: number;
   favorited: boolean;
+};
+
+export interface HeroIconProps {
+  className?: string;
+  filled?: boolean;
+  id?: string;
+  css?: any;
 }

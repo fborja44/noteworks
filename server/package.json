@@ -1,12 +1,24 @@
 {
   "name": "denote-server",
   "version": "1.0.0",
+  "bin": "./src/index.ts",
   "description": "Backend for Denote notes application.",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "seed": "ts-node ./src/tasks/seed.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "pkg": "pkg ./src/index.ts"
+  },
+  "pkg": {
+    "outputPath": "dist",
+    "assets": [
+      "./node_modules/**/*",
+      "./src/**/*"
+    ],
+    "targets": [
+      "node14-win-x64"
+    ]
   },
   "author": "Francis Borja",
   "license": "MIT",
@@ -23,6 +35,7 @@
   "devDependencies": {
     "@types/mongodb": "^3.6.6",
     "@types/node": "^16.7.1",
+    "pkg": "^5.8.0",
     "typescript": "^4.3.5"
   }
 }

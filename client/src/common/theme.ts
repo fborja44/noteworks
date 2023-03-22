@@ -3,22 +3,30 @@ export interface AppTheme {
   main: {
     background: string;
     backgroundSecondary: string;
+    borderColor: string;
     textPrimary: string;
     textSecondary: string;
   };
   title: {
     background: string;
     backgroundSecondary: string;
+    borderColor: string;
     textPrimary: string;
+    textSecondary: string;
   };
   header: {
     background: string;
     backgroundSecondary: string;
+    borderColor: string;
     textPrimary: string;
+    textSecondary: string;
   };
   sidebar: {
     background: string;
     backgroundSecondary: string;
+    borderColor: string;
+    textPrimary: string;
+    textSecondary: string;
   };
   note: {
     background: string;
@@ -32,7 +40,7 @@ export interface AppTheme {
   };
   menu: {
     title: string;
-  }
+  };
 }
 
 export const lightTheme: AppTheme = {
@@ -40,22 +48,30 @@ export const lightTheme: AppTheme = {
   main: {
     background: "#E0E0E0",
     backgroundSecondary: "#FFF",
+    borderColor: "E0E0E0",
     textPrimary: "#4f4f4f",
     textSecondary: "#000",
   },
   title: {
     background: "#25242c",
     backgroundSecondary: "#3e3d44",
+    borderColor: "#25242c",
     textPrimary: "#FFF",
+    textSecondary: "#CCCCCC",
   },
   header: {
     background: "#4b4a53",
     backgroundSecondary: "#383740",
+    borderColor: "#4b4a53",
     textPrimary: "#FFF",
+    textSecondary: "#A6A6A6",
   },
   sidebar: {
     background: "#34333b",
     backgroundSecondary: "#49484e",
+    borderColor: "#34333b",
+    textPrimary: "#FFF",
+    textSecondary: "#CCCCCC",
   },
   note: {
     background: "#FFF",
@@ -68,31 +84,39 @@ export const lightTheme: AppTheme = {
     },
   },
   menu: {
-    title: "#4f4f4f"
-  }
+    title: "#4f4f4f",
+  },
 };
 
 export const darkTheme: AppTheme = {
   id: "dark",
   main: {
-    background: "#1b1a20",
+    background: "#212121",
     backgroundSecondary: "#34333b",
-    textPrimary: "#DDD",
-    textSecondary: "#EEE",
+    borderColor: "#3B3B3B",
+    textPrimary: "#E1E1E1",
+    textSecondary: "#A6A6A6",
   },
   title: {
-    background: "#25242c",
-    backgroundSecondary: "#3e3d44",
-    textPrimary: "#FFF",
+    background: "#212121",
+    backgroundSecondary: "#2B2B2B",
+    borderColor: "#3B3B3B",
+    textPrimary: "#E1E1E1",
+    textSecondary: "#A6A6A6",
   },
   header: {
-    background: "#3a3940",
-    backgroundSecondary: "#383740",
-    textPrimary: "#FFF",
+    background: "#212121",
+    backgroundSecondary: "#2B2B2B",
+    borderColor: "#3B3B3B",
+    textPrimary: "#E1E1E1",
+    textSecondary: "#A6A6A6",
   },
   sidebar: {
-    background: "#34333b",
-    backgroundSecondary: "#49484e",
+    background: "#262626",
+    borderColor: "#303030",
+    backgroundSecondary: "#3B3B3B",
+    textPrimary: "#A6A6A6",
+    textSecondary: "#CCCCCC",
   },
   note: {
     background: "#34333b",
@@ -106,5 +130,5 @@ export const darkTheme: AppTheme = {
   },
   menu: {
     title: "#FFF",
-  }
+  },
 };

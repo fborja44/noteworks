@@ -91,7 +91,7 @@ const QNPage: React.FC<QNPageProps> = ({
   return (
     <React.Fragment>
       <PageHeader
-        title="Quicknotes"
+        title="My Quicknotes"
         useSearch={true}
         setSearchText={setQNSearchText}
       >

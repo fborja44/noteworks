@@ -104,7 +104,7 @@ const MNPage: React.FC<MNPageProps> = ({
     <Switch>
       <Route exact path="/marknotes">
         <PageHeader
-          title="Marknotes"
+          title="My Marknotes"
           useSearch={true}
           setSearchText={setMNSearchText}
         >

@@ -15,7 +15,7 @@ import { darkTheme, lightTheme } from "../common/theme";
 import { COLOR } from "../common/color";
 
 // Component imports
-import Titlebar from "./Titlebar";
+import Titlebar from "./titlebar/Titlebar";
 import Sidebar from "./sidebar/Sidebar";
 import Footer from "./Footer";
 
@@ -279,25 +279,22 @@ const App = () => {
    * @param groupId The marknote id
    * @param updatedGroup The data to update the marknote with
    */
-     const updateGroupsList = (groupId: string, updatedGroup: Group) => {
-      const updatedGroupsArray = groups.map((note: any) => {
-        if (note._id === groupId) {
-          return updatedGroup;
-        }
-        return note;
-      });
-      setGroups(updatedGroupsArray);
-    };
+  const updateGroupsList = (groupId: string, updatedGroup: Group) => {
+    const updatedGroupsArray = groups.map((note: any) => {
+      if (note._id === groupId) {
+        return updatedGroup;
+      }
+      return note;
+    });
+    setGroups(updatedGroupsArray);
+  };
 
   /**
    * Group function to update a group in the database
    * @param currentGroup The group being updated
    * @param updatedGroup The data to update the group with
    */
-  const handleUpdateGroup = async (
-    groupId: string,
-    updatedGroup: Group
-  ) => {
+  const handleUpdateGroup = async (groupId: string, updatedGroup: Group) => {
     try {
       await axios({
         baseURL: BASE_ADDR,

@@ -8,50 +8,62 @@ import { Link } from "react-router-dom";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import { AppTheme } from "../../common/theme";
 
-const ButtonItem = styled.li`
+import { COLOR } from "../../common/color";
+
+const ButtonItem = styled.div`
   width: 100%;
-  height: 45px;
-  font-size: 24px;
+  height: 55px;
+  font-size: 11px;
+  border-radius: 5px;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  margin: 0.35em 0;
 
   user-drag: none;
 
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    width: 45px;
-    height: 45px;
-    position: absolute;
+  span {
+    margin-top: 0.25em;
   }
 
   &:hover {
-    background-color: ${(props) => props.theme.sidebar.backgroundSecondary};
-    transition: background-color 0.2s ease-out 0s;
+    background-color: #313131;
+    color: ${(props: { theme?: AppTheme }) =>
+      props.theme && props.theme.sidebar.textSecondary};
+    // transition: background-color 0.1s ease-out 0s;
   }
 
-  &:hover .nav-button {
-    cursor: pointer;
-    border-left: solid 2px white;
-    transition: all 0.2s ease 0s;
-  }
+  ${(props: { theme?: AppTheme; selected: boolean }) =>
+    props.selected &&
+    `background: ${
+      props.theme && props.theme.sidebar.backgroundSecondary
+    } !important; color: ${props.theme && props.theme.sidebar.textSecondary};`}
 `;
 
-const NavButton = styled.div`
-  width: 45px;
-  height: 45px;
+const LinkStyles = css`
+  text-decoration: none;
+`;
+
+const Indicator = styled.span`
+  width: 3px;
+  height: 100%;
+  border-radius: 5px 0px 0px 5px;
+  background: ${COLOR.BLUE};
   position: absolute;
-  border-left: solid 2px ${(props) => props.theme.sidebar.background};
-  user-drag: none;
+  bottom: 0;
+  left: 0;
 `;
 
 export interface SidebarButtonProps {
   title: string;
+  label: string;
+  icon: React.ReactNode;
   route: string;
   selectedTab: string;
   setSelectedTab: (value: React.SetStateAction<string>) => void;
@@ -59,25 +71,30 @@ export interface SidebarButtonProps {
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
   title,
+  label,
+  icon,
   route,
   children,
   selectedTab,
   setSelectedTab,
 }) => {
+  const isSelected = selectedTab === route;
+
   return (
-    <ButtonItem>
-      <Link to={route} onClick={() => setSelectedTab(route)} title={title}>
-        <NavButton
-          id={route}
-          css={css`
-            border-left: ${selectedTab === route
-              ? "solid 2px white !important"
-              : "none"};
-          `}
-        />
-        {children}
+    <li>
+      <Link
+        css={LinkStyles}
+        to={route}
+        onClick={() => setSelectedTab(route)}
+        title={title}
+      >
+        <ButtonItem selected={isSelected}>
+          {isSelected && <Indicator />}
+          {icon}
+          <span>{label}</span>
+        </ButtonItem>
       </Link>
-    </ButtonItem>
+    </li>
   );
 };
 

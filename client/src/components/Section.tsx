@@ -10,10 +10,11 @@ import { RiAddLine } from "react-icons/ri";
 
 export const SectionContainer = styled.section`
   margin-bottom: 2em;
+  color: ${(props) => props.theme.main.textSecondary};
+  font-size: 14px;
 `;
 
 export const SectionHeader = styled.div`
-  border-bottom: solid 1px #5f5f5f;
   margin-bottom: 1em;
   display: flex;
   flex-direction: row;
@@ -24,7 +25,7 @@ export const SectionHeader = styled.div`
 
 export const SectionTitle = styled.h1`
   margin: 0 0 0.5em 0;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;

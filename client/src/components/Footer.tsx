@@ -10,17 +10,19 @@ import styled from "@emotion/styled";
 
 // Image and icon imports
 import { BiRefresh } from "react-icons/bi";
+import RefreshIcon from "./icons/RefreshIcon";
 
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.title.background};
-  color: ${(props) => props.theme.title.textPrimary};
+  color: ${(props) => props.theme.title.textSecondary};
+  border-top: 1px solid ${(props) => props.theme.title.borderColor};
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 9px;
 
   width: 100vw;
-  height: 20px;
+  height: 25px;
   position: fixed;
   bottom: 0;
   z-index: 1000;
@@ -32,13 +34,13 @@ const OptionContainer = styled.div`
   height: 100%;
   a,
   span {
-    color: ${(props) => props.theme.title.textPrimary};
+    color: ${(props) => props.theme.title.textSecondary};
     margin-left: 0.5em;
     text-decoration: none;
   }
 
   a:visited {
-    color: ${(props) => props.theme.title.textPrimary};
+    color: ${(props) => props.theme.title.textSecondary};
   }
 `;
 
@@ -53,6 +55,11 @@ const FooterOption = styled.button`
   color: inherit;
   font-size: inherit;
   border: 0;
+
+  svg {
+    height: 12px;
+    width: 12px;
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.title.backgroundSecondary};
@@ -82,7 +89,7 @@ const Footer = ({
             await fetchGroups();
           }}
         >
-          <BiRefresh size={14} />
+          <RefreshIcon />
           <span>Refresh Notes</span>
         </FooterOption>
       </OptionContainer>
@@ -92,7 +99,7 @@ const Footer = ({
         `}
         id="cpy"
       >
-        Francis Borja © 2021
+        Francis Borja © 2021-2023
       </div>
     </FooterContainer>
   );
