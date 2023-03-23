@@ -17,6 +17,8 @@ import { FaRegWindowMinimize } from "react-icons/fa";
 import { TiPower } from "react-icons/ti";
 import XMarkIcon from "../icons/XMarkIcon";
 import GlobeIcon from "../icons/GlobeIcon";
+import ProfileButton from "./ProfileButton";
+import SmileIcon from "../icons/SmileIcon";
 
 // Import electron renderer
 let ipc: any;
@@ -55,7 +57,7 @@ const ButtonsContainer = styled.ul`
   list-style: none;
   margin: 0;
   height: 100%;
-  color: ${(props) => props.theme.title.textPrimary};
+  color: ${(props) => props.theme.title.textSecondary};
   padding: 0;
 
   li {
@@ -105,6 +107,36 @@ const Title = styled.div`
   -webkit-user-select: none;
 `;
 
+const ProfileInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin-right: 1em;
+    font-size: 12px;
+    font-weight: 700;
+  }
+`;
+
+const ProfileIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 28px;
+  width: 28px;
+  background: ${COLOR.BLUE};
+  border-radius: 1000em;
+  margin-right: 0.75em;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 const Titlebar = () => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
@@ -145,6 +177,13 @@ const Titlebar = () => {
         <Title>NotesNexus</Title>
       </TitleContainer>
       <Draggable />
+      <ProfileInfoContainer>
+        <span>Username</span>
+        <ProfileIcon>
+          <SmileIcon />
+        </ProfileIcon>
+        <ProfileButton />
+      </ProfileInfoContainer>
       {ipc ? (
         <ButtonsContainer>
           <li onClick={handleOnClickMinimize} title="Minimize">

@@ -7,25 +7,28 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 
 import styled from "@emotion/styled";
+import MagnifyingGlassIcon from "./icons/MagnifyingGlassIcon";
 
 const SearchbarContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1rem;
+  position: relative;
 `;
 
 const SearchInput = styled.input`
   width: 200px;
+  height: 24px;
   margin-left: 0.3rem;
-  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
-  font-size: 12px;
+  padding: 0.2em 0.5em 0.2em 2.25em;
+  font-size: 11px;
   background-color: ${(props) => props.theme.header.backgroundSecondary};
-  border: none;
-  border-radius: 2px;
-  color: ${(props) => props.theme.header.textPrimary};
+  border: 1px solid ${(props) => props.theme.title.borderColor};
+  border-radius: 5px;
+  color: ${(props) => props.theme.header.textSecondary};
 
   &::placeholder {
-    color: ${(props) => props.theme.header.textPrimary};
+    color: ${(props) => props.theme.header.textSecondary};
   }
 
   &:focus {
@@ -44,7 +47,7 @@ interface SearchbarProps {
 const Searchbar: React.FC<SearchbarProps> = ({ handleSearchNote }) => {
   return (
     <SearchbarContainer>
-      <FaSearch size="13px" />
+      <MagnifyingGlassIcon className="search-icon" />
       <SearchInput
         onChange={(event) => handleSearchNote(event.target.value)}
         placeholder="type to search..."

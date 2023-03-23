@@ -143,3 +143,10 @@ textarea:focus {
   height: 20px;
   width: 20px;
 }
+
+.search-icon {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  left: 12px;
+}

@@ -38,7 +38,7 @@ const SidebarContainer = styled.aside`
 
   nav {
     height: calc(100vh - 110px);
-    padding: 0 0.25em;
+    padding: 0 0.3em;
   }
 
   nav ul {
@@ -65,7 +65,7 @@ const SidebarTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.25em 0 0.8em;
+  padding: 0 0.15em 0 0.8em;
   border-bottom: 1px solid ${(props) => props.theme.sidebar.borderColor};
   font-size: 14px;
 `;

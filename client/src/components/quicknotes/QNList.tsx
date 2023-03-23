@@ -15,7 +15,7 @@ import { Empty } from "../Section";
 const List = styled.div`
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(auto-fit, 230px);
+  grid-template-columns: repeat(auto-fit, 215px);
   grid-auto-rows: auto;
   max-width: 100vw;
   row-gap: 1rem;

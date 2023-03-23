@@ -73,7 +73,7 @@ const QNPage: React.FC<QNPageProps> = ({
         method: "POST",
         data: {
           title: "",
-          color: COLOR.GREY_DARK,
+          color: COLOR.YELLOW,
           body: "",
         },
       });
