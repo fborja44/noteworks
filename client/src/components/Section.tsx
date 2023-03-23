@@ -30,8 +30,10 @@ export const SectionTitle = styled.h1`
   display: flex;
   align-items: center;
   user-select: none;
-  * {
-    margin-right: 0.2em;
+  svg {
+    margin-right: 0.75em;
+    height: 16px;
+    width: 16px;
   }
 `;
 
@@ -92,11 +94,11 @@ const Section: React.FC<SectionProps> = ({
           {icon}
           {name}
         </SectionTitle>
-        {handleClick ? (
+        {/* {handleClick ? (
           <SectionHeaderButton onClick={handleClick}>
             <RiAddLine />
           </SectionHeaderButton>
-        ) : null}
+        ) : null} */}
       </SectionHeader>
       {children}
     </SectionContainer>

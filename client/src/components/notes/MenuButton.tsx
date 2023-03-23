@@ -14,8 +14,8 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 import NoteButton from "./NoteButton";
 
 // Image and icon imports
-import { IoMdMenu } from "react-icons/io";
 import DropdownMenu from "../dropdown/DropdownMenu";
+import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
 
 export interface MenuButtonProps {
   item: Quicknote | Marknote | Group;
@@ -53,11 +53,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           ${open ? "z-index: 1000" : null}
         `}
       >
-        <IoMdMenu
-          css={(theme) => css`
-            ${theme.id === "dark" && item.type === "group"
-              ? "color: white;"
-              : ""}
+        <EllipsisVerticalIcon
+          css={css`
+            height: 16px;
+            width: 16px;
+            color: inherit;
           `}
         />
       </NoteButton>

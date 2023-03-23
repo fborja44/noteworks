@@ -22,7 +22,7 @@ export const COLOR = {
   ORANGE_LIGHT: "#FFAE66",
 
   YELLOW: "#FFEBA1",
-  YELLOW_DARK: "#F2AC42",
+  YELLOW_DARK: "#F5D354",
   YELLOW_LIGHT: "#FFD965",
 
   GREEN: "#27ae60",

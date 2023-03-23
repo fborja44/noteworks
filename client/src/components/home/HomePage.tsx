@@ -13,6 +13,7 @@ import MNList from "../marknotes/MNList";
 // Image and icon imports
 import { TiStar } from "react-icons/ti";
 import GroupList from "../groups/GroupList";
+import StarIcon from "../icons/StarIcon";
 
 /**
  * Home content props
@@ -55,7 +56,7 @@ const HomePage: React.FC<HomePageProps> = ({
     <React.Fragment>
       <PageHeader title="Dashboard" />
       <div className="main-content-wrapper">
-        <Section name={`Favorited Groups`} icon={<TiStar />}>
+        <Section name={`Favorited Groups`} icon={<StarIcon />}>
           <GroupList
             groups={groups}
             updateGroupsList={updateGroupsList}
@@ -64,7 +65,7 @@ const HomePage: React.FC<HomePageProps> = ({
             handleDeleteGroup={handleDeleteGroup}
           />
         </Section>
-        <Section name={`Favorited Quicknotes`} icon={<TiStar />}>
+        <Section name={`Favorited Quicknotes`} icon={<StarIcon />}>
           <QNList
             quicknotes={quicknotes}
             updateQuicknotesList={updateQuicknotesList}
@@ -76,7 +77,7 @@ const HomePage: React.FC<HomePageProps> = ({
             handleDeleteQuicknote={handleDeleteQuicknote}
           />
         </Section>
-        <Section name={`Favorited Marknotes`} icon={<TiStar />}>
+        <Section name={`Favorited Marknotes`} icon={<StarIcon />}>
           <MNList
             marknotes={marknotes}
             updateMarknotesList={updateMarknotesList}

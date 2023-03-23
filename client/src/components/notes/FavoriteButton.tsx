@@ -11,10 +11,10 @@ import { css, jsx } from "@emotion/react";
 import NoteButton from "./NoteButton";
 
 // Image and icon imports
-import { TiStarOutline, TiStar } from "react-icons/ti";
+import StarIcon from "../icons/StarIcon";
 
 export interface FavoriteButtonProps {
-  favorited: Boolean;
+  favorited: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   color?: string;
 }
@@ -30,16 +30,14 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
       className="favorite-note-button note-button"
       onClick={(event) => onClick(event)}
       css={css`
-        color: ${color ? color : "white"};
-        margin-right: 0.5em;
-        &:hover {
-          svg {
-            color: ${color ? color : "white"} !important;
-          }
+        color: ${color ? color : "inherit"};
+        svg {
+          width: 14px;
+          height: 14px;
         }
       `}
     >
-      {favorited ? <TiStar /> : <TiStarOutline />}
+      {<StarIcon filled={favorited} />}
     </NoteButton>
   );
 };

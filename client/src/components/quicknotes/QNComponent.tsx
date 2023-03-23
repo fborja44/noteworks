@@ -22,7 +22,7 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
 
 const QuicknoteContainer = styled.div`
-  background-color: ${(props) => props.theme.note.background};
+  background-color: ${(props) => props.color};
   width: 215px;
   height: fit-content;
   justify-self: center;
@@ -37,12 +37,13 @@ const QuicknoteContainer = styled.div`
     border: none;
     resize: none;
     background-color: inherit;
-    font-size: 13px;
+    font-size: 12px;
     font-family: "Source Sans Pro", sans-serif !important;
     font-weight: 500;
+    color: ${(props) => props.theme.note.textPrimary};
 
     &::placeholder {
-      color: ${(props) => props.theme.note.textSecondary};
+      color: ${(props) => props.theme.note.textPrimary};
     }
   }
 
@@ -193,7 +194,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   }, [quicknote]);
 
   return (
-    <QuicknoteContainer>
+    <QuicknoteContainer color={quicknote.color}>
       <NoteHeader
         currentNote={quicknote}
         handleFavorite={handleFavorite}

@@ -18,7 +18,7 @@ import { MdCreateNewFolder } from "react-icons/md";
 const List = styled.div`
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(auto-fit, 180px);
+  grid-template-columns: repeat(auto-fit, 215px);
   grid-auto-rows: fit-content;
   max-width: 100vw;
   row-gap: 1rem;

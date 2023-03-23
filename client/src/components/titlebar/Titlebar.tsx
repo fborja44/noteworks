@@ -14,7 +14,6 @@ import { COLOR } from "../../common/color";
 // Image and icon imports
 import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
-import { TiPower } from "react-icons/ti";
 import XMarkIcon from "../icons/XMarkIcon";
 import GlobeIcon from "../icons/GlobeIcon";
 import ProfileButton from "./ProfileButton";

@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
             />
             <SidebarButton
               title="Quicknotes"
-              label="My Quicknotes"
+              label="Quicknotes"
               icon={<BoltIcon css={NavIcon} />}
               route="/quicknotes"
               selectedTab={selectedTab}
@@ -100,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
             />
             <SidebarButton
               title="Marknotes"
-              label="My Marknotes"
+              label="Marknotes"
               icon={<PencilSquareIcon css={NavIcon} />}
               route="/marknotes"
               selectedTab={selectedTab}

@@ -20,22 +20,21 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
 import { MdFolder } from "react-icons/md";
+import FolderIcon from "../icons/FolderIcon";
 
 const GroupContainer = styled.div`
   background-color: ${(props) => props.theme.note.background};
   margin: 0 10px 0 10px;
-  width: 180px;
-  height: 35px;
+  width: 215px;
+  height: 38px;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   border: 1px solid ${(props) => props.theme.note.borderColor};
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  border-radius: 5px;
 
   &:hover {
     border: 1px solid #26a7fd;
-    transition: border 0.2s ease;
   }
 `;
 
@@ -54,17 +53,16 @@ const GroupContentSection = styled.div`
 `;
 
 const GroupName = styled.div`
-  margin-left: 0.4rem;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  color: ${(props) => props.theme.note.textPrimary} !important;
+  color: ${(props) => props.theme.note.textSecondary} !important;
 `;
 
 const GroupLink = css`
   text-decoration: none;
   position: absolute;
-  width: 180px;
-  height: 35px;
+  width: 215px;
+  height: 38px;
   z-index: 1;
 `;
 
@@ -155,7 +153,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   return (
     <React.Fragment>
       <GroupContainer>
-        <Link css={GroupLink} to={`/groups/${groupComponent._id}`}></Link>
+        <Link css={GroupLink} to={`/groups/${groupComponent._id}`} />
         <GroupContent>
           <GroupContentSection>
             <FavoriteButton
@@ -163,12 +161,13 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
               onClick={handleFavorite}
               color={appTheme.main.textPrimary}
             />
-            <MdFolder
-              size="1.5em"
+            <FolderIcon
+              filled
               css={css`
                 color: ${groupComponent.color};
-                position: relative;
-                right: 2px;
+                width: 16px;
+                height: 16px;
+                margin: 0 0.75em;
               `}
             />
             <GroupName>

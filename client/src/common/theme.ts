@@ -77,7 +77,7 @@ export const lightTheme: AppTheme = {
     background: "#FFF",
     textPrimary: "#333333",
     textSecondary: "#828282",
-    borderColor: "#828282",
+    borderColor: "##3B3B3B",
     header: {
       textPrimary: "#333333",
       textSecondary: "#FFF",
@@ -120,9 +120,9 @@ export const darkTheme: AppTheme = {
   },
   note: {
     background: "#34333b",
-    textPrimary: "#DDD",
-    textSecondary: "#BDBDBD",
-    borderColor: "#5f5f5f",
+    textPrimary: "#333333",
+    textSecondary: "#FFF",
+    borderColor: "#3B3B3B",
     header: {
       textPrimary: "#333333",
       textSecondary: "#FFF",
