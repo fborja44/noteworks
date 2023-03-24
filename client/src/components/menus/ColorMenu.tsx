@@ -6,7 +6,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { COLOR } from "../../common/color";
+import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
 import ModalMenu from "./ModalMenu";
@@ -26,7 +26,7 @@ const ColorMenuContent = styled.div`
 export interface ColorMenuProps {
   showColorMenu: boolean;
   setShowColorMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  handleEditColor: (color: string) => void;
+  handleEditColor: (color: ColorId) => void;
 }
 
 const ColorMenu: React.FC<ColorMenuProps> = ({
@@ -36,6 +36,7 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
 }) => {
   /**
    * On click handler to change color of note.
+   * Updates the note's color using the id of the color.
    * Event target needs dataset attribute.
    */
   const handleClick = (event: any) => {
@@ -50,60 +51,60 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
       setShowMenuState={setShowColorMenu}
     >
       <ColorMenuContent>
-        <ColorOption handleClick={handleClick} color={COLOR.RED} title="Red" />
+        <ColorOption handleClick={handleClick} color={COLOR.red} title="Red" />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.ORANGE}
+          color={COLOR.orange}
           title="Orange"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.YELLOW}
+          color={COLOR.yellow}
           title="Yellow"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.GREEN}
+          color={COLOR.green}
           title="Green"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.BLUE}
+          color={COLOR.blue}
           title="Blue"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.PURPLE}
+          color={COLOR.purple}
           title="Purple"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.PINK}
+          color={COLOR.magenta}
           title="Pink"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.CYAN}
+          color={COLOR.cyan}
           title="Cyan"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.LEMON}
+          color={COLOR.lemon}
           title="Lemon"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.LIME}
+          color={COLOR.lime}
           title="Lime"
         />
         <ColorOption
           handleClick={handleClick}
-          color={COLOR.GREY}
+          color={COLOR.grey}
           title="Grey"
         />
         <ColorOption
           handleClick={(event) => handleClick(event)}
-          color={COLOR.GREY_DARK}
+          color={COLOR.dark_grey}
           title="Dark Grey"
         />
       </ColorMenuContent>

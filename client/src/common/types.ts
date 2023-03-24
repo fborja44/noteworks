@@ -1,10 +1,12 @@
+import { ColorId } from "./color";
+
 /* Type Definitions
 ------------------------------------------------------------------------------*/
 export type Quicknote = {
   _id: string;
   type: string;
   title: string;
-  color: string;
+  color: ColorId;
   body: string;
   lastModified: number;
   favorited: boolean;
@@ -15,7 +17,7 @@ export type Marknote = {
   _id: string;
   type: string;
   title: string;
-  color: string;
+  color: ColorId;
   body: string;
   lastModified: number;
   favorited: boolean;
@@ -26,7 +28,7 @@ export type Group = {
   _id: string;
   type: string;
   title: string;
-  color: string;
+  color: ColorId;
   quicknotes: string[];
   marknotes: string[];
   lastModified: number;

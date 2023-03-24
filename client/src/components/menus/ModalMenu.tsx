@@ -60,7 +60,7 @@ const Heading = styled.h1`
 const Close = css`
   &:hover {
     cursor: pointer;
-    color: ${COLOR.BLUE_DARK};
+    color: ${COLOR.blue.secondary};
     transition: color 0.2s linear 0s;
   }
 `;

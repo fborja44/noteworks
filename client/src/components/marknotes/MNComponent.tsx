@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
+import { ColorId } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -66,7 +67,7 @@ export interface MNComponentProps {
   handleFavorite: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
-  handleEditColor: (color: string) => void;
+  handleEditColor: (color: ColorId) => void;
   toggleConfirmDelete: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;

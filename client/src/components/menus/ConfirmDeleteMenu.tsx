@@ -31,7 +31,7 @@ const DeleteButton = css`
   justify-content: center;
   margin: 1rem auto 0 auto;
   width: 200px;
-  background-color: ${COLOR.RED};
+  background-color: ${COLOR.red.primary};
   color: white;
   border: solid 1px #666666;
   height: 28px;
@@ -45,7 +45,7 @@ const DeleteButton = css`
 
   &:hover {
     cursor: pointer;
-    background-color: ${COLOR.RED_DARK};
+    background-color: ${COLOR.red.secondary};
     transition: background-color 0.1s ease 0s;
   }
 `;

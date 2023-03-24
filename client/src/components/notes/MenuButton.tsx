@@ -9,6 +9,7 @@ import { css, jsx } from "@emotion/react";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import NoteButton from "./NoteButton";
@@ -55,9 +56,9 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       >
         <EllipsisVerticalIcon
           css={css`
-            height: 16px;
-            width: 16px;
-            color: inherit;
+            height: 18px;
+            width: 20px;
+            color: ${COLOR[item.color].secondary};
           `}
         />
       </NoteButton>

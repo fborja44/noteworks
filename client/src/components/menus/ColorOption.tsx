@@ -8,9 +8,11 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-const OptionStyles = ({ color }: { color: string }) =>
+import { NoteColor } from "../../common/color";
+
+const OptionStyles = ({ primaryColor }: { primaryColor: string }) =>
   css`
-    background: ${color};
+    background: ${primaryColor};
   `;
 const Option = styled.div`
   ${OptionStyles}
@@ -29,7 +31,7 @@ const Option = styled.div`
 `;
 
 export interface ColorOptionProps {
-  color: string;
+  color: NoteColor;
   title: string;
   handleClick: (event: any) => void;
 }
@@ -41,9 +43,9 @@ const ColorOption: React.FC<ColorOptionProps> = ({
 }) => {
   return (
     <Option
-      color={color}
+      primaryColor={color.primary}
       title={title}
-      data-color={color}
+      data-color={color.id}
       onClick={handleClick}
     />
   );

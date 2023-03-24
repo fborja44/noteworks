@@ -5,9 +5,6 @@ import * as React from "react";
 
 import styled from "@emotion/styled";
 
-// Image and icon imports
-import { RiAddLine } from "react-icons/ri";
-
 export const SectionContainer = styled.section`
   margin-bottom: 2em;
   color: ${(props) => props.theme.main.textSecondary};

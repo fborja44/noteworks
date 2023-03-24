@@ -1,4 +1,5 @@
-import { isHex } from "../common/regex";
+import { ColorIds } from "../common/colors";
+
 const data = require("../db");
 const quicknotesData = data.quicknotes;
 const express = require("express");
@@ -45,7 +46,7 @@ router.post("/", async (req: any, res: any) => {
     title = "";
   }
   if (!color) {
-    color = "#828282";
+    color = "grey";
   }
   if (!body) {
     body = "";
@@ -60,7 +61,7 @@ router.post("/", async (req: any, res: any) => {
       error: "Body length cannot exceed 300 characters",
     });
   }
-  if (!isHex(color)) {
+  if (!ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });
@@ -101,7 +102,7 @@ router.patch("/:id", async (req: any, res: any) => {
       error: "Body length cannot exceed 300 characters",
     });
   }
-  if (color && !isHex(color)) {
+  if (color && !ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });

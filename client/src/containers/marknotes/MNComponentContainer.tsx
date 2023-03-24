@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
+import { ColorId } from "../../common/color";
 
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
@@ -95,7 +96,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
    * Function to handle a change in the marknoteComponent's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: string) => {
+  const handleEditColor = (color: ColorId) => {
     const updatedMarknote = {
       ...marknoteComponent,
       color: color,

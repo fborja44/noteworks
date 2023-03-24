@@ -76,7 +76,7 @@ const MNPage: React.FC<MNPageProps> = ({
         method: "POST",
         data: {
           title: "",
-          color: COLOR.GREY_DARK,
+          color: COLOR.dark_grey.id,
           body: "",
         },
       });

@@ -3,10 +3,9 @@
 // React imports
 import React from "react";
 
-// Image and icon imports
-import { FaSearch } from "react-icons/fa";
-
 import styled from "@emotion/styled";
+
+// Image and icon imports
 import MagnifyingGlassIcon from "./icons/MagnifyingGlassIcon";
 
 const SearchbarContainer = styled.div`

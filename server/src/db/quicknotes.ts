@@ -1,27 +1,28 @@
-import { Quicknote } from "note-types";
+import { ColorId, Quicknote } from "note-types";
 import { ObjectId } from "mongodb";
-import { isHex } from "../common/regex";
+import { ColorIds } from "../common/colors";
 
 const mongoCollections = require("../config/mongoCollections");
 const groups = require("./groups");
 const quicknotes = mongoCollections.quicknotes;
 
-
 /**
  * Inserts a quicknote into the database.
  * @param title Title of the note.
- * @param color Hex code for the color of the note.
+ * @param color ID for the color of the note.
  * @param body Content of the note.
  * @returns The new quicknote. Throws an error if failed.
  */
-export const createQuicknote = async (title: string, color: string, body: string) => {
-  if (color.trim().length === 0) throw "createQuicknote: must provide a color";
+export const createQuicknote = async (
+  title: string,
+  color: ColorId,
+  body: string
+) => {
+  if (!color) throw "createQuicknote: must provide a color";
   if (title.length > 30)
     throw "createQuicknote: Title length cannot exceed 30 characters";
   if (body.length > 300)
     throw "createQuicknote: Body length cannot exceed 300 characters";
-  if (!isHex(color))
-    throw `createQuicknote: '${color}' is not a valid hex code`;
   const newQuicknote: Quicknote = {
     type: "quicknote",
     _id: new ObjectId(),
@@ -75,12 +76,15 @@ export const getQuicknoteById = async (id: string) => {
  * @param updatedQuicknote The updated quicknote information.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const updateQuicknoteById = async (id: string, updatedQuicknote: Quicknote) => {
+export const updateQuicknoteById = async (
+  id: string,
+  updatedQuicknote: Quicknote
+) => {
   if (updatedQuicknote.title.length > 30)
     throw "updateQuicknoteById: Title length cannot exceed 30 characters.";
   if (updatedQuicknote.body.length > 300)
     throw "updateQuicknoteById: Body length cannot exceed 300 characters.";
-  if (!isHex(updatedQuicknote.color))
+  if (!ColorIds.includes(updatedQuicknote.color))
     throw `updateQuicknoteById: '${updatedQuicknote.color}' is not a valid hex code`;
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(id.trim());
@@ -116,7 +120,12 @@ export const deleteQuicknoteById = async (id: string) => {
   // Remove from all groups
   for (const group_id of note.groups) {
     try {
-      await groups.removeFromGroup(group_id, note._id.toString(), note.type, true);
+      await groups.removeFromGroup(
+        group_id,
+        note._id.toString(),
+        note.type,
+        true
+      );
     } catch (e) {
       console.log(e);
     }
@@ -131,7 +140,10 @@ export const deleteQuicknoteById = async (id: string) => {
  * @param group_id The target group id.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const addGroupToQuicknote = async (note_id: string, group_id: string) => {
+export const addGroupToQuicknote = async (
+  note_id: string,
+  group_id: string
+) => {
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(note_id.trim());
 
@@ -150,7 +162,10 @@ export const addGroupToQuicknote = async (note_id: string, group_id: string) => 
  * @param group_id The target group id.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const removeGroupFromQuicknote = async (note_id: string, group_id: string) => {
+export const removeGroupFromQuicknote = async (
+  note_id: string,
+  group_id: string
+) => {
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(note_id.trim());
 

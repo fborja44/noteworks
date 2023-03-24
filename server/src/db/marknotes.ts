@@ -1,6 +1,6 @@
-import { Marknote } from "note-types"
-import { isHex } from "../common/regex"
+import { ColorId, Marknote } from "note-types";
 import { ObjectId } from "mongodb";
+import { ColorIds } from "../common/colors";
 
 const mongoCollections = require("../config/mongoCollections");
 const marknotes = mongoCollections.marknotes;
@@ -9,13 +9,16 @@ const groups = require("./groups");
 /**
  * Inserts a marknote into the database.
  * @param title Title of the note.
- * @param color Hex code for the color of the note.
+ * @param color ID for the color of the note.
  * @param body Content of the note.
  * @returns The new marknote. Throws an error if failed.
  */
-export const createMarknote = async (title: string, color: string, body: string) => {
-  if (color.trim().length === 0) throw "createMarknote: must provide a color";
-  if (!isHex(color)) throw `createMarknote: '${color}' is not a valid hex code`
+export const createMarknote = async (
+  title: string,
+  color: ColorId,
+  body: string
+) => {
+  if (!color) throw "createMarknote: must provide a color";
   const newMarknote: Marknote = {
     type: "marknote",
     _id: new ObjectId(),
@@ -24,7 +27,7 @@ export const createMarknote = async (title: string, color: string, body: string)
     body: body,
     lastModified: Date.now(),
     favorited: false,
-    groups: []
+    groups: [],
   };
 
   const marknotesCollection = await marknotes();
@@ -69,8 +72,12 @@ export const getMarknoteById = async (id: string) => {
  * @param updatedMarknote The updated marknote information.
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
-export const updateMarknoteById = async (id: string, updatedMarknote: Marknote) => {
-  if (!isHex(updatedMarknote.color)) throw `updateMarknote: '${updatedMarknote.color}' is not a valid hex code`
+export const updateMarknoteById = async (
+  id: string,
+  updatedMarknote: Marknote
+) => {
+  if (!ColorIds.includes(updatedMarknote.color))
+    throw `updateMarknote: '${updatedMarknote.color}' is not a valid hex code`;
   const marknotesCollection = await marknotes();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await marknotesCollection.updateOne(
@@ -96,20 +103,25 @@ export const deleteMarknoteById = async (id: string) => {
   if (!note) {
     throw `deleteMarknoteById: Could not find marknote with id '${id}'`;
   }
-  
+
   // Delete the note
   const deleteInfo = await marknotesCollection.deleteOne({ _id: parsed_id });
   if (deleteInfo.deletedCount === 0)
     throw "deleteMarknoteById: Failed to delete marknote";
 
-    // Remove from all groups
-    for (const group_id of note.groups) {
-      try {
-        await groups.removeFromGroup(group_id, note._id.toString(), note.type, true)
-      } catch (e) {
-        console.log(e)
-      }
+  // Remove from all groups
+  for (const group_id of note.groups) {
+    try {
+      await groups.removeFromGroup(
+        group_id,
+        note._id.toString(),
+        note.type,
+        true
+      );
+    } catch (e) {
+      console.log(e);
     }
+  }
 
   return true;
 };
@@ -139,7 +151,10 @@ export const addGroupToMarknote = async (note_id: string, group_id: string) => {
  * @param group_id The target group id.
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
-export const removeGroupFromMarknote = async (note_id: string, group_id: string) => {
+export const removeGroupFromMarknote = async (
+  note_id: string,
+  group_id: string
+) => {
   const marknotesCollection = await marknotes();
   const parsed_id = new ObjectId(note_id.trim());
 
@@ -150,4 +165,4 @@ export const removeGroupFromMarknote = async (note_id: string, group_id: string)
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw `removeGroupFromMarknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'marknote', 'id': '${note_id}'}`;
   return await getMarknoteById(note_id.trim());
-}
+};

@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
+import { ColorId } from "../../common/color";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -103,7 +104,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: string) => {
+  const handleEditColor = (color: ColorId) => {
     handleUpdateGroup(group._id, {
       ...group,
       color: color,

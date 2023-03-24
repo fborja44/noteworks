@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote, Quicknote } from "../../common/types";
-import { COLOR, findDarkColor } from "../../common/color";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import FavoriteButton from "./FavoriteButton";
@@ -20,8 +20,8 @@ import MenuButton from "./MenuButton";
 const NoteHeaderContainer = styled.div`
   width: 100%;
   height: 25px;
-  color: ${(props) => props.theme.note.header.textPrimary};
-  background: ${(props: { color: string }) => findDarkColor(props.color)};
+  color: ${(props: {color: string, headerColor: string}) => props.color};
+  background: ${(props: { headerColor: string }) => props.headerColor};
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -83,7 +83,7 @@ const NoteHeader: React.FC<NoteHeaderProps> = ({
   };
 
   return (
-    <NoteHeaderContainer color={currentNote.color}>
+    <NoteHeaderContainer headerColor={COLOR[currentNote.color].primary} color={COLOR[currentNote.color].secondary}>
       <FavoriteButton
         favorited={currentNote.favorited}
         onClick={handleFavorite}

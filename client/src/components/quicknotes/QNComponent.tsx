@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Group, Quicknote } from "../../common/types";
-import { COLOR } from "../../common/color";
+import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -22,15 +22,13 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
 
 const QuicknoteContainer = styled.div`
-  background-color: ${(props) => props.color};
+  background-color: ${(props: {bodyColor: string}) => props.bodyColor};
   width: 215px;
   height: fit-content;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   box-sizing: border-box;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
   position: relative;
 
   textarea {
@@ -52,7 +50,7 @@ const QuicknoteContainer = styled.div`
   }
 
   textarea::-webkit-scrollbar-thumb {
-    background: ${COLOR.GREY_DARK};
+    background: ${COLOR.dark_grey.primary};
   }
 
   textarea::-webkit-scrollbar-thumb:hover {
@@ -131,7 +129,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Function to handle a change in the quicknote's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: string) => {
+  const handleEditColor = (color: ColorId) => {
     const updatedQuicknote = {
       ...quicknote,
       color: color,
@@ -194,7 +192,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   }, [quicknote]);
 
   return (
-    <QuicknoteContainer color={quicknote.color}>
+    <QuicknoteContainer bodyColor={COLOR[quicknote.color].body}>
       <NoteHeader
         currentNote={quicknote}
         handleFavorite={handleFavorite}

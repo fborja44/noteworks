@@ -1,4 +1,5 @@
-import { isHex } from "../common/regex";
+import { ColorIds } from "../common/colors";
+
 const data = require("../db");
 const groupsData = data.groups;
 const quicknotesData = data.quicknotes;
@@ -46,9 +47,9 @@ router.post("/", async (req: any, res: any) => {
     req.body.title = "";
   }
   if (!req.body.color) {
-    req.body.color = "#828282";
+    req.body.color = "grey";
   }
-  if (!isHex(req.body.color)) {
+  if (!ColorIds.includes(req.body.color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });
@@ -75,7 +76,7 @@ router.patch("/:id", async (req: any, res: any) => {
   const favorited = req.body.favorited;
   const lastModified = req.body.lastModified;
 
-  if (!isHex(color)) {
+  if (!ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });

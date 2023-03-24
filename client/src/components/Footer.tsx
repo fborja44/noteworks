@@ -9,7 +9,6 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Image and icon imports
-import { BiRefresh } from "react-icons/bi";
 import RefreshIcon from "./icons/RefreshIcon";
 
 const FooterContainer = styled.footer`

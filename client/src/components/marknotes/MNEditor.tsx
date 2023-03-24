@@ -12,7 +12,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Marknote } from "../../common/types";
-import { COLOR } from "../../common/color";
+import { COLOR, ColorId, NoteColor } from "../../common/color";
 // import { lightTheme } from "../../common/theme";
 
 // Component imports
@@ -56,7 +56,7 @@ const EditorContent = styled.div`
 
   & *::-webkit-scrollbar-thumb {
     background: ${(props) =>
-      props.theme.id === "light" ? COLOR.GREY_DARK : "#52525b"} !important;
+      props.theme.id === "light" ? COLOR.dark_grey.primary : "#52525b"} !important;
     border-radius: 2px;
   }
 `;
@@ -104,12 +104,12 @@ const EditorBodyDark = css`
     color: white;
 
     .cm-comment {
-      color: ${COLOR.GREY};
+      color: ${COLOR.grey.primary};
     }
   }
 
   .CodeMirror-linenumber {
-    color: ${COLOR.GREY};
+    color: ${COLOR.grey.primary};
   }
 
   .CodeMirror-gutters {
@@ -130,7 +130,7 @@ const PreviewBody = css`
   h1,
   h2 {
     padding-bottom: 0.2em;
-    border-bottom: 1px solid ${COLOR.GREY};
+    border-bottom: 1px solid ${COLOR.grey.primary};
   }
 
   h1,
@@ -160,14 +160,14 @@ const PreviewBody = css`
     padding: 0.6em 0.8em;
     border-radius: 8px;
     box-sizing: border-box;
-    color: ${COLOR.BLUE};
+    color: ${COLOR.blue.primary};
     line-height: 1.5em;
   }
 
   blockquote {
     margin-left: 1em;
     padding-left: 1em;
-    border-left: solid 2px ${COLOR.GREY};
+    border-left: solid 2px ${COLOR.grey.primary};
   }
 
   a {
@@ -227,7 +227,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
    * Function to handle a change in the marknote's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: string) => {
+  const handleEditColor = (color: ColorId) => {
     handleEditField("color", color, false);
   };
 
@@ -258,7 +258,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
    */
   const handleEditField = (
     key: string,
-    value: string | Boolean,
+    value: string | Boolean | NoteColor,
     updateDate: Boolean = true
   ) => {
     let updatedNote;

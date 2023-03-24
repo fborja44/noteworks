@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Group } from "../../common/types";
+import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
 import FavoriteButton from "../notes/FavoriteButton";
@@ -19,7 +20,6 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
-import { MdFolder } from "react-icons/md";
 import FolderIcon from "../icons/FolderIcon";
 
 const GroupContainer = styled.div`
@@ -122,7 +122,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
    * Function to handle a change in the note's color.
    * Does NOT change the last modified date.
    */
-  const handleEditColor = (color: string) => {
+  const handleEditColor = (color: ColorId) => {
     const updatedGroup = {
       ...currentGroup,
       color: color,
@@ -164,7 +164,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
             <FolderIcon
               filled
               css={css`
-                color: ${groupComponent.color};
+                color: ${COLOR[groupComponent.color].primary};
                 width: 16px;
                 height: 16px;
                 margin: 0 0.75em;

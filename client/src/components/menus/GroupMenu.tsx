@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import ModalMenu from "./ModalMenu";
@@ -161,7 +162,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
           >
             <MdFolder
               css={css`
-                color: ${group.color};
+                color: ${COLOR[group.color].primary};
                 font-size: 18px;
                 margin-right: 0.7em;
               `}

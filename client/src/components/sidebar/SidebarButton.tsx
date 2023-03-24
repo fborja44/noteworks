@@ -54,7 +54,7 @@ const Indicator = styled.span`
   width: 3px;
   height: 100%;
   border-radius: 5px 0px 0px 5px;
-  background: ${COLOR.BLUE};
+  background: ${COLOR.blue.primary};
   position: absolute;
   bottom: 0;
   left: 0;

@@ -1,4 +1,4 @@
-import { Group, Marknote, Quicknote } from "note-types";
+import { ColorId, Group, Marknote, Quicknote } from "note-types";
 import { ObjectId } from "mongodb";
 
 const mongoCollections = require("../config/mongoCollections");
@@ -9,11 +9,11 @@ const groups = mongoCollections.groups;
 /**
  * Creates a new empty group.
  * @param title Title of the group.
- * @param color Hex code for the color of the group.
+ * @param color ID for the color of the group.
  * @returns The new group. Throws an error if failed.
  */
-export const createGroup = async (title: string, color: string) => {
-  if (color.trim().length === 0) throw "createGroup: must provide a color";
+export const createGroup = async (title: string, color: ColorId) => {
+  if (!color) throw "createGroup: must provide a color";
   const newGroup: Group = {
     type: "group",
     _id: new ObjectId(),

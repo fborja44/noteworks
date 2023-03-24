@@ -4,16 +4,16 @@
 import * as React from "react";
 
 import styled from "@emotion/styled";
-import { css, useTheme } from "@emotion/react";
+import { css } from "@emotion/react";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
-import { findDarkColor } from "../../common/color";
 
 // Component imports
 import Searchbar from "../Searchbar";
 
 /**
+ * @deprecated Header background is no longer dynamic.
  * Dynamic Element Styles
  * Issue: input is rerendered each time input is given, losing focus
  * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
@@ -38,8 +38,8 @@ const PageHeaderColors = ({
       background: ${color2} !important;
     }
   `;
+
 const PageHeaderContainer = styled.section`
-  ${PageHeaderColors};
   color: ${(props) => props.theme.header.textPrimary};
   border-bottom: 1px solid ${(props) => props.theme.header.borderColor};
   height: 35px;
@@ -97,14 +97,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   color,
   children,
 }) => {
-  const appTheme = useTheme();
+  // const appTheme = useTheme();
   return (
-    <PageHeaderContainer
-      color={color ? color : appTheme.header.background}
-      color2={
-        color ? findDarkColor(color) : appTheme.header.backgroundSecondary
-      }
-    >
+    <PageHeaderContainer>
       <PageHeaderSection>
         <h1>{title}</h1>
       </PageHeaderSection>
@@ -126,28 +121,24 @@ PageHeader.defaultProps = {
 
 export default PageHeader;
 
-const TitleInputStyles = ({ color }: { color: string }) =>
-  css`
-    background: ${color};
-    color: white;
-    height: 75%;
-    width: fit-content;
-    border: none;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0 0.5rem 0 0.7rem;
-
-    &::placeholder {
-      color: white;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  `;
 const TitleInput = styled.input`
-  ${TitleInputStyles}
+  background: ${(props) => props.theme.header.backgroundSecondary};
+  color: white;
+  height: 75%;
+  width: fit-content;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.7rem;
+
+  &::placeholder {
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 interface InputPageHeaderProps {
@@ -160,11 +151,8 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
   handleEditField,
   children,
 }) => {
-  const color = item.color;
-  const color_alt = findDarkColor(color);
-
   return (
-    <PageHeaderContainer color={color} color2={color_alt}>
+    <PageHeaderContainer>
       <TitleInput
         type="text"
         placeholder={
@@ -172,7 +160,6 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
         }
         value={item.title}
         onChange={(event) => handleEditField("title", event.target.value)}
-        color={color_alt}
       />
       <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
     </PageHeaderContainer>

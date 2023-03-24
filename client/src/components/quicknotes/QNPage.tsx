@@ -33,10 +33,7 @@ export interface QNPageProps {
   handleAddGroup: () => void;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (
-    noteId: string,
-    updatedQuicknote: Quicknote
-  ) => void;
+  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
 }
 
@@ -63,7 +60,8 @@ const QNPage: React.FC<QNPageProps> = ({
   };
 
   /**
-   * Function to add new empty quicknote after add quicknote button is pressed
+   * Function to add new empty quicknote after add quicknote button is pressed.
+   * Color is the id of the note color.
    */
   const handleAddQuicknote = async () => {
     try {
@@ -73,7 +71,7 @@ const QNPage: React.FC<QNPageProps> = ({
         method: "POST",
         data: {
           title: "",
-          color: COLOR.YELLOW,
+          color: COLOR.yellow.id,
           body: "",
         },
       });

@@ -1,4 +1,5 @@
-import { isHex } from "../common/regex";
+import { ColorIds } from "../common/colors";
+
 const data = require("../db");
 const marknotesData = data.marknotes;
 const express = require("express");
@@ -12,7 +13,9 @@ router.get("/", async (req: any, res: any) => {
     let marknotes = await marknotesData.getAllMarknotes();
     return res.status(200).json(marknotes);
   } catch (e) {
-    return res.status(500).json({ error: "Failed to fetch marknotes from database." });
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch marknotes from database." });
   }
 });
 
@@ -25,7 +28,9 @@ router.get("/:id", async (req: any, res: any) => {
     let marknote = await marknotesData.getMarknoteById(id.trim());
     return res.status(200).json(marknote);
   } catch (e) {
-    return res.status(500).json({ error: "Failed to fetch marknotes from database." });
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch marknotes from database." });
   }
 });
 
@@ -41,12 +46,12 @@ router.post("/", async (req: any, res: any) => {
     title = "";
   }
   if (!color) {
-    color = "#828282";
+    color = "grey";
   }
   if (!body) {
     body = "";
   }
-  if (!isHex(color)) {
+  if (!ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });
@@ -73,7 +78,7 @@ router.patch("/:id", async (req: any, res: any) => {
   const favorited = req.body.favorited;
   const id = req.params.id;
 
-  if (color && !isHex(color)) {
+  if (color && !ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
     });
@@ -107,7 +112,7 @@ router.patch("/:id", async (req: any, res: any) => {
   if (favorited != null) {
     marknote.favorited = favorited;
   }
-  marknote.lastModified = Date.now()
+  marknote.lastModified = Date.now();
 
   // Update the marknote
   try {

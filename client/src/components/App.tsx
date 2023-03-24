@@ -265,7 +265,7 @@ const App = () => {
         method: "POST",
         data: {
           title: "",
-          color: COLOR.GREY_DARK,
+          color: COLOR.dark_grey.id,
         },
       });
       setGroups([...groups, newGroup]);

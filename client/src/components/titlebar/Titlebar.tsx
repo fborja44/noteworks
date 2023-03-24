@@ -126,7 +126,7 @@ const ProfileIcon = styled.div`
 
   height: 28px;
   width: 28px;
-  background: ${COLOR.BLUE};
+  background: ${COLOR.blue.primary};
   border-radius: 1000em;
   margin-right: 0.75em;
 
@@ -170,7 +170,7 @@ const Titlebar = () => {
           css={css`
             width: 26px;
             height: 26px;
-            color: ${COLOR.BLUE};
+            color: ${COLOR.blue.primary};
           `}
         />
         <Title>NotesNexus</Title>
@@ -207,7 +207,7 @@ const Titlebar = () => {
           <li
             css={css`
               &:hover {
-                background-color: ${COLOR.RED_DARK} !important;
+                background-color: ${COLOR.red.secondary} !important;
               }
             `}
             onClick={handleOnClickClose}

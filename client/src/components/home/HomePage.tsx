@@ -11,7 +11,6 @@ import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
 
 // Image and icon imports
-import { TiStar } from "react-icons/ti";
 import GroupList from "../groups/GroupList";
 import StarIcon from "../icons/StarIcon";
 

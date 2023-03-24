@@ -41,7 +41,7 @@ const Slider = styled.span`
   right: 0;
   bottom: 0;
 
-  background-color: ${COLOR.GREY};
+  background-color: ${COLOR.grey.primary};
   border-radius: 34px;
 
   &:before {
