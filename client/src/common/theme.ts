@@ -93,7 +93,7 @@ export const darkTheme: AppTheme = {
   main: {
     background: "#212121",
     backgroundSecondary: "#34333b",
-    borderColor: "#3B3B3B",
+    borderColor: "#323232",
     textPrimary: "#E1E1E1",
     textSecondary: "#A6A6A6",
   },

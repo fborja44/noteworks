@@ -56,10 +56,15 @@
 }
 
 /** General Styles **/
+html {
+  background: #212121;
+}
+
 body {
   height: 100vh;
   max-width: 100vw;
   font-family: Inter, sans-serif;
+  background: #212121;
 }
 
 * {
@@ -149,4 +154,10 @@ textarea:focus {
   height: 12px;
   width: 12px;
   left: 12px;
+}
+
+.sparkle-icon {
+  height: 50px;
+  width: 50px;
+  margin-top: 1em !important;
 }

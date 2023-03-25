@@ -19,8 +19,9 @@ import MenuButton from "./MenuButton";
 
 const NoteHeaderContainer = styled.div`
   width: 100%;
-  height: 25px;
-  color: ${(props: {color: string, headerColor: string}) => props.color};
+  height: 26px;
+  // color: ${(props: {color: string, headerColor: string}) => props.color};
+  color: ${(props) => props.theme.note.textPrimary};
   background: ${(props: { headerColor: string }) => props.headerColor};
   font-weight: 600;
   display: flex;
@@ -32,7 +33,7 @@ const NoteHeaderContainer = styled.div`
 const NoteTitle = styled.input`
   width: 100%;
   font-weight: 700;
-  padding: 2px 0 0 0;
+  padding: 2px 0;
   font-size: 12px;
   margin: 0 0.75em;
   border: none;

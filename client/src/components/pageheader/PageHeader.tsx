@@ -71,6 +71,9 @@ const PageHeaderSection = styled.div`
 const PageHeaderButtonsContainer = styled.div`
   height: inherit;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   ul {
     list-style: none;
@@ -123,18 +126,14 @@ export default PageHeader;
 
 const TitleInput = styled.input`
   background: ${(props) => props.theme.header.backgroundSecondary};
+  border: 1px solid ${(props) => props.theme.header.borderColor};
   color: white;
   height: 75%;
   width: fit-content;
-  border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 14px;
   font-weight: bold;
   padding: 0 0.5rem 0 0.7rem;
-
-  &::placeholder {
-    color: white;
-  }
 
   &:focus {
     outline: none;
@@ -161,7 +160,9 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
         value={item.title}
         onChange={(event) => handleEditField("title", event.target.value)}
       />
-      <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
+      <PageHeaderSection>
+        <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
+      </PageHeaderSection>
     </PageHeaderContainer>
   );
 };

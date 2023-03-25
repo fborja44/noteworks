@@ -56,9 +56,9 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       >
         <EllipsisVerticalIcon
           css={css`
-            height: 18px;
-            width: 20px;
-            color: ${COLOR[item.color].secondary};
+            height: 20px;
+            width: 22px;
+            color: inherit;
           `}
         />
       </NoteButton>

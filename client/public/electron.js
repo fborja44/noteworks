@@ -19,6 +19,7 @@ function createWindow() {
     },
     title: "Denote!",
     frame: false,
+    icon: path.join(__dirname, "img/icon.png"),
   });
 
   // load the application depending on dev status

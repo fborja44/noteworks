@@ -22,6 +22,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { IoReturnUpForward } from "react-icons/io5";
 import { RiEdit2Line } from "react-icons/ri";
 import { TiStar, TiStarOutline } from "react-icons/ti";
+import SparkleIcon from "../icons/SparkleIcon";
 
 /**
  * Props for GroupPage
@@ -202,7 +203,10 @@ const GroupPage: React.FC<GroupPageProps> = ({
           </Section>
         ) : null}
         {group.quicknotes.length === 0 && group.marknotes.length === 0 ? (
-          <Empty>This group is empty.</Empty>
+          <Empty>
+            <p>This group is empty.</p>
+            <SparkleIcon className="sparkle-icon" />
+          </Empty>
         ) : null}
       </div>
       <ColorMenu

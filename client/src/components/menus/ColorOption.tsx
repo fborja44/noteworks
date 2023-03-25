@@ -8,7 +8,7 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import { NoteColor } from "../../common/color";
+import { COLOR, NoteColor } from "../../common/color";
 
 const OptionStyles = ({ primaryColor }: { primaryColor: string }) =>
   css`
@@ -16,9 +16,9 @@ const OptionStyles = ({ primaryColor }: { primaryColor: string }) =>
   `;
 const Option = styled.div`
   ${OptionStyles}
-  width: 20px;
-  height: 20px;
-  border: 1px solid #828282;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
   cursor: pointer;
 
   display: flex;
@@ -26,7 +26,7 @@ const Option = styled.div`
   justify-content: center;
 
   &:hover {
-    border: 2px solid #666666;
+    border: 1px solid white;
   }
 `;
 

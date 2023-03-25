@@ -24,6 +24,7 @@ import FolderIcon from "../icons/FolderIcon";
 
 const GroupContainer = styled.div`
   background-color: ${(props) => props.theme.note.background};
+  color: ${(props) => props.theme.title.textPrimary};
   margin: 0 10px 0 10px;
   width: 215px;
   height: 38px;
@@ -41,6 +42,7 @@ const GroupContainer = styled.div`
 const GroupContent = styled.div`
   display: flex;
   align-items: center;
+  color: inherit;
   justify-content: space-between;
   height: 100%;
   padding: 0.2em 0.5rem;
@@ -50,6 +52,7 @@ const GroupContent = styled.div`
 const GroupContentSection = styled.div`
   display: flex;
   align-items: center;
+  color: inherit;
 `;
 
 const GroupName = styled.div`

@@ -18,10 +18,10 @@ import ModalMenu from "./ModalMenu";
 
 const MenuContent = styled.div`
   text-align: center;
-  margin: 1rem 1rem 0 1rem;
 
   p {
-    margin: 0;
+    font-size: 14px;
+    margin-bottom: 2em;
   }
 `;
 
@@ -32,8 +32,8 @@ const DeleteButton = css`
   margin: 1rem auto 0 auto;
   width: 200px;
   background-color: ${COLOR.red.primary};
+  border: none;
   color: white;
-  border: solid 1px #666666;
   height: 28px;
   border-radius: 5px;
   text-decoration: none;

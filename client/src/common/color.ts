@@ -61,7 +61,7 @@ const orange: NoteColor = {
 const yellow: NoteColor = {
   id: "yellow",
   primary: "#F5D354",
-  secondary: "#D0931C",
+  secondary: "#C68729",
   body: "#FFEBA1",
   footer: "#FCE489",
 };

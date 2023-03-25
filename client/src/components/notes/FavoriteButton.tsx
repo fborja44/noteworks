@@ -32,8 +32,8 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
       css={css`
         color: ${color ? color : "inherit"};
         svg {
-          width: 14px;
-          height: 14px;
+          width: 16px;
+          height: 16px;
         }
       `}
     >

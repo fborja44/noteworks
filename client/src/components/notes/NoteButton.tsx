@@ -8,7 +8,7 @@ import styled from "@emotion/styled";
 const NoteButton = styled.button`
   background: none;
   border: none;
-  color: ${(props) => props.theme.note.header.textPrimary};
+  color: inherit;
   height: 100%;
   width: fit-content;
   display: flex;

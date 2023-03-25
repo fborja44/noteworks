@@ -14,12 +14,12 @@ import ColorOption from "./ColorOption";
 
 const ColorMenuContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 20px);
-  grid-column-gap: 1.25rem;
-  grid-template-rows: repeat(2, 20px);
-  grid-row-gap: 1rem;
+  grid-template-columns: repeat(6, 30px);
+  grid-column-gap: 1.5rem;
+  grid-template-rows: repeat(2, 30px);
+  grid-row-gap: 1.5em;
   width: fit-content;
-  margin: 0 auto 0 auto;
+  margin: 1em auto;
   padding: 0.5rem 2rem 1rem 2rem;
 `;
 
@@ -80,7 +80,7 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
         <ColorOption
           handleClick={handleClick}
           color={COLOR.magenta}
-          title="Pink"
+          title="Magenta"
         />
         <ColorOption
           handleClick={handleClick}

@@ -52,14 +52,17 @@ export const SectionHeaderButton = styled.button`
 `;
 
 export const Empty = styled.div`
+  color: ${(props) => props.theme.main.textSecondary};
+  font-weight: 500;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-style: italic;
   text-align: center;
   user-select: none;
+  font-size: 13px;
 
   p {
     margin: 0.5rem;
