@@ -5,11 +5,8 @@ import React, { useRef, useEffect, useCallback } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
-
-// Common imports
-import { COLOR } from "../../common/color";
 
 // Image and icon imports
 import XMarkIcon from "../icons/XMarkIcon";

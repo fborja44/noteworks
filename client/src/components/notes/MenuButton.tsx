@@ -9,7 +9,6 @@ import { css, jsx } from "@emotion/react";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
-import { COLOR } from "../../common/color";
 
 // Component imports
 import NoteButton from "./NoteButton";

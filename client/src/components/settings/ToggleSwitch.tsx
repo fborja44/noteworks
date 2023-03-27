@@ -16,7 +16,7 @@ const Switch = styled.label`
   position: relative;
   display: inline-block;
   width: 46px;
-  height: 26px;
+  height: 22px;
 
   input {
     opacity: 0;
@@ -47,10 +47,10 @@ const Slider = styled.span`
   &:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
-    left: 4px;
-    bottom: 4px;
+    height: 16px;
+    width: 16px;
+    left: 5px;
+    bottom: 3px;
     background-color: ${(props) => props.theme.id === "light" ? "white" : props.theme.title.textSecondary};
     transition: 0.25s;
     border-radius: 50%;

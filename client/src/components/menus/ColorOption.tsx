@@ -8,7 +8,7 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import { COLOR, NoteColor } from "../../common/color";
+import { NoteColor } from "../../common/color";
 
 const OptionStyles = ({ primaryColor }: { primaryColor: string }) =>
   css`
