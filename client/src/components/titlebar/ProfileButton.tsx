@@ -39,7 +39,7 @@ const ButtonContainer = styled.div`
 
     :hover {
       cursor: pointer;
-      background: #313131;
+      background: ${(props) => props.theme.sidebar.backgroundSecondary};
       color: ${(props) => props.theme.sidebar.textSecondary};
     }
 

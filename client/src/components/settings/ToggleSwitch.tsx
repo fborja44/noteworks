@@ -51,8 +51,8 @@ const Slider = styled.span`
     width: 18px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
+    background-color: ${(props) => props.theme.id === "light" ? "white" : props.theme.title.textSecondary};
+    transition: 0.25s;
     border-radius: 50%;
   }
 `;

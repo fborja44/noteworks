@@ -19,8 +19,9 @@ import MNList from "./MNList";
 import GroupList from "../groups/GroupList";
 
 // Image and icon impaorts
-import { RiAddLine } from "react-icons/ri";
-import { MdCreateNewFolder, MdHelpOutline } from "react-icons/md";
+import PlusIcon from "../icons/PlusIcon";
+import FolderPlusIcon from "../icons/FolderPlusIcon";
+import HelpIcon from "../icons/HelpIcon";
 
 import axios from "axios";
 
@@ -109,13 +110,13 @@ const MNPage: React.FC<MNPageProps> = ({
           setSearchText={setMNSearchText}
         >
           <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
-            <RiAddLine />
+            <PlusIcon />
           </PageHeaderButton>
           <PageHeaderButton title="New Group" onClick={handleAddGroup}>
-            <MdCreateNewFolder />
+            <FolderPlusIcon />
           </PageHeaderButton>
           <PageHeaderButton title="Help" onClick={openMNHelp}>
-            <MdHelpOutline />
+            <HelpIcon />
           </PageHeaderButton>
         </PageHeader>
         <div className="main-content-wrapper">

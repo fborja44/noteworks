@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
-import { ColorId } from "../../common/color";
+import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -22,7 +22,7 @@ import NoteContent, { MarknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
 
 const MarknoteContainer = styled.div`
-  background-color: ${(props) => props.theme.note.background};
+  background-color: ${(props: { bodyColor: string }) => props.bodyColor};
   margin: 0 10px 0 10px;
   width: 240px;
   height: 330px;
@@ -54,10 +54,7 @@ export interface MNComponentProps {
   setGroupPage?: Function;
   currentNote: Marknote;
   updateMarknotesList: Function;
-  handleUpdateMarknote?: (
-    noteId: string,
-    updatedMarknote: Marknote
-  ) => void;
+  handleUpdateMarknote?: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote?: (noteId: string) => void;
   handleEditField: (
     key: string,
@@ -112,7 +109,10 @@ const MNComponent: React.FC<MNComponentProps> = ({
   history,
 }) => {
   return (
-    <MarknoteContainer className="mncontainer">
+    <MarknoteContainer
+      className="mncontainer"
+      bodyColor={COLOR[currentNote.color].body}
+    >
       <Link
         css={MarknoteLink}
         to={`/marknotes/${currentNote._id}`}

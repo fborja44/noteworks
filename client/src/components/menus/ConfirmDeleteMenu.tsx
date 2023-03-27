@@ -25,17 +25,17 @@ const MenuContent = styled.div`
   }
 `;
 
-const DeleteButton = css`
+const DeleteButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 1rem auto 0 auto;
   width: 200px;
   background-color: ${COLOR.red.primary};
-  border: none;
+  border: 1px solid ${(props) => props.theme.main.borderColor};
   color: white;
   height: 28px;
-  border-radius: 5px;
+  border-radius: 8px;
   text-decoration: none;
   font-size: 13px;
 
@@ -75,14 +75,15 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
 
   return (
     <ModalMenu
-      heading={`Delete "${title}"?`}
+      heading={`Delete ${
+        item.type.charAt(0).toUpperCase() + item.type.slice(1)
+      } "${title}"?`}
       showMenuState={showMenuState}
       setShowMenuState={setShowMenuState}
     >
       <MenuContent>
         <p>This action cannot be reversed.</p>
-        <button
-          css={DeleteButton}
+        <DeleteButton
           onClick={
             handleDelete
               ? (event) => {
@@ -96,7 +97,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
           }
         >
           Confirm
-        </button>
+        </DeleteButton>
       </MenuContent>
     </ModalMenu>
   );

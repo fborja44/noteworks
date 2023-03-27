@@ -23,15 +23,16 @@ import { ImSun } from "react-icons/im";
 
 const Option = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
   background-color: inherit;
 `;
 
 const OptionLabel = styled.div`
   color: ${(props) => props.theme.main.textPrimary};
-  margin-bottom: 0.4em;
-  font-weight: 500;
+  margin-right: 1em;
+  font-weight: 600;
+  font-size: 13px;
 `;
 
 export interface SettingsPageProps {
@@ -49,7 +50,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       <div className="main-content-wrapper">
         <Section name="Appearance">
           <Option>
-            <OptionLabel>Switch Theme:</OptionLabel>
+            <OptionLabel>App Theme:</OptionLabel>
             <div
               css={css`
                 display: flex;

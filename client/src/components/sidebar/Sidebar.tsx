@@ -67,7 +67,8 @@ const SidebarTitle = styled.div`
   align-items: center;
   padding: 0 0.15em 0 0.8em;
   border-bottom: 1px solid ${(props) => props.theme.sidebar.borderColor};
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
 `;
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {

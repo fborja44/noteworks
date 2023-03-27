@@ -55,6 +55,7 @@ const MenuHeader = styled.div`
 const Heading = styled.h1`
   margin: 0;
   font-size: 15px;
+  max-width: 375px;
   color: ${(props) => props.theme.menu.title};
 `;
 

@@ -4,6 +4,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
+
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
 import { ColorId } from "../../common/color";
@@ -18,11 +23,11 @@ import MNList from "../marknotes/MNList";
 import QNList from "../quicknotes/QNList";
 
 // Image and icon imports
-import { MdDeleteForever } from "react-icons/md";
-import { IoReturnUpForward } from "react-icons/io5";
-import { RiEdit2Line } from "react-icons/ri";
-import { TiStar, TiStarOutline } from "react-icons/ti";
 import SparkleIcon from "../icons/SparkleIcon";
+import TrashIcon from "../icons/TrashIcon";
+import PencilSquareIcon from "../icons/PencilSquareIcon";
+import StarIcon from "../icons/StarIcon";
+import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
 
 /**
  * Props for GroupPage
@@ -144,10 +149,10 @@ const GroupPage: React.FC<GroupPageProps> = ({
     <React.Fragment>
       <InputPageHeader item={group} handleEditField={handleEditField}>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
-          <RiEdit2Line />
+          <PencilSquareIcon />
         </PageHeaderButton>
         <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
-          <MdDeleteForever />
+          <TrashIcon />
         </PageHeaderButton>
         <PageHeaderButton
           title="Favorite"
@@ -158,13 +163,13 @@ const GroupPage: React.FC<GroupPageProps> = ({
             });
           }}
         >
-          {group.favorited === false ? <TiStarOutline /> : <TiStar />}
+          {group.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
           title="Return to Notes"
         >
-          <IoReturnUpForward />
+          <ArrowUturnRightIcon />
         </PageHeaderButton>
       </InputPageHeader>
       <div className="main-content-wrapper">
@@ -203,10 +208,20 @@ const GroupPage: React.FC<GroupPageProps> = ({
           </Section>
         ) : null}
         {group.quicknotes.length === 0 && group.marknotes.length === 0 ? (
-          <Empty>
-            <p>This group is empty.</p>
-            <SparkleIcon className="sparkle-icon" />
-          </Empty>
+          <div
+            css={css`
+              width: 100%;
+              height: 80%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            `}
+          >
+            <Empty>
+              <p>This group is empty.</p>
+              <SparkleIcon className="sparkle-icon" />
+            </Empty>
+          </div>
         ) : null}
       </div>
       <ColorMenu

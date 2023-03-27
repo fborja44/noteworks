@@ -42,41 +42,44 @@ export interface AppTheme {
   menu: {
     title: string;
   };
+  editor: {
+    background: string;
+  };
 }
 
 export const lightTheme: AppTheme = {
   id: "light",
   main: {
-    background: "#E0E0E0",
-    backgroundSecondary: "#FFF",
-    borderColor: "E0E0E0",
-    textPrimary: "#4f4f4f",
-    textSecondary: "#000",
+    background: "#FFFFFF",
+    backgroundSecondary: "#F7F7F7",
+    borderColor: "#EDEDED",
+    textPrimary: "#6B6B74",
+    textSecondary: "#6B6B6B",
   },
   title: {
-    background: "#25242c",
-    backgroundSecondary: "#3e3d44",
-    borderColor: "#25242c",
-    textPrimary: "#FFF",
-    textSecondary: "#CCCCCC",
+    background: "#FFFFFF",
+    backgroundSecondary: "#E6E6E6",
+    borderColor: "#E6E6E6",
+    textPrimary: "#6B6B74",
+    textSecondary: "#6B6B6B",
   },
   header: {
     background: "#4b4a53",
-    backgroundSecondary: "#383740",
-    borderColor: "#4b4a53",
-    textPrimary: "#FFF",
-    textSecondary: "#A6A6A6",
+    backgroundSecondary: "#F2F2F2",
+    borderColor: "#EDEDED",
+    textPrimary: "#6B6B74",
+    textSecondary: "#6B6B6B",
   },
   sidebar: {
-    background: "#34333b",
-    backgroundSecondary: "#49484e",
-    borderColor: "#34333b",
-    hoverColor: "#313131",
-    textPrimary: "#FFF",
-    textSecondary: "#CCCCCC",
+    background: "#F9F9F9",
+    backgroundSecondary: "#EDEDED",
+    borderColor: "#EDEDED",
+    hoverColor: "#F3F3F3",
+    textPrimary: "#6B6B6B",
+    textSecondary: "#6B6B6B",
   },
   note: {
-    background: "#FFF",
+    background: "#E6E6E6",
     textPrimary: "#333333",
     textSecondary: "#828282",
     borderColor: "##3B3B3B",
@@ -86,7 +89,10 @@ export const lightTheme: AppTheme = {
     },
   },
   menu: {
-    title: "#4f4f4f",
+    title: "#4F4F4F",
+  },
+  editor: {
+    background: "$FFFFFF",
   },
 };
 
@@ -94,7 +100,7 @@ export const darkTheme: AppTheme = {
   id: "dark",
   main: {
     background: "#212121",
-    backgroundSecondary: "#34333b",
+    backgroundSecondary: "#303030",
     borderColor: "#323232",
     textPrimary: "#E1E1E1",
     textSecondary: "#A6A6A6",
@@ -133,5 +139,8 @@ export const darkTheme: AppTheme = {
   },
   menu: {
     title: "#FFF",
+  },
+  editor: {
+    background: "#1D1D1D",
   },
 };

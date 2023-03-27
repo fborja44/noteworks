@@ -3,14 +3,18 @@
 // React import
 import * as React from "react";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
+import { COLOR } from "../../common/color";
 
 // Component imports
 import Searchbar from "../Searchbar";
+import FolderOpenIcon from "../icons/FolderOpenIcon";
 
 /**
  * @deprecated Header background is no longer dynamic.
@@ -128,7 +132,7 @@ const TitleInput = styled.input`
   background: ${(props) => props.theme.header.backgroundSecondary};
   border: 1px solid ${(props) => props.theme.header.borderColor};
   color: white;
-  height: 75%;
+  height: 26px;
   width: fit-content;
   border-radius: 5px;
   font-size: 14px;
@@ -152,14 +156,32 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
 }) => {
   return (
     <PageHeaderContainer>
-      <TitleInput
-        type="text"
-        placeholder={
-          item.type === "marknote" ? "Untitled Note" : "Untitled Group"
-        }
-        value={item.title}
-        onChange={(event) => handleEditField("title", event.target.value)}
-      />
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+        `}
+      >
+        {item.type === "group" && (
+          <FolderOpenIcon
+            css={css`
+              height: 24px;
+              width: 24px;
+              color: ${COLOR[item.color].primary};
+              margin-right: 0.75em;
+            `}
+            filled
+          />
+        )}
+        <TitleInput
+          type="text"
+          placeholder={
+            item.type === "marknote" ? "Untitled Note" : "Untitled Group"
+          }
+          value={item.title}
+          onChange={(event) => handleEditField("title", event.target.value)}
+        />
+      </div>
       <PageHeaderSection>
         <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
       </PageHeaderSection>

@@ -16,8 +16,9 @@ import QNList from "./QNList";
 import GroupList from "../groups/GroupList";
 
 // Image and icon imports
-import { RiAddLine } from "react-icons/ri";
-import { MdCreateNewFolder, MdHelpOutline } from "react-icons/md";
+import PlusIcon from "../icons/PlusIcon";
+import FolderPlusIcon from "../icons/FolderPlusIcon";
+import HelpIcon from "../icons/HelpIcon";
 
 import axios from "axios";
 
@@ -94,13 +95,13 @@ const QNPage: React.FC<QNPageProps> = ({
         setSearchText={setQNSearchText}
       >
         <PageHeaderButton title={"New Note"} onClick={handleAddQuicknote}>
-          <RiAddLine />
+          <PlusIcon />
         </PageHeaderButton>
         <PageHeaderButton title="New Group" onClick={handleAddGroup}>
-          <MdCreateNewFolder />
+          <FolderPlusIcon />
         </PageHeaderButton>
         <PageHeaderButton title={"Help"} onClick={openQNHelp}>
-          <MdHelpOutline />
+          <HelpIcon />
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">

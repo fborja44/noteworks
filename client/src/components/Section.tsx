@@ -55,7 +55,7 @@ export const Empty = styled.div`
   color: ${(props) => props.theme.main.textSecondary};
   font-weight: 500;
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,8 +70,16 @@ export const Empty = styled.div`
 
   svg {
     position: relative;
-    top: 3px;
+    top: 2px;
     margin: 0 0.2em;
+    height: 16px;
+    width: 16px;
+  }
+
+  .sparkle-icon {
+    height: 40px;
+    width: 40px;
+    margin-top: 1.5em;
   }
 `;
 

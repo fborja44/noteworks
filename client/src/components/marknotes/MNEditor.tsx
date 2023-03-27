@@ -22,12 +22,11 @@ import { InputPageHeader } from "../pageheader/PageHeader";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 
 // Image and icon imports
-import { IoReturnUpForward } from "react-icons/io5";
-import { TiStarOutline, TiStar } from "react-icons/ti";
-import { RiEdit2Line } from "react-icons/ri";
-import { MdDeleteForever } from "react-icons/md";
-import { VscOpenPreview } from "react-icons/vsc";
-import { AiOutlineCode } from "react-icons/ai";
+import { VscOpenPreview, VscFileCode } from "react-icons/vsc";
+import PencilSquareIcon from "../icons/PencilSquareIcon";
+import TrashIcon from "../icons/TrashIcon";
+import StarIcon from "../icons/StarIcon";
+import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
 import { Empty } from "../Section";
 
 // Codemirror imports
@@ -56,7 +55,9 @@ const EditorContent = styled.div`
 
   & *::-webkit-scrollbar-thumb {
     background: ${(props) =>
-      props.theme.id === "light" ? COLOR.dark_grey.primary : "#52525b"} !important;
+      props.theme.id === "light"
+        ? COLOR.dark_grey.primary
+        : "#52525b"} !important;
     border-radius: 2px;
   }
 `;
@@ -69,14 +70,14 @@ const EditorContainer = styled.section`
 `;
 
 const PreviewContainer = styled.section`
-  background: white;
+  background: ${(props) => props.theme.editor.background};
   height: 100%;
   flex: 1;
   overflow: auto;
   z-index: 1;
 `;
 
-const EditorBody = css`
+const EditorBody = styled(CodeMirror)`
   width: 100%;
   height: 100%;
   border: none;
@@ -91,16 +92,24 @@ const EditorBody = css`
     font-size: 14px;
     padding-bottom: 10px;
     padding-right: 1em;
+    background: ${(props) => props.theme.editor.background};
+    caret-color: ${COLOR.blue.primary};
   }
 
   .CodeMirror.CodeMirror-wrap pre {
     word-break: break-word;
   }
+
+  .CodeMirror-gutters {
+    ${(props) =>
+      props.theme.id === "dark" &&
+      `background: ${props.theme.main.background};`}
+    border-right: 1px solid ${(props) => props.theme.main.borderColor};
+  }
 `;
 
 const EditorBodyDark = css`
   .CodeMirror {
-    background: #1b1a20;
     color: white;
 
     .cm-comment {
@@ -110,11 +119,6 @@ const EditorBodyDark = css`
 
   .CodeMirror-linenumber {
     color: ${COLOR.grey.primary};
-  }
-
-  .CodeMirror-gutters {
-    background: #1b1a20;
-    border-right: 1px solid #34333b;
   }
 `;
 
@@ -156,7 +160,7 @@ const PreviewBody = css`
 
   code {
     display: block;
-    background: rgb(241, 241, 241);
+    background: inherit;
     padding: 0.6em 0.8em;
     border-radius: 8px;
     box-sizing: border-box;
@@ -180,7 +184,6 @@ const PreviewBody = css`
 `;
 
 const PreviewBodyDark = css`
-  background: #1b1a20;
   color: white;
   code {
     background: #52525b;
@@ -194,6 +197,13 @@ const PreviewBodyDark = css`
   a:visited {
     color: violet;
   }
+`;
+
+const Divider = styled.section`
+  width: 8px;
+  background: ${(props) => props.theme.main.backgroundSecondary};
+  border-right: 1px solid ${(props) => props.theme.main.borderColor};
+  border-left: 1px solid ${(props) => props.theme.main.borderColor};
 `;
 
 /**
@@ -311,7 +321,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
           onClick={() => setShowEditor((prev) => !prev)}
           selected={showEditor}
         >
-          <AiOutlineCode />
+          <VscFileCode />
         </PageHeaderButton>
         <PageHeaderButton
           title="Toggle Preview"
@@ -321,10 +331,10 @@ const MNEditor: React.FC<MNEditorProps> = ({
           <VscOpenPreview />
         </PageHeaderButton>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
-          <RiEdit2Line />
+          <PencilSquareIcon />
         </PageHeaderButton>
         <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
-          <MdDeleteForever />
+          <TrashIcon />
         </PageHeaderButton>
         <PageHeaderButton
           title="Favorite"
@@ -338,20 +348,20 @@ const MNEditor: React.FC<MNEditorProps> = ({
             updateMarknotesList(marknote._id, updatedMarknote);
           }}
         >
-          {marknote.favorited === false ? <TiStarOutline /> : <TiStar />}
+          {marknote.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
           title="Return to Notes"
         >
-          <IoReturnUpForward />
+          <ArrowUturnRightIcon />
         </PageHeaderButton>
       </InputPageHeader>
       {!showEditor && !showPreview ? (
         <div className="main-content-wrapper">
           <Empty>
             <p>
-              To open the editor, click the <AiOutlineCode /> button.
+              To open the editor, click the <VscFileCode /> button.
             </p>
             <p>
               To open the preview, click the <VscOpenPreview /> button.
@@ -369,8 +379,8 @@ const MNEditor: React.FC<MNEditorProps> = ({
             display: ${showEditor ? "default" : "none"};
           `}
         >
-          <CodeMirror
-            css={[EditorBody, appTheme.id === "light" ? null : EditorBodyDark]}
+          <EditorBody
+            css={[appTheme.id === "light" ? null : EditorBodyDark]}
             value={marknote.body}
             onBeforeChange={handleChangeEditorBody}
             options={{
@@ -383,14 +393,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
             }}
           />
         </EditorContainer>
-        {showEditor && showPreview && (
-          <section
-            css={css`
-              width: 20px;
-              background: ${appTheme.id === "light" ? "#c4c4c4" : "#34333b"};
-            `}
-          />
-        )}
+        {showEditor && showPreview && <Divider />}
         <PreviewContainer
           css={css`
             display: ${showPreview ? "default" : "none"};

@@ -127,6 +127,7 @@ const ProfileIcon = styled.div`
   height: 28px;
   width: 28px;
   background: ${COLOR.blue.primary};
+  color: white;
   border-radius: 1000em;
   margin-right: 0.75em;
 
@@ -208,6 +209,7 @@ const Titlebar = () => {
             css={css`
               &:hover {
                 background-color: ${COLOR.red.secondary} !important;
+                color: white;
               }
             `}
             onClick={handleOnClickClose}
