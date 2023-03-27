@@ -26,7 +26,7 @@ const Option = styled.div`
   justify-content: center;
 
   &:hover {
-    border: 1px solid white;
+    border: 1px solid ${(props) => props.theme.main.textPrimary};
   }
 `;
 

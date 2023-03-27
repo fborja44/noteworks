@@ -52,12 +52,16 @@ const GroupMenuItem = styled.div`
   padding: 1.25em;
   display: flex;
   justify-content: space-between;
+
   align-items: center;
   font-weight: 600;
-  border-bottom: 1px solid ${(props) => props.theme.title.borderColor};
 
   &:hover {
     background: ${(props) => props.theme.sidebar.hoverColor};
+  }
+
+  &.border {
+    border-bottom: 1px solid ${(props) => props.theme.title.borderColor};
   }
 `;
 
@@ -126,7 +130,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
       setShowMenuState={setShowGroupMenu}
     >
       <GroupMenuContent>
-        {groups.map((group) => (
+        {groups.map((group, i) => (
           <GroupMenuItem
             key={group._id}
             data-id={group._id}
@@ -136,7 +140,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
               group.marknotes.includes(item._id)
                 ? "selected"
                 : ""
-            }`}
+            } ${i !== groups.length - 1 ? "border" : ""}`}
           >
             <div
               css={css`
@@ -153,9 +157,9 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
                 `}
                 filled
               />
-              {(group.title && <span>{group.title.slice(0, 28) + "..."}</span>) || (
-                <span className="italic">Untitled Group</span>
-              )}
+              {(group.title && (
+                <span>{group.title.slice(0, 28) + "..."}</span>
+              )) || <span className="italic">Untitled Group</span>}
             </div>
             {group.quicknotes.includes(item._id) ||
             group.marknotes.includes(item._id) ? (
