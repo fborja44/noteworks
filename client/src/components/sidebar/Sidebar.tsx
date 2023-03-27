@@ -1,7 +1,7 @@
 /* Sidebar Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -31,10 +31,10 @@ const SidebarContainer = styled.aside`
   background: ${(props) => props.theme.sidebar.background};
   border-right: 1px solid ${(props) => props.theme.sidebar.borderColor};
   height: calc(100vh - 75px);
-  width: 100px;
-  min-width: 100px;
+  width: ${(props: { open: boolean }) => (props.open ? "100px" : "50px")};
   color: ${(props) => props.theme.sidebar.textPrimary};
   z-index: 0;
+  transition: width 0.1s;
 
   nav {
     height: calc(100vh - 110px);
@@ -63,20 +63,31 @@ const SidebarTitle = styled.div`
   width: 100%;
   height: 35px;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(props: { open: boolean }) =>
+    props.open ? "space-between" : "center"};
   align-items: center;
-  padding: 0 0.15em 0 0.8em;
+  padding: ${(props: { open: boolean }) =>
+    props.open ? "0 0.15em 0 1em" : "0"};
   border-bottom: 1px solid ${(props) => props.theme.sidebar.borderColor};
   font-size: 13px;
   font-weight: 600;
+  ${(props: { open: boolean }) => !props.open && "transform: scale(-1, 1);"}
 `;
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
+  const [open, setOpen] = useState(true);
+
   return (
-    <SidebarContainer>
-      <SidebarTitle>
-        <span>Menu</span>
-        <PageHeaderButton title="Toggle Menu" onClick={() => {}} width="fit-content">
+    <SidebarContainer open={open}>
+      <SidebarTitle open={open}>
+        {open && <span>Menu</span>}
+        <PageHeaderButton
+          title="Toggle Menu"
+          onClick={() => {
+            setOpen(!open);
+          }}
+          width="fit-content"
+        >
           <ChevronLeftIcon className="menu-button" />
         </PageHeaderButton>
       </SidebarTitle>
@@ -84,6 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
         <ul>
           <div>
             <SidebarButton
+              full={open}
               title="Home"
               label="Dashboard"
               icon={<HomeIcon css={NavIcon} />}
@@ -92,6 +104,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               setSelectedTab={setSelectedTab}
             />
             <SidebarButton
+              full={open}
               title="Quicknotes"
               label="Quicknotes"
               icon={<BoltIcon css={NavIcon} />}
@@ -100,6 +113,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               setSelectedTab={setSelectedTab}
             />
             <SidebarButton
+              full={open}
               title="Marknotes"
               label="Marknotes"
               icon={<PencilSquareIcon css={NavIcon} />}
@@ -109,6 +123,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
             />
           </div>
           <SidebarButton
+            full={open}
             title="Settings"
             label="App Settings"
             icon={<SettingsIcon css={NavIcon} />}

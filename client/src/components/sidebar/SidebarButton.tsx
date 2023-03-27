@@ -30,6 +30,7 @@ const ButtonItem = styled.div`
 
   span {
     margin-top: 0.25em;
+    white-space: nowrap;
   }
 
   &:hover {
@@ -62,6 +63,7 @@ const Indicator = styled.span`
 `;
 
 export interface SidebarButtonProps {
+  full: boolean;
   title: string;
   label: string;
   icon: React.ReactNode;
@@ -71,6 +73,7 @@ export interface SidebarButtonProps {
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
+  full,
   title,
   label,
   icon,
@@ -81,6 +84,24 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
 }) => {
   const isSelected = selectedTab === route;
 
+  if (full) {
+    return (
+      <li>
+        <Link
+          css={LinkStyles}
+          to={route}
+          onClick={() => setSelectedTab(route)}
+          title={title}
+        >
+          <ButtonItem selected={isSelected}>
+            {isSelected && <Indicator />}
+            {icon}
+            <span>{label}</span>
+          </ButtonItem>
+        </Link>
+      </li>
+    );
+  }
   return (
     <li>
       <Link
@@ -92,7 +113,6 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
         <ButtonItem selected={isSelected}>
           {isSelected && <Indicator />}
           {icon}
-          <span>{label}</span>
         </ButtonItem>
       </Link>
     </li>

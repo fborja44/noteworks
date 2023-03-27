@@ -74,19 +74,20 @@ body {
 .app-container {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 main {
   flex: 1;
   height: calc(100vh - 75px);
-  width: calc(100vw - 100px);
+  width: 100%;
 }
 
 .main-content-wrapper {
   padding: 1.5rem 1.75rem;
   overflow: auto;
   height: calc(100vh - 110px);
-  width: calc(100vw - 100px);
+  width: 100%;
 }
 
 input:focus,

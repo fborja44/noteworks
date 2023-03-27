@@ -47,7 +47,7 @@ const PageHeaderContainer = styled.section`
   color: ${(props) => props.theme.header.textPrimary};
   border-bottom: 1px solid ${(props) => props.theme.header.borderColor};
   height: 35px;
-  width: calc(100vw - 100px);
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

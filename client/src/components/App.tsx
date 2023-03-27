@@ -210,7 +210,7 @@ const App = () => {
 
   /* Current theme state
   ------------------------------------------------------------------------------*/
-  const [appTheme, setAppTheme] = useState(lightTheme);
+  const [appTheme, setAppTheme] = useState(darkTheme);
 
   const themeLocal = "denote_theme";
   /**
