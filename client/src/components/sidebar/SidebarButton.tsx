@@ -33,7 +33,8 @@ const ButtonItem = styled.div`
   }
 
   &:hover {
-    background-color: #313131;
+    background-color: ${(props: { theme?: AppTheme }) =>
+      props.theme && props.theme.sidebar.hoverColor};
     color: ${(props: { theme?: AppTheme }) =>
       props.theme && props.theme.sidebar.textSecondary};
     // transition: background-color 0.1s ease-out 0s;

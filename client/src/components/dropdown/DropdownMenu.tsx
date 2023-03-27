@@ -15,7 +15,9 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 import DropdownItem from "./DropdownItem";
 
 // Image and icon imports
-import { MdColorLens, MdDeleteForever, MdFolderOpen } from "react-icons/md";
+import { IoColorPalette } from "react-icons/io5";
+import FolderOpenIcon from "../icons/FolderOpenIcon";
+import TrashIcon from "../icons/TrashIcon";
 
 const Background = styled.div`
   width: 100%;
@@ -34,17 +36,16 @@ const Background = styled.div`
 
 const DropdownContainer = styled.div`
   position: absolute;
-  top: 24px;
+  top: 20px;
   left: 260px;
   width: fit-content;
   transform: translateX(-45%);
-  background: ${(props) =>
-    props.theme.id === "light" ? "white" : props.theme.main.background};
-  border-radius: 2px;
-  padding: 0.5em 0.6em;
-  border: 1px solid #828282;
+  background: ${(props) => props.theme.header.backgroundSecondary};
+  border-radius: 8px;
+  padding: 0.5em 0.5em 0.25em 0.5em;
+  border: 1px solid ${(props) => props.theme.title.borderColor};
   overflow: hidden;
-  transition: height 500ms ease;
+  transition: height 250ms;
   font-size: 12px;
   cursor: default;
 `;
@@ -110,26 +111,28 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         `}
       >
         <Menu>
-          <DropdownItem
-            setOpen={setOpen}
-            icon={<MdColorLens />}
-            onClick={toggleColorMenu}
-          >
-            Change Label Color
-          </DropdownItem>
           {item.type !== "group" && (
             <DropdownItem
               setOpen={setOpen}
-              icon={<MdFolderOpen />}
+              icon={<FolderOpenIcon filled />}
               onClick={toggleGroupMenu}
             >
-              Add to Group
+              Manage Groups
             </DropdownItem>
           )}
           <DropdownItem
             setOpen={setOpen}
-            icon={<MdDeleteForever />}
+            icon={<IoColorPalette />}
+            onClick={toggleColorMenu}
+          >
+            Change Color
+          </DropdownItem>
+          <div css={css`height: 28px;`} />
+          <DropdownItem
+            setOpen={setOpen}
+            icon={<TrashIcon filled />}
             onClick={toggleConfirmDelete}
+            warning
           >
             Delete {item.type !== "group" ? "Note" : "Group"}
           </DropdownItem>

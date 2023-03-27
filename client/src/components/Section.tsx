@@ -55,7 +55,7 @@ export const Empty = styled.div`
   color: ${(props) => props.theme.main.textSecondary};
   font-weight: 500;
   width: 100%;
-  height: 100%;
+  height: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -174,7 +174,9 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
               `}
             />
             <GroupName>
-              {groupComponent.title || (
+              {groupComponent.title.trim() ? (
+                groupComponent.title.slice(0, 20) + "..."
+              ) : (
                 <span className="italic">Untitled Group</span>
               )}
             </GroupName>

@@ -8,23 +8,28 @@ import React from "react";
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common Imports
+import { COLOR } from "../../common/color";
+
 const Item = styled.div`
-  color: ${(props) => props.theme.main.textPrimary};
+  color: ${(props) => props.theme.main.textSecondary};
+  ${(props: { warning: boolean | undefined }) =>
+    props.warning && `color: ${COLOR.red.primary};`}
   height: 28px;
   flex: 1;
   display: flex;
   align-items: center;
-  border-radius: 3px;
-  transition: background 0.2s;
-  padding: 0.2em 0.5em;
+  border-radius: 5px;
+  padding: 0.75em 0.75em 0.75em 0.5em;
+  margin-bottom: 0.25em;
   cursor: pointer;
   user-select: none;
 
   &:hover {
-    background: ${(props) =>
-      props.theme.id === "light"
-        ? "#e6e6e6"
-        : props.theme.main.backgroundSecondary};
+    background: ${(props) => props.theme.sidebar.backgroundSecondary};
+    color: ${(props) => props.theme.main.textPrimary};
+    ${(props: { warning: boolean | undefined }) =>
+      props.warning && `color: ${COLOR.red.primary};`}
   }
 `;
 
@@ -34,6 +39,11 @@ const IconContainer = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 
   &:hover {
     filter: none;
@@ -50,6 +60,7 @@ export interface DropdownItemProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveMenu?: React.Dispatch<React.SetStateAction<string>>;
   onClick: any;
+  warning?: boolean;
 }
 
 const DropdownItem: React.FC<DropdownItemProps> = ({
@@ -57,6 +68,7 @@ const DropdownItem: React.FC<DropdownItemProps> = ({
   onClick,
   setOpen,
   children,
+  warning,
 }) => {
   return (
     <Item
@@ -64,6 +76,7 @@ const DropdownItem: React.FC<DropdownItemProps> = ({
         setOpen((prev) => !prev);
         onClick();
       }}
+      warning={warning}
     >
       <IconContainer>{icon}</IconContainer>
       <Text>{children}</Text>

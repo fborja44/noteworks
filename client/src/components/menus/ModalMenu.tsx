@@ -39,7 +39,7 @@ const MenuContainer = styled.div`
   color: ${(props) => props.theme.main.textPrimary};
   position: relative;
   z-index: 10;
-  border-radius: 5px;
+  border-radius: 10px;
 `;
 
 const MenuHeader = styled.div`

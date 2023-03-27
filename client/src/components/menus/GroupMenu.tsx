@@ -16,9 +16,10 @@ import { COLOR } from "../../common/color";
 import ModalMenu from "./ModalMenu";
 
 // Image and icon imports
-import { MdFolder } from "react-icons/md";
+import FolderIcon from "../icons/FolderIcon";
 
 import axios from "axios";
+import CheckCircleIcon from "../icons/CheckCircleIcon";
 
 const BASE_ADDR = "http://localhost:3001";
 
@@ -27,37 +28,16 @@ const GroupMenuContent = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0 auto 0 auto;
-  border: 1px solid #828282;
+  border: 1px solid ${(props) => props.theme.title.borderColor};
+  border-radius: 8px;
   max-height: 300px;
   overflow: auto;
 
-  & > div:nth-child(odd) {
-    background: #fff;
-    &.selected {
-      background: #bbd0f2 !important;
-    }
+  & > div {
+    background: ${(props) => props.theme.header.backgroundSecondary};
 
     &:hover {
-      background: ${(props) =>
-        props.theme.id === "light"
-          ? "#d3e0f5"
-          : props.theme.main.backgroundSecondary} !important;
-      transition: background-color 0.2s ease, color 0.1s ease;
-    }
-  }
-
-  & > div:nth-child(even) {
-    background: #f0f0f0;
-    &.selected {
-      background: #a6bde3 !important;
-    }
-
-    &:hover {
-      background: ${(props) =>
-        props.theme.id === "light"
-          ? "#d3e0f5"
-          : props.theme.main.backgroundSecondary} !important;
-      transition: background-color 0.2s ease, color 0.1s ease;
+      background: ${(props) => props.theme.sidebar.hoverColor};
     }
   }
 
@@ -69,17 +49,15 @@ const GroupMenuContent = styled.div`
 const GroupMenuItem = styled.div`
   width: 100%;
   cursor: pointer;
-  padding: 1em;
+  padding: 1.25em;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-weight: 600;
+  border-bottom: 1px solid ${(props) => props.theme.title.borderColor};
 
   &:hover {
-    background: ${(props) =>
-      props.theme.id === "light"
-        ? "#d3e0f5"
-        : props.theme.main.backgroundSecondary} !important;
-    transition: background-color 0.2s ease, color 0.1s ease;
+    background: ${(props) => props.theme.sidebar.hoverColor};
   }
 `;
 
@@ -160,14 +138,35 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
                 : ""
             }`}
           >
-            <MdFolder
+            <div
               css={css`
-                color: ${COLOR[group.color].primary};
-                font-size: 18px;
-                margin-right: 0.7em;
+                display: flex;
+                justify-content: center;
               `}
-            />
-            {group.title || <span className="italic">Untitled Group</span>}
+            >
+              <FolderIcon
+                css={css`
+                  color: ${COLOR[group.color].primary};
+                  height: 20px;
+                  width: 20px;
+                  margin-right: 1em;
+                `}
+                filled
+              />
+              {(group.title && <span>{group.title.slice(0, 28) + "..."}</span>) || (
+                <span className="italic">Untitled Group</span>
+              )}
+            </div>
+            {group.quicknotes.includes(item._id) ||
+            group.marknotes.includes(item._id) ? (
+              <CheckCircleIcon
+                css={css`
+                  width: 18px;
+                  height: 18px;
+                  color: ${COLOR.green.primary};
+                `}
+              />
+            ) : null}
           </GroupMenuItem>
         ))}
       </GroupMenuContent>
