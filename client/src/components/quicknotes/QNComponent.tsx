@@ -22,7 +22,7 @@ import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
 
 const QuicknoteContainer = styled.div`
-  background-color: ${(props: {bodyColor: string}) => props.bodyColor};
+  background-color: ${(props: { bodyColor: string }) => props.bodyColor};
   width: 215px;
   height: fit-content;
   justify-self: center;
@@ -68,6 +68,7 @@ export interface QNComponentProps {
   updateQuicknotesList: Function;
   handleDeleteQuicknote?: (id: string) => void;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
+  setSaved?: Function;
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
@@ -79,6 +80,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   updateQuicknotesList,
   handleDeleteQuicknote,
   handleUpdateQuicknote,
+  setSaved,
 }) => {
   // Character limits
   const titleCharLimit = 30;
@@ -187,8 +189,16 @@ const QNComponent: React.FC<QNComponentProps> = ({
     const delayDBUpdate = setTimeout(() => {
       handleUpdateQuicknote(quicknote._id, quicknote);
       updateQuicknotesList(quicknote._id, quicknote);
+      if (setSaved) {
+        setSaved(true);
+      }
     }, 1000);
-    return () => clearTimeout(delayDBUpdate);
+    return () => {
+      if (setSaved) {
+        setSaved(false);
+      }
+      clearTimeout(delayDBUpdate);
+    };
   }, [quicknote]);
 
   return (

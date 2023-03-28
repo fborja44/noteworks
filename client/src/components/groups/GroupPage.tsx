@@ -79,6 +79,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
+  // Group Saved State
+  const [saved, setSaved] = useState(true);
+
   /**
    * Function to handle changes in a note's field.
    * @param key The field being changed
@@ -141,8 +144,12 @@ const GroupPage: React.FC<GroupPageProps> = ({
     const delayDBUpdate = setTimeout(() => {
       handleUpdateGroup(group._id, group);
       updateGroupsList(group._id, group);
+      setSaved(true);
     }, 1000);
-    return () => clearTimeout(delayDBUpdate);
+    return () => {
+      setSaved(false);
+      clearTimeout(delayDBUpdate);
+    };
   }, [group, quicknotes, marknotes]);
 
   return (
@@ -151,6 +158,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         item={group}
         handleEditField={handleEditField}
         icon={<FolderOpenIcon filled />}
+        saved={saved}
       >
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />

@@ -234,6 +234,9 @@ const MNEditor: React.FC<MNEditorProps> = ({
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
+  // Marknote Saved State
+  const [saved, setSaved] = useState(true);
+
   /**
    * Function to handle a change in the marknote's color.
    * Does NOT change the last modified date.
@@ -309,14 +312,23 @@ const MNEditor: React.FC<MNEditorProps> = ({
     const delayDBUpdate = setTimeout(() => {
       handleUpdateMarknote(marknote._id, marknote);
       updateMarknotesList(marknote._id, marknote);
+      setSaved(true);
     }, 1000);
 
-    return () => clearTimeout(delayDBUpdate);
+    return () => {
+      setSaved(false);
+      clearTimeout(delayDBUpdate);
+    };
   }, [marknote]);
 
   return (
     <EditorMain>
-      <InputPageHeader item={marknote} handleEditField={handleEditField} icon={<BsMarkdownFill className="markdown" />}>
+      <InputPageHeader
+        item={marknote}
+        handleEditField={handleEditField}
+        icon={<BsMarkdownFill className="markdown" />}
+        saved={saved}
+      >
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowEditor((prev) => !prev)}
@@ -329,7 +341,12 @@ const MNEditor: React.FC<MNEditorProps> = ({
           onClick={() => setShowPreview((prev) => !prev)}
           selected={showPreview}
         >
-          <VscOpenPreview css={css`position: relative; top: 1px;`} />
+          <VscOpenPreview
+            css={css`
+              position: relative;
+              top: 1px;
+            `}
+          />
         </PageHeaderButton>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />

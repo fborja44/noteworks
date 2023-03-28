@@ -55,11 +55,14 @@ const QNPage: React.FC<QNPageProps> = ({
   handleUpdateQuicknote,
   handleDeleteQuicknote,
 }) => {
-  // Quicknotes Help Menu state
+  // Quicknotes Help Menu State
   const [showQNHelp, setShowQNHelp] = useState(false);
   const openQNHelp = () => {
     setShowQNHelp((prev) => !prev);
   };
+
+  // Quicknotes Saved State
+  const [saved, setSaved] = useState(true);
 
   /**
    * Function to add new empty quicknote after add quicknote button is pressed.
@@ -95,6 +98,7 @@ const QNPage: React.FC<QNPageProps> = ({
         useSearch={true}
         setSearchText={setQNSearchText}
         icon={<BoltIcon />}
+        saved={saved}
       >
         <PageHeaderButton title={"New Note"} onClick={handleAddQuicknote}>
           <PlusIcon />
@@ -125,6 +129,7 @@ const QNPage: React.FC<QNPageProps> = ({
             handleUpdateGroup={handleUpdateGroup}
             handleUpdateQuicknote={handleUpdateQuicknote}
             handleDeleteQuicknote={handleDeleteQuicknote}
+            setSaved={setSaved}
           />
         </Section>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />

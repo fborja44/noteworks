@@ -14,8 +14,8 @@ import { COLOR } from "../../common/color";
 
 // Component imports
 import Searchbar from "../Searchbar";
-import FolderOpenIcon from "../icons/FolderOpenIcon";
-import CodeBracketIcon from "../icons/CodeBracketIcon";
+import { IoSaveOutline } from "react-icons/io5";
+import CheckCircleIcon from "../icons/CheckCircleIcon";
 
 /**
  * @deprecated Header background is no longer dynamic.
@@ -108,11 +108,29 @@ const PageHeaderButtonsContainer = styled.div`
   }
 `;
 
+const SavingIndicatorContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 0.5em;
+  color: ${(props) => props.theme.header.textSecondary};
+  svg {
+    margin-right: 0.375em;
+    width: 14px;
+    height: 14px;
+  }
+  small {
+    font-size: 10px;
+    font-style: italic;
+  }
+`;
+
 export interface PageHeaderProps {
   title: string;
   color?: string;
   useSearch?: boolean;
   icon?: React.ReactNode;
+  saved?: boolean;
   setSearchText?: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -122,6 +140,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   setSearchText,
   color,
   icon,
+  saved,
   children,
 }) => {
   // const appTheme = useTheme();
@@ -141,6 +160,17 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           </span>
         )}
         <h1>{title}</h1>
+        {saved !== undefined &&
+          (!saved ? (
+            <SavingIndicatorContainer className="blink">
+              <IoSaveOutline />
+              <small>saving...</small>
+            </SavingIndicatorContainer>
+          ) : (
+            <SavingIndicatorContainer>
+              <CheckCircleIcon />
+            </SavingIndicatorContainer>
+          ))}
       </PageHeaderSection>
       <PageHeaderSection>
         {useSearch && setSearchText && (
@@ -180,12 +210,14 @@ interface InputPageHeaderProps {
   item: Marknote | Group;
   icon?: React.ReactNode;
   handleEditField: (key: string, value: string | Boolean) => void;
+  saved?: boolean;
 }
 
 export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
   item,
   icon,
   handleEditField,
+  saved,
   children,
 }) => {
   return (
@@ -211,6 +243,17 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
           value={item.title}
           onChange={(event) => handleEditField("title", event.target.value)}
         />
+        {saved !== undefined &&
+          (!saved ? (
+            <SavingIndicatorContainer className="blink">
+              <IoSaveOutline />
+              <small>saving...</small>
+            </SavingIndicatorContainer>
+          ) : (
+            <SavingIndicatorContainer>
+              <CheckCircleIcon />
+            </SavingIndicatorContainer>
+          ))}
       </PageHeaderSection>
       <PageHeaderSection>
         <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>

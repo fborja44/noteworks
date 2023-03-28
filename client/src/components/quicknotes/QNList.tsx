@@ -35,6 +35,7 @@ export interface QNListProps {
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
   setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
+  setSaved?: Function;
 }
 
 const QNList: React.FC<QNListProps> = ({
@@ -48,6 +49,7 @@ const QNList: React.FC<QNListProps> = ({
   favorites,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
+  setSaved
 }) => {
   let notes = quicknotes;
   // Filter notes by searchtext if given
@@ -77,6 +79,7 @@ const QNList: React.FC<QNListProps> = ({
           updateQuicknotesList={updateQuicknotesList}
           handleUpdateQuicknote={handleUpdateQuicknote}
           handleDeleteQuicknote={handleDeleteQuicknote}
+          setSaved={setSaved}
         />
       ))}
     </List>

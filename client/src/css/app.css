@@ -156,3 +156,13 @@ textarea:focus {
   width: 12px;
   left: 12px;
 }
+
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
