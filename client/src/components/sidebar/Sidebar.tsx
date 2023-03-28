@@ -10,12 +10,12 @@ import styled from "@emotion/styled";
 
 // Image and icon imports
 import SidebarButton from "./SidebarButton";
-import PencilSquareIcon from "../icons/PencilSquareIcon";
 import BoltIcon from "../icons/BoltIcon";
 import HomeIcon from "../icons/HomeIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
+import CommandLineIcon from "../icons/CommandLineIcon";
 
 export interface SidebarProps {
   selectedTab: string;
@@ -67,7 +67,7 @@ const SidebarTitle = styled.div`
     props.open ? "space-between" : "center"};
   align-items: center;
   padding: ${(props: { open: boolean }) =>
-    props.open ? "0 0.15em 0 1em" : "0"};
+    props.open ? "0 0.25em 0 1em" : "0 0.25em"};
   border-bottom: 1px solid ${(props) => props.theme.sidebar.borderColor};
   font-size: 13px;
   font-weight: 600;
@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
           onClick={() => {
             setOpen(!open);
           }}
-          width="fit-content"
+          width={open ? "28px" : "100%"}
         >
           <ChevronLeftIcon className="menu-button" />
         </PageHeaderButton>
@@ -116,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               full={open}
               title="Marknotes"
               label="Marknotes"
-              icon={<PencilSquareIcon css={NavIcon} />}
+              icon={<CommandLineIcon css={NavIcon} />}
               route="/marknotes"
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}

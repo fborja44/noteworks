@@ -13,6 +13,7 @@ import MNList from "../marknotes/MNList";
 // Image and icon imports
 import GroupList from "../groups/GroupList";
 import StarIcon from "../icons/StarIcon";
+import HomeIcon from "../icons/HomeIcon";
 
 /**
  * Home content props
@@ -53,7 +54,7 @@ const HomePage: React.FC<HomePageProps> = ({
 }) => {
   return (
     <React.Fragment>
-      <PageHeader title="Dashboard" />
+      <PageHeader title="Dashboard" icon={<HomeIcon />} />
       <div className="main-content-wrapper">
         <Section name={`Favorited Groups`} icon={<StarIcon />}>
           <GroupList

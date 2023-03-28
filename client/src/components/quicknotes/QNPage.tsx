@@ -19,6 +19,7 @@ import GroupList from "../groups/GroupList";
 import PlusIcon from "../icons/PlusIcon";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
+import BoltIcon from "../icons/BoltIcon";
 
 import axios from "axios";
 
@@ -93,6 +94,7 @@ const QNPage: React.FC<QNPageProps> = ({
         title="My Quicknotes"
         useSearch={true}
         setSearchText={setQNSearchText}
+        icon={<BoltIcon />}
       >
         <PageHeaderButton title={"New Note"} onClick={handleAddQuicknote}>
           <PlusIcon />

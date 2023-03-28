@@ -14,23 +14,25 @@ export interface PageHeaderButtonProps {
 }
 
 const StyledButton = styled.div`
-  width: ${(props: { width?: string; height?: string }) =>
-    props.width ? props.width : "38px"};
-  height: ${(props: { width?: string; height?: string }) =>
-    props.height ? props.height : "28px"};
   float: left;
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${(props) => props.theme.header.textSecondary};
+  ${(props: { width?: string; height?: string }) =>
+    !props.width && !props.height && "margin-left: 0.25em;"}
+  width: ${(props: { width?: string; height?: string }) =>
+    props.width ? props.width : "32px"};
 
   button {
-    width: 80%;
-    height: 100%;
+    width: ${(props: { width?: string; height?: string }) =>
+      props.width ? props.width : "32px"};
+    height: ${(props: { width?: string; height?: string }) =>
+      props.height ? props.height : "28px"};
     background: inherit;
     border: none;
     color: inherit;
-    font-size: 20px;
+    font-size: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,6 +44,11 @@ const StyledButton = styled.div`
       cursor: pointer;
       background: ${(props) => props.theme.header.backgroundSecondary};
       // transition: background-color 0.2s ease 0s;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 

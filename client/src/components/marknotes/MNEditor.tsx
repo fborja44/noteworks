@@ -328,7 +328,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
           onClick={() => setShowPreview((prev) => !prev)}
           selected={showPreview}
         >
-          <VscOpenPreview />
+          <VscOpenPreview css={css`position: relative; top: 1px;`} />
         </PageHeaderButton>
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />

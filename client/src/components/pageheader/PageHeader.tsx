@@ -15,6 +15,7 @@ import { COLOR } from "../../common/color";
 // Component imports
 import Searchbar from "../Searchbar";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
+import CommandLineIcon from "../icons/CommandLineIcon";
 
 /**
  * @deprecated Header background is no longer dynamic.
@@ -53,7 +54,7 @@ const PageHeaderContainer = styled.section`
   justify-content: space-between;
   position: relative;
   z-index: 10;
-  padding: 0 0 0 1rem;
+  padding: 0 0.5em 0 1em;
 
   h1 {
     margin-left: 1rem;
@@ -70,6 +71,18 @@ const PageHeaderSection = styled.div`
   flex-direction: row;
   align-items: center;
   height: 100%;
+`;
+
+const PageHeaderIconStyles = css`
+  height: 20px;
+  width: 20px;
+  margin-right: 0.625em;
+
+  span {
+    height: 20px;
+    width: 20px;
+    margin-right: 0.625em;
+  }
 `;
 
 const PageHeaderButtonsContainer = styled.div`
@@ -94,6 +107,7 @@ export interface PageHeaderProps {
   title: string;
   color?: string;
   useSearch?: boolean;
+  icon?: React.ReactNode;
   setSearchText?: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -102,12 +116,25 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   useSearch,
   setSearchText,
   color,
+  icon,
   children,
 }) => {
   // const appTheme = useTheme();
   return (
     <PageHeaderContainer>
       <PageHeaderSection>
+        {icon && (
+          <span
+            css={[
+              PageHeaderIconStyles,
+              css`
+                color: ${color};
+              `,
+            ]}
+          >
+            {icon}
+          </span>
+        )}
         <h1>{title}</h1>
       </PageHeaderSection>
       <PageHeaderSection>
@@ -156,21 +183,26 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
 }) => {
   return (
     <PageHeaderContainer>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
+      <PageHeaderSection>
         {item.type === "group" && (
           <FolderOpenIcon
-            css={css`
-              height: 24px;
-              width: 24px;
-              color: ${COLOR[item.color].primary};
-              margin-right: 0.75em;
-            `}
+            css={[
+              PageHeaderIconStyles,
+              css`
+                color: ${COLOR[item.color].primary};
+              `,
+            ]}
             filled
+          />
+        )}
+        {item.type === "marknote" && (
+          <CommandLineIcon
+            css={[
+              PageHeaderIconStyles,
+              css`
+                color: ${COLOR[item.color].primary};
+              `,
+            ]}
           />
         )}
         <TitleInput
@@ -181,7 +213,7 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
           value={item.title}
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-      </div>
+      </PageHeaderSection>
       <PageHeaderSection>
         <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
       </PageHeaderSection>
