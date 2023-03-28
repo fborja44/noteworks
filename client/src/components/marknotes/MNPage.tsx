@@ -22,7 +22,7 @@ import GroupList from "../groups/GroupList";
 import PlusIcon from "../icons/PlusIcon";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
-import CommandLineIcon from "../icons/CommandLineIcon";
+import { BsMarkdown } from "react-icons/bs";
 
 import axios from "axios";
 
@@ -109,7 +109,7 @@ const MNPage: React.FC<MNPageProps> = ({
           title="My Marknotes"
           useSearch={true}
           setSearchText={setMNSearchText}
-          icon={<CommandLineIcon />}
+          icon={<BsMarkdown className="markdown" />}
         >
           <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
             <PlusIcon />

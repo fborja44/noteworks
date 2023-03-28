@@ -15,13 +15,14 @@ import { COLOR } from "../../common/color";
 
 // Component Imports
 import ModalMenu from "./ModalMenu";
+import TrashIcon from "../icons/TrashIcon";
 
 const MenuContent = styled.div`
   text-align: center;
 
   p {
     font-size: 14px;
-    margin-bottom: 2em;
+    padding-bottom: 1em;
   }
 `;
 
@@ -78,6 +79,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
       heading={`Delete ${
         item.type.charAt(0).toUpperCase() + item.type.slice(1)
       } "${title}"?`}
+      icon={<TrashIcon />}
       showMenuState={showMenuState}
       setShowMenuState={setShowMenuState}
     >

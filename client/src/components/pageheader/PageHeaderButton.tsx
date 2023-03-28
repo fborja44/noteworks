@@ -20,7 +20,7 @@ const StyledButton = styled.div`
   justify-content: center;
   color: ${(props) => props.theme.header.textSecondary};
   ${(props: { width?: string; height?: string }) =>
-    !props.width && !props.height && "margin-left: 0.25em;"}
+    !props.width && !props.height && "margin-left: 0.5em;"}
   width: ${(props: { width?: string; height?: string }) =>
     props.width ? props.width : "32px"};
 

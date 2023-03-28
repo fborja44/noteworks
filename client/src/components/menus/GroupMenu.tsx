@@ -17,9 +17,10 @@ import ModalMenu from "./ModalMenu";
 
 // Image and icon imports
 import FolderIcon from "../icons/FolderIcon";
+import CheckCircleIcon from "../icons/CheckCircleIcon";
+import FolderOpenIcon from "../icons/FolderOpenIcon";
 
 import axios from "axios";
-import CheckCircleIcon from "../icons/CheckCircleIcon";
 
 const BASE_ADDR = "http://localhost:3001";
 
@@ -125,10 +126,20 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
 
   return (
     <ModalMenu
-      heading="Add/Remove Note from Groups:"
+      heading="Manage Note Groups"
+      icon={<FolderIcon filled />}
       showMenuState={showGroupMenu}
       setShowMenuState={setShowGroupMenu}
     >
+      <p
+        css={css`
+          text-align: center;
+          padding-bottom: 1em;
+          font-size: 14px;
+        `}
+      >
+        Add or remove this note from groups.
+      </p>
       <GroupMenuContent>
         {groups.map((group, i) => (
           <GroupMenuItem
@@ -146,17 +157,20 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
               css={css`
                 display: flex;
                 justify-content: center;
-              `}
-            >
-              <FolderIcon
-                css={css`
+                svg {
                   color: ${COLOR[group.color].primary};
                   height: 20px;
                   width: 20px;
                   margin-right: 1em;
-                `}
-                filled
-              />
+                }
+              `}
+            >
+              {group.quicknotes.includes(item._id) ||
+              group.marknotes.includes(item._id) ? (
+                <FolderOpenIcon filled />
+              ) : (
+                <FolderIcon />
+              )}
               {(group.title && (
                 <span>{group.title.slice(0, 28) + "..."}</span>
               )) || <span className="italic">Untitled Group</span>}

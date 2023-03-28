@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 
 // Image and icon imports
 import XMarkIcon from "../icons/XMarkIcon";
+import HelpIcon from "../icons/HelpIcon";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -39,6 +40,19 @@ const MenuContainer = styled.div`
   border-radius: 10px;
 `;
 
+const HeadingContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 21px;
+    height: 21px;
+    margin-right: 0.625em;
+  }
+`
+
 const MenuHeader = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.main.borderColor};
   display: flex;
@@ -46,28 +60,30 @@ const MenuHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   height: fit-content;
-  padding: 0.65em 1em 0.65em 2em;
+  padding: 0.65em 1.25em 0.65em 1.5em;
 `;
 
 const Heading = styled.h1`
   margin: 0;
   font-size: 15px;
   max-width: 375px;
+  margin-right: 2em;
   color: ${(props) => props.theme.menu.title};
 `;
 
 const ModalMenuContentContainer = styled.div`
   display: block;
   width: 100%;
-  padding: 1.5em;
+  padding: 1em 1.5em 1.5em 1.5em;
 
   p {
-    margin: 0.5rem 0 0.5rem;
+    margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
 export interface ModalMenuProps {
   heading: string;
+  icon?: React.ReactNode;
   children: any;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -78,6 +94,7 @@ export interface ModalMenuProps {
  */
 const ModalMenu: React.FC<ModalMenuProps> = ({
   heading,
+  icon,
   children,
   showMenuState,
   setShowMenuState,
@@ -123,7 +140,10 @@ const ModalMenu: React.FC<ModalMenuProps> = ({
         >
           <MenuContainer>
             <MenuHeader>
-              <Heading>{heading}</Heading>
+              <HeadingContainer>
+                {icon}
+                <Heading>{heading}</Heading>
+              </HeadingContainer>
               <PageHeaderButton
                 title="Close"
                 onClick={() => setShowMenuState((prev: boolean) => !prev)}

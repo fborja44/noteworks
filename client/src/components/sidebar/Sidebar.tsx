@@ -15,7 +15,7 @@ import HomeIcon from "../icons/HomeIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
-import CommandLineIcon from "../icons/CommandLineIcon";
+import { BsMarkdown } from "react-icons/bs";
 
 export interface SidebarProps {
   selectedTab: string;
@@ -116,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               full={open}
               title="Marknotes"
               label="Marknotes"
-              icon={<CommandLineIcon css={NavIcon} />}
+              icon={<BsMarkdown css={NavIcon} />}
               route="/marknotes"
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}

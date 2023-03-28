@@ -27,6 +27,7 @@ import TrashIcon from "../icons/TrashIcon";
 import PencilSquareIcon from "../icons/PencilSquareIcon";
 import StarIcon from "../icons/StarIcon";
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
+import FolderOpenIcon from "../icons/FolderOpenIcon";
 
 /**
  * Props for GroupPage
@@ -146,7 +147,11 @@ const GroupPage: React.FC<GroupPageProps> = ({
 
   return (
     <React.Fragment>
-      <InputPageHeader item={group} handleEditField={handleEditField}>
+      <InputPageHeader
+        item={group}
+        handleEditField={handleEditField}
+        icon={<FolderOpenIcon filled />}
+      >
         <PageHeaderButton title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />
         </PageHeaderButton>

@@ -20,6 +20,7 @@ import ToggleSwitch from "./ToggleSwitch";
 // Image and icon imports
 import { FiMoon } from "react-icons/fi";
 import { ImSun } from "react-icons/im";
+import SettingsIcon from "../icons/SettingsIcon";
 
 const Option = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
 }) => {
   return (
     <React.Fragment>
-      <PageHeader title="Settings" />
+      <PageHeader title="Settings" icon={<SettingsIcon />} />
       <div className="main-content-wrapper">
         <Section name="Appearance">
           <Option>

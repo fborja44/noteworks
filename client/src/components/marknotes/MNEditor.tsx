@@ -20,6 +20,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import { InputPageHeader } from "../pageheader/PageHeader";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
+import { Empty } from "../Section";
 
 // Image and icon imports
 import { VscOpenPreview, VscFileCode } from "react-icons/vsc";
@@ -27,7 +28,7 @@ import PencilSquareIcon from "../icons/PencilSquareIcon";
 import TrashIcon from "../icons/TrashIcon";
 import StarIcon from "../icons/StarIcon";
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
-import { Empty } from "../Section";
+import { BsMarkdownFill } from "react-icons/bs";
 
 // Codemirror imports
 import "codemirror/lib/codemirror.css";
@@ -315,7 +316,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
 
   return (
     <EditorMain>
-      <InputPageHeader item={marknote} handleEditField={handleEditField}>
+      <InputPageHeader item={marknote} handleEditField={handleEditField} icon={<BsMarkdownFill className="markdown" />}>
         <PageHeaderButton
           title="Toggle Preview"
           onClick={() => setShowEditor((prev) => !prev)}

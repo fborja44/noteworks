@@ -5,6 +5,7 @@ import React from "react";
 
 // Component imports
 import ModalMenu from "../menus/ModalMenu";
+import HelpIcon from "../icons/HelpIcon";
 
 export interface MNHelpProps {
   showMNHelp: boolean;
@@ -15,6 +16,7 @@ const MNHelp: React.FC<MNHelpProps> = ({ showMNHelp, setShowMNHelp }) => {
   return (
     <ModalMenu
       heading="Marknotes Help"
+      icon={<HelpIcon />}
       showMenuState={showMNHelp}
       setShowMenuState={setShowMNHelp}
     >

@@ -15,7 +15,7 @@ import { COLOR } from "../../common/color";
 // Component imports
 import Searchbar from "../Searchbar";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
-import CommandLineIcon from "../icons/CommandLineIcon";
+import CodeBracketIcon from "../icons/CodeBracketIcon";
 
 /**
  * @deprecated Header background is no longer dynamic.
@@ -82,6 +82,11 @@ const PageHeaderIconStyles = css`
     height: 20px;
     width: 20px;
     margin-right: 0.625em;
+  }
+
+  .markdown {
+    height: 20px;
+    width: 20px;
   }
 `;
 
@@ -173,37 +178,30 @@ const TitleInput = styled.input`
 
 interface InputPageHeaderProps {
   item: Marknote | Group;
+  icon?: React.ReactNode;
   handleEditField: (key: string, value: string | Boolean) => void;
 }
 
 export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
   item,
+  icon,
   handleEditField,
   children,
 }) => {
   return (
     <PageHeaderContainer>
       <PageHeaderSection>
-        {item.type === "group" && (
-          <FolderOpenIcon
+        {icon && (
+          <span
             css={[
               PageHeaderIconStyles,
               css`
                 color: ${COLOR[item.color].primary};
               `,
             ]}
-            filled
-          />
-        )}
-        {item.type === "marknote" && (
-          <CommandLineIcon
-            css={[
-              PageHeaderIconStyles,
-              css`
-                color: ${COLOR[item.color].primary};
-              `,
-            ]}
-          />
+          >
+            {icon}
+          </span>
         )}
         <TitleInput
           type="text"

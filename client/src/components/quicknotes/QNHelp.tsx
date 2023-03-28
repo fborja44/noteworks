@@ -5,6 +5,7 @@ import React from "react";
 
 // Component imports
 import ModalMenu from "../menus/ModalMenu";
+import HelpIcon from "../icons/HelpIcon";
 
 export interface QNHelpProps {
   showQNHelp: any;
@@ -15,6 +16,7 @@ const QNHelp: React.FC<QNHelpProps> = ({ showQNHelp, setShowQNHelp }) => {
   return (
     <ModalMenu
       heading="Quicknotes Help"
+      icon={<HelpIcon />}
       showMenuState={showQNHelp}
       setShowMenuState={setShowQNHelp}
     >

@@ -11,6 +11,7 @@ import { COLOR, ColorId } from "../../common/color";
 // Component imports
 import ModalMenu from "./ModalMenu";
 import ColorOption from "./ColorOption";
+import { IoColorPalette } from "react-icons/io5";
 
 const ColorMenuContent = styled.div`
   display: grid;
@@ -46,7 +47,8 @@ const ColorMenu: React.FC<ColorMenuProps> = ({
 
   return (
     <ModalMenu
-      heading="Choose Label Color:"
+      heading="Choose Label Color"
+      icon={<IoColorPalette />}
       showMenuState={showColorMenu}
       setShowMenuState={setShowColorMenu}
     >
