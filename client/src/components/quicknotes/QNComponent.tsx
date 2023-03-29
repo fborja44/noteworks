@@ -68,7 +68,9 @@ export interface QNComponentProps {
   updateQuicknotesList: Function;
   handleDeleteQuicknote?: (id: string) => void;
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  setSaved?: Function;
+  setSaved: Function;
+  unsavedNotes: Quicknote[];
+  setUnsavedNotes: Function;
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
@@ -81,6 +83,8 @@ const QNComponent: React.FC<QNComponentProps> = ({
   handleDeleteQuicknote,
   handleUpdateQuicknote,
   setSaved,
+  unsavedNotes,
+  setUnsavedNotes,
 }) => {
   // Character limits
   const titleCharLimit = 30;
@@ -110,7 +114,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
     ) {
       return;
     } else {
-      let updatedNote;
+      let updatedNote: Quicknote;
       if (updateDate) {
         updatedNote = {
           ...quicknote,
@@ -124,6 +128,17 @@ const QNComponent: React.FC<QNComponentProps> = ({
         };
       }
       setQuicknote(updatedNote);
+      // Add note to unsaved list if not already in; Otherwise, update the note.
+      if (!unsavedNotes.filter((note) => note._id === updatedNote._id).length) {
+        let newUnsavedNotes = unsavedNotes;
+        newUnsavedNotes.push(updatedNote);
+        setUnsavedNotes(newUnsavedNotes);
+      } else {
+        let newUnsavedNotes = unsavedNotes.map((note) => {
+          return note._id === updatedNote._id ? updatedNote : note;
+        });
+        setUnsavedNotes(newUnsavedNotes);
+      }
     }
   };
 
@@ -138,7 +153,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
     };
     setQuicknote(updatedQuicknote);
     handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesList(quicknote._id, updatedQuicknote);
+    updateQuicknotesList([updatedQuicknote]);
   };
 
   /**
@@ -152,7 +167,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
     };
     setQuicknote(updatedQuicknote);
     handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesList(quicknote._id, updatedQuicknote);
+    updateQuicknotesList([updatedQuicknote]);
   };
 
   // Menu state
@@ -187,16 +202,16 @@ const QNComponent: React.FC<QNComponentProps> = ({
 
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateQuicknote(quicknote._id, quicknote);
-      updateQuicknotesList(quicknote._id, quicknote);
-      if (setSaved) {
-        setSaved(true);
+      // Update every note in the unsaved queue.
+      for (let note of unsavedNotes) {
+        handleUpdateQuicknote(note._id, note);
       }
-    }, 1000);
+      updateQuicknotesList(unsavedNotes);
+      setUnsavedNotes([]); // Reset unsaved notes
+      setSaved(true);
+    }, 2000);
     return () => {
-      if (setSaved) {
-        setSaved(false);
-      }
+      setSaved(false);
       clearTimeout(delayDBUpdate);
     };
   }, [quicknote]);

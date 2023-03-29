@@ -79,7 +79,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
 
-  // Group Saved State
+  // Data Saved State
   const [saved, setSaved] = useState(true);
 
   /**
@@ -145,7 +145,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
       handleUpdateGroup(group._id, group);
       updateGroupsList(group._id, group);
       setSaved(true);
-    }, 1000);
+    }, 2000);
     return () => {
       setSaved(false);
       clearTimeout(delayDBUpdate);
@@ -199,6 +199,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
               handleDeleteQuicknote={handleDeleteQuicknote}
               setSelectedTab={setSelectedTab}
               setGroupPage={setGroupPage}
+              setSaved={setSaved}
             ></QNList>
           </Section>
         ) : null}

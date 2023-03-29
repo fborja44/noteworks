@@ -1,7 +1,7 @@
 /* Quicknotes List Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "@emotion/styled";
 
@@ -35,7 +35,7 @@ export interface QNListProps {
   handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   handleDeleteQuicknote: (noteId: string) => void;
   setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
-  setSaved?: Function;
+  setSaved: Function;
 }
 
 const QNList: React.FC<QNListProps> = ({
@@ -49,8 +49,11 @@ const QNList: React.FC<QNListProps> = ({
   favorites,
   handleUpdateQuicknote,
   handleDeleteQuicknote,
-  setSaved
+  setSaved,
 }) => {
+  // Unsaved Quicknotes Queue
+  const [unsavedNotes, setUnsavedNotes] = useState<Quicknote[]>([]);
+
   let notes = quicknotes;
   // Filter notes by searchtext if given
   if (QNSearchText) {
@@ -80,6 +83,8 @@ const QNList: React.FC<QNListProps> = ({
           handleUpdateQuicknote={handleUpdateQuicknote}
           handleDeleteQuicknote={handleDeleteQuicknote}
           setSaved={setSaved}
+          unsavedNotes={unsavedNotes}
+          setUnsavedNotes={setUnsavedNotes}
         />
       ))}
     </List>

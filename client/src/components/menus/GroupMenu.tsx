@@ -110,7 +110,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
           url: `/groups/${groupId}/quicknotes/${item._id}`,
           method: "PATCH",
         });
-        updateQuicknotesList(item._id, data.data.updatedNote);
+        updateQuicknotesList([data.data.updatedNote]);
       }
       if (data) {
         if (setGroupPage) {

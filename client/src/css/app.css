@@ -158,11 +158,46 @@ textarea:focus {
 }
 
 .blink {
-  animation: blinker 2s linear infinite;
+  animation: blinker 1.5s linear infinite;
+  -webkit-animation: blinker 1.5s linear infinite;
 }
 
 @keyframes blinker {
   50% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeout 0.5s 1;
+  -webkit-animation: fadeout 0.5s 1;
+  animation-fill-mode: forwards;
+
+  animation-delay: 2s;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
     opacity: 0;
   }
 }

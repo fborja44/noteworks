@@ -67,21 +67,21 @@ const App = () => {
   };
 
   /**
-   * Quicknote function to update the marknotes list in app state
-   * @param noteId The marknote id
-   * @param updatedQuicknote The data to update the marknote with
+   * Quicknote function to update the quicknotes list in app state
+   * when notes are updated.
+   * @param updatedQuicknotes Array of updated quicknote data.
    */
-  const updateQuicknotesList = (
-    noteId: string,
-    updatedQuicknote: Quicknote
-  ) => {
-    const updatedQuicknotesArray = quicknotes.map((note: any) => {
-      if (note._id === noteId) {
-        return updatedQuicknote;
+  const updateQuicknotesList = (updatedQuicknotes: Quicknote[]) => {
+    // Combine lists of updated notes and non-updated notes
+    const filteredQuicknotes: Quicknote[] = quicknotes.filter((note) => {
+      for (const updatedNote of updatedQuicknotes) {
+        if (note._id === updatedNote._id) {
+          return false;
+        }
       }
-      return note;
+      return true;
     });
-    setQuicknotes(updatedQuicknotesArray);
+    setQuicknotes([...updatedQuicknotes, ...filteredQuicknotes]);
   };
 
   /**

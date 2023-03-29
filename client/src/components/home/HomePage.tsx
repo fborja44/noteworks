@@ -1,7 +1,7 @@
 /* Home Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
@@ -52,9 +52,12 @@ const HomePage: React.FC<HomePageProps> = ({
   handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // Data Saved State
+  const [saved, setSaved] = useState(true);
+
   return (
     <React.Fragment>
-      <PageHeader title="Dashboard" icon={<HomeIcon />} />
+      <PageHeader title="Dashboard" icon={<HomeIcon />} saved={saved} />
       <div className="main-content-wrapper">
         <Section name={`Favorited Groups`} icon={<StarIcon />}>
           <GroupList
@@ -75,6 +78,7 @@ const HomePage: React.FC<HomePageProps> = ({
             favorites={true}
             handleUpdateQuicknote={handleUpdateQuicknote}
             handleDeleteQuicknote={handleDeleteQuicknote}
+            setSaved={setSaved}
           />
         </Section>
         <Section name={`Favorited Marknotes`} icon={<StarIcon />}>

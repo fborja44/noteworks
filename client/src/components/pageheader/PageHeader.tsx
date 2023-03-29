@@ -112,7 +112,8 @@ const SavingIndicatorContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-left: 0.5em;
+  align-items: center;
+  margin-right: 0.625em;
   color: ${(props) => props.theme.header.textSecondary};
   svg {
     margin-right: 0.375em;
@@ -122,8 +123,29 @@ const SavingIndicatorContainer = styled.div`
   small {
     font-size: 10px;
     font-style: italic;
+    position: relative;
+    bottom: 1px;
   }
 `;
+
+const SavedIndicator = ({ saved }: { saved: boolean }) => {
+  return !saved ? (
+    <SavingIndicatorContainer className="blink">
+      <IoSaveOutline />
+      <small>saving...</small>
+    </SavingIndicatorContainer>
+  ) : (
+    <SavingIndicatorContainer
+      className="fade-out"
+      css={css`
+        color: ${COLOR.green.primary};
+      `}
+    >
+      <CheckCircleIcon />
+      <small>data saved</small>
+    </SavingIndicatorContainer>
+  );
+};
 
 export interface PageHeaderProps {
   title: string;
@@ -160,19 +182,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           </span>
         )}
         <h1>{title}</h1>
-        {saved !== undefined &&
-          (!saved ? (
-            <SavingIndicatorContainer className="blink">
-              <IoSaveOutline />
-              <small>saving...</small>
-            </SavingIndicatorContainer>
-          ) : (
-            <SavingIndicatorContainer>
-              <CheckCircleIcon />
-            </SavingIndicatorContainer>
-          ))}
       </PageHeaderSection>
       <PageHeaderSection>
+        {saved !== undefined && <SavedIndicator saved={saved} />}
         {useSearch && setSearchText && (
           <Searchbar handleSearchNote={setSearchText} />
         )}
@@ -243,19 +255,9 @@ export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
           value={item.title}
           onChange={(event) => handleEditField("title", event.target.value)}
         />
-        {saved !== undefined &&
-          (!saved ? (
-            <SavingIndicatorContainer className="blink">
-              <IoSaveOutline />
-              <small>saving...</small>
-            </SavingIndicatorContainer>
-          ) : (
-            <SavingIndicatorContainer>
-              <CheckCircleIcon />
-            </SavingIndicatorContainer>
-          ))}
       </PageHeaderSection>
       <PageHeaderSection>
+        {saved !== undefined && <SavedIndicator saved={saved} />}
         <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
       </PageHeaderSection>
     </PageHeaderContainer>

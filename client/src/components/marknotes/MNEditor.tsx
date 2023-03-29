@@ -313,7 +313,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
       handleUpdateMarknote(marknote._id, marknote);
       updateMarknotesList(marknote._id, marknote);
       setSaved(true);
-    }, 1000);
+    }, 2000);
 
     return () => {
       setSaved(false);
