@@ -140,7 +140,11 @@ const ProfileIcon = styled.div`
   }
 `;
 
-const Titlebar = () => {
+interface TitlebarProps {
+  setSearchTerm: Function;
+}
+
+const Titlebar = ({ setSearchTerm }: TitlebarProps) => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);
@@ -179,7 +183,7 @@ const Titlebar = () => {
         />
         <Title>NotesNexus</Title>
       </TitleContainer>
-      <AppSearchbar />
+      <AppSearchbar setSearchTerm={setSearchTerm} />
       <Draggable />
       <ProfileInfoContainer>
         <span>Username</span>

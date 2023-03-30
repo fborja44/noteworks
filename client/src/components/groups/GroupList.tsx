@@ -28,6 +28,7 @@ const List = styled.div`
 `;
 
 export interface GroupListProps {
+  GroupsFilterText?: string;
   groups: Group[];
   updateGroupsList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
@@ -36,6 +37,7 @@ export interface GroupListProps {
 }
 
 const GroupList: React.FC<GroupListProps> = ({
+  GroupsFilterText,
   groups,
   updateGroupsList,
   handleUpdateGroup,
@@ -46,9 +48,17 @@ const GroupList: React.FC<GroupListProps> = ({
     groups = groups.filter((group) => group.favorited);
   }
 
+  let filteredGroups = groups;
+  // Filter notes by searchtext if given
+  if (GroupsFilterText) {
+    filteredGroups = groups.filter((group) =>
+      group.title.toLowerCase().includes(GroupsFilterText.toLowerCase())
+    );
+  }
+
   const groupsList = (
     <List>
-      {groups.map((group) => (
+      {filteredGroups.map((group) => (
         <GroupComponent
           key={group._id}
           currentGroup={group}
@@ -60,9 +70,13 @@ const GroupList: React.FC<GroupListProps> = ({
     </List>
   );
 
-  const groupsEmpty = favorites ? (
-    <Empty>You have no favorited groups.</Empty>
-  ) : (
+  const searchEmpty = (
+    <Empty>
+      <p>{`No groups found for the term "${GroupsFilterText}".`}</p>
+    </Empty>
+  );
+
+  const groupsEmpty = !favorites ? (
     <Empty>
       <p>You have no groups.</p>
       <p>
@@ -70,11 +84,17 @@ const GroupList: React.FC<GroupListProps> = ({
         above!
       </p>
     </Empty>
+  ) : (
+    <Empty>You have no favorited groups.</Empty>
   );
 
   return (
     <React.Fragment>
-      {groups.length !== 0 ? groupsList : groupsEmpty}
+      {filteredGroups.length !== 0
+        ? groupsList
+        : GroupsFilterText
+        ? searchEmpty
+        : groupsEmpty}
     </React.Fragment>
   );
 };

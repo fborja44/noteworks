@@ -1,7 +1,7 @@
 /* Home Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import * as React from "react";
+import React, { useState } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -47,8 +47,10 @@ const FooterOption = styled.button`
   margin-left: 0.5rem;
   padding: 0 0.4rem 0 0.4rem;
   height: 100%;
+  width: 90px;
 
   display: flex;
+  justify-content: center;
   align-items: center;
   background: inherit;
   color: inherit;
@@ -78,18 +80,23 @@ const Footer = ({
   fetchMarknotes,
   fetchGroups,
 }: FooterProps) => {
+  const [refreshing, setRefreshing] = useState(false);
+
   return (
     <FooterContainer>
       <OptionContainer>
         <FooterOption
           onClick={async () => {
+            setRefreshing(true);
             await fetchQuicknotes();
             await fetchMarknotes();
             await fetchGroups();
+            setRefreshing(false);
           }}
+          className={refreshing ? "blink" : ""}
         >
           <RefreshIcon />
-          <span>Refresh Notes</span>
+          <span>{!refreshing ? "Refresh Notes" : "Refreshing..."}</span>
         </FooterOption>
       </OptionContainer>
       <div

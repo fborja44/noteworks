@@ -1,9 +1,12 @@
 /* AppSearchbar Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "@emotion/styled";
+
+// Component imports
+import { Link } from "react-router-dom";
 
 // Image and icon imports
 import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
@@ -44,7 +47,8 @@ const SearchInput = styled.input`
   }
 `;
 
-const AppSearchButton = styled.button`
+const AppSearchButton = styled(Link)`
+  width: 22px;
   height: 100%;
   border: none;
   background-color: ${(props) => props.theme.title.borderColor};
@@ -59,21 +63,35 @@ const AppSearchButton = styled.button`
   }
   &:hover {
     cursor: pointer;
-    background: ${(props) => props.theme.title.borderHoverColor}
+    background: ${(props) => props.theme.title.borderHoverColor};
   }
 `;
 
-interface AppSearchbarProps {}
+interface AppSearchbarProps {
+  setSearchTerm: Function;
+}
 
 /**
  * App Searchbar component
  */
-const AppSearchbar: React.FC<AppSearchbarProps> = ({}) => {
+const AppSearchbar: React.FC<AppSearchbarProps> = ({ setSearchTerm }) => {
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <AppSearchbarContainer>
       <MagnifyingGlassIcon className="app-search-icon" />
-      <SearchInput onChange={() => {}} placeholder="Type to search for notes..." />
-      <AppSearchButton>
+      <SearchInput
+        value={searchInput}
+        onChange={(event) => setSearchInput(event.target.value)}
+        placeholder="Search for notes..."
+      />
+      <AppSearchButton
+        title="Search"
+        to="/search"
+        onClick={() => {
+          setSearchTerm(searchInput);
+        }}
+      >
         <ChevronRightIcon />
       </AppSearchButton>
     </AppSearchbarContainer>

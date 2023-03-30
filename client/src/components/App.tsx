@@ -24,6 +24,7 @@ import QNPage from "./quicknotes/QNPage";
 import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
 import GroupPage from "./groups/GroupPage";
+import SearchPage from "./searchpage/SearchPage";
 
 // CSS imports
 import "../css/app.css";
@@ -43,6 +44,10 @@ const BASE_ADDR = "http://localhost:3001";
  * Main application component
  */
 const App = () => {
+  /* Search State
+  ------------------------------------------------------------------------------*/
+  const [searchTerm, setSearchTerm] = useState("");
+
   /* Quicknotes State
   ------------------------------------------------------------------------------*/
   const [quicknotes, setQuicknotes] = useState<Quicknote[]>([]);
@@ -328,7 +333,7 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
-        <Titlebar />
+        <Titlebar setSearchTerm={setSearchTerm} />
         <div className="app-container">
           <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
           <Switch>
@@ -382,6 +387,26 @@ const App = () => {
                   handleDeleteGroup={handleDeleteGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
+                  setSelectedTab={setSelectedTab}
+                />
+              </main>
+            </Route>
+            <Route path="/search">
+              <main>
+                <SearchPage
+                  searchTerm={searchTerm}
+                  groups={groups}
+                  updateGroupsList={updateGroupsList}
+                  quicknotes={quicknotes}
+                  updateQuicknotesList={updateQuicknotesList}
+                  marknotes={marknotes}
+                  updateMarknotesList={updateMarknotesList}
+                  handleUpdateGroup={handleUpdateGroup}
+                  handleDeleteGroup={handleDeleteGroup}
+                  handleUpdateMarknote={handleUpdateMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
+                  handleUpdateQuicknote={handleUpdateQuicknote}
+                  handleDeleteQuicknote={handleDeleteQuicknote}
                   setSelectedTab={setSelectedTab}
                 />
               </main>
