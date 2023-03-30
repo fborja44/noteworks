@@ -1,6 +1,6 @@
 import { HeroIconProps } from "../../common/types";
 
-const ChevronLeftIcon = ({ className, filled }: HeroIconProps) => {
+const ChevronDownIcon = ({ className, filled }: HeroIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,4 +19,4 @@ const ChevronLeftIcon = ({ className, filled }: HeroIconProps) => {
   );
 };
 
-export default ChevronLeftIcon;
+export default ChevronDownIcon;

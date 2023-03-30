@@ -6,13 +6,20 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Image and icon imports
-import MagnifyingGlassIcon from "./icons/MagnifyingGlassIcon";
+import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
 
 const SearchbarContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1rem;
   position: relative;
+
+  .search-icon {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    left: 12px;
+  }
 `;
 
 const SearchInput = styled.input`

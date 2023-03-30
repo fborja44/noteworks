@@ -13,7 +13,7 @@ import { Group, Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import Searchbar from "../Searchbar";
+import Searchbar from "./Searchbar";
 import { IoSaveOutline } from "react-icons/io5";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 

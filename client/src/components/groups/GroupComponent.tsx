@@ -153,6 +153,11 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
     setShowConfirmDelete((prev) => !prev);
   };
 
+  const title =
+    groupComponent.title.trim() && groupComponent.title.length > 20
+      ? groupComponent.title.slice(0, 20) + "..."
+      : groupComponent.title;
+
   return (
     <React.Fragment>
       <GroupContainer>
@@ -175,7 +180,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
             />
             <GroupName>
               {groupComponent.title.trim() ? (
-                groupComponent.title.slice(0, 20) + "..."
+                <span>{title}</span>
               ) : (
                 <span className="italic">Untitled Group</span>
               )}

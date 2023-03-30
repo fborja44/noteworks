@@ -8,6 +8,10 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Component imports
+import ProfileButton from "./ProfileButton";
+import AppSearchbar from "./AppSearchbar";
+
 // Common imports
 import { COLOR } from "../../common/color";
 
@@ -16,7 +20,6 @@ import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import XMarkIcon from "../icons/XMarkIcon";
 import GlobeIcon from "../icons/GlobeIcon";
-import ProfileButton from "./ProfileButton";
 import SmileIcon from "../icons/SmileIcon";
 
 // Import electron renderer
@@ -176,6 +179,7 @@ const Titlebar = () => {
         />
         <Title>NotesNexus</Title>
       </TitleContainer>
+      <AppSearchbar />
       <Draggable />
       <ProfileInfoContainer>
         <span>Username</span>

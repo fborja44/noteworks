@@ -49,7 +49,7 @@ const HeadingContainer = styled.div`
   svg {
     width: 21px;
     height: 21px;
-    margin-right: 0.625em;
+    margin-right: 0.75em;
   }
 `
 

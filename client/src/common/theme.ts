@@ -11,6 +11,7 @@ export interface AppTheme {
     background: string;
     backgroundSecondary: string;
     borderColor: string;
+    borderHoverColor: string;
     textPrimary: string;
     textSecondary: string;
   };
@@ -60,6 +61,7 @@ export const lightTheme: AppTheme = {
     background: "#FFFFFF",
     backgroundSecondary: "#E6E6E6",
     borderColor: "#E6E6E6",
+    borderHoverColor: "#D9D9D9",
     textPrimary: "#6B6B74",
     textSecondary: "#6B6B6B",
   },
@@ -109,6 +111,7 @@ export const darkTheme: AppTheme = {
     background: "#212121",
     backgroundSecondary: "#2B2B2B",
     borderColor: "#3B3B3B",
+    borderHoverColor: "#444444",
     textPrimary: "#E1E1E1",
     textSecondary: "#A6A6A6",
   },

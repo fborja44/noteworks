@@ -150,13 +150,6 @@ textarea:focus {
   width: 18px !important;
 }
 
-.search-icon {
-  position: absolute;
-  height: 12px;
-  width: 12px;
-  left: 12px;
-}
-
 .blink {
   animation: blinker 1.5s linear infinite;
   -webkit-animation: blinker 1.5s linear infinite;

@@ -47,7 +47,7 @@ const GroupMenuContent = styled.div`
   }
 `;
 
-const GroupMenuItem = styled.div`
+const GroupMenuItemContainer = styled.div`
   width: 100%;
   cursor: pointer;
   padding: 1.25em;
@@ -57,12 +57,29 @@ const GroupMenuItem = styled.div`
   align-items: center;
   font-weight: 600;
 
+  .selected-icon {
+    width: 18px;
+    height: 18px;
+    color: ${COLOR.green.primary};
+  }
+
   &:hover {
     background: ${(props) => props.theme.sidebar.hoverColor};
   }
 
   &.border {
     border-bottom: 1px solid ${(props) => props.theme.title.borderColor};
+  }
+`;
+
+const GroupMenuItemTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  svg {
+    color: ${(props: { iconColor: string }) => props.iconColor};
+    height: 20px;
+    width: 20px;
+    margin-right: 1em;
   }
 `;
 
@@ -141,51 +158,13 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
         Add or remove this note from groups.
       </p>
       <GroupMenuContent>
-        {groups.map((group, i) => (
+        {groups.map((group, index) => (
           <GroupMenuItem
-            key={group._id}
-            data-id={group._id}
-            onClick={(event) => handleSelectGroup(event)}
-            className={`${
-              group.quicknotes.includes(item._id) ||
-              group.marknotes.includes(item._id)
-                ? "selected"
-                : ""
-            } ${i !== groups.length - 1 ? "border" : ""}`}
-          >
-            <div
-              css={css`
-                display: flex;
-                justify-content: center;
-                svg {
-                  color: ${COLOR[group.color].primary};
-                  height: 20px;
-                  width: 20px;
-                  margin-right: 1em;
-                }
-              `}
-            >
-              {group.quicknotes.includes(item._id) ||
-              group.marknotes.includes(item._id) ? (
-                <FolderOpenIcon filled />
-              ) : (
-                <FolderIcon />
-              )}
-              {(group.title && (
-                <span>{group.title.slice(0, 28) + "..."}</span>
-              )) || <span className="italic">Untitled Group</span>}
-            </div>
-            {group.quicknotes.includes(item._id) ||
-            group.marknotes.includes(item._id) ? (
-              <CheckCircleIcon
-                css={css`
-                  width: 18px;
-                  height: 18px;
-                  color: ${COLOR.green.primary};
-                `}
-              />
-            ) : null}
-          </GroupMenuItem>
+            item={item}
+            group={group}
+            last={index !== groups.length - 1}
+            handleSelectGroup={handleSelectGroup}
+          />
         ))}
       </GroupMenuContent>
     </ModalMenu>
@@ -193,3 +172,45 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
 };
 
 export default GroupMenu;
+
+const GroupMenuItem = ({
+  item,
+  group,
+  last,
+  handleSelectGroup,
+}: {
+  item: Quicknote | Marknote;
+  group: Group;
+  last: boolean;
+  handleSelectGroup: Function;
+}) => {
+  return (
+    <GroupMenuItemContainer
+      key={group._id}
+      data-id={group._id}
+      onClick={(event) => handleSelectGroup(event)}
+      className={`${
+        group.quicknotes.includes(item._id) ||
+        group.marknotes.includes(item._id)
+          ? "selected"
+          : ""
+      } ${last ? "border" : ""}`}
+    >
+      <GroupMenuItemTitle iconColor={COLOR[group.color].primary}>
+        {group.quicknotes.includes(item._id) ||
+        group.marknotes.includes(item._id) ? (
+          <FolderOpenIcon filled />
+        ) : (
+          <FolderIcon />
+        )}
+        {(group.title && <span>{group.title.slice(0, 28) + "..."}</span>) || (
+          <span className="italic">Untitled Group</span>
+        )}
+      </GroupMenuItemTitle>
+      {group.quicknotes.includes(item._id) ||
+      group.marknotes.includes(item._id) ? (
+        <CheckCircleIcon className="selected-icon" />
+      ) : null}
+    </GroupMenuItemContainer>
+  );
+};
