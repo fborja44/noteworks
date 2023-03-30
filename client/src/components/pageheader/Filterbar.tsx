@@ -1,4 +1,4 @@
-/* Searchbar Component
+/* Filterbar Component
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
@@ -8,13 +8,13 @@ import styled from "@emotion/styled";
 // Image and icon imports
 import FilterIcon from "../icons/FilterIcon";
 
-const SearchbarContainer = styled.div`
+const FilterbarContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1rem;
   position: relative;
 
-  .search-icon {
+  .filter-icon {
     position: absolute;
     height: 12px;
     width: 12px;
@@ -22,7 +22,7 @@ const SearchbarContainer = styled.div`
   }
 `;
 
-const SearchInput = styled.input`
+const FilterInput = styled.input`
   width: 175px;
   height: 24px;
   margin-left: 0.3rem;
@@ -42,24 +42,24 @@ const SearchInput = styled.input`
   }
 `;
 
-interface SearchbarProps {
-  handleSearchNote: React.Dispatch<React.SetStateAction<string>>;
+interface FilterbarProps {
+  handleFilterNote: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
- * Searchbar component
- * TODO: Add delay before search term is passed down
+ * Filterbar component
+ * TODO: Add delay before filter term is passed down
  */
-const Searchbar: React.FC<SearchbarProps> = ({ handleSearchNote }) => {
+const Filterbar: React.FC<FilterbarProps> = ({ handleFilterNote }) => {
   return (
-    <SearchbarContainer>
-      <FilterIcon className="search-icon" />
-      <SearchInput
-        onChange={(event) => handleSearchNote(event.target.value)}
+    <FilterbarContainer>
+      <FilterIcon className="filter-icon" />
+      <FilterInput
+        onChange={(event) => handleFilterNote(event.target.value)}
         placeholder="Type to filter notes..."
       />
-    </SearchbarContainer>
+    </FilterbarContainer>
   );
 };
 
-export default Searchbar;
+export default Filterbar;

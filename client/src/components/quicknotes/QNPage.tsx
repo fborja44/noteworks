@@ -1,7 +1,7 @@
 /* Quicknotes Main Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Common imports
 import { Group, Quicknote } from "../../common/types";
@@ -87,16 +87,20 @@ const QNPage: React.FC<QNPageProps> = ({
   };
 
   /**
-   * State for quicknotes search text
+   * State for quicknotes filter text
    */
-  const [QNSearchText, setQNSearchText] = useState("");
+  const [QNFilterText, setQNFilterText] = useState("");
+
+  useEffect(() => {
+    setSaved(true);
+  }, [QNFilterText]);
 
   return (
     <React.Fragment>
       <PageHeader
         title="My Quicknotes"
-        useSearch={true}
-        setSearchText={setQNSearchText}
+        useFilter={true}
+        setFilterText={setQNFilterText}
         icon={<BoltIcon />}
         saved={saved}
       >
@@ -121,7 +125,7 @@ const QNPage: React.FC<QNPageProps> = ({
         </Section>
         <Section name="My Quicknotes" handleClick={handleAddQuicknote}>
           <QNList
-            QNSearchText={QNSearchText}
+            QNFilterText={QNFilterText}
             quicknotes={quicknotes}
             updateQuicknotesList={updateQuicknotesList}
             groups={groups}

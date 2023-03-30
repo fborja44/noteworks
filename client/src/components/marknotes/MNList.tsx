@@ -24,7 +24,7 @@ const List = styled.div`
 `;
 
 export interface MNListProps {
-  MNSearchText?: string;
+  MNFilterText?: string;
   marknotes: Quicknote[] | Marknote[];
   updateMarknotesList: Function;
   groups: Group[];
@@ -38,7 +38,7 @@ export interface MNListProps {
 }
 
 const MNList: React.FC<MNListProps> = ({
-  MNSearchText,
+  MNFilterText,
   marknotes,
   updateMarknotesList,
   groups,
@@ -56,11 +56,11 @@ const MNList: React.FC<MNListProps> = ({
   );
 
   // Filter notes by searchtext if given
-  if (MNSearchText) {
+  if (MNFilterText) {
     notes = notes.filter(
       (note: Quicknote | Marknote) =>
-        note.title.toLowerCase().includes(MNSearchText.toLowerCase()) ||
-        note.body.toLowerCase().includes(MNSearchText.toLowerCase())
+        note.title.toLowerCase().includes(MNFilterText.toLowerCase()) ||
+        note.body.toLowerCase().includes(MNFilterText.toLowerCase())
     );
   }
 
@@ -90,7 +90,7 @@ const MNList: React.FC<MNListProps> = ({
 
   const searchEmpty = (
     <Empty>
-      <p>{`No notes found for the search term "${MNSearchText}".`}</p>
+      <p>{`No notes found for the term "${MNFilterText}".`}</p>
     </Empty>
   );
 
@@ -107,7 +107,7 @@ const MNList: React.FC<MNListProps> = ({
 
   return (
     <React.Fragment>
-      {notes.length !== 0 ? notesList : MNSearchText ? searchEmpty : notesEmpty}
+      {notes.length !== 0 ? notesList : MNFilterText ? searchEmpty : notesEmpty}
     </React.Fragment>
   );
 };

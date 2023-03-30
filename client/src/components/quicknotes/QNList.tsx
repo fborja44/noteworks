@@ -24,7 +24,7 @@ const List = styled.div`
 `;
 
 export interface QNListProps {
-  QNSearchText?: string;
+  QNFilterText?: string;
   quicknotes: Quicknote[];
   updateQuicknotesList: Function;
   groups: Group[];
@@ -39,7 +39,7 @@ export interface QNListProps {
 }
 
 const QNList: React.FC<QNListProps> = ({
-  QNSearchText,
+  QNFilterText,
   quicknotes,
   updateQuicknotesList,
   groups,
@@ -56,11 +56,11 @@ const QNList: React.FC<QNListProps> = ({
 
   let notes = quicknotes;
   // Filter notes by searchtext if given
-  if (QNSearchText) {
+  if (QNFilterText) {
     notes = quicknotes.filter(
       (note: Quicknote | Marknote) =>
-        note.title.toLowerCase().includes(QNSearchText.toLowerCase()) ||
-        note.body.toLowerCase().includes(QNSearchText.toLowerCase())
+        note.title.toLowerCase().includes(QNFilterText.toLowerCase()) ||
+        note.body.toLowerCase().includes(QNFilterText.toLowerCase())
     );
   }
 
@@ -92,7 +92,7 @@ const QNList: React.FC<QNListProps> = ({
 
   const searchEmpty = (
     <Empty>
-      <p>{`No notes found for the search term "${QNSearchText}".`}</p>
+      <p>{`No notes found for the term "${QNFilterText}".`}</p>
     </Empty>
   );
 
@@ -109,7 +109,7 @@ const QNList: React.FC<QNListProps> = ({
 
   return (
     <React.Fragment>
-      {notes.length !== 0 ? notesList : QNSearchText ? searchEmpty : notesEmpty}
+      {notes.length !== 0 ? notesList : QNFilterText ? searchEmpty : notesEmpty}
     </React.Fragment>
   );
 };

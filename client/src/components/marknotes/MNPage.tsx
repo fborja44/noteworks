@@ -98,17 +98,17 @@ const MNPage: React.FC<MNPageProps> = ({
   };
 
   /**
-   * State for marknotes search text
+   * State for marknotes filter text
    */
-  const [MNSearchText, setMNSearchText] = useState("");
+  const [MNFilterText, setMNFilterText] = useState("");
 
   return (
     <Switch>
       <Route exact path="/marknotes">
         <PageHeader
           title="My Marknotes"
-          useSearch={true}
-          setSearchText={setMNSearchText}
+          useFilter={true}
+          setFilterText={setMNFilterText}
           icon={<BsMarkdown className="markdown" />}
         >
           <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
@@ -132,7 +132,7 @@ const MNPage: React.FC<MNPageProps> = ({
           </Section>
           <Section name="My Marknotes" handleClick={handleAddMarknote}>
             <MNList
-              MNSearchText={MNSearchText}
+              MNFilterText={MNFilterText}
               marknotes={marknotes}
               updateMarknotesList={updateMarknotesList}
               groups={groups}

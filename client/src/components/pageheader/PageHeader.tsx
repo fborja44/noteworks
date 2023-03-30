@@ -13,7 +13,7 @@ import { Group, Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
-import Searchbar from "./Searchbar";
+import Filterbar from "./Filterbar";
 import { IoSaveOutline } from "react-icons/io5";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 
@@ -150,16 +150,16 @@ const SavedIndicator = ({ saved }: { saved: boolean }) => {
 export interface PageHeaderProps {
   title: string;
   color?: string;
-  useSearch?: boolean;
+  useFilter?: boolean;
   icon?: React.ReactNode;
   saved?: boolean;
-  setSearchText?: React.Dispatch<React.SetStateAction<string>>;
+  setFilterText?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
-  useSearch,
-  setSearchText,
+  useFilter,
+  setFilterText,
   color,
   icon,
   saved,
@@ -185,8 +185,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       </PageHeaderSection>
       <PageHeaderSection>
         {saved !== undefined && <SavedIndicator saved={saved} />}
-        {useSearch && setSearchText && (
-          <Searchbar handleSearchNote={setSearchText} />
+        {useFilter && setFilterText && (
+          <Filterbar handleFilterNote={setFilterText} />
         )}
         <PageHeaderButtonsContainer>
           <ul>{children}</ul>
@@ -197,7 +197,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 };
 
 PageHeader.defaultProps = {
-  useSearch: false,
+  useFilter: false,
 };
 
 export default PageHeader;
