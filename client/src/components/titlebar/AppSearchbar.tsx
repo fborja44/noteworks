@@ -25,7 +25,7 @@ const AppSearchbarContainer = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 200px;
+  width: 240px;
   height: 100%;
   margin-left: 0.3rem;
   padding: 0.2em 0.5em 0.2em 3.25em;
@@ -72,7 +72,7 @@ const AppSearchbar: React.FC<AppSearchbarProps> = ({}) => {
   return (
     <AppSearchbarContainer>
       <MagnifyingGlassIcon className="app-search-icon" />
-      <SearchInput onChange={() => {}} placeholder="type to search..." />
+      <SearchInput onChange={() => {}} placeholder="Type to search for notes..." />
       <AppSearchButton>
         <ChevronRightIcon />
       </AppSearchButton>

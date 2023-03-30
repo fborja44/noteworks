@@ -6,7 +6,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 // Image and icon imports
-import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
+import FilterIcon from "../icons/FilterIcon";
 
 const SearchbarContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const SearchbarContainer = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 200px;
+  width: 175px;
   height: 24px;
   margin-left: 0.3rem;
   padding: 0.2em 0.5em 0.2em 2.25em;
@@ -53,10 +53,10 @@ interface SearchbarProps {
 const Searchbar: React.FC<SearchbarProps> = ({ handleSearchNote }) => {
   return (
     <SearchbarContainer>
-      <MagnifyingGlassIcon className="search-icon" />
+      <FilterIcon className="search-icon" />
       <SearchInput
         onChange={(event) => handleSearchNote(event.target.value)}
-        placeholder="type to search..."
+        placeholder="Type to filter notes..."
       />
     </SearchbarContainer>
   );
