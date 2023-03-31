@@ -25,7 +25,7 @@ const List = styled.div`
 
 export interface MNListProps {
   MNFilterText?: string;
-  marknotes: Quicknote[] | Marknote[];
+  marknotes: Marknote[];
   updateMarknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
@@ -71,20 +71,24 @@ const MNList: React.FC<MNListProps> = ({
 
   const notesList = (
     <List>
-      {notes.map((note) => (
-        <MNComponentContainer
-          key={note._id}
-          groups={groups}
-          updateGroupsList={updateGroupsList}
-          handleUpdateGroup={handleUpdateGroup}
-          setGroupPage={setGroupPage}
-          currentNote={note}
-          updateMarknotesList={updateMarknotesList}
-          handleUpdateMarknote={handleUpdateMarknote}
-          handleDeleteMarknote={handleDeleteMarknote}
-          setSelectedTab={setSelectedTab}
-        />
-      ))}
+      {notes.map(
+        (
+          note // Note should not be a member of a group to be listed with the general notes
+        ) => (
+          <MNComponentContainer
+            key={note._id}
+            groups={groups}
+            updateGroupsList={updateGroupsList}
+            handleUpdateGroup={handleUpdateGroup}
+            setGroupPage={setGroupPage}
+            currentNote={note}
+            updateMarknotesList={updateMarknotesList}
+            handleUpdateMarknote={handleUpdateMarknote}
+            handleDeleteMarknote={handleDeleteMarknote}
+            setSelectedTab={setSelectedTab}
+          />
+        )
+      )}
     </List>
   );
 

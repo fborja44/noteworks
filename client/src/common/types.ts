@@ -4,7 +4,7 @@ import { ColorId } from "./color";
 ------------------------------------------------------------------------------*/
 export type Quicknote = {
   _id: string;
-  type: string;
+  type: "quicknote";
   title: string;
   color: ColorId;
   body: string;
@@ -15,7 +15,7 @@ export type Quicknote = {
 
 export type Marknote = {
   _id: string;
-  type: string;
+  type: "marknote";
   title: string;
   color: ColorId;
   body: string;
@@ -26,7 +26,7 @@ export type Marknote = {
 
 export type Group = {
   _id: string;
-  type: string;
+  type: "group";
   title: string;
   color: ColorId;
   quicknotes: string[];

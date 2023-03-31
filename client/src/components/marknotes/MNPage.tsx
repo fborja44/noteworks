@@ -87,49 +87,41 @@ const MNPage: React.FC<MNPageProps> = ({
       <Route exact path="/marknotes">
         <PageHeader
           title="My Marknotes"
-          useFilter={true}
+          useFilter={!explorerOpen}
           setFilterText={setMNFilterText}
           icon={<BsMarkdown className="markdown-icon" />}
         >
-          <span>
-            <PageHeaderButton
-              title="List View"
-              selected={explorerOpen}
-              onClick={() => {
-                setExplorerOpen(true);
-              }}
-            >
-              <MenuIcon />
-            </PageHeaderButton>
-            <PageHeaderButton
-              title="Grid View"
-              selected={!explorerOpen}
-              onClick={() => {
-                setExplorerOpen(false);
-              }}
-            >
-              <SquareBlocksIcon />
-            </PageHeaderButton>
-          </span>
-          {!explorerOpen ? (
-            <span>
+          {!explorerOpen && (
+            <>
               <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
                 <PlusIcon />
               </PageHeaderButton>
               <PageHeaderButton title="New Group" onClick={handleAddGroup}>
                 <FolderPlusIcon />
               </PageHeaderButton>
-              <PageHeaderButton title="Help" onClick={openMNHelp}>
-                <HelpIcon />
-              </PageHeaderButton>
-            </span>
-          ) : (
-            <span>
-              <PageHeaderButton title="Help" onClick={openMNHelp}>
-                <HelpIcon />
-              </PageHeaderButton>
-            </span>
+            </>
           )}
+          <PageHeaderButton
+            title="List View"
+            selected={explorerOpen}
+            onClick={() => {
+              setExplorerOpen(true);
+            }}
+          >
+            <MenuIcon />
+          </PageHeaderButton>
+          <PageHeaderButton
+            title="Grid View"
+            selected={!explorerOpen}
+            onClick={() => {
+              setExplorerOpen(false);
+            }}
+          >
+            <SquareBlocksIcon />
+          </PageHeaderButton>
+          <PageHeaderButton title="Help" onClick={openMNHelp}>
+            <HelpIcon />
+          </PageHeaderButton>
         </PageHeader>
         <div className="main-content-wrapper">
           {!explorerOpen ? (

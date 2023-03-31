@@ -9,16 +9,17 @@ import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Marknote } from "../../common/types";
+import { Group, Marknote } from "../../common/types";
 
 // Component imports
 import NotesExplorerFilter from "./NotesExplorerFilter";
 import NotesExplorerButton from "./NotesExplorerButton";
+import NotesExplorerGroup from "./NotesExplorerGroup";
+import NotesExplorerMarknote from "./NotesExplorerMarknote";
 
 // Image and icon imports
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import PlusIcon from "../icons/PlusIcon";
-import NotesExplorerItem from "./NotesExplorerItem";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
 
 const NotesExplorerContainer = styled.section`
@@ -68,20 +69,22 @@ const NotesList = styled.ul`
 `;
 
 const NotesExplorerContentText = styled.div`
-width: 60%;
-font-size: 12px;
-margin: 0 auto;
-text-align: center;
+  width: 60%;
+  font-size: 12px;
+  margin: 0 auto;
+  text-align: center;
 `;
 
 interface NotesExplorerProps {
   marknotes: Marknote[];
+  groups: Group[];
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   handleAddMarknote: () => void;
 }
 
 const NotesExplorer = ({
   marknotes,
+  groups,
   setSelectedTab,
   handleAddMarknote,
 }: NotesExplorerProps) => {
@@ -104,10 +107,27 @@ const NotesExplorer = ({
 
   const notesList = (
     <NotesList>
-      {notes.map((marknote) => (
-        <NotesExplorerItem
-          marknote={marknote}
+      {notes.map(
+        (marknote) =>
+          (explorerFilter || marknote.groups.length === 0) && (
+            <NotesExplorerMarknote
+              marknote={marknote}
+              setSelectedTab={setSelectedTab}
+              level={1}
+            />
+          )
+      )}
+    </NotesList>
+  );
+
+  const groupsList = (
+    <NotesList>
+      {groups.map((group) => (
+        <NotesExplorerGroup
+          group={group}
+          marknotes={marknotes}
           setSelectedTab={setSelectedTab}
+          explorerFilter={explorerFilter}
         />
       ))}
     </NotesList>
@@ -148,6 +168,7 @@ const NotesExplorer = ({
         </NotesExplorerButtons>
       </NotesExplorerHeader>
       <NotesExplorerContent className="hide-scroll">
+        {!explorerFilter && groupsList}
         {notes.length !== 0
           ? notesList
           : explorerFilter

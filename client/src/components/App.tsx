@@ -376,6 +376,7 @@ const App = () => {
           {pathname.includes("marknotes") && explorerOpen && (
             <NotesExplorer
               marknotes={marknotes}
+              groups={groups}
               setSelectedTab={setSelectedTab}
               handleAddMarknote={handleAddMarknote}
             />
