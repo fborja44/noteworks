@@ -2,11 +2,14 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
-import { COLOR } from "../../common/color";
 
 // Component imports
 import MNHelp from "./MNHelp";
@@ -14,7 +17,7 @@ import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import PageHeader from "../pageheader/PageHeader";
-import Section from "../Section";
+import Section, { Empty } from "../Section";
 import MNList from "./MNList";
 import GroupList from "../groups/GroupList";
 
@@ -22,16 +25,17 @@ import GroupList from "../groups/GroupList";
 import PlusIcon from "../icons/PlusIcon";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
+import MenuIcon from "../icons/MenuIcon";
+import SquareBlocksIcon from "../icons/SquareBlocksIcon";
+import SparkleIcon from "../icons/SparkleIcon";
 import { BsMarkdown } from "react-icons/bs";
-
-import axios from "axios";
-
-const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Props for MNPage
  */
 export interface MNPageProps {
+  explorerOpen: boolean;
+  setExplorerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   marknotes: Marknote[];
   updateMarknotesList: Function;
   setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
@@ -41,6 +45,7 @@ export interface MNPageProps {
   handleAddGroup: () => void;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
+  handleAddMarknote: () => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
@@ -50,6 +55,8 @@ export interface MNPageProps {
  * Content for marknotes route
  */
 const MNPage: React.FC<MNPageProps> = ({
+  explorerOpen,
+  setExplorerOpen,
   marknotes,
   updateMarknotesList,
   setMarknotes,
@@ -59,38 +66,11 @@ const MNPage: React.FC<MNPageProps> = ({
   handleAddGroup,
   handleUpdateGroup,
   handleDeleteGroup,
+  handleAddMarknote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
 }) => {
-  // History
-  const history = useHistory();
-
-  /**
-   * Marknote function to add a new empty marknote to the list
-   */
-  const handleAddMarknote = async () => {
-    // Add new to state list
-    try {
-      const { data: newMarknote } = await axios({
-        baseURL: BASE_ADDR,
-        url: "/marknotes",
-        method: "POST",
-        data: {
-          title: "",
-          color: COLOR.dark_grey.id,
-          body: "",
-        },
-      });
-      setMarknotes([...marknotes, newMarknote]);
-      // Redirect when new note is added
-      history.push("/marknotes");
-      history.push(`/marknotes/${newMarknote._id}`);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   // Help menu state
   const [showMNHelp, setShowMNHelp] = useState(false);
   const openMNHelp = () => {
@@ -109,40 +89,97 @@ const MNPage: React.FC<MNPageProps> = ({
           title="My Marknotes"
           useFilter={true}
           setFilterText={setMNFilterText}
-          icon={<BsMarkdown className="markdown" />}
+          icon={<BsMarkdown className="markdown-icon" />}
         >
-          <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
-            <PlusIcon />
-          </PageHeaderButton>
-          <PageHeaderButton title="New Group" onClick={handleAddGroup}>
-            <FolderPlusIcon />
-          </PageHeaderButton>
-          <PageHeaderButton title="Help" onClick={openMNHelp}>
-            <HelpIcon />
-          </PageHeaderButton>
+          <span>
+            <PageHeaderButton
+              title="List View"
+              selected={explorerOpen}
+              onClick={() => {
+                setExplorerOpen(true);
+              }}
+            >
+              <MenuIcon />
+            </PageHeaderButton>
+            <PageHeaderButton
+              title="Grid View"
+              selected={!explorerOpen}
+              onClick={() => {
+                setExplorerOpen(false);
+              }}
+            >
+              <SquareBlocksIcon />
+            </PageHeaderButton>
+          </span>
+          {!explorerOpen ? (
+            <span>
+              <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
+                <PlusIcon />
+              </PageHeaderButton>
+              <PageHeaderButton title="New Group" onClick={handleAddGroup}>
+                <FolderPlusIcon />
+              </PageHeaderButton>
+              <PageHeaderButton title="Help" onClick={openMNHelp}>
+                <HelpIcon />
+              </PageHeaderButton>
+            </span>
+          ) : (
+            <span>
+              <PageHeaderButton title="Help" onClick={openMNHelp}>
+                <HelpIcon />
+              </PageHeaderButton>
+            </span>
+          )}
         </PageHeader>
         <div className="main-content-wrapper">
-          <Section name="Groups" handleClick={handleAddGroup}>
-            <GroupList
-              groups={groups}
-              updateGroupsList={updateGroupsList}
-              handleUpdateGroup={handleUpdateGroup}
-              handleDeleteGroup={handleDeleteGroup}
-            />
-          </Section>
-          <Section name="My Marknotes" handleClick={handleAddMarknote}>
-            <MNList
-              MNFilterText={MNFilterText}
-              marknotes={marknotes}
-              updateMarknotesList={updateMarknotesList}
-              groups={groups}
-              updateGroupsList={updateGroupsList}
-              handleUpdateGroup={handleUpdateGroup}
-              handleUpdateMarknote={handleUpdateMarknote}
-              handleDeleteMarknote={handleDeleteMarknote}
-              setSelectedTab={setSelectedTab}
-            />
-          </Section>
+          {!explorerOpen ? (
+            <>
+              <Section name="Groups" handleClick={handleAddGroup}>
+                <GroupList
+                  groups={groups}
+                  updateGroupsList={updateGroupsList}
+                  handleUpdateGroup={handleUpdateGroup}
+                  handleDeleteGroup={handleDeleteGroup}
+                />
+              </Section>
+              <Section name="My Marknotes" handleClick={handleAddMarknote}>
+                <MNList
+                  MNFilterText={MNFilterText}
+                  marknotes={marknotes}
+                  updateMarknotesList={updateMarknotesList}
+                  groups={groups}
+                  updateGroupsList={updateGroupsList}
+                  handleUpdateGroup={handleUpdateGroup}
+                  handleUpdateMarknote={handleUpdateMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
+                  setSelectedTab={setSelectedTab}
+                />
+              </Section>
+            </>
+          ) : (
+            <>
+              <div
+                css={css`
+                  width: 100%;
+                  height: 80%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  svg {
+                    width: 50px;
+                    height: 50px;
+                    margin-top: 1.5em;
+                  }
+                `}
+              >
+                <Empty>
+                  <p>No Active Marknotes</p>
+                  <SparkleIcon />
+                </Empty>
+              </div>
+            </>
+          )}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>

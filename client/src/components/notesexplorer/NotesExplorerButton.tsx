@@ -1,16 +1,14 @@
-/* Page Header Button Component
+/* Notes Explorer Button Component
 ------------------------------------------------------------------------------*/
 // React import
 import * as React from "react";
 
 import styled from "@emotion/styled";
 
-export interface PageHeaderButtonProps {
+export interface NotesExplorerButtonProps {
   title: string;
   onClick: Function;
   selected?: boolean;
-  width?: string;
-  height?: string;
 }
 
 const StyledButton = styled.div`
@@ -18,17 +16,11 @@ const StyledButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.theme.header.textSecondary};
-  ${(props: { width?: string; height?: string }) =>
-    !props.width && !props.height && "margin-left: 0.5em;"}
-  width: ${(props: { width?: string; height?: string }) =>
-    props.width ? props.width : "32px"};
+  color: inherit;
 
   button {
-    width: ${(props: { width?: string; height?: string }) =>
-      props.width ? props.width : "32px"};
-    height: ${(props: { width?: string; height?: string }) =>
-      props.height ? props.height : "28px"};
+    width: 27px;
+    height: 27px;
     background: inherit;
     border: none;
     color: inherit;
@@ -40,10 +32,6 @@ const StyledButton = styled.div`
     -webkit-user-select: none;
     border-radius: 5px;
 
-    &.selected {
-      background: ${(props) => props.theme.header.backgroundSecondary};
-    }
-
     &:hover {
       cursor: pointer;
       background: ${(props) => props.theme.header.backgroundSecondary};
@@ -51,8 +39,8 @@ const StyledButton = styled.div`
     }
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
     }
   }
 
@@ -70,16 +58,14 @@ const StyledButton = styled.div`
   }
 `;
 
-const PageHeaderButton: React.FC<PageHeaderButtonProps> = ({
+const NotesExplorerButton: React.FC<NotesExplorerButtonProps> = ({
   title,
   onClick,
   selected,
   children,
-  width,
-  height,
 }) => {
   return (
-    <StyledButton title={`${title}`} width={width} height={height}>
+    <StyledButton title={`${title}`}>
       <button onClick={() => onClick()} className={`${selected && "selected"}`}>
         {children}
       </button>
@@ -87,8 +73,8 @@ const PageHeaderButton: React.FC<PageHeaderButtonProps> = ({
   );
 };
 
-PageHeaderButton.defaultProps = {
+NotesExplorerButton.defaultProps = {
   selected: false,
 };
 
-export default PageHeaderButton;
+export default NotesExplorerButton;

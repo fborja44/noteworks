@@ -10,7 +10,6 @@ import styled from "@emotion/styled";
 
 // Image and icon imports
 import XMarkIcon from "../icons/XMarkIcon";
-import HelpIcon from "../icons/HelpIcon";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";

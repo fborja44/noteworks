@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -17,6 +17,7 @@ import { COLOR } from "../common/color";
 // Component imports
 import Titlebar from "./titlebar/Titlebar";
 import Sidebar from "./sidebar/Sidebar";
+import NotesExplorer from "./notesexplorer/NotesExplorer";
 import Footer from "./Footer";
 
 import HomePage from "./home/HomePage";
@@ -25,6 +26,7 @@ import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
 import GroupPage from "./groups/GroupPage";
 import SearchPage from "./searchpage/SearchPage";
+import ChecklistsPage from "./checklists/ChecklistsPage";
 
 // CSS imports
 import "../css/app.css";
@@ -44,6 +46,10 @@ const BASE_ADDR = "http://localhost:3001";
  * Main application component
  */
 const App = () => {
+  /* Quicknotes State
+  ------------------------------------------------------------------------------*/
+  const history = useHistory();
+
   /* Search State
   ------------------------------------------------------------------------------*/
   const [searchTerm, setSearchTerm] = useState("");
@@ -169,6 +175,31 @@ const App = () => {
   };
 
   /**
+   * Marknote function to add a new empty marknote to the list
+   */
+  const handleAddMarknote = async () => {
+    // Add new to state list
+    try {
+      const { data: newMarknote } = await axios({
+        baseURL: BASE_ADDR,
+        url: "/marknotes",
+        method: "POST",
+        data: {
+          title: "",
+          color: COLOR.dark_grey.id,
+          body: "",
+        },
+      });
+      setMarknotes([...marknotes, newMarknote]);
+      // Redirect when new note is added
+      history.push("/marknotes");
+      history.push(`/marknotes/${newMarknote._id}`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  /**
    * Marknote function to update a marknote in the database
    * @param noteId The marknote id
    * @param updatedMarknote The data to update the marknote with
@@ -211,7 +242,13 @@ const App = () => {
 
   /* Selected tab State
   ------------------------------------------------------------------------------*/
-  const [selectedTab, setSelectedTab] = useState(useLocation().pathname);
+  const pathname = useLocation().pathname;
+
+  const [selectedTab, setSelectedTab] = useState(pathname);
+
+  /* Notes Explorer State
+  ------------------------------------------------------------------------------*/
+  const [explorerOpen, setExplorerOpen] = useState(true);
 
   /* Current theme state
   ------------------------------------------------------------------------------*/
@@ -336,6 +373,13 @@ const App = () => {
         <Titlebar setSearchTerm={setSearchTerm} />
         <div className="app-container">
           <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          {pathname.includes("marknotes") && explorerOpen && (
+            <NotesExplorer
+              marknotes={marknotes}
+              setSelectedTab={setSelectedTab}
+              handleAddMarknote={handleAddMarknote}
+            />
+          )}
           <Switch>
             <Route exact path="/">
               <main>
@@ -373,22 +417,27 @@ const App = () => {
                 />
               </main>
             </Route>
-            <Route path="/marknotes">
+            <Route path={"/marknotes"}>
               <main>
-                <MNPage
-                  marknotes={marknotes}
-                  updateMarknotesList={updateMarknotesList}
-                  setMarknotes={setMarknotes}
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  setGroups={setGroups}
-                  handleAddGroup={handleAddGroup}
-                  handleUpdateGroup={handleUpdateGroup}
-                  handleDeleteGroup={handleDeleteGroup}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
-                  setSelectedTab={setSelectedTab}
-                />
+                {
+                  <MNPage
+                    explorerOpen={explorerOpen}
+                    setExplorerOpen={setExplorerOpen}
+                    marknotes={marknotes}
+                    updateMarknotesList={updateMarknotesList}
+                    setMarknotes={setMarknotes}
+                    groups={groups}
+                    updateGroupsList={updateGroupsList}
+                    setGroups={setGroups}
+                    handleAddGroup={handleAddGroup}
+                    handleUpdateGroup={handleUpdateGroup}
+                    handleDeleteGroup={handleDeleteGroup}
+                    handleAddMarknote={handleAddMarknote}
+                    handleUpdateMarknote={handleUpdateMarknote}
+                    handleDeleteMarknote={handleDeleteMarknote}
+                    setSelectedTab={setSelectedTab}
+                  />
+                }
               </main>
             </Route>
             <Route path="/search">
@@ -409,6 +458,11 @@ const App = () => {
                   handleDeleteQuicknote={handleDeleteQuicknote}
                   setSelectedTab={setSelectedTab}
                 />
+              </main>
+            </Route>
+            <Route path="/checklists">
+              <main>
+                <ChecklistsPage />
               </main>
             </Route>
             <Route path="/settings">

@@ -6,7 +6,7 @@ import React from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
@@ -18,9 +18,9 @@ import Section from "../Section";
 import ToggleSwitch from "./ToggleSwitch";
 
 // Image and icon imports
-import { FiMoon } from "react-icons/fi";
-import { ImSun } from "react-icons/im";
 import SettingsIcon from "../icons/SettingsIcon";
+import SunIcon from "../icons/SunIcon";
+import MoonIcon from "../icons/MoonIcon";
 
 const Option = styled.div`
   display: flex;
@@ -34,6 +34,24 @@ const OptionLabel = styled.div`
   margin-right: 1em;
   font-weight: 600;
   font-size: 13px;
+`;
+
+const ThemeToggleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .sun-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.625em;
+  }
+
+  .moon-icon {
+    width: 17px;
+    height: 17px;
+    margin-left: 0.625em;
+  }
 `;
 
 export interface SettingsPageProps {
@@ -52,18 +70,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         <Section name="Appearance">
           <Option>
             <OptionLabel>App Theme:</OptionLabel>
-            <div
-              css={css`
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-              `}
-            >
-              <ImSun
-                css={css`
-                  margin-right: 0.7em;
-                `}
-              />
+            <ThemeToggleContainer>
+              <SunIcon className="sun-icon" />
               <ToggleSwitch
                 isToggled={appTheme === lightTheme ? false : true}
                 onToggle={() =>
@@ -72,12 +80,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
                   )
                 }
               />
-              <FiMoon
-                css={css`
-                  margin-left: 0.7em;
-                `}
-              />
-            </div>
+              <MoonIcon className="moon-icon" />
+            </ThemeToggleContainer>
           </Option>
         </Section>
       </div>

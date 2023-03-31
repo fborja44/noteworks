@@ -75,12 +75,6 @@ export const Empty = styled.div`
     height: 16px;
     width: 16px;
   }
-
-  .sparkle-icon {
-    height: 40px;
-    width: 40px;
-    margin-top: 1.5em;
-  }
 `;
 
 export interface SectionProps {

@@ -55,7 +55,7 @@ const MNList: React.FC<MNListProps> = ({
     (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
   );
 
-  // Filter notes by searchtext if given
+  // Filter notes by filter text if given
   if (MNFilterText) {
     notes = notes.filter(
       (note: Quicknote | Marknote) =>

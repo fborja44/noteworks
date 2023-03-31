@@ -330,7 +330,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         saved={saved}
       >
         <PageHeaderButton
-          title="Toggle Preview"
+          title="Toggle Code Editor"
           onClick={() => setShowEditor((prev) => !prev)}
           selected={showEditor}
         >
@@ -370,7 +370,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
-          title="Return to Notes"
+          title="Close Note"
         >
           <ArrowUturnRightIcon />
         </PageHeaderButton>

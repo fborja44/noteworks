@@ -62,7 +62,7 @@ const FooterOption = styled.button`
     width: 12px;
   }
 
-  &:hover {
+  &:hover:enabled {
     background-color: ${(props) => props.theme.title.backgroundSecondary};
     cursor: pointer;
     transition: background-color 0.2s ease 0s;
@@ -86,11 +86,16 @@ const Footer = ({
     <FooterContainer>
       <OptionContainer>
         <FooterOption
+          disabled={refreshing}
           onClick={async () => {
             setRefreshing(true);
-            await fetchQuicknotes();
-            await fetchMarknotes();
-            await fetchGroups();
+            try {
+              await fetchQuicknotes();
+              await fetchMarknotes();
+              await fetchGroups();
+            } catch (e: any) {
+              console.log(e.toString());
+            }
             setRefreshing(false);
           }}
           className={refreshing ? "blink" : ""}

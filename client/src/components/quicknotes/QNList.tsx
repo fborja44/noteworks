@@ -55,7 +55,7 @@ const QNList: React.FC<QNListProps> = ({
   const [unsavedNotes, setUnsavedNotes] = useState<Quicknote[]>([]);
 
   let notes = quicknotes;
-  // Filter notes by searchtext if given
+  // Filter notes by filter text if given
   if (QNFilterText) {
     notes = quicknotes.filter(
       (note: Quicknote | Marknote) =>

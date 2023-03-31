@@ -1,6 +1,6 @@
 import { HeroIconProps } from "../../common/types";
 
-const XMarkicon = ({ className, filled, id, css }: HeroIconProps) => {
+const XMarkIcon = ({ className, filled, id, css }: HeroIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,4 +19,4 @@ const XMarkicon = ({ className, filled, id, css }: HeroIconProps) => {
   );
 };
 
-export default XMarkicon;
+export default XMarkIcon;

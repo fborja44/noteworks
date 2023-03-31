@@ -49,7 +49,8 @@ const GroupList: React.FC<GroupListProps> = ({
   }
 
   let filteredGroups = groups;
-  // Filter notes by searchtext if given
+
+  // Filter notes by filter text if given
   if (GroupsFilterText) {
     filteredGroups = groups.filter((group) =>
       group.title.toLowerCase().includes(GroupsFilterText.toLowerCase())

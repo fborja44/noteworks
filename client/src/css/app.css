@@ -145,6 +145,19 @@ textarea:focus {
   cursor: pointer;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Other Styles */
+
 .menu-button {
   height: 18px !important;
   width: 18px !important;

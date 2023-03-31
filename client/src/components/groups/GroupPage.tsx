@@ -228,6 +228,12 @@ const GroupPage: React.FC<GroupPageProps> = ({
               display: flex;
               justify-content: center;
               align-items: center;
+
+              .sparkle-icon {
+                height: 50px;
+                width: 50px;
+                margin-top: 1.5em;
+              }
             `}
           >
             <Empty>

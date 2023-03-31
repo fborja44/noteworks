@@ -8,14 +8,17 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Component imports
+import PageHeaderButton from "../pageheader/PageHeaderButton";
+
 // Image and icon imports
 import SidebarButton from "./SidebarButton";
 import BoltIcon from "../icons/BoltIcon";
 import HomeIcon from "../icons/HomeIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
-import PageHeaderButton from "../pageheader/PageHeaderButton";
 import { BsMarkdown } from "react-icons/bs";
+import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 
 export interface SidebarProps {
   selectedTab: string;
@@ -119,6 +122,15 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               label="Marknotes"
               icon={<BsMarkdown css={NavIcon} />}
               route="/marknotes"
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            />
+            <SidebarButton
+              full={open}
+              title="Checklists"
+              label="Checklists"
+              icon={<DocumentCheckIcon css={NavIcon} />}
+              route="/checklists"
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
             />

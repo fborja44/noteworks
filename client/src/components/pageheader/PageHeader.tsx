@@ -84,7 +84,7 @@ const PageHeaderIconStyles = css`
     margin-right: 0.625em;
   }
 
-  .markdown {
+  .markdown-icon {
     height: 20px;
     width: 20px;
   }
