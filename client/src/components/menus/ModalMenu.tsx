@@ -77,6 +77,7 @@ const ModalMenuContentContainer = styled.div`
 
   p {
     margin: 0.5rem 0 0.5rem 0;
+    font-size: 14px;
   }
 `;
 
