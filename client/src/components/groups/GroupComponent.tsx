@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux imports
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Group } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
@@ -82,6 +85,9 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   handleUpdateGroup,
   handleDeleteGroup,
 }) => {
+  // Groups State
+  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
+
   /**
    * State for current group info
    */
@@ -202,6 +208,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
+        itemsState={groupsState}
         item={groupComponent}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}

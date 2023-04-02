@@ -10,6 +10,9 @@ import ReactMarkdown from "react-markdown";
 import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux imports
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Marknote } from "../../common/types";
 import { COLOR, ColorId, NoteColor } from "../../common/color";
@@ -223,6 +226,11 @@ const MNEditor: React.FC<MNEditorProps> = ({
   handleDeleteMarknote,
   handleUpdateMarknote,
 }) => {
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
+
   // History
   const history = useHistory();
 
@@ -368,10 +376,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         >
           {marknote.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
-        <PageHeaderButton
-          onClick={() => history.goBack()}
-          title="Close Note"
-        >
+        <PageHeaderButton onClick={() => history.goBack()} title="Close Note">
           <ArrowUturnRightIcon />
         </PageHeaderButton>
       </InputPageHeader>
@@ -433,6 +438,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
+        itemsState={marknotesState}
         item={marknote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}

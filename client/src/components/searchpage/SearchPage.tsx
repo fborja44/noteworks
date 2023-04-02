@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
-import { Quicknote, Marknote, Group } from "../../common/types";
+import { Marknote, Group } from "../../common/types";
 import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
@@ -21,14 +21,10 @@ export interface SearchPageProps {
   searchTerm: string;
   groups: Group[];
   updateGroupsList: Function;
-  quicknotes: Quicknote[];
-  updateQuicknotesList: Function;
   marknotes: Marknote[];
   updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  handleDeleteQuicknote: (noteId: string) => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
@@ -41,14 +37,10 @@ const SearchPage: React.FC<SearchPageProps> = ({
   searchTerm,
   groups,
   updateGroupsList,
-  quicknotes,
-  updateQuicknotesList,
   marknotes,
   updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
@@ -76,13 +68,9 @@ const SearchPage: React.FC<SearchPageProps> = ({
         <Section name={`Quicknotes`}>
           <QNList
             QNFilterText={searchTerm}
-            quicknotes={quicknotes}
-            updateQuicknotesList={updateQuicknotesList}
             groups={groups}
             updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
-            handleUpdateQuicknote={handleUpdateQuicknote}
-            handleDeleteQuicknote={handleDeleteQuicknote}
             setSaved={setSaved}
           />
         </Section>

@@ -5,12 +5,16 @@ import React, { useState } from "react";
 
 import styled from "@emotion/styled";
 
+// Redux Imports
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import QNComponent from "./QNComponent";
 import { Empty } from "../Section";
+import { useLocation } from "react-router-dom";
 
 const List = styled.div`
   display: grid;
@@ -25,39 +29,46 @@ const List = styled.div`
 
 export interface QNListProps {
   QNFilterText?: string;
-  quicknotes: Quicknote[];
-  updateQuicknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
   setGroupPage?: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   favorites?: boolean;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  handleDeleteQuicknote: (noteId: string) => void;
   setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
   setSaved: Function;
 }
 
 const QNList: React.FC<QNListProps> = ({
   QNFilterText,
-  quicknotes,
-  updateQuicknotesList,
   groups,
   updateGroupsList,
   setGroupPage,
   handleUpdateGroup,
   favorites,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
   setSaved,
 }) => {
+  // Location hook
+  const pathname = useLocation().pathname;
+
+  // Quicknotes State
+  const quicknotesState: Quicknote[] = useSelector(
+    (state: any) => state.quicknotesState
+  );
+
   // Unsaved Quicknotes Queue
   const [unsavedNotes, setUnsavedNotes] = useState<Quicknote[]>([]);
 
-  let notes = quicknotes;
+  let notes = quicknotesState;
+
+  // Filter notes by group if on group page
+  const group_id = pathname.split("/").pop();
+  if (pathname.includes("group") && group_id) {
+    notes = notes.filter((note: Quicknote) => note.groups.includes(group_id));
+  }
+
   // Filter notes by filter text if given
   if (QNFilterText) {
-    notes = quicknotes.filter(
+    notes = notes.filter(
       (note: Quicknote | Marknote) =>
         note.title.toLowerCase().includes(QNFilterText.toLowerCase()) ||
         note.body.toLowerCase().includes(QNFilterText.toLowerCase())
@@ -66,7 +77,7 @@ const QNList: React.FC<QNListProps> = ({
 
   // Filter notes by favorited if true
   if (favorites) {
-    notes = quicknotes.filter((note: Quicknote | Marknote) => note.favorited);
+    notes = notes.filter((note: Quicknote | Marknote) => note.favorited);
   }
 
   const notesList = (
@@ -79,9 +90,6 @@ const QNList: React.FC<QNListProps> = ({
           setGroupPage={setGroupPage}
           handleUpdateGroup={handleUpdateGroup}
           currentNote={note}
-          updateQuicknotesList={updateQuicknotesList}
-          handleUpdateQuicknote={handleUpdateQuicknote}
-          handleDeleteQuicknote={handleDeleteQuicknote}
           setSaved={setSaved}
           unsavedNotes={unsavedNotes}
           setUnsavedNotes={setUnsavedNotes}

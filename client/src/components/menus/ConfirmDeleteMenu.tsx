@@ -9,6 +9,10 @@ import { useHistory } from "react-router-dom";
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux imports
+import { Dispatch, AnyAction } from "redux";
+import { useDispatch } from "react-redux";
+
 // Common imports
 import { Quicknote, Marknote, Group } from "../../common/types";
 import { COLOR } from "../../common/color";
@@ -52,15 +56,17 @@ const DeleteButton = styled.button`
 `;
 
 export interface ConfirmDeleteProps {
-  item: Marknote | Quicknote | Group;
+  itemsState: Quicknote[] | Marknote[] | Group[];
+  item: Quicknote | Marknote | Group;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDelete?: (id: string) => void;
+  handleDelete?: Function;
   toggleConfirmDelete: (event: any) => void;
   redirect?: Boolean;
 }
 
 const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
+  itemsState,
   item,
   showMenuState,
   setShowMenuState,
@@ -68,6 +74,9 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   toggleConfirmDelete,
   redirect,
 }) => {
+  // Dispatch
+  const dispatch = useDispatch();
+
   // History
   const history = useHistory();
 
@@ -89,7 +98,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
           onClick={
             handleDelete
               ? (event) => {
-                  handleDelete(item._id);
+                  handleDelete(itemsState, item._id, dispatch);
                   if (redirect) {
                     history.goBack();
                   }

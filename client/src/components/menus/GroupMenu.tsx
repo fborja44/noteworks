@@ -8,8 +8,12 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux Imports
+import { useSelector, useDispatch } from "react-redux";
+
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
+import { updateQuicknotesState } from "../../utils/quicknotes";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -85,7 +89,6 @@ const GroupMenuItemTitle = styled.div`
 
 export interface GroupMenuProps {
   item: Quicknote | Marknote;
-  updateQuicknotesList?: Function;
   updateMarknotesList?: Function;
   groups: Group[];
   updateGroupsList: Function;
@@ -97,7 +100,6 @@ export interface GroupMenuProps {
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
   item,
-  updateQuicknotesList,
   updateMarknotesList,
   groups,
   updateGroupsList,
@@ -106,6 +108,13 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
   setShowGroupMenu,
   handleUpdateGroup,
 }) => {
+  const dispatch = useDispatch();
+
+  // Quicknotes State
+  const quicknotesState: Quicknote[] = useSelector(
+    (state: any) => state.quicknotesState
+  );
+
   /**
    * On click handler to add/remove note from group.
    * Event target needs dataset attribute.
@@ -121,13 +130,17 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
           method: "PATCH",
         });
         updateMarknotesList(item._id, data.data.updatedNote);
-      } else if (item.type === "quicknote" && updateQuicknotesList) {
+      } else if (item.type === "quicknote") {
         data = await axios({
           baseURL: BASE_ADDR,
           url: `/groups/${groupId}/quicknotes/${item._id}`,
           method: "PATCH",
         });
-        updateQuicknotesList([data.data.updatedNote]);
+        updateQuicknotesState(
+          quicknotesState,
+          [data.data.updatedNote],
+          dispatch
+        );
       }
       if (data) {
         if (setGroupPage) {

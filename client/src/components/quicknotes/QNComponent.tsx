@@ -9,9 +9,18 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux Imports
+import { useSelector, useDispatch } from "react-redux";
+
 // Common imports
 import { Group, Quicknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
+
+import {
+  updateQuicknotesState,
+  handleUpdateQuicknote,
+  handleDeleteQuicknote,
+} from "../../utils/quicknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -65,9 +74,6 @@ export interface QNComponentProps {
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   setGroupPage?: Function;
   currentNote: Quicknote;
-  updateQuicknotesList: Function;
-  handleDeleteQuicknote?: (id: string) => void;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
   setSaved: Function;
   unsavedNotes: Quicknote[];
   setUnsavedNotes: Function;
@@ -79,13 +85,17 @@ const QNComponent: React.FC<QNComponentProps> = ({
   handleUpdateGroup,
   setGroupPage,
   currentNote,
-  updateQuicknotesList,
-  handleDeleteQuicknote,
-  handleUpdateQuicknote,
   setSaved,
   unsavedNotes,
   setUnsavedNotes,
 }) => {
+  const dispatch = useDispatch();
+
+  // Quicknotes State
+  const quicknotesState: Quicknote[] = useSelector(
+    (state: any) => state.quicknotesState
+  );
+
   // Character limits
   const titleCharLimit = 30;
   const bodyCharLimit = 300;
@@ -153,7 +163,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
     };
     setQuicknote(updatedQuicknote);
     handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesList([updatedQuicknote]);
+    updateQuicknotesState(quicknotesState, [updatedQuicknote], dispatch);
   };
 
   /**
@@ -167,7 +177,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
     };
     setQuicknote(updatedQuicknote);
     handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesList([updatedQuicknote]);
+    updateQuicknotesState(quicknotesState, [updatedQuicknote], dispatch);
   };
 
   // Menu state
@@ -206,7 +216,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
       for (let note of unsavedNotes) {
         handleUpdateQuicknote(note._id, note);
       }
-      updateQuicknotesList(unsavedNotes);
+      updateQuicknotesState(quicknotesState, unsavedNotes, dispatch);
       setUnsavedNotes([]); // Reset unsaved notes
       setSaved(true);
     }, 2000);
@@ -246,7 +256,6 @@ const QNComponent: React.FC<QNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={quicknote}
-        updateQuicknotesList={updateQuicknotesList}
         groups={groups}
         updateGroupsList={updateGroupsList}
         setGroupPage={setGroupPage}
@@ -260,6 +269,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
+        itemsState={quicknotesState}
         item={quicknote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}

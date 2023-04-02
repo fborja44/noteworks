@@ -6,8 +6,16 @@ import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, ThemeProvider } from "@emotion/react";
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+
+// Redux imports
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateQuicknotes,
+  updateMarknotes,
+  updateGroups,
+} from "../redux/actions";
 
 // Common imports
 import { Quicknote, Marknote, Group } from "../common/types";
@@ -46,6 +54,8 @@ const BASE_ADDR = "http://localhost:3001";
  * Main application component
  */
 const App = () => {
+  const dispatch = useDispatch();
+
   /* Quicknotes State
   ------------------------------------------------------------------------------*/
   const history = useHistory();
@@ -53,10 +63,6 @@ const App = () => {
   /* Search State
   ------------------------------------------------------------------------------*/
   const [searchTerm, setSearchTerm] = useState("");
-
-  /* Quicknotes State
-  ------------------------------------------------------------------------------*/
-  const [quicknotes, setQuicknotes] = useState<Quicknote[]>([]);
 
   /**
    * Effect hook to retrieve quicknotes from local storage
@@ -73,66 +79,7 @@ const App = () => {
     });
     // Check if notes were received
     if (savedQuicknotes) {
-      setQuicknotes(savedQuicknotes);
-    }
-  };
-
-  /**
-   * Quicknote function to update the quicknotes list in app state
-   * when notes are updated.
-   * @param updatedQuicknotes Array of updated quicknote data.
-   */
-  const updateQuicknotesList = (updatedQuicknotes: Quicknote[]) => {
-    // Combine lists of updated notes and non-updated notes
-    const filteredQuicknotes: Quicknote[] = quicknotes.filter((note) => {
-      for (const updatedNote of updatedQuicknotes) {
-        if (note._id === updatedNote._id) {
-          return false;
-        }
-      }
-      return true;
-    });
-    setQuicknotes([...updatedQuicknotes, ...filteredQuicknotes]);
-  };
-
-  /**
-   * Function to update a quicknote in the database with updated information
-   * @param noteId The quicknote id
-   * @param updatedQuicknote The new information in update with
-   */
-  const handleUpdateQuicknote = async (
-    noteId: string,
-    updatedQuicknote: Quicknote
-  ) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/quicknotes/${noteId}`,
-        method: "PATCH",
-        data: updatedQuicknote,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Function to delete a quicknote from the list
-   * @param noteId The id of the quicknote to be deleted
-   */
-  const handleDeleteQuicknote = async (noteId: string) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/quicknotes/${noteId}`,
-        method: "DELETE",
-      });
-      const newQuicknotes = quicknotes.filter(
-        (note: Quicknote) => note._id !== noteId
-      ); // don't need to make new array since filter returns new array
-      setQuicknotes(newQuicknotes);
-    } catch (e) {
-      console.log(e);
+      dispatch(updateQuicknotes(savedQuicknotes));
     }
   };
 
@@ -368,141 +315,122 @@ const App = () => {
   };
 
   return (
-    <ThemeProvider theme={appTheme}>
-      <RendererContainer>
-        <Titlebar setSearchTerm={setSearchTerm} />
-        <div className="app-container">
-          <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-          {pathname.includes("marknotes") && explorerOpen && (
-            <NotesExplorer
-              marknotes={marknotes}
-              groups={groups}
-              setSelectedTab={setSelectedTab}
-              handleAddMarknote={handleAddMarknote}
-              handleAddGroup={handleAddGroup}
-            />
-          )}
-          <Switch>
-            <Route exact path="/">
-              <main>
-                <HomePage
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  quicknotes={quicknotes}
-                  updateQuicknotesList={updateQuicknotesList}
+    <RendererContainer>
+      <Titlebar setSearchTerm={setSearchTerm} />
+      <div className="app-container">
+        <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        {pathname.includes("marknotes") && explorerOpen && (
+          <NotesExplorer
+            marknotes={marknotes}
+            groups={groups}
+            setSelectedTab={setSelectedTab}
+            handleAddMarknote={handleAddMarknote}
+            handleAddGroup={handleAddGroup}
+          />
+        )}
+        <Switch>
+          <Route exact path="/">
+            <main>
+              <HomePage
+                groups={groups}
+                updateGroupsList={updateGroupsList}
+                marknotes={marknotes}
+                updateMarknotesList={updateMarknotesList}
+                handleUpdateGroup={handleUpdateGroup}
+                handleDeleteGroup={handleDeleteGroup}
+                handleUpdateMarknote={handleUpdateMarknote}
+                handleDeleteMarknote={handleDeleteMarknote}
+                setSelectedTab={setSelectedTab}
+              />
+            </main>
+          </Route>
+          <Route path="/quicknotes">
+            <main>
+              <QNPage
+                groups={groups}
+                updateGroupsList={updateGroupsList}
+                setGroups={setGroups}
+                handleAddGroup={handleAddGroup}
+                handleUpdateGroup={handleUpdateGroup}
+                handleDeleteGroup={handleDeleteGroup}
+              />
+            </main>
+          </Route>
+          <Route path={"/marknotes"}>
+            <main>
+              {
+                <MNPage
+                  explorerOpen={explorerOpen}
+                  setExplorerOpen={setExplorerOpen}
                   marknotes={marknotes}
                   updateMarknotesList={updateMarknotesList}
-                  handleUpdateGroup={handleUpdateGroup}
-                  handleDeleteGroup={handleDeleteGroup}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
-                  handleUpdateQuicknote={handleUpdateQuicknote}
-                  handleDeleteQuicknote={handleDeleteQuicknote}
-                  setSelectedTab={setSelectedTab}
-                />
-              </main>
-            </Route>
-            <Route path="/quicknotes">
-              <main>
-                <QNPage
-                  quicknotes={quicknotes}
-                  setQuicknotes={setQuicknotes}
-                  updateQuicknotesList={updateQuicknotesList}
+                  setMarknotes={setMarknotes}
                   groups={groups}
                   updateGroupsList={updateGroupsList}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
-                  handleUpdateQuicknote={handleUpdateQuicknote}
-                  handleDeleteQuicknote={handleDeleteQuicknote}
+                  handleAddMarknote={handleAddMarknote}
+                  handleUpdateMarknote={handleUpdateMarknote}
+                  handleDeleteMarknote={handleDeleteMarknote}
+                  setSelectedTab={setSelectedTab}
                 />
-              </main>
-            </Route>
-            <Route path={"/marknotes"}>
+              }
+            </main>
+          </Route>
+          <Route path="/search">
+            <main>
+              <SearchPage
+                searchTerm={searchTerm}
+                groups={groups}
+                updateGroupsList={updateGroupsList}
+                marknotes={marknotes}
+                updateMarknotesList={updateMarknotesList}
+                handleUpdateGroup={handleUpdateGroup}
+                handleDeleteGroup={handleDeleteGroup}
+                handleUpdateMarknote={handleUpdateMarknote}
+                handleDeleteMarknote={handleDeleteMarknote}
+                setSelectedTab={setSelectedTab}
+              />
+            </main>
+          </Route>
+          <Route path="/checklists">
+            <main>
+              <ChecklistsPage />
+            </main>
+          </Route>
+          <Route path="/settings">
+            <main>
+              <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
+            </main>
+          </Route>
+          {groups.map((group) => (
+            <Route path={`/groups/${group._id}`}>
               <main>
-                {
-                  <MNPage
-                    explorerOpen={explorerOpen}
-                    setExplorerOpen={setExplorerOpen}
-                    marknotes={marknotes}
-                    updateMarknotesList={updateMarknotesList}
-                    setMarknotes={setMarknotes}
-                    groups={groups}
-                    updateGroupsList={updateGroupsList}
-                    setGroups={setGroups}
-                    handleAddGroup={handleAddGroup}
-                    handleUpdateGroup={handleUpdateGroup}
-                    handleDeleteGroup={handleDeleteGroup}
-                    handleAddMarknote={handleAddMarknote}
-                    handleUpdateMarknote={handleUpdateMarknote}
-                    handleDeleteMarknote={handleDeleteMarknote}
-                    setSelectedTab={setSelectedTab}
-                  />
-                }
-              </main>
-            </Route>
-            <Route path="/search">
-              <main>
-                <SearchPage
-                  searchTerm={searchTerm}
+                <GroupPage
+                  currentGroup={group}
                   groups={groups}
                   updateGroupsList={updateGroupsList}
-                  quicknotes={quicknotes}
-                  updateQuicknotesList={updateQuicknotesList}
                   marknotes={marknotes}
                   updateMarknotesList={updateMarknotesList}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
                   handleUpdateMarknote={handleUpdateMarknote}
                   handleDeleteMarknote={handleDeleteMarknote}
-                  handleUpdateQuicknote={handleUpdateQuicknote}
-                  handleDeleteQuicknote={handleDeleteQuicknote}
                   setSelectedTab={setSelectedTab}
                 />
               </main>
             </Route>
-            <Route path="/checklists">
-              <main>
-                <ChecklistsPage />
-              </main>
-            </Route>
-            <Route path="/settings">
-              <main>
-                <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
-              </main>
-            </Route>
-            {groups.map((group) => (
-              <Route path={`/groups/${group._id}`}>
-                <main>
-                  <GroupPage
-                    currentGroup={group}
-                    groups={groups}
-                    updateGroupsList={updateGroupsList}
-                    quicknotes={quicknotes}
-                    updateQuicknotesList={updateQuicknotesList}
-                    marknotes={marknotes}
-                    updateMarknotesList={updateMarknotesList}
-                    handleUpdateGroup={handleUpdateGroup}
-                    handleDeleteGroup={handleDeleteGroup}
-                    handleUpdateQuicknote={handleUpdateQuicknote}
-                    handleDeleteQuicknote={handleDeleteQuicknote}
-                    handleUpdateMarknote={handleUpdateMarknote}
-                    handleDeleteMarknote={handleDeleteMarknote}
-                    setSelectedTab={setSelectedTab}
-                  />
-                </main>
-              </Route>
-            ))}
-          </Switch>
-        </div>
-        <Footer
-          fetchQuicknotes={fetchQuicknotes}
-          fetchMarknotes={fetchMarknotes}
-          fetchGroups={fetchGroups}
-        />
-      </RendererContainer>
-    </ThemeProvider>
+          ))}
+        </Switch>
+      </div>
+      <Footer
+        fetchQuicknotes={fetchQuicknotes}
+        fetchMarknotes={fetchMarknotes}
+        fetchGroups={fetchGroups}
+      />
+    </RendererContainer>
   );
 };
 

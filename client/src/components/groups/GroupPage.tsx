@@ -8,6 +8,9 @@ import { useHistory } from "react-router-dom";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
+// Redux state
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
 import { ColorId } from "../../common/color";
@@ -36,14 +39,10 @@ export interface GroupPageProps {
   currentGroup: Group;
   groups: Group[];
   updateGroupsList: Function;
-  quicknotes: Quicknote[];
-  updateQuicknotesList: Function;
   marknotes: Marknote[];
   updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  handleDeleteQuicknote: (noteId: string) => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
@@ -56,18 +55,19 @@ const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
   groups,
   updateGroupsList,
-  quicknotes,
-  updateQuicknotesList,
   marknotes,
   updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // Quicknotes State
+  const quicknotesState: Quicknote[] = useSelector(
+    (state: any) => state.quicknotesState
+  );
+
   // History
   const history = useHistory();
 
@@ -150,7 +150,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [group, quicknotes, marknotes]);
+  }, [group, quicknotesState, marknotes]);
 
   return (
     <React.Fragment>
@@ -188,15 +188,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
         {group.quicknotes.length > 0 ? (
           <Section name="Quicknotes">
             <QNList
-              quicknotes={quicknotes.filter((note: Quicknote) =>
-                note.groups.includes(group._id)
-              )}
-              updateQuicknotesList={updateQuicknotesList}
               groups={groups}
               updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
-              handleUpdateQuicknote={handleUpdateQuicknote}
-              handleDeleteQuicknote={handleDeleteQuicknote}
               setSelectedTab={setSelectedTab}
               setGroupPage={setGroupPage}
               setSaved={setSaved}
@@ -249,6 +243,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
+        itemsState={groups}
         item={group}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}

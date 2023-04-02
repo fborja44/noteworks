@@ -21,14 +21,10 @@ import HomeIcon from "../icons/HomeIcon";
 export interface HomePageProps {
   groups: Group[];
   updateGroupsList: Function;
-  quicknotes: Quicknote[];
-  updateQuicknotesList: Function;
   marknotes: Marknote[];
   updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  handleDeleteQuicknote: (noteId: string) => void;
   handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
   handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
@@ -40,14 +36,10 @@ export interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({
   groups,
   updateGroupsList,
-  quicknotes,
-  updateQuicknotesList,
   marknotes,
   updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
   handleUpdateMarknote,
   handleDeleteMarknote,
   setSelectedTab,
@@ -70,14 +62,10 @@ const HomePage: React.FC<HomePageProps> = ({
         </Section>
         <Section name={`Favorited Quicknotes`} icon={<StarIcon />}>
           <QNList
-            quicknotes={quicknotes}
-            updateQuicknotesList={updateQuicknotesList}
             groups={groups}
             updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             favorites={true}
-            handleUpdateQuicknote={handleUpdateQuicknote}
-            handleDeleteQuicknote={handleDeleteQuicknote}
             setSaved={setSaved}
           />
         </Section>

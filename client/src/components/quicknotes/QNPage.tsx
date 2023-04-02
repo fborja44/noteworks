@@ -22,38 +22,29 @@ import HelpIcon from "../icons/HelpIcon";
 import BoltIcon from "../icons/BoltIcon";
 
 import axios from "axios";
+import { handleAddQuicknote } from "../../utils/quicknotes";
 
 const BASE_ADDR = "http://localhost:3001";
 
 export interface QNPageProps {
-  quicknotes: Quicknote[];
-  setQuicknotes: React.Dispatch<React.SetStateAction<any[]>>;
-  updateQuicknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateQuicknote: (noteId: string, updatedQuicknote: Quicknote) => void;
-  handleDeleteQuicknote: (noteId: string) => void;
 }
 
 /**
  * Content for the quicknotes route.
  */
 const QNPage: React.FC<QNPageProps> = ({
-  quicknotes,
-  setQuicknotes,
   groups,
   updateGroupsList,
   setGroups,
-  updateQuicknotesList,
   handleAddGroup,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
 }) => {
   // Quicknotes Help Menu State
   const [showQNHelp, setShowQNHelp] = useState(false);
@@ -63,28 +54,6 @@ const QNPage: React.FC<QNPageProps> = ({
 
   // Quicknotes Saved State
   const [saved, setSaved] = useState(true);
-
-  /**
-   * Function to add new empty quicknote after add quicknote button is pressed.
-   * Color is the id of the note color.
-   */
-  const handleAddQuicknote = async () => {
-    try {
-      const { data: newQuicknote } = await axios({
-        baseURL: BASE_ADDR,
-        url: "/quicknotes",
-        method: "POST",
-        data: {
-          title: "",
-          color: COLOR.yellow.id,
-          body: "",
-        },
-      });
-      setQuicknotes([...quicknotes, newQuicknote]);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   /**
    * State for quicknotes filter text
@@ -126,13 +95,9 @@ const QNPage: React.FC<QNPageProps> = ({
         <Section name="My Quicknotes" handleClick={handleAddQuicknote}>
           <QNList
             QNFilterText={QNFilterText}
-            quicknotes={quicknotes}
-            updateQuicknotesList={updateQuicknotesList}
             groups={groups}
             updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
-            handleUpdateQuicknote={handleUpdateQuicknote}
-            handleDeleteQuicknote={handleDeleteQuicknote}
             setSaved={setSaved}
           />
         </Section>
