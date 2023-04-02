@@ -10,15 +10,15 @@ import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  updateQuicknotes,
-  updateMarknotes,
-  updateGroups,
+  updateQuicknotesAction,
+  updateMarknotesAction,
+  updateGroupsAction,
 } from "../redux/actions";
 
 // Common imports
-import { Quicknote, Marknote, Group } from "../common/types";
+import { Group } from "../common/types";
 import { darkTheme, lightTheme } from "../common/theme";
 import { COLOR } from "../common/color";
 
@@ -79,13 +79,9 @@ const App = () => {
     });
     // Check if notes were received
     if (savedQuicknotes) {
-      dispatch(updateQuicknotes(savedQuicknotes));
+      dispatch(updateQuicknotesAction(savedQuicknotes));
     }
   };
-
-  /* Marknotes State
-  ------------------------------------------------------------------------------*/
-  const [marknotes, setMarknotes] = useState<Marknote[]>([]);
 
   /**
    * Effect hook to retrieve marknotes from local storage
@@ -102,88 +98,7 @@ const App = () => {
     });
     // Check if notes were received
     if (savedMarknotes) {
-      setMarknotes(savedMarknotes);
-    }
-  };
-
-  /**
-   * Marknote function to update the marknotes list in app state
-   * @param noteId The marknote id
-   * @param updatedMarknote The data to update the marknote with
-   */
-  const updateMarknotesList = (noteId: string, updatedMarknote: Marknote) => {
-    const updatedMarknotesArray = marknotes.map((note: any) => {
-      if (note._id === noteId) {
-        return updatedMarknote;
-      }
-      return note;
-    });
-    setMarknotes(updatedMarknotesArray);
-  };
-
-  /**
-   * Marknote function to add a new empty marknote to the list
-   */
-  const handleAddMarknote = async () => {
-    // Add new to state list
-    try {
-      const { data: newMarknote } = await axios({
-        baseURL: BASE_ADDR,
-        url: "/marknotes",
-        method: "POST",
-        data: {
-          title: "",
-          color: COLOR.dark_grey.id,
-          body: "",
-        },
-      });
-      setMarknotes([...marknotes, newMarknote]);
-      // Redirect when new note is added
-      history.push("/marknotes");
-      history.push(`/marknotes/${newMarknote._id}`);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Marknote function to update a marknote in the database
-   * @param noteId The marknote id
-   * @param updatedMarknote The data to update the marknote with
-   */
-  const handleUpdateMarknote = async (
-    noteId: string,
-    updatedMarknote: Marknote
-  ) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/marknotes/${noteId}`,
-        method: "PATCH",
-        data: updatedMarknote,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Marknote function to delete a marknote from the list
-   * @param noteId The id of the marknote to be deleted
-   */
-  const handleDeleteMarknote = async (noteId: string) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/marknotes/${noteId}`,
-        method: "DELETE",
-      });
-      const newMarknotes = marknotes.filter(
-        (note: Marknote) => note._id !== noteId
-      ); // don't need to make new array since filter returns new array
-      setMarknotes(newMarknotes);
-    } catch (e) {
-      console.log(e);
+      dispatch(updateMarknotesAction(savedMarknotes));
     }
   };
 
@@ -321,10 +236,8 @@ const App = () => {
         <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         {pathname.includes("marknotes") && explorerOpen && (
           <NotesExplorer
-            marknotes={marknotes}
             groups={groups}
             setSelectedTab={setSelectedTab}
-            handleAddMarknote={handleAddMarknote}
             handleAddGroup={handleAddGroup}
           />
         )}
@@ -334,12 +247,8 @@ const App = () => {
               <HomePage
                 groups={groups}
                 updateGroupsList={updateGroupsList}
-                marknotes={marknotes}
-                updateMarknotesList={updateMarknotesList}
                 handleUpdateGroup={handleUpdateGroup}
                 handleDeleteGroup={handleDeleteGroup}
-                handleUpdateMarknote={handleUpdateMarknote}
-                handleDeleteMarknote={handleDeleteMarknote}
                 setSelectedTab={setSelectedTab}
               />
             </main>
@@ -362,18 +271,12 @@ const App = () => {
                 <MNPage
                   explorerOpen={explorerOpen}
                   setExplorerOpen={setExplorerOpen}
-                  marknotes={marknotes}
-                  updateMarknotesList={updateMarknotesList}
-                  setMarknotes={setMarknotes}
                   groups={groups}
                   updateGroupsList={updateGroupsList}
                   setGroups={setGroups}
                   handleAddGroup={handleAddGroup}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
-                  handleAddMarknote={handleAddMarknote}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
                 />
               }
@@ -385,12 +288,8 @@ const App = () => {
                 searchTerm={searchTerm}
                 groups={groups}
                 updateGroupsList={updateGroupsList}
-                marknotes={marknotes}
-                updateMarknotesList={updateMarknotesList}
                 handleUpdateGroup={handleUpdateGroup}
                 handleDeleteGroup={handleDeleteGroup}
-                handleUpdateMarknote={handleUpdateMarknote}
-                handleDeleteMarknote={handleDeleteMarknote}
                 setSelectedTab={setSelectedTab}
               />
             </main>
@@ -412,12 +311,8 @@ const App = () => {
                   currentGroup={group}
                   groups={groups}
                   updateGroupsList={updateGroupsList}
-                  marknotes={marknotes}
-                  updateMarknotesList={updateMarknotesList}
                   handleUpdateGroup={handleUpdateGroup}
                   handleDeleteGroup={handleDeleteGroup}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
                 />
               </main>

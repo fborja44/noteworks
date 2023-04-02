@@ -39,12 +39,8 @@ export interface GroupPageProps {
   currentGroup: Group;
   groups: Group[];
   updateGroupsList: Function;
-  marknotes: Marknote[];
-  updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -55,21 +51,22 @@ const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
   groups,
   updateGroupsList,
-  marknotes,
-  updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // History
+  const history = useHistory();
+
   // Quicknotes State
   const quicknotesState: Quicknote[] = useSelector(
     (state: any) => state.quicknotesState
   );
 
-  // History
-  const history = useHistory();
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
 
   /**
    * State for current group info
@@ -150,7 +147,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [group, quicknotesState, marknotes]);
+  }, [group, quicknotesState, marknotesState]);
 
   return (
     <React.Fragment>
@@ -200,15 +197,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
         {group.marknotes.length > 0 ? (
           <Section name="Marknotes">
             <MNList
-              marknotes={marknotes.filter((note: Marknote) =>
-                note.groups.includes(group._id)
-              )}
-              updateMarknotesList={updateMarknotesList}
               groups={groups}
               updateGroupsList={updateGroupsList}
               handleUpdateGroup={handleUpdateGroup}
-              handleUpdateMarknote={handleUpdateMarknote}
-              handleDeleteMarknote={handleDeleteMarknote}
               setSelectedTab={setSelectedTab}
               setGroupPage={setGroupPage}
             />

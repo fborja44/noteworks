@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
-import { Marknote, Group } from "../../common/types";
+import { Group } from "../../common/types";
 import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
@@ -21,12 +21,8 @@ export interface SearchPageProps {
   searchTerm: string;
   groups: Group[];
   updateGroupsList: Function;
-  marknotes: Marknote[];
-  updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -37,12 +33,8 @@ const SearchPage: React.FC<SearchPageProps> = ({
   searchTerm,
   groups,
   updateGroupsList,
-  marknotes,
-  updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
   // Data Saved State
@@ -77,13 +69,9 @@ const SearchPage: React.FC<SearchPageProps> = ({
         <Section name={`Marknotes`}>
           <MNList
             MNFilterText={searchTerm}
-            marknotes={marknotes}
-            updateMarknotesList={updateMarknotesList}
             groups={groups}
             updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
-            handleUpdateMarknote={handleUpdateMarknote}
-            handleDeleteMarknote={handleDeleteMarknote}
             setSelectedTab={setSelectedTab}
           />
         </Section>

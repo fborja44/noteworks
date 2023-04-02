@@ -11,12 +11,16 @@ import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Common imports
 import { Marknote } from "../../common/types";
 import { COLOR, ColorId, NoteColor } from "../../common/color";
-// import { lightTheme } from "../../common/theme";
+import {
+  handleDeleteMarknote,
+  handleUpdateMarknote,
+  updateMarknotesState,
+} from "../../utils/marknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -214,30 +218,25 @@ const Divider = styled.section`
  * Editor component proptypes
  */
 export interface MNEditorProps {
-  currentNote: Marknote;
-  updateMarknotesList: Function;
-  handleDeleteMarknote: (noteId: string) => void;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
+  activeNote: Marknote;
 }
 
-const MNEditor: React.FC<MNEditorProps> = ({
-  currentNote,
-  updateMarknotesList,
-  handleDeleteMarknote,
-  handleUpdateMarknote,
-}) => {
+const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
     (state: any) => state.marknotesState
   );
 
-  // History
+  // History hook
   const history = useHistory();
+
+  // Dispatch hook
+  const dispatch = useDispatch();
 
   /**
    * State for current marknote info
    */
-  const [marknote, setMarknote] = useState(currentNote);
+  const [marknote, setMarknote] = useState(activeNote);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -256,9 +255,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
   /**
    * Function to toggle the color menu
    */
-  const toggleColorMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const toggleColorMenu = () => {
     // Toggle display of component
     setShowColorMenu((prev) => !prev);
   };
@@ -319,7 +316,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
       handleUpdateMarknote(marknote._id, marknote);
-      updateMarknotesList(marknote._id, marknote);
+      updateMarknotesState(marknotesState, marknote, dispatch);
       setSaved(true);
     }, 2000);
 
@@ -371,7 +368,7 @@ const MNEditor: React.FC<MNEditorProps> = ({
             };
             setMarknote(marknote);
             handleUpdateMarknote(marknote._id, updatedMarknote);
-            updateMarknotesList(marknote._id, updatedMarknote);
+            updateMarknotesState(marknotesState, updatedMarknote, dispatch);
           }}
         >
           {marknote.favorited === false ? <StarIcon /> : <StarIcon filled />}

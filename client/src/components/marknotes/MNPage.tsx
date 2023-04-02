@@ -8,6 +8,11 @@ import { Switch, Route } from "react-router-dom";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
+import { useHistory } from "react-router-dom";
+
+// Redux imports
+import { useSelector, useDispatch } from "react-redux";
+
 // Common imports
 import { Group, Marknote } from "../../common/types";
 
@@ -29,6 +34,7 @@ import MenuIcon from "../icons/MenuIcon";
 import SquareBlocksIcon from "../icons/SquareBlocksIcon";
 import SparkleIcon from "../icons/SparkleIcon";
 import { BsMarkdown } from "react-icons/bs";
+import { handleAddMarknote } from "../../utils/marknotes";
 
 /**
  * Props for MNPage
@@ -36,18 +42,12 @@ import { BsMarkdown } from "react-icons/bs";
 export interface MNPageProps {
   explorerOpen: boolean;
   setExplorerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  marknotes: Marknote[];
-  updateMarknotesList: Function;
-  setMarknotes: React.Dispatch<React.SetStateAction<any[]>>;
   groups: Group[];
   updateGroupsList: Function;
   setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleAddMarknote: () => void;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -57,25 +57,30 @@ export interface MNPageProps {
 const MNPage: React.FC<MNPageProps> = ({
   explorerOpen,
   setExplorerOpen,
-  marknotes,
-  updateMarknotesList,
-  setMarknotes,
   groups,
   updateGroupsList,
   setGroups,
   handleAddGroup,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleAddMarknote,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // History hook
+  const history = useHistory();
+
   // Help menu state
   const [showMNHelp, setShowMNHelp] = useState(false);
   const openMNHelp = () => {
     setShowMNHelp((prev) => !prev);
   };
+
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
 
   /**
    * State for marknotes filter text
@@ -93,7 +98,12 @@ const MNPage: React.FC<MNPageProps> = ({
         >
           {!explorerOpen && (
             <>
-              <PageHeaderButton title="New Note" onClick={handleAddMarknote}>
+              <PageHeaderButton
+                title="New Note"
+                onClick={() =>
+                  handleAddMarknote(marknotesState, history, dispatch)
+                }
+              >
                 <PlusIcon />
               </PageHeaderButton>
               <PageHeaderButton title="New Group" onClick={handleAddGroup}>
@@ -137,13 +147,9 @@ const MNPage: React.FC<MNPageProps> = ({
               <Section name="My Marknotes" handleClick={handleAddMarknote}>
                 <MNList
                   MNFilterText={MNFilterText}
-                  marknotes={marknotes}
-                  updateMarknotesList={updateMarknotesList}
                   groups={groups}
                   updateGroupsList={updateGroupsList}
                   handleUpdateGroup={handleUpdateGroup}
-                  handleUpdateMarknote={handleUpdateMarknote}
-                  handleDeleteMarknote={handleDeleteMarknote}
                   setSelectedTab={setSelectedTab}
                 />
               </Section>
@@ -176,18 +182,13 @@ const MNPage: React.FC<MNPageProps> = ({
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />
       </Route>
       {/** Routes for Editors */}
-      {marknotes.map((note) => (
+      {marknotesState.map((note) => (
         <Route key={note._id} path={`/marknotes/${note._id}`}>
-          <MNEditor
-            currentNote={note}
-            updateMarknotesList={updateMarknotesList}
-            handleDeleteMarknote={handleDeleteMarknote}
-            handleUpdateMarknote={handleUpdateMarknote}
-          />
+          <MNEditor activeNote={note} />
         </Route>
       ))}
       {/** Routes for Previews */}
-      {marknotes.map((note) => (
+      {marknotesState.map((note) => (
         <Route key={note._id} path={`/marknotes/${note._id}`}>
           <Preview currentNote={note} />
         </Route>

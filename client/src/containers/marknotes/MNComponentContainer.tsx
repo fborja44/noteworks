@@ -4,12 +4,19 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
+// Redux imports
+import { useSelector, useDispatch } from "react-redux";
+
 // Common imports
 import { Group, Marknote } from "../../common/types";
 import { ColorId } from "../../common/color";
 
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
+import {
+  handleUpdateMarknote,
+  updateMarknotesState,
+} from "../../utils/marknotes";
 
 export interface MNComponentContainerProps {
   groups: Group[];
@@ -17,9 +24,6 @@ export interface MNComponentContainerProps {
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   setGroupPage?: Function;
   currentNote: Marknote;
-  updateMarknotesList: Function;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote?: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -29,11 +33,16 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   handleUpdateGroup,
   setGroupPage,
   currentNote,
-  updateMarknotesList,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
+
+  // Dispatch
+  const dispatch = useDispatch();
+
   // History
   const history = useHistory();
 
@@ -48,14 +57,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   /**
    * Function to toggle the group menu
    */
-  const toggleGroupMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    // Prevent parent link from redirecting
-    // event.preventDefault();
-    // event.stopPropagation();
-    // event.nativeEvent.stopImmediatePropagation();
-
+  const toggleGroupMenu = () => {
     // Toggle display of component
     setShowGroupMenu((prev) => !prev);
   };
@@ -88,7 +90,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       };
     }
     setMarknoteComponent(updatedNote);
-    updateMarknotesList(marknoteComponent._id, updatedNote);
+    updateMarknotesState(marknotesState, updatedNote, dispatch);
     handleUpdateMarknote(marknoteComponent._id, updatedNote);
   };
 
@@ -103,7 +105,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     };
     setMarknoteComponent(marknoteComponent);
     handleUpdateMarknote(marknoteComponent._id, updatedMarknote);
-    updateMarknotesList(marknoteComponent._id, updatedMarknote);
+    updateMarknotesState(marknotesState, updatedMarknote, dispatch);
   };
 
   /**
@@ -122,20 +124,13 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     };
     setMarknoteComponent(marknoteComponent);
     handleUpdateMarknote(marknoteComponent._id, updatedMarknote);
-    updateMarknotesList(marknoteComponent._id, updatedMarknote);
+    updateMarknotesState(marknotesState, updatedMarknote, dispatch);
   };
 
   /**
    * Function to toggle the color menu
    */
-  const toggleColorMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    // Prevent parent link from redirecting
-    // event.preventDefault();
-    // event.stopPropagation();
-    // event.nativeEvent.stopImmediatePropagation();
-
+  const toggleColorMenu = () => {
     // Toggle display of component
     setShowColorMenu((prev) => !prev);
   };
@@ -146,14 +141,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   /**
    * Function to toggle the confirm delete menu
    */
-  const toggleConfirmDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    // Prevent parent link from redirecting
-    // event.preventDefault();
-    // event.stopPropagation();
-    // event.nativeEvent.stopImmediatePropagation();
-
+  const toggleConfirmDelete = () => {
     // Toggle display of component
     setShowConfirmDelete((prev) => !prev);
   };
@@ -166,9 +154,6 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       handleUpdateGroup={handleUpdateGroup}
       setGroupPage={setGroupPage}
       currentNote={currentNote}
-      updateMarknotesList={updateMarknotesList}
-      handleUpdateMarknote={handleUpdateMarknote}
-      handleDeleteMarknote={handleDeleteMarknote}
       handleEditField={handleEditField}
       handleFavorite={handleFavorite}
       handleEditColor={handleEditColor}

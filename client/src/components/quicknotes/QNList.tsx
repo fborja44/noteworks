@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 
 import styled from "@emotion/styled";
+import { useLocation } from "react-router-dom";
 
 // Redux Imports
 import { useSelector } from "react-redux";
@@ -14,7 +15,6 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 // Component imports
 import QNComponent from "./QNComponent";
 import { Empty } from "../Section";
-import { useLocation } from "react-router-dom";
 
 const List = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ const QNList: React.FC<QNListProps> = ({
   favorites,
   setSaved,
 }) => {
-  // Location hook
+  // URL Pathname
   const pathname = useLocation().pathname;
 
   // Quicknotes State

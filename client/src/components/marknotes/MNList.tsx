@@ -5,6 +5,11 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
+import { useLocation } from "react-router-dom";
+
+// Redux imports
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
 
@@ -25,35 +30,41 @@ const List = styled.div`
 
 export interface MNListProps {
   MNFilterText?: string;
-  marknotes: Marknote[];
-  updateMarknotesList: Function;
   groups: Group[];
   updateGroupsList: Function;
   setGroupPage?: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   favorites?: boolean;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNList: React.FC<MNListProps> = ({
   MNFilterText,
-  marknotes,
-  updateMarknotesList,
   groups,
   updateGroupsList,
   setGroupPage,
   handleUpdateGroup,
   favorites,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
+  // URL Pathname
+  const pathname = useLocation().pathname;
+
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
+
   // Sort marknotes by last modified date
-  let notes = marknotes.sort(
+  let notes = marknotesState.sort(
     (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
   );
+
+  // Filter notes by group if on group page
+  const group_id = pathname.split("/").pop();
+  if (pathname.includes("group") && group_id) {
+    notes = notes.filter((note: Marknote) => note.groups.includes(group_id));
+  }
 
   // Filter notes by filter text if given
   if (MNFilterText) {
@@ -82,9 +93,6 @@ const MNList: React.FC<MNListProps> = ({
             handleUpdateGroup={handleUpdateGroup}
             setGroupPage={setGroupPage}
             currentNote={note}
-            updateMarknotesList={updateMarknotesList}
-            handleUpdateMarknote={handleUpdateMarknote}
-            handleDeleteMarknote={handleDeleteMarknote}
             setSelectedTab={setSelectedTab}
           />
         )

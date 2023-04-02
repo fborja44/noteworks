@@ -8,6 +8,11 @@ import React, { useState } from "react";
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+import { useHistory } from "react-router-dom";
+
+// Redux imports
+import { useSelector, useDispatch } from "react-redux";
+
 // Common imports
 import { Group, Marknote } from "../../common/types";
 
@@ -21,6 +26,7 @@ import NotesExplorerMarknote from "./NotesExplorerMarknote";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
+import { handleAddMarknote } from "../../utils/marknotes";
 
 const NotesExplorerContainer = styled.section`
   background: ${(props) => props.theme.sidebar.background};
@@ -76,25 +82,32 @@ const NotesExplorerContentText = styled.div`
 `;
 
 interface NotesExplorerProps {
-  marknotes: Marknote[];
   groups: Group[];
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  handleAddMarknote: () => void;
   handleAddGroup: () => void;
 }
 
 const NotesExplorer = ({
-  marknotes,
   groups,
   setSelectedTab,
-  handleAddMarknote,
-  handleAddGroup
+  handleAddGroup,
 }: NotesExplorerProps) => {
+  // Dispatch
+  const dispatch = useDispatch();
+
+  // History
+  const history = useHistory();
+
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
+
   // Explorer filter State
   const [explorerFilter, setExplorerFilter] = useState("");
 
   // Sort marknotes by last modified date
-  let notes = marknotes.sort(
+  let notes = marknotesState.sort(
     (a: Marknote, b: Marknote) => b.lastModified - a.lastModified
   );
 
@@ -127,7 +140,7 @@ const NotesExplorer = ({
       {groups.map((group) => (
         <NotesExplorerGroup
           group={group}
-          marknotes={marknotes}
+          marknotes={marknotesState}
           setSelectedTab={setSelectedTab}
           explorerFilter={explorerFilter}
         />
@@ -163,7 +176,7 @@ const NotesExplorer = ({
           </NotesExplorerButton>
           <NotesExplorerButton
             title={"New Marknote"}
-            onClick={handleAddMarknote}
+            onClick={() => handleAddMarknote(marknotesState, history, dispatch)}
           >
             <PlusIcon />
           </NotesExplorerButton>

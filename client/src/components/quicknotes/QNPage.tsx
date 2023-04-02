@@ -4,8 +4,7 @@
 import React, { useState, useEffect } from "react";
 
 // Common imports
-import { Group, Quicknote } from "../../common/types";
-import { COLOR } from "../../common/color";
+import { Group } from "../../common/types";
 
 // Component imports
 import QNHelp from "./QNHelp";
@@ -21,10 +20,7 @@ import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
 import BoltIcon from "../icons/BoltIcon";
 
-import axios from "axios";
 import { handleAddQuicknote } from "../../utils/quicknotes";
-
-const BASE_ADDR = "http://localhost:3001";
 
 export interface QNPageProps {
   groups: Group[];

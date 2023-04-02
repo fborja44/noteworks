@@ -4,13 +4,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { Dispatch, AnyAction } from "redux";
 import { useDispatch } from "react-redux";
 
 // Common imports

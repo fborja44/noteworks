@@ -21,12 +21,8 @@ import HomeIcon from "../icons/HomeIcon";
 export interface HomePageProps {
   groups: Group[];
   updateGroupsList: Function;
-  marknotes: Marknote[];
-  updateMarknotesList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
-  handleUpdateMarknote: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote: (noteId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -36,12 +32,8 @@ export interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({
   groups,
   updateGroupsList,
-  marknotes,
-  updateMarknotesList,
   handleUpdateGroup,
   handleDeleteGroup,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   setSelectedTab,
 }) => {
   // Data Saved State
@@ -71,14 +63,10 @@ const HomePage: React.FC<HomePageProps> = ({
         </Section>
         <Section name={`Favorited Marknotes`} icon={<StarIcon />}>
           <MNList
-            marknotes={marknotes}
-            updateMarknotesList={updateMarknotesList}
             groups={groups}
             updateGroupsList={updateGroupsList}
             handleUpdateGroup={handleUpdateGroup}
             favorites={true}
-            handleUpdateMarknote={handleUpdateMarknote}
-            handleDeleteMarknote={handleDeleteMarknote}
             setSelectedTab={setSelectedTab}
           />
         </Section>

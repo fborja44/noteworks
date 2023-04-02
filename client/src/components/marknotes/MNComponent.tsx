@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 // Common imports
 import { Group, Marknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
+import { handleDeleteMarknote } from "../../utils/marknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -55,9 +56,6 @@ export interface MNComponentProps {
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   setGroupPage?: Function;
   currentNote: Marknote;
-  updateMarknotesList: Function;
-  handleUpdateMarknote?: (noteId: string, updatedMarknote: Marknote) => void;
-  handleDeleteMarknote?: (noteId: string) => void;
   handleEditField: (
     key: string,
     value: string | Boolean,
@@ -92,9 +90,6 @@ const MNComponent: React.FC<MNComponentProps> = ({
   handleUpdateGroup,
   setGroupPage,
   currentNote,
-  updateMarknotesList,
-  handleUpdateMarknote,
-  handleDeleteMarknote,
   handleEditField,
   handleFavorite,
   handleEditColor,
@@ -157,7 +152,6 @@ const MNComponent: React.FC<MNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={currentNote}
-        updateMarknotesList={updateMarknotesList}
         groups={groups}
         updateGroupsList={updateGroupsList}
         setGroupPage={setGroupPage}
