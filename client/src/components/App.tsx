@@ -379,6 +379,7 @@ const App = () => {
               groups={groups}
               setSelectedTab={setSelectedTab}
               handleAddMarknote={handleAddMarknote}
+              handleAddGroup={handleAddGroup}
             />
           )}
           <Switch>

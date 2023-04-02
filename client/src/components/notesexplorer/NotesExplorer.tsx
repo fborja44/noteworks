@@ -80,6 +80,7 @@ interface NotesExplorerProps {
   groups: Group[];
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   handleAddMarknote: () => void;
+  handleAddGroup: () => void;
 }
 
 const NotesExplorer = ({
@@ -87,6 +88,7 @@ const NotesExplorer = ({
   groups,
   setSelectedTab,
   handleAddMarknote,
+  handleAddGroup
 }: NotesExplorerProps) => {
   // Explorer filter State
   const [explorerFilter, setExplorerFilter] = useState("");
@@ -156,7 +158,7 @@ const NotesExplorer = ({
       <NotesExplorerHeader>
         <NotesExplorerFilter handleFilterNote={setExplorerFilter} />
         <NotesExplorerButtons>
-          <NotesExplorerButton title={"New Group"} onClick={() => {}}>
+          <NotesExplorerButton title={"New Group"} onClick={handleAddGroup}>
             <FolderPlusIcon />
           </NotesExplorerButton>
           <NotesExplorerButton

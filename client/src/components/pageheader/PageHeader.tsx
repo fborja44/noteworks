@@ -113,7 +113,7 @@ const SavingIndicatorContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-right: 0.625em;
+  margin-right: 1em;
   color: ${(props) => props.theme.header.textSecondary};
   svg {
     margin-right: 0.375em;

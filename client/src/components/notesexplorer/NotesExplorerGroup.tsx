@@ -108,7 +108,7 @@ const NotesExplorerGroup = ({
           {group.title ? (
             <span>{title}</span>
           ) : (
-            <span className="untitled">Untitled Note</span>
+            <span className="untitled">Untitled Group</span>
           )}
         </div>
         {openGroup ? (
