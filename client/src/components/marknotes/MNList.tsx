@@ -15,6 +15,7 @@ import { Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import MNContainer from "../../containers/marknotes/MNContainer";
+import MNCreateButton from "./MNCreateButton";
 import { Empty } from "../Section";
 
 const List = styled.div`
@@ -22,9 +23,9 @@ const List = styled.div`
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(auto-fit, 240px);
   grid-auto-rows: fit-content;
-  max-width: 100vw;
-  row-gap: 1rem;
-  column-gap: 1rem;
+  width: 100%;
+  row-gap: 1em;
+  column-gap: 2em;
   z-index: 1;
 `;
 
@@ -88,6 +89,7 @@ const MNList: React.FC<MNListProps> = ({
           />
         )
       )}
+      <MNCreateButton />
     </List>
   );
 

@@ -32,6 +32,8 @@ const MarknoteContainer = styled.div`
   border: 1px solid ${(props) => props.theme.note.borderColor};
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     border: 1px solid ${COLOR.blue.primary};
@@ -133,8 +135,8 @@ const MNComponent: React.FC<MNComponentProps> = ({
             <span className="italic">This note is empty.</span>
           )}
         </MarknoteBody>
-        <MNFooter currentNote={currentNote} />
       </NoteContent>
+      <MNFooter currentNote={currentNote} />
       <GroupMenu
         item={currentNote}
         setActiveGroup={setActiveGroup}

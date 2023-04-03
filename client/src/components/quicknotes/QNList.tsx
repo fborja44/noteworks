@@ -14,16 +14,17 @@ import { Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import QNComponent from "./QNComponent";
+import QNCreateButton from "./QNCreateButton";
 import { Empty } from "../Section";
 
 const List = styled.div`
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(auto-fit, 215px);
-  grid-auto-rows: auto;
-  max-width: 100vw;
-  row-gap: 1rem;
-  column-gap: 1rem;
+  grid-auto-rows: 215px;
+  width: 100%;
+  row-gap: 2em;
+  column-gap: 2em;
   z-index: 1;
 `;
 
@@ -86,6 +87,7 @@ const QNList: React.FC<QNListProps> = ({
           setUnsavedNotes={setUnsavedNotes}
         />
       ))}
+      <QNCreateButton />
     </List>
   );
 

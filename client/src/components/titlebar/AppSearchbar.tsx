@@ -5,6 +5,8 @@ import React, { useState } from "react";
 
 import styled from "@emotion/styled";
 
+import { useHistory } from "react-router-dom";
+
 // Component imports
 import { Link } from "react-router-dom";
 
@@ -47,10 +49,11 @@ const SearchInput = styled.input`
   }
 `;
 
-const AppSearchButton = styled(Link)`
+const AppSearchButton = styled.button`
   width: 22px;
   height: 100%;
   border: none;
+  padding: 0;
   background-color: ${(props) => props.theme.title.borderColor};
   color: inherit;
   border-radius: 0px 5px 5px 0px;
@@ -75,6 +78,10 @@ interface AppSearchbarProps {
  * App Searchbar component
  */
 const AppSearchbar: React.FC<AppSearchbarProps> = ({ setSearchTerm }) => {
+  // History hook
+  const history = useHistory();
+
+  // Search input state
   const [searchInput, setSearchInput] = useState("");
 
   return (
@@ -87,10 +94,13 @@ const AppSearchbar: React.FC<AppSearchbarProps> = ({ setSearchTerm }) => {
       />
       <AppSearchButton
         title="Search"
-        to="/search"
         onClick={() => {
-          setSearchTerm(searchInput);
+          if (searchInput.trim().length !== 0) {
+            history.push("/search");
+            setSearchTerm(searchInput);
+          }
         }}
+        disabled={searchInput.trim().length !== 0}
       >
         <ChevronRightIcon />
       </AppSearchButton>

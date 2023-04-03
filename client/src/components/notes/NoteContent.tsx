@@ -25,7 +25,7 @@ const NoteContent = styled.div`
   color: ${(props) => props.theme.note.textPrimary};
   font-weight: 500;
   width: 100%;
-  height: 100%;
+  flex: 1;
 `;
 
 export default NoteContent;

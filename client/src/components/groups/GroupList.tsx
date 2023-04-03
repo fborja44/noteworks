@@ -25,8 +25,8 @@ const List = styled.div`
   grid-auto-rows: fit-content;
   max-width: 100vw;
   min-height: 60px;
-  row-gap: 1rem;
-  column-gap: 1rem;
+  row-gap: 1em;
+  column-gap: 2em;
   z-index: 1;
 `;
 

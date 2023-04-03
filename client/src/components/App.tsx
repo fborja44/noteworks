@@ -50,6 +50,9 @@ const App = () => {
   // Dispatch hook
   const dispatch = useDispatch();
 
+  // Current path
+  const pathname = useLocation().pathname;
+
   /* Search State
   ------------------------------------------------------------------------------*/
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,8 +71,6 @@ const App = () => {
 
   /* Selected tab State
   ------------------------------------------------------------------------------*/
-  const pathname = useLocation().pathname;
-
   const [selectedTab, setSelectedTab] = useState(pathname);
 
   /* Notes Explorer State
@@ -107,19 +108,15 @@ const App = () => {
         {pathname.includes("marknotes") && explorerOpen && (
           <NotesExplorer setSelectedTab={setSelectedTab} />
         )}
-        <Switch>
-          <Route exact path="/">
-            <main>
+        <main>
+          <Switch>
+            <Route exact path="/">
               <HomePage setSelectedTab={setSelectedTab} />
-            </main>
-          </Route>
-          <Route path="/quicknotes">
-            <main>
+            </Route>
+            <Route path="/quicknotes">
               <QNPage />
-            </main>
-          </Route>
-          <Route path={"/marknotes"}>
-            <main>
+            </Route>
+            <Route path={"/marknotes"}>
               {
                 <MNPage
                   explorerOpen={explorerOpen}
@@ -127,37 +124,29 @@ const App = () => {
                   setSelectedTab={setSelectedTab}
                 />
               }
-            </main>
-          </Route>
-          <Route path="/search">
-            <main>
+            </Route>
+            <Route path="/search">
               <SearchPage
                 searchTerm={searchTerm}
                 setSelectedTab={setSelectedTab}
               />
-            </main>
-          </Route>
-          <Route path="/checklists">
-            <main>
+            </Route>
+            <Route path="/checklists">
               <ChecklistsPage />
-            </main>
-          </Route>
-          <Route path="/settings">
-            <main>
+            </Route>
+            <Route path="/settings">
               <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
-            </main>
-          </Route>
-          {groupsState.map((group: Group) => (
-            <Route path={`/groups/${group._id}`}>
-              <main>
+            </Route>
+            {groupsState.map((group: Group) => (
+              <Route path={`/groups/${group._id}`}>
                 <GroupPage
                   currentGroup={group}
                   setSelectedTab={setSelectedTab}
                 />
-              </main>
-            </Route>
-          ))}
-        </Switch>
+              </Route>
+            ))}
+          </Switch>
+        </main>
       </div>
       <Footer />
     </RendererContainer>

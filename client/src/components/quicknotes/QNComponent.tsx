@@ -31,12 +31,14 @@ import GroupMenu from "../menus/GroupMenu";
 const QuicknoteContainer = styled.div`
   background-color: ${(props: { bodyColor: string }) => props.bodyColor};
   width: 215px;
-  height: fit-content;
+  height: 100%;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   textarea {
     border: none;
@@ -218,11 +220,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-      <NoteContent
-        css={css`
-          height: 175px;
-        `}
-      >
+      <NoteContent>
         <QuicknoteBody
           placeholder="Write your quicknote here..."
           value={quicknote.body}
@@ -230,12 +228,12 @@ const QNComponent: React.FC<QNComponentProps> = ({
             handleEditField("body", event.target.value, true)
           }
         />
-        <QNFooter
-          currentNote={quicknote}
-          remaining={bodyCharRemaining}
-          limit={bodyCharLimit}
-        />
       </NoteContent>
+      <QNFooter
+        currentNote={quicknote}
+        remaining={bodyCharRemaining}
+        limit={bodyCharLimit}
+      />
       <GroupMenu
         item={quicknote}
         setActiveGroup={setActiveGroup}
