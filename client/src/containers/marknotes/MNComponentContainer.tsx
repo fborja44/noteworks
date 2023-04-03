@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
+import { handleUpdateMarknote } from "../../utils/marknotes";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
@@ -13,10 +14,6 @@ import { ColorId } from "../../common/color";
 
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
-import {
-  handleUpdateMarknote,
-  updateMarknotesState,
-} from "../../utils/marknotes";
 
 export interface MNComponentContainerProps {
   groups: Group[];
@@ -76,22 +73,21 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
     value: string | Boolean,
     updateDate: Boolean = true
   ) => {
-    let updatedNote;
+    let updatedMarknote: Marknote;
     if (updateDate) {
-      updatedNote = {
+      updatedMarknote = {
         ...marknoteComponent,
         [key]: value,
         lastModified: Date.now(),
       };
     } else {
-      updatedNote = {
+      updatedMarknote = {
         ...marknoteComponent,
         [key]: value,
       };
     }
-    setMarknoteComponent(updatedNote);
-    updateMarknotesState(marknotesState, updatedNote, dispatch);
-    handleUpdateMarknote(marknoteComponent._id, updatedNote);
+    setMarknoteComponent(updatedMarknote);
+    handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
   /**
@@ -104,8 +100,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       color: color,
     };
     setMarknoteComponent(marknoteComponent);
-    handleUpdateMarknote(marknoteComponent._id, updatedMarknote);
-    updateMarknotesState(marknotesState, updatedMarknote, dispatch);
+    handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
   /**
@@ -123,8 +118,7 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
       favorited: !marknoteComponent.favorited,
     };
     setMarknoteComponent(marknoteComponent);
-    handleUpdateMarknote(marknoteComponent._id, updatedMarknote);
-    updateMarknotesState(marknotesState, updatedMarknote, dispatch);
+    handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
   /**

@@ -2,7 +2,7 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Quicknote } from "../common/types";
-import { updateQuicknotesAction } from "../redux/actions";
+import { setQuicknotes } from "../redux/actions";
 
 const BASE_ADDR = "http://localhost:3001";
 
@@ -25,9 +25,7 @@ const updateQuicknotesState = (
     }
     return true;
   });
-  dispatch(
-    updateQuicknotesAction([...updatedQuicknotes, ...filteredQuicknotes])
-  );
+  dispatch(setQuicknotes([...updatedQuicknotes, ...filteredQuicknotes]));
 };
 
 /**
@@ -49,7 +47,7 @@ const handleAddQuicknote = async (
         body: "",
       },
     });
-    dispatch(updateQuicknotesAction([...quicknotes, newQuicknote]));
+    dispatch(setQuicknotes([...quicknotes, newQuicknote]));
   } catch (e) {
     console.log(e);
   }
@@ -94,7 +92,7 @@ const handleDeleteQuicknote = async (
     const newQuicknotes = items.filter(
       (note: Quicknote) => note._id !== noteId
     ); // don't need to make new array since filter returns new array
-    dispatch(updateQuicknotesAction(newQuicknotes));
+    dispatch(setQuicknotes(newQuicknotes));
   } catch (e) {
     console.log(e);
   }

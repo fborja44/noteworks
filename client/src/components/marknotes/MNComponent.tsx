@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 // Common imports
 import { Group, Marknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
-import { handleDeleteMarknote } from "../../utils/marknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -105,11 +104,6 @@ const MNComponent: React.FC<MNComponentProps> = ({
   setSelectedTab,
   history,
 }) => {
-  // Marknotes State
-  const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
-  );
-
   return (
     <MarknoteContainer
       className="mncontainer"
@@ -165,11 +159,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        itemsState={marknotesState}
         item={currentNote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDelete={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
     </MarknoteContainer>

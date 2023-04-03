@@ -1,28 +1,64 @@
 import { Quicknote, Marknote, Group } from "../common/types";
 
-const updateSearchAction = (updatedSearch: string) => ({
+const updateSearch = (updatedSearch: string) => ({
   type: "UPDATE_SEARCH",
   payload: updatedSearch,
 });
 
-const updateQuicknotesAction = (updatedQuicknotes: Quicknote[]) => ({
+const setQuicknotes = (quicknotes: Quicknote[]) => ({
+  type: "SET_QUICKNOTES",
+  payload: quicknotes,
+});
+
+const updateQuicknotes = (updatedQuicknotes: Quicknote[]) => ({
   type: "UPDATE_QUICKNOTES",
   payload: updatedQuicknotes,
 });
 
-const updateMarknotesAction = (updatedMarknotes: Marknote[]) => ({
-  type: "UPDATE_MARKNOTES",
-  payload: updatedMarknotes,
+const deleteQuicknote = (quicknoteId: string) => ({
+  type: "DELETE_QUICKNOTE",
+  payload: quicknoteId,
 });
 
-const updateGroupsAction = (updatedGroups: Group[]) => ({
+const setMarknotes = (marknotes: Marknote[]) => ({
+  type: "SET_MARKNOTES",
+  payload: marknotes,
+});
+
+const updateMarknote = (updatedMarknote: Marknote) => ({
+  type: "UPDATE_MARKNOTE",
+  payload: updatedMarknote,
+});
+
+const createMarknote = (newMarknote: Marknote) => ({
+  type: "CREATE_MARKNOTE",
+  payload: newMarknote,
+});
+
+const deleteMarknote = (marknoteId: string) => ({
+  type: "DELETE_MARKNOTE",
+  payload: marknoteId,
+});
+
+const updateGroup = (updatedGroups: Group[]) => ({
   type: "UPDATE_GROUPS",
   payload: updatedGroups,
 });
 
+const deleteGroup = (groupId: string) => ({
+  type: "DELETE_GROUP",
+  payload: groupId,
+});
+
 export {
-  updateSearchAction,
-  updateQuicknotesAction,
-  updateMarknotesAction,
-  updateGroupsAction,
+  updateSearch,
+  setQuicknotes,
+  deleteQuicknote,
+  updateQuicknotes,
+  setMarknotes,
+  updateMarknote,
+  createMarknote,
+  deleteMarknote,
+  updateGroup,
+  deleteGroup,
 };

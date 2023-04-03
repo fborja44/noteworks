@@ -26,7 +26,7 @@ import NotesExplorerMarknote from "./NotesExplorerMarknote";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
-import { handleAddMarknote } from "../../utils/marknotes";
+import { handleCreateMarknote } from "../../utils/marknotes";
 
 const NotesExplorerContainer = styled.section`
   background: ${(props) => props.theme.sidebar.background};
@@ -176,7 +176,7 @@ const NotesExplorer = ({
           </NotesExplorerButton>
           <NotesExplorerButton
             title={"New Marknote"}
-            onClick={() => handleAddMarknote(marknotesState, history, dispatch)}
+            onClick={() => handleCreateMarknote(dispatch, history)}
           >
             <PlusIcon />
           </NotesExplorerButton>

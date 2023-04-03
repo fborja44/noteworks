@@ -2,36 +2,20 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Marknote } from "../common/types";
-import { updateMarknotesAction } from "../redux/actions";
+import {
+  createMarknote,
+  deleteMarknote,
+  updateMarknote,
+} from "../redux/actions";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
- * Marknote function to update the marknotes list in app state
- * @param noteId The marknote id
- * @param updatedMarknote The data to update the marknote with
- */
-const updateMarknotesState = (
-  marknotes: Marknote[],
-  updatedMarknote: Marknote,
-  dispatch: Dispatch<AnyAction>
-) => {
-  const updatedMarknotesArray = marknotes.map((note: any) => {
-    if (note._id === updatedMarknote._id) {
-      return updatedMarknote;
-    }
-    return note;
-  });
-  dispatch(updateMarknotesAction(updatedMarknotesArray));
-};
-
-/**
  * Marknote function to add a new empty marknote to the list
  */
-const handleAddMarknote = async (
-  marknotes: Marknote[],
-  history: any,
-  dispatch: Dispatch<AnyAction>
+const handleCreateMarknote = async (
+  dispatch: Dispatch<AnyAction>,
+  history: any
 ) => {
   // Add new to state list
   try {
@@ -45,7 +29,7 @@ const handleAddMarknote = async (
         body: "",
       },
     });
-    dispatch(updateMarknotesAction([...marknotes, newMarknote]));
+    dispatch(createMarknote(newMarknote));
     // Redirect when new note is added
     history.push("/marknotes");
     history.push(`/marknotes/${newMarknote._id}`);
@@ -55,53 +39,44 @@ const handleAddMarknote = async (
 };
 
 /**
- * Marknote function to update a marknote in the database
- * @param noteId The marknote id
+ * Updates a marknote in the database
  * @param updatedMarknote The data to update the marknote with
  */
 const handleUpdateMarknote = async (
-  noteId: string,
+  dispatch: Dispatch<AnyAction>,
   updatedMarknote: Marknote
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/marknotes/${noteId}`,
+      url: `/marknotes/${updatedMarknote._id}`,
       method: "PATCH",
       data: updatedMarknote,
     });
+    dispatch(updateMarknote(updatedMarknote));
   } catch (e) {
     console.log(e);
   }
 };
 
 /**
- * Marknote function to delete a marknote from the list
+ * Deletes a marknote from the database
  * @param noteId The id of the marknote to be deleted
  */
 const handleDeleteMarknote = async (
-  marknotes: Marknote[],
-  noteId: string,
-  dispatch: Dispatch<AnyAction>
+  dispatch: Dispatch<AnyAction>,
+  marknoteId: string
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/marknotes/${noteId}`,
+      url: `/marknotes/${marknoteId}`,
       method: "DELETE",
     });
-    const newMarknotes = marknotes.filter(
-      (note: Marknote) => note._id !== noteId
-    ); // don't need to make new array since filter returns new array
-    dispatch(updateMarknotesAction(newMarknotes));
+    dispatch(deleteMarknote(marknoteId));
   } catch (e) {
     console.log(e);
   }
 };
 
-export {
-  updateMarknotesState,
-  handleAddMarknote,
-  handleDeleteMarknote,
-  handleUpdateMarknote,
-};
+export { handleCreateMarknote, handleUpdateMarknote, handleDeleteMarknote };

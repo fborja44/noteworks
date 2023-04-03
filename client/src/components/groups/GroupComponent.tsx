@@ -83,7 +83,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   currentGroup,
   updateGroupsList,
   handleUpdateGroup,
-  handleDeleteGroup,
 }) => {
   // Groups State
   const groupsState: Group[] = useSelector((state: any) => state.groupsState);
@@ -208,11 +207,9 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        itemsState={groupsState}
         item={groupComponent}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDelete={handleDeleteGroup}
         toggleConfirmDelete={toggleConfirmDelete}
         redirect={false}
       />

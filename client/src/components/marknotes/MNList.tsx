@@ -55,6 +55,8 @@ const MNList: React.FC<MNListProps> = ({
     (state: any) => state.marknotesState
   );
 
+  console.log(marknotesState);
+
   // Sort marknotes by last modified date
   let notes = marknotesState.sort(
     (a: Marknote, b: Marknote) => b.lastModified - a.lastModified

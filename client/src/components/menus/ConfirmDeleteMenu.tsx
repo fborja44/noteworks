@@ -8,6 +8,11 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
+import {
+  deleteGroup,
+  deleteMarknote,
+  deleteQuicknote,
+} from "../../redux/actions";
 
 // Common imports
 import { Quicknote, Marknote, Group } from "../../common/types";
@@ -16,6 +21,7 @@ import { COLOR } from "../../common/color";
 // Component Imports
 import ModalMenu from "./ModalMenu";
 import TrashIcon from "../icons/TrashIcon";
+import { handleDeleteMarknote } from "../../utils/marknotes";
 
 const MenuContent = styled.div`
   text-align: center;
@@ -52,21 +58,17 @@ const DeleteButton = styled.button`
 `;
 
 export interface ConfirmDeleteProps {
-  itemsState: Quicknote[] | Marknote[] | Group[];
   item: Quicknote | Marknote | Group;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDelete?: Function;
   toggleConfirmDelete: (event: any) => void;
   redirect?: Boolean;
 }
 
 const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
-  itemsState,
   item,
   showMenuState,
   setShowMenuState,
-  handleDelete,
   toggleConfirmDelete,
   redirect,
 }) => {
@@ -91,17 +93,21 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
       <MenuContent>
         <p>This action cannot be reversed.</p>
         <DeleteButton
-          onClick={
-            handleDelete
-              ? (event) => {
-                  handleDelete(itemsState, item._id, dispatch);
-                  if (redirect) {
-                    history.goBack();
-                  }
-                  toggleConfirmDelete(event);
-                }
-              : undefined
-          }
+          onClick={(event) => {
+            if (item.type === "quicknote") {
+              dispatch(deleteQuicknote(item._id));
+            } else if (item.type === "marknote") {
+              handleDeleteMarknote(dispatch, item._id);
+            } else if (item.type === "group") {
+              dispatch(deleteGroup(item._id));
+            } else {
+              return;
+            }
+            if (redirect) {
+              history.goBack();
+            }
+            toggleConfirmDelete(event);
+          }}
         >
           Confirm
         </DeleteButton>

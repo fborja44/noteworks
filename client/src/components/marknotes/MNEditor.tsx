@@ -12,15 +12,11 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
+import { updateMarknote } from "../../redux/actions";
 
 // Common imports
 import { Marknote } from "../../common/types";
 import { COLOR, ColorId, NoteColor } from "../../common/color";
-import {
-  handleDeleteMarknote,
-  handleUpdateMarknote,
-  updateMarknotesState,
-} from "../../utils/marknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -315,8 +311,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateMarknote(marknote._id, marknote);
-      updateMarknotesState(marknotesState, marknote, dispatch);
+      dispatch(updateMarknote(marknote));
       setSaved(true);
     }, 2000);
 
@@ -367,8 +362,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
               favorited: !marknote.favorited,
             };
             setMarknote(marknote);
-            handleUpdateMarknote(marknote._id, updatedMarknote);
-            updateMarknotesState(marknotesState, updatedMarknote, dispatch);
+            dispatch(updatedMarknote);
           }}
         >
           {marknote.favorited === false ? <StarIcon /> : <StarIcon filled />}
@@ -435,11 +429,9 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        itemsState={marknotesState}
         item={marknote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDelete={handleDeleteMarknote}
         toggleConfirmDelete={toggleConfirmDelete}
         redirect={true}
       />

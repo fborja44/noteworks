@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -11,11 +11,7 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import {
-  updateQuicknotesAction,
-  updateMarknotesAction,
-  updateGroupsAction,
-} from "../redux/actions";
+import { setMarknotes, setQuicknotes } from "../redux/actions";
 
 // Common imports
 import { Group } from "../common/types";
@@ -54,11 +50,8 @@ const BASE_ADDR = "http://localhost:3001";
  * Main application component
  */
 const App = () => {
+  // Dispatch hook
   const dispatch = useDispatch();
-
-  /* Quicknotes State
-  ------------------------------------------------------------------------------*/
-  const history = useHistory();
 
   /* Search State
   ------------------------------------------------------------------------------*/
@@ -79,7 +72,7 @@ const App = () => {
     });
     // Check if notes were received
     if (savedQuicknotes) {
-      dispatch(updateQuicknotesAction(savedQuicknotes));
+      dispatch(setQuicknotes(savedQuicknotes));
     }
   };
 
@@ -98,7 +91,7 @@ const App = () => {
     });
     // Check if notes were received
     if (savedMarknotes) {
-      dispatch(updateMarknotesAction(savedMarknotes));
+      dispatch(setMarknotes(savedMarknotes));
     }
   };
 

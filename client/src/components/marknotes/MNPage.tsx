@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
+import { createMarknote } from "../../redux/actions";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
@@ -34,7 +35,7 @@ import MenuIcon from "../icons/MenuIcon";
 import SquareBlocksIcon from "../icons/SquareBlocksIcon";
 import SparkleIcon from "../icons/SparkleIcon";
 import { BsMarkdown } from "react-icons/bs";
-import { handleAddMarknote } from "../../utils/marknotes";
+import { handleCreateMarknote } from "../../utils/marknotes";
 
 /**
  * Props for MNPage
@@ -82,6 +83,8 @@ const MNPage: React.FC<MNPageProps> = ({
     (state: any) => state.marknotesState
   );
 
+  console.log(marknotesState);
+
   /**
    * State for marknotes filter text
    */
@@ -100,9 +103,7 @@ const MNPage: React.FC<MNPageProps> = ({
             <>
               <PageHeaderButton
                 title="New Note"
-                onClick={() =>
-                  handleAddMarknote(marknotesState, history, dispatch)
-                }
+                onClick={() => handleCreateMarknote(dispatch, history)}
               >
                 <PlusIcon />
               </PageHeaderButton>
@@ -144,7 +145,10 @@ const MNPage: React.FC<MNPageProps> = ({
                   handleDeleteGroup={handleDeleteGroup}
                 />
               </Section>
-              <Section name="My Marknotes" handleClick={handleAddMarknote}>
+              <Section
+                name="My Marknotes"
+                handleClick={() => handleCreateMarknote(dispatch, history)}
+              >
                 <MNList
                   MNFilterText={MNFilterText}
                   groups={groups}

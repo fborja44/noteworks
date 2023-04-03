@@ -269,11 +269,9 @@ const QNComponent: React.FC<QNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        itemsState={quicknotesState}
         item={quicknote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDelete={handleDeleteQuicknote}
         toggleConfirmDelete={toggleConfirmDelete}
       />
     </QuicknoteContainer>

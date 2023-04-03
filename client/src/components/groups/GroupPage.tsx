@@ -234,11 +234,9 @@ const GroupPage: React.FC<GroupPageProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        itemsState={groups}
         item={group}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
-        handleDelete={handleDeleteGroup}
         toggleConfirmDelete={toggleConfirmDelete}
         redirect={true}
       />
