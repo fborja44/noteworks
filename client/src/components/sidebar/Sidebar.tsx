@@ -30,8 +30,6 @@ const SidebarContainer = styled.aside`
   border-right: 1px solid ${(props) => props.theme.sidebar.borderColor};
   height: calc(100vh - 75px);
   width: ${(props: { open: boolean }) => (props.open ? "100px" : "50px")};
-  max-width: ${(props: { open: boolean }) => (props.open ? "100px" : "50px")};
-  min-width: ${(props: { open: boolean }) => (props.open ? "100px" : "50px")};
   color: ${(props) => props.theme.sidebar.textPrimary};
   z-index: 0;
   transition: width 0.1s;

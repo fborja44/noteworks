@@ -8,6 +8,7 @@ import { Switch, Route, useLocation } from "react-router-dom";
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import { ThemeProvider } from "@emotion/react";
 
 // Redux imports
 import { useDispatch, useSelector } from "react-redux";
@@ -93,46 +94,48 @@ const App = () => {
   }, [appTheme]);
 
   return (
-    <RendererContainer>
-      <Titlebar />
-      <div className="app-container">
-        <Sidebar />
-        {pathname.includes("marknotes") && explorerOpen && <NotesExplorer />}
-        <main>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/quicknotes">
-              <QNPage />
-            </Route>
-            <Route path={"/marknotes"}>
-              {
-                <MNPage
-                  explorerOpen={explorerOpen}
-                  setExplorerOpen={setExplorerOpen}
-                />
-              }
-            </Route>
-            <Route path="/search">
-              <SearchPage />
-            </Route>
-            <Route path="/checklists">
-              <ChecklistsPage />
-            </Route>
-            <Route path="/settings">
-              <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
-            </Route>
-            {groupsState.map((group: Group) => (
-              <Route path={`/groups/${group._id}`}>
-                <GroupPage currentGroup={group} />
+    <ThemeProvider theme={appTheme}>
+      <RendererContainer>
+        <Titlebar />
+        <div className="app-container">
+          <Sidebar />
+          {pathname.includes("marknotes") && explorerOpen && <NotesExplorer />}
+          <main>
+            <Switch>
+              <Route exact path="/">
+                <HomePage />
               </Route>
-            ))}
-          </Switch>
-        </main>
-      </div>
-      <Footer />
-    </RendererContainer>
+              <Route path="/quicknotes">
+                <QNPage />
+              </Route>
+              <Route path={"/marknotes"}>
+                {
+                  <MNPage
+                    explorerOpen={explorerOpen}
+                    setExplorerOpen={setExplorerOpen}
+                  />
+                }
+              </Route>
+              <Route path="/search">
+                <SearchPage />
+              </Route>
+              <Route path="/checklists">
+                <ChecklistsPage />
+              </Route>
+              <Route path="/settings">
+                <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
+              </Route>
+              {groupsState.map((group: Group) => (
+                <Route path={`/groups/${group._id}`}>
+                  <GroupPage currentGroup={group} />
+                </Route>
+              ))}
+            </Switch>
+          </main>
+        </div>
+        <Footer />
+      </RendererContainer>
+    </ThemeProvider>
   );
 };
 

@@ -84,7 +84,7 @@ export const lightTheme: AppTheme = {
     background: "#E6E6E6",
     textPrimary: "#333333",
     textSecondary: "#828282",
-    borderColor: "#3B3B3B",
+    borderColor: "#E1E1E1",
     header: {
       textPrimary: "#333333",
       textSecondary: "#FFF",
