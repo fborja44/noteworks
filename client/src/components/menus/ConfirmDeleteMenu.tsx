@@ -8,7 +8,6 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import { deleteGroup } from "../../redux/actions";
 
 // Common imports
 import { Quicknote, Marknote, Group } from "../../common/types";
@@ -19,6 +18,8 @@ import ModalMenu from "./ModalMenu";
 import TrashIcon from "../icons/TrashIcon";
 import { handleDeleteMarknote } from "../../utils/marknotes";
 import { handleDeleteQuicknote } from "../../utils/quicknotes";
+import { handleDeleteGroup } from "../../utils/groups";
+import { enqueueSnackbar } from "notistack";
 
 const MenuContent = styled.div`
   text-align: center;
@@ -91,19 +92,29 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
         <p>This action cannot be reversed.</p>
         <DeleteButton
           onClick={(event) => {
-            if (item.type === "quicknote") {
-              handleDeleteQuicknote(dispatch, item._id);
-            } else if (item.type === "marknote") {
-              handleDeleteMarknote(dispatch, item._id);
-            } else if (item.type === "group") {
-              dispatch(deleteGroup(item._id));
-            } else {
-              return;
+            try {
+              if (item.type === "quicknote") {
+                handleDeleteQuicknote(dispatch, item._id);
+              } else if (item.type === "marknote") {
+                handleDeleteMarknote(dispatch, item._id);
+              } else if (item.type === "group") {
+                handleDeleteGroup(dispatch, item._id);
+              } else {
+                return;
+              }
+              if (redirect) {
+                history.goBack();
+              }
+              toggleConfirmDelete(event);
+              enqueueSnackbar(`Successfully deleted ${item.type}.`, {
+                variant: "success",
+              });
+            } catch (e: any) {
+              console.log(e.toString());
+              enqueueSnackbar(`Failed to delete ${item.type}.`, {
+                variant: "error",
+              });
             }
-            if (redirect) {
-              history.goBack();
-            }
-            toggleConfirmDelete(event);
           }}
         >
           Confirm

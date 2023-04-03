@@ -8,6 +8,8 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+import { enqueueSnackbar } from "notistack";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import { fetchQuicknotes } from "../utils/quicknotes";
@@ -82,22 +84,29 @@ const Footer = () => {
   // Refreshing state
   const [refreshing, setRefreshing] = useState(false);
 
+  /**
+   * Function to refresh all notes data.
+   */
+  const refreshNotes = async () => {
+    setRefreshing(true);
+    try {
+      await fetchQuicknotes(dispatch);
+      await fetchMarknotes(dispatch);
+      await fetchGroups(dispatch);
+      enqueueSnackbar("Notes have been refreshed.", { variant: "success" });
+    } catch (e: any) {
+      console.log(e.toString());
+      enqueueSnackbar("Failed to refresh notes.", { variant: "error" });
+    }
+    setRefreshing(false);
+  };
+
   return (
     <FooterContainer>
       <OptionContainer>
         <FooterOption
           disabled={refreshing}
-          onClick={async () => {
-            setRefreshing(true);
-            try {
-              await fetchQuicknotes(dispatch);
-              await fetchMarknotes(dispatch);
-              await fetchGroups(dispatch);
-            } catch (e: any) {
-              console.log(e.toString());
-            }
-            setRefreshing(false);
-          }}
+          onClick={() => refreshNotes()}
           className={refreshing ? "blink" : ""}
         >
           <RefreshIcon />
