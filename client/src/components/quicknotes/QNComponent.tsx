@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
 // Redux Imports
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   handleUpdateQuicknote,
   handleUpdateQuicknotes,

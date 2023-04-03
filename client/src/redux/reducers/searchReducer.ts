@@ -6,8 +6,9 @@ const searchReducer = (state = initialState, action: AnyAction) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "UPDATE_SEARCH":
-      return payload;
+    case "SET_SEARCH_TERM":
+      const searchTerm: string = payload;
+      return searchTerm;
     default:
       return state;
   }

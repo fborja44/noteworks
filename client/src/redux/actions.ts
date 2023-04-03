@@ -2,9 +2,16 @@ import { Quicknote, Marknote, Group } from "../common/types";
 
 /* Search Term
 /***********************************/
-const updateSearch = (updatedSearch: string) => ({
-  type: "UPDATE_SEARCH",
-  payload: updatedSearch,
+const setSearchTerm = (searchTerm: string) => ({
+  type: "SET_SEARCH_TERM",
+  payload: searchTerm,
+});
+
+/* Selected Tab Term
+/***********************************/
+const setSelectedTab = (selectedTab: string) => ({
+  type: "SET_SELECTED_TAB",
+  payload: selectedTab,
 });
 
 /* Quicknotes
@@ -86,7 +93,8 @@ const addUnsavedNote = (updatedNote: Quicknote) => ({
 });
 
 export {
-  updateSearch,
+  setSearchTerm,
+  setSelectedTab,
   setQuicknotes,
   createQuicknote,
   deleteQuicknote,

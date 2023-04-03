@@ -38,16 +38,12 @@ import FolderOpenIcon from "../icons/FolderOpenIcon";
  */
 export interface GroupPageProps {
   currentGroup: Group;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
  * Group page component
  */
-const GroupPage: React.FC<GroupPageProps> = ({
-  currentGroup,
-  setSelectedTab,
-}) => {
+const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -183,7 +179,6 @@ const GroupPage: React.FC<GroupPageProps> = ({
         {activeGroup.quicknotes.length > 0 ? (
           <Section name="Quicknotes">
             <QNList
-              setSelectedTab={setSelectedTab}
               setActiveGroup={setActiveGroup}
               setSaved={setSaved}
             ></QNList>
@@ -191,10 +186,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         ) : null}
         {activeGroup.marknotes.length > 0 ? (
           <Section name="Marknotes">
-            <MNList
-              setSelectedTab={setSelectedTab}
-              setActiveGroup={setActiveGroup}
-            />
+            <MNList setActiveGroup={setActiveGroup} />
           </Section>
         ) : null}
         {activeGroup.quicknotes.length === 0 &&

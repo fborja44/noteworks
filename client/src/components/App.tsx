@@ -53,10 +53,6 @@ const App = () => {
   // Current path
   const pathname = useLocation().pathname;
 
-  /* Search State
-  ------------------------------------------------------------------------------*/
-  const [searchTerm, setSearchTerm] = useState("");
-
   /**
    * Effect hook to retrieve data from the database.
    */
@@ -68,10 +64,6 @@ const App = () => {
 
   // Groups State
   const groupsState: Group[] = useSelector((state: any) => state.groupsState);
-
-  /* Selected tab State
-  ------------------------------------------------------------------------------*/
-  const [selectedTab, setSelectedTab] = useState(pathname);
 
   /* Notes Explorer State
   ------------------------------------------------------------------------------*/
@@ -102,16 +94,14 @@ const App = () => {
 
   return (
     <RendererContainer>
-      <Titlebar setSearchTerm={setSearchTerm} />
+      <Titlebar />
       <div className="app-container">
-        <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        {pathname.includes("marknotes") && explorerOpen && (
-          <NotesExplorer setSelectedTab={setSelectedTab} />
-        )}
+        <Sidebar />
+        {pathname.includes("marknotes") && explorerOpen && <NotesExplorer />}
         <main>
           <Switch>
             <Route exact path="/">
-              <HomePage setSelectedTab={setSelectedTab} />
+              <HomePage />
             </Route>
             <Route path="/quicknotes">
               <QNPage />
@@ -121,15 +111,11 @@ const App = () => {
                 <MNPage
                   explorerOpen={explorerOpen}
                   setExplorerOpen={setExplorerOpen}
-                  setSelectedTab={setSelectedTab}
                 />
               }
             </Route>
             <Route path="/search">
-              <SearchPage
-                searchTerm={searchTerm}
-                setSelectedTab={setSelectedTab}
-              />
+              <SearchPage />
             </Route>
             <Route path="/checklists">
               <ChecklistsPage />
@@ -139,10 +125,7 @@ const App = () => {
             </Route>
             {groupsState.map((group: Group) => (
               <Route path={`/groups/${group._id}`}>
-                <GroupPage
-                  currentGroup={group}
-                  setSelectedTab={setSelectedTab}
-                />
+                <GroupPage currentGroup={group} />
               </Route>
             ))}
           </Switch>

@@ -8,9 +8,14 @@ import { Link } from "react-router-dom";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
-import { AppTheme } from "../../common/theme";
 
+// Redux imports
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedTab } from "../../redux/actions";
+
+// Common imports
 import { COLOR } from "../../common/color";
+import { AppTheme } from "../../common/theme";
 
 const ButtonItem = styled.div`
   width: 100%;
@@ -68,8 +73,6 @@ export interface SidebarButtonProps {
   label: string;
   icon: React.ReactNode;
   route: string;
-  selectedTab: string;
-  setSelectedTab: (value: React.SetStateAction<string>) => void;
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
@@ -78,10 +81,13 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   label,
   icon,
   route,
-  children,
-  selectedTab,
-  setSelectedTab,
 }) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // Selected Tab state
+  const selectedTab = useSelector((state: any) => state.selectedTabState);
+
   const isSelected = selectedTab === route;
 
   if (full) {
@@ -90,7 +96,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
         <Link
           css={LinkStyles}
           to={route}
-          onClick={() => setSelectedTab(route)}
+          onClick={() => dispatch(setSelectedTab(route))}
           title={title}
         >
           <ButtonItem selected={isSelected}>
@@ -107,7 +113,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
       <Link
         css={LinkStyles}
         to={route}
-        onClick={() => setSelectedTab(route)}
+        onClick={() => dispatch(setSelectedTab(route))}
         title={title}
       >
         <ButtonItem selected={isSelected}>

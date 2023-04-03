@@ -20,11 +20,6 @@ import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import { BsMarkdown } from "react-icons/bs";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 
-export interface SidebarProps {
-  selectedTab: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
 const NavIcon = css`
   height: 18px;
   width: 18px;
@@ -79,7 +74,7 @@ const SidebarTitle = styled.div`
   ${(props: { open: boolean }) => !props.open && "transform: scale(-1, 1);"}
 `;
 
-const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
+const Sidebar: React.FC = () => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -105,8 +100,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               label="Dashboard"
               icon={<HomeIcon css={NavIcon} />}
               route="/"
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
             />
             <SidebarButton
               full={open}
@@ -114,8 +107,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               label="Quicknotes"
               icon={<BoltIcon css={NavIcon} />}
               route="/quicknotes"
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
             />
             <SidebarButton
               full={open}
@@ -123,8 +114,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               label="Marknotes"
               icon={<BsMarkdown css={NavIcon} />}
               route="/marknotes"
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
             />
             <SidebarButton
               full={open}
@@ -132,8 +121,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
               label="Checklists"
               icon={<DocumentCheckIcon css={NavIcon} />}
               route="/checklists"
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
             />
           </div>
           <SidebarButton
@@ -142,8 +129,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTab, setSelectedTab }) => {
             label="App Settings"
             icon={<SettingsIcon css={NavIcon} />}
             route="/settings"
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
           />
         </ul>
       </nav>

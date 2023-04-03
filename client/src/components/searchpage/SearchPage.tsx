@@ -9,27 +9,22 @@ import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
 
+// Redux imports
+import { useSelector } from "react-redux";
+
 // Image and icon imports
 import GroupList from "../groups/GroupList";
 import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
 
 /**
- * Search content props
- */
-export interface SearchPageProps {
-  searchTerm: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-/**
  * Search content renderer
  */
-const SearchPage: React.FC<SearchPageProps> = ({
-  searchTerm,
-  setSelectedTab,
-}) => {
+const SearchPage: React.FC = () => {
   // Data Saved State
   const [saved, setSaved] = useState(true);
+
+  // Search Term State
+  const searchTerm = useSelector((state: any) => state.searchState);
 
   return (
     <React.Fragment>
@@ -46,7 +41,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
           <QNList QNFilterText={searchTerm} setSaved={setSaved} />
         </Section>
         <Section name={`Marknotes`}>
-          <MNList MNFilterText={searchTerm} setSelectedTab={setSelectedTab} />
+          <MNList MNFilterText={searchTerm} />
         </Section>
       </div>
     </React.Fragment>

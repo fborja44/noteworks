@@ -43,17 +43,12 @@ import { BsMarkdown } from "react-icons/bs";
 export interface MNPageProps {
   explorerOpen: boolean;
   setExplorerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
  * Content for marknotes route
  */
-const MNPage: React.FC<MNPageProps> = ({
-  explorerOpen,
-  setExplorerOpen,
-  setSelectedTab,
-}) => {
+const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -136,10 +131,7 @@ const MNPage: React.FC<MNPageProps> = ({
                 name="My Marknotes"
                 handleClick={() => handleCreateMarknote(dispatch, history)}
               >
-                <MNList
-                  MNFilterText={MNFilterText}
-                  setSelectedTab={setSelectedTab}
-                />
+                <MNList MNFilterText={MNFilterText} />
               </Section>
             </>
           ) : (

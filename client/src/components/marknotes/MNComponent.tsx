@@ -2,12 +2,16 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+
+// Redux imports
+import { setSelectedTab } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 // Common imports
 import { Marknote } from "../../common/types";
@@ -75,8 +79,6 @@ export interface MNComponentProps {
   setShowColorMenu: React.Dispatch<React.SetStateAction<boolean>>;
   showConfirmDelete: boolean;
   setShowConfirmDelete: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  history: any;
 }
 
 const MNComponent: React.FC<MNComponentProps> = ({
@@ -94,9 +96,13 @@ const MNComponent: React.FC<MNComponentProps> = ({
   setShowColorMenu,
   showConfirmDelete,
   setShowConfirmDelete,
-  setSelectedTab,
-  history,
 }) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // History hook
+  const history = useHistory();
+
   return (
     <MarknoteContainer
       className="mncontainer"
@@ -106,7 +112,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
         css={MarknoteLink}
         to={`/marknotes/${currentNote._id}`}
         onClick={() => {
-          setSelectedTab("/marknotes");
+          dispatch(setSelectedTab("/marknotes"));
           history.push("/marknotes");
         }}
       />

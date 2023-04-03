@@ -32,7 +32,6 @@ export interface QNListProps {
   QNFilterText?: string;
   setActiveGroup?: Function;
   favorites?: boolean;
-  setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
   setSaved: Function;
 }
 

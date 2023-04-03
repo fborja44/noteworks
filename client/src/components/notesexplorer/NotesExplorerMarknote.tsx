@@ -8,6 +8,10 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
+// Redux imports
+import { useDispatch } from "react-redux";
+import { setSelectedTab } from "../../redux/actions";
+
 // Common imports
 import { Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
@@ -23,15 +27,16 @@ import { VscMarkdown } from "react-icons/vsc";
 
 interface NotesExplorerMarknoteProps {
   marknote: Marknote;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   level: number;
 }
 
 const NotesExplorerMarknote = ({
   marknote,
-  setSelectedTab,
   level,
 }: NotesExplorerMarknoteProps) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
   // React Router hooks
   const history = useHistory();
   const pathname = useLocation().pathname;
@@ -50,7 +55,7 @@ const NotesExplorerMarknote = ({
         css={NotesExplorerLink}
         to={`/marknotes/${marknote._id}`}
         onClick={() => {
-          setSelectedTab("/marknotes");
+          dispatch(setSelectedTab("/marknotes"));
           history.push("/marknotes");
         }}
       >

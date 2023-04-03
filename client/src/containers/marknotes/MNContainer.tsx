@@ -2,7 +2,6 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useDispatch } from "react-redux";
@@ -18,19 +17,14 @@ import MNComponent from "../../components/marknotes/MNComponent";
 export interface MNContainerProps {
   setActiveGroup?: Function;
   currentNote: Marknote;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNContainer: React.FC<MNContainerProps> = ({
   setActiveGroup,
   currentNote,
-  setSelectedTab,
 }) => {
   // Dispatch
   const dispatch = useDispatch();
-
-  // History
-  const history = useHistory();
 
   /**
    * State for current marknoteComponent info
@@ -146,8 +140,6 @@ const MNContainer: React.FC<MNContainerProps> = ({
       setShowColorMenu={setShowColorMenu}
       showConfirmDelete={showConfirmDelete}
       setShowConfirmDelete={setShowConfirmDelete}
-      setSelectedTab={setSelectedTab}
-      history={history}
     />
   );
 };

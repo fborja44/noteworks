@@ -36,14 +36,12 @@ export const GroupNotesList = styled.ul`
 interface NotesExplorerGroupProps {
   group: Group;
   marknotes: Marknote[];
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   explorerFilter: string;
 }
 
 const NotesExplorerGroup = ({
   group,
   marknotes,
-  setSelectedTab,
   explorerFilter,
 }: NotesExplorerGroupProps) => {
   // Open state for groups
@@ -74,11 +72,7 @@ const NotesExplorerGroup = ({
       {notes.map(
         (marknote) =>
           marknote.groups.includes(group._id) && (
-            <NotesExplorerMarknote
-              marknote={marknote}
-              setSelectedTab={setSelectedTab}
-              level={2}
-            />
+            <NotesExplorerMarknote marknote={marknote} level={2} />
           )
       )}
     </GroupNotesList>

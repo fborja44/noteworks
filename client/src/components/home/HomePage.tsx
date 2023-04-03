@@ -15,16 +15,9 @@ import StarIcon from "../icons/StarIcon";
 import HomeIcon from "../icons/HomeIcon";
 
 /**
- * Home content props
- */
-export interface HomePageProps {
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-/**
  * Home content renderer
  */
-const HomePage: React.FC<HomePageProps> = ({ setSelectedTab }) => {
+const HomePage: React.FC = () => {
   // Data Saved State
   const [saved, setSaved] = useState(true);
 
@@ -39,7 +32,7 @@ const HomePage: React.FC<HomePageProps> = ({ setSelectedTab }) => {
           <QNList favorites={true} setSaved={setSaved} />
         </Section>
         <Section name={`Favorited Marknotes`} icon={<StarIcon />}>
-          <MNList favorites={true} setSelectedTab={setSelectedTab} />
+          <MNList favorites={true} />
         </Section>
       </div>
     </React.Fragment>

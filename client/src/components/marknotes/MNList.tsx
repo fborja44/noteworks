@@ -33,14 +33,12 @@ export interface MNListProps {
   MNFilterText?: string;
   setActiveGroup?: Function;
   favorites?: boolean;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNList: React.FC<MNListProps> = ({
   MNFilterText,
   setActiveGroup,
   favorites,
-  setSelectedTab,
 }) => {
   // URL Pathname
   const pathname = useLocation().pathname;
@@ -85,7 +83,6 @@ const MNList: React.FC<MNListProps> = ({
             key={note._id}
             setActiveGroup={setActiveGroup}
             currentNote={note}
-            setSelectedTab={setSelectedTab}
           />
         )
       )}

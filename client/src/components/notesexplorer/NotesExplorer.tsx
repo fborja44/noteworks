@@ -82,11 +82,7 @@ const NotesExplorerContentText = styled.div`
   text-align: center;
 `;
 
-interface NotesExplorerProps {
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const NotesExplorer = ({ setSelectedTab }: NotesExplorerProps) => {
+const NotesExplorer = () => {
   // Dispatch
   const dispatch = useDispatch();
 
@@ -123,11 +119,7 @@ const NotesExplorer = ({ setSelectedTab }: NotesExplorerProps) => {
       {notes.map(
         (marknote) =>
           (explorerFilter || marknote.groups.length === 0) && (
-            <NotesExplorerMarknote
-              marknote={marknote}
-              setSelectedTab={setSelectedTab}
-              level={1}
-            />
+            <NotesExplorerMarknote marknote={marknote} level={1} />
           )
       )}
     </NotesList>
@@ -139,7 +131,6 @@ const NotesExplorer = ({ setSelectedTab }: NotesExplorerProps) => {
         <NotesExplorerGroup
           group={group}
           marknotes={marknotesState}
-          setSelectedTab={setSelectedTab}
           explorerFilter={explorerFilter}
         />
       ))}
