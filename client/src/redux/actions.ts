@@ -1,10 +1,14 @@
 import { Quicknote, Marknote, Group } from "../common/types";
 
+/* Search Term
+/***********************************/
 const updateSearch = (updatedSearch: string) => ({
   type: "UPDATE_SEARCH",
   payload: updatedSearch,
 });
 
+/* Quicknotes
+/***********************************/
 const setQuicknotes = (quicknotes: Quicknote[]) => ({
   type: "SET_QUICKNOTES",
   payload: quicknotes,
@@ -25,6 +29,8 @@ const deleteQuicknote = (quicknoteId: string) => ({
   payload: quicknoteId,
 });
 
+/* Marknotes
+/***********************************/
 const setMarknotes = (marknotes: Marknote[]) => ({
   type: "SET_MARKNOTES",
   payload: marknotes,
@@ -45,6 +51,8 @@ const deleteMarknote = (marknoteId: string) => ({
   payload: marknoteId,
 });
 
+/* Groups
+/***********************************/
 const setGroups = (groups: Group[]) => ({
   type: "SET_GROUPS",
   payload: groups,
@@ -65,6 +73,18 @@ const deleteGroup = (groupId: string) => ({
   payload: groupId,
 });
 
+/* unsavedNotes
+/***********************************/
+const setUnsavedNotes = (newUnsavedNotes: Quicknote[]) => ({
+  type: "SET_UNSAVED_NOTES",
+  payload: newUnsavedNotes,
+});
+
+const addUnsavedNote = (updatedNote: Quicknote) => ({
+  type: "ADD_UNSAVED_NOTE",
+  payload: updatedNote,
+});
+
 export {
   updateSearch,
   setQuicknotes,
@@ -79,4 +99,6 @@ export {
   createGroup,
   updateGroup,
   deleteGroup,
+  setUnsavedNotes,
+  addUnsavedNote,
 };

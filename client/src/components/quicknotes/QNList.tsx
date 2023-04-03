@@ -1,7 +1,7 @@
 /* Quicknotes List Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React from "react";
 
 import styled from "@emotion/styled";
 import { useLocation } from "react-router-dom";
@@ -50,8 +50,12 @@ const QNList: React.FC<QNListProps> = ({
     (state: any) => state.quicknotesState
   );
 
-  // Unsaved Quicknotes Queue
-  const [unsavedNotes, setUnsavedNotes] = useState<Quicknote[]>([]);
+  /**
+   * Unsaved notes
+   */
+  const unsavedNotesState = useSelector(
+    (state: any) => state.unsavedNotesState
+  );
 
   let notes = quicknotesState;
 
@@ -82,9 +86,8 @@ const QNList: React.FC<QNListProps> = ({
           key={note._id}
           setActiveGroup={setActiveGroup}
           currentNote={note}
+          unsavedNotes={unsavedNotesState}
           setSaved={setSaved}
-          unsavedNotes={unsavedNotes}
-          setUnsavedNotes={setUnsavedNotes}
         />
       ))}
       <QNCreateButton />

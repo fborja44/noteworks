@@ -118,11 +118,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-      <NoteContent
-        css={css`
-          height: calc(100% - 25px);
-        `}
-      >
+      <NoteContent spellCheck={false}>
         <MarknoteBody
           css={css`
             height: calc(100% - 25px);

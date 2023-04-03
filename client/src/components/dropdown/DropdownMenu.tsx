@@ -43,7 +43,7 @@ const DropdownContainer = styled.div`
   background: ${(props) => props.theme.header.backgroundSecondary};
   border-radius: 8px;
   padding: 0.5em 0.5em 0.25em 0.5em;
-  border: 1px solid ${(props) => props.theme.title.borderColor};
+  border: 1px solid ${(props) => props.theme.note.borderColor};
   overflow: hidden;
   transition: height 250ms;
   font-size: 12px;

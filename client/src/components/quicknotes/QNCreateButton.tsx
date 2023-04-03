@@ -1,9 +1,6 @@
 // React imports
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
@@ -15,7 +12,7 @@ import { COLOR } from "../../common/color";
 import PlusIcon from "../icons/PlusIcon";
 
 const CreateButtonContainer = styled.button`
-  width: 215px;
+  width: 100%;
   height: 100%;
   background-color: ${(props) => props.theme.main.backgroundSecondary};
   color: ${(props) => props.theme.title.textSecondary};

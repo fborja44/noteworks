@@ -7,9 +7,6 @@ import styled from "@emotion/styled";
 
 import { useHistory } from "react-router-dom";
 
-// Component imports
-import { Link } from "react-router-dom";
-
 // Image and icon imports
 import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";

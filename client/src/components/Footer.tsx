@@ -75,9 +75,7 @@ const FooterOption = styled.button`
   }
 `;
 
-interface FooterProps {}
-
-const Footer = ({}: FooterProps) => {
+const Footer = () => {
   // Dispatch hook
   const dispatch = useDispatch();
 

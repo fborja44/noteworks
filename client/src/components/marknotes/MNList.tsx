@@ -24,7 +24,7 @@ const List = styled.div`
   grid-template-columns: repeat(auto-fit, 240px);
   grid-auto-rows: fit-content;
   width: 100%;
-  row-gap: 1em;
+  row-gap: 2em;
   column-gap: 2em;
   z-index: 1;
 `;

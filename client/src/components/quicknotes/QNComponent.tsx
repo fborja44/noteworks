@@ -4,13 +4,10 @@ Quicknote Component
 // React imports
 import React, { useState, useEffect } from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux Imports
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleUpdateQuicknote,
   handleUpdateQuicknotes,
@@ -27,6 +24,7 @@ import NoteHeader from "../notes/NoteHeader";
 import QNFooter from "./QNFooter";
 import NoteContent, { QuicknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
+import { addUnsavedNote, setUnsavedNotes } from "../../redux/actions";
 
 const QuicknoteContainer = styled.div`
   background-color: ${(props: { bodyColor: string }) => props.bodyColor};
@@ -70,17 +68,15 @@ const QuicknoteContainer = styled.div`
 export interface QNComponentProps {
   setActiveGroup?: Function;
   currentNote: Quicknote;
-  setSaved: Function;
   unsavedNotes: Quicknote[];
-  setUnsavedNotes: Function;
+  setSaved: Function;
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
   setActiveGroup,
   currentNote,
-  setSaved,
   unsavedNotes,
-  setUnsavedNotes,
+  setSaved,
 }) => {
   // Dispatch hook
   const dispatch = useDispatch();
@@ -127,17 +123,9 @@ const QNComponent: React.FC<QNComponentProps> = ({
         };
       }
       setQuicknote(updatedNote);
-      // Add note to unsaved list if not already in; Otherwise, update the note.
-      if (!unsavedNotes.filter((note) => note._id === updatedNote._id).length) {
-        let newUnsavedNotes = unsavedNotes;
-        newUnsavedNotes.push(updatedNote);
-        setUnsavedNotes(newUnsavedNotes);
-      } else {
-        let newUnsavedNotes = unsavedNotes.map((note) => {
-          return note._id === updatedNote._id ? updatedNote : note;
-        });
-        setUnsavedNotes(newUnsavedNotes);
-      }
+      setSaved(false);
+      // Update unsaved
+      dispatch(addUnsavedNote(updatedNote));
     }
   };
 
@@ -201,14 +189,13 @@ const QNComponent: React.FC<QNComponentProps> = ({
     const delayDBUpdate = setTimeout(() => {
       // Update every note in the unsaved queue.
       handleUpdateQuicknotes(dispatch, unsavedNotes);
-      setUnsavedNotes([]); // Reset unsaved notes
+      dispatch(setUnsavedNotes([])); // Reset unsaved notes
       setSaved(true);
-    }, 2000);
+    }, 5000);
     return () => {
-      setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [quicknote]);
+  }, [quicknote, unsavedNotes]);
 
   return (
     <QuicknoteContainer bodyColor={COLOR[quicknote.color].body}>
@@ -220,7 +207,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         toggleColorMenu={toggleColorMenu}
         toggleConfirmDelete={toggleConfirmDelete}
       />
-      <NoteContent>
+      <NoteContent spellCheck={false}>
         <QuicknoteBody
           placeholder="Write your quicknote here..."
           value={quicknote.body}
