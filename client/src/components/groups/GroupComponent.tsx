@@ -10,7 +10,7 @@ import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // Common imports
 import { Group } from "../../common/types";
@@ -24,6 +24,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 
 // Image and icon imports
 import FolderIcon from "../icons/FolderIcon";
+import { handleUpdateGroup } from "../../utils/groups";
 
 const GroupContainer = styled.div`
   background-color: ${(props) => props.theme.note.background};
@@ -74,16 +75,12 @@ const GroupLink = css`
 
 export interface GroupComponentProps {
   currentGroup: Group;
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
 }
 
-const GroupComponent: React.FC<GroupComponentProps> = ({
-  currentGroup,
-  updateGroupsList,
-  handleUpdateGroup,
-}) => {
+const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
   /**
    * State for current group info
    */
@@ -104,8 +101,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
       favorited: !groupComponent.favorited,
     };
     setGroupComponent(updatedGroup);
-    handleUpdateGroup(groupComponent._id, updatedGroup);
-    updateGroupsList(groupComponent._id, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup);
   };
 
   const appTheme = useTheme();
@@ -133,8 +129,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
       color: color,
     };
     setGroupComponent(updatedGroup);
-    handleUpdateGroup(groupComponent._id, updatedGroup);
-    updateGroupsList(groupComponent._id, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup);
   };
 
   /**

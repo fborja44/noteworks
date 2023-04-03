@@ -10,13 +10,14 @@ import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { useDispatch } from "react-redux";
-import { setMarknotes, setQuicknotes } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQuicknotes } from "../utils/quicknotes";
+import { fetchMarknotes } from "../utils/marknotes";
+import { fetchGroups } from "../utils/groups";
 
 // Common imports
 import { Group } from "../common/types";
 import { darkTheme, lightTheme } from "../common/theme";
-import { COLOR } from "../common/color";
 
 // Component imports
 import Titlebar from "./titlebar/Titlebar";
@@ -37,14 +38,10 @@ import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
 
-import axios from "axios";
-
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
   color: ${(props) => props.theme.main.textPrimary};
 `;
-
-const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Main application component
@@ -58,42 +55,16 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   /**
-   * Effect hook to retrieve quicknotes from local storage
+   * Effect hook to retrieve data from the database.
    */
   useEffect(() => {
-    fetchQuicknotes();
+    fetchQuicknotes(dispatch);
+    fetchMarknotes(dispatch);
+    fetchGroups(dispatch);
   }, []); // Run on load
 
-  const fetchQuicknotes = async () => {
-    const { data: savedQuicknotes } = await axios({
-      baseURL: BASE_ADDR,
-      url: "/quicknotes",
-      method: "GET",
-    });
-    // Check if notes were received
-    if (savedQuicknotes) {
-      dispatch(setQuicknotes(savedQuicknotes));
-    }
-  };
-
-  /**
-   * Effect hook to retrieve marknotes from local storage
-   */
-  useEffect(() => {
-    fetchMarknotes();
-  }, []); // Run on load
-
-  const fetchMarknotes = async () => {
-    const { data: savedMarknotes } = await axios({
-      baseURL: BASE_ADDR,
-      url: "/marknotes",
-      method: "GET",
-    });
-    // Check if notes were received
-    if (savedMarknotes) {
-      dispatch(setMarknotes(savedMarknotes));
-    }
-  };
+  // Groups State
+  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
 
   /* Selected tab State
   ------------------------------------------------------------------------------*/
@@ -128,133 +99,23 @@ const App = () => {
     localStorage.setItem(themeLocal, JSON.stringify(appTheme.id));
   }, [appTheme]);
 
-  /* Groups state
-  ------------------------------------------------------------------------------*/
-  const [groups, setGroups] = useState<Group[]>([]);
-
-  /**
-   * Effect hook to retrieve groups from local storage
-   */
-  useEffect(() => {
-    fetchGroups();
-  }, []); // Run on load
-
-  const fetchGroups = async () => {
-    const { data: savedGroups } = await axios({
-      baseURL: BASE_ADDR,
-      url: "/groups",
-      method: "GET",
-    });
-    // Check if notes were received
-    if (savedGroups) {
-      setGroups(savedGroups);
-    }
-  };
-
-  /**
-   * Group function to add a new empty group to the list
-   */
-  const handleAddGroup = async () => {
-    try {
-      const { data: newGroup } = await axios({
-        baseURL: BASE_ADDR,
-        url: "/groups",
-        method: "POST",
-        data: {
-          title: "",
-          color: COLOR.dark_grey.id,
-        },
-      });
-      setGroups([...groups, newGroup]);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Group function to update the marknotes list in app state
-   * @param groupId The marknote id
-   * @param updatedGroup The data to update the marknote with
-   */
-  const updateGroupsList = (groupId: string, updatedGroup: Group) => {
-    const updatedGroupsArray = groups.map((note: any) => {
-      if (note._id === groupId) {
-        return updatedGroup;
-      }
-      return note;
-    });
-    setGroups(updatedGroupsArray);
-  };
-
-  /**
-   * Group function to update a group in the database
-   * @param currentGroup The group being updated
-   * @param updatedGroup The data to update the group with
-   */
-  const handleUpdateGroup = async (groupId: string, updatedGroup: Group) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/groups/${groupId}`,
-        method: "PATCH",
-        data: updatedGroup,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  /**
-   * Group function to delete a group from the list
-   * @param groupId The id of the group to be deleted
-   */
-  const handleDeleteGroup = async (groupId: string) => {
-    try {
-      await axios({
-        baseURL: BASE_ADDR,
-        url: `/groups/${groupId}`,
-        method: "DELETE",
-      });
-      const newGroups = groups.filter((group: Group) => group._id !== groupId); // don't need to make new array since filter returns new array
-      setGroups(newGroups);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <RendererContainer>
       <Titlebar setSearchTerm={setSearchTerm} />
       <div className="app-container">
         <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         {pathname.includes("marknotes") && explorerOpen && (
-          <NotesExplorer
-            groups={groups}
-            setSelectedTab={setSelectedTab}
-            handleAddGroup={handleAddGroup}
-          />
+          <NotesExplorer setSelectedTab={setSelectedTab} />
         )}
         <Switch>
           <Route exact path="/">
             <main>
-              <HomePage
-                groups={groups}
-                updateGroupsList={updateGroupsList}
-                handleUpdateGroup={handleUpdateGroup}
-                handleDeleteGroup={handleDeleteGroup}
-                setSelectedTab={setSelectedTab}
-              />
+              <HomePage setSelectedTab={setSelectedTab} />
             </main>
           </Route>
           <Route path="/quicknotes">
             <main>
-              <QNPage
-                groups={groups}
-                updateGroupsList={updateGroupsList}
-                handleAddGroup={handleAddGroup}
-                handleUpdateGroup={handleUpdateGroup}
-                handleDeleteGroup={handleDeleteGroup}
-              />
+              <QNPage />
             </main>
           </Route>
           <Route path={"/marknotes"}>
@@ -263,12 +124,6 @@ const App = () => {
                 <MNPage
                   explorerOpen={explorerOpen}
                   setExplorerOpen={setExplorerOpen}
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  setGroups={setGroups}
-                  handleAddGroup={handleAddGroup}
-                  handleUpdateGroup={handleUpdateGroup}
-                  handleDeleteGroup={handleDeleteGroup}
                   setSelectedTab={setSelectedTab}
                 />
               }
@@ -278,10 +133,6 @@ const App = () => {
             <main>
               <SearchPage
                 searchTerm={searchTerm}
-                groups={groups}
-                updateGroupsList={updateGroupsList}
-                handleUpdateGroup={handleUpdateGroup}
-                handleDeleteGroup={handleDeleteGroup}
                 setSelectedTab={setSelectedTab}
               />
             </main>
@@ -296,15 +147,11 @@ const App = () => {
               <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
             </main>
           </Route>
-          {groups.map((group) => (
+          {groupsState.map((group: Group) => (
             <Route path={`/groups/${group._id}`}>
               <main>
                 <GroupPage
                   currentGroup={group}
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  handleUpdateGroup={handleUpdateGroup}
-                  handleDeleteGroup={handleDeleteGroup}
                   setSelectedTab={setSelectedTab}
                 />
               </main>
@@ -312,11 +159,7 @@ const App = () => {
           ))}
         </Switch>
       </div>
-      <Footer
-        fetchQuicknotes={fetchQuicknotes}
-        fetchMarknotes={fetchMarknotes}
-        fetchGroups={fetchGroups}
-      />
+      <Footer />
     </RendererContainer>
   );
 };

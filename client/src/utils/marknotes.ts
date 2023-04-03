@@ -5,10 +5,26 @@ import { Marknote } from "../common/types";
 import {
   createMarknote,
   deleteMarknote,
+  setMarknotes,
   updateMarknote,
 } from "../redux/actions";
 
 const BASE_ADDR = "http://localhost:3001";
+
+/**
+ * Fetches marknotes from the database.
+ */
+const fetchMarknotes = async (dispatch: Dispatch<AnyAction>) => {
+  const { data: savedMarknotes } = await axios({
+    baseURL: BASE_ADDR,
+    url: "/marknotes",
+    method: "GET",
+  });
+  // Check if notes were received
+  if (savedMarknotes) {
+    dispatch(setMarknotes(savedMarknotes));
+  }
+};
 
 /**
  * Creates a new empty marknote.
@@ -17,7 +33,6 @@ const handleCreateMarknote = async (
   dispatch: Dispatch<AnyAction>,
   history: any
 ) => {
-  // Add new to state list
   try {
     const { data: newMarknote } = await axios({
       baseURL: BASE_ADDR,
@@ -85,7 +100,7 @@ const handleUpdateMarknotesGroups = async (
 
 /**
  * Deletes a marknote.
- * @param noteId The id of the marknote to be deleted
+ * @param marknoteId The id of the marknote to be deleted
  */
 const handleDeleteMarknote = async (
   dispatch: Dispatch<AnyAction>,
@@ -104,6 +119,7 @@ const handleDeleteMarknote = async (
 };
 
 export {
+  fetchMarknotes,
   handleCreateMarknote,
   handleUpdateMarknote,
   handleUpdateMarknotesGroups,

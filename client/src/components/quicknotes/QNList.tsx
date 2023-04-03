@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Common imports
-import { Group, Marknote, Quicknote } from "../../common/types";
+import { Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import QNComponent from "./QNComponent";
@@ -29,10 +29,7 @@ const List = styled.div`
 
 export interface QNListProps {
   QNFilterText?: string;
-  groups: Group[];
-  updateGroupsList: Function;
-  setGroupPage?: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
+  setActiveGroup?: Function;
   favorites?: boolean;
   setSelectedTab?: React.Dispatch<React.SetStateAction<string>>;
   setSaved: Function;
@@ -40,10 +37,7 @@ export interface QNListProps {
 
 const QNList: React.FC<QNListProps> = ({
   QNFilterText,
-  groups,
-  updateGroupsList,
-  setGroupPage,
-  handleUpdateGroup,
+  setActiveGroup,
   favorites,
   setSaved,
 }) => {
@@ -85,10 +79,7 @@ const QNList: React.FC<QNListProps> = ({
       {notes.map((note: any) => (
         <QNComponent
           key={note._id}
-          groups={groups}
-          updateGroupsList={updateGroupsList}
-          setGroupPage={setGroupPage}
-          handleUpdateGroup={handleUpdateGroup}
+          setActiveGroup={setActiveGroup}
           currentNote={note}
           setSaved={setSaved}
           unsavedNotes={unsavedNotes}

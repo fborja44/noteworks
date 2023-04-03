@@ -9,8 +9,9 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux Imports
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleUpdateQuicknotesGroups } from "../../utils/quicknotes";
+import { handleUpdateMarknotesGroups } from "../../utils/marknotes";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
@@ -23,8 +24,7 @@ import ModalMenu from "./ModalMenu";
 import FolderIcon from "../icons/FolderIcon";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
-
-import { handleUpdateMarknotesGroups } from "../../utils/marknotes";
+import { handleUpdateGroup } from "../../utils/groups";
 
 const GroupMenuContent = styled.div`
   display: flex;
@@ -87,24 +87,22 @@ const GroupMenuItemTitle = styled.div`
 
 export interface GroupMenuProps {
   item: Quicknote | Marknote;
-  groups: Group[];
-  updateGroupsList: Function;
-  setGroupPage?: Function;
+  setActiveGroup?: Function;
   showGroupMenu: boolean;
   setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
 }
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
   item,
-  groups,
-  updateGroupsList,
-  setGroupPage,
+  setActiveGroup,
   showGroupMenu,
   setShowGroupMenu,
-  handleUpdateGroup,
 }) => {
+  // Dispatch hook
   const dispatch = useDispatch();
+
+  // Groups State
+  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
 
   /**
    * On click handler to add/remove note from group.
@@ -120,11 +118,11 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
         data = await handleUpdateQuicknotesGroups(dispatch, item._id, groupId);
       }
       if (data) {
-        if (setGroupPage) {
-          setGroupPage(data.updatedGroup);
+        if (setActiveGroup) {
+          // If group page is open, update the group live so that displayed notes are updated
+          setActiveGroup(data.updatedGroup);
         }
-        handleUpdateGroup(groupId, data.updatedGroup);
-        updateGroupsList(groupId, data.updatedGroup);
+        handleUpdateGroup(dispatch, data.updatedGroup);
       }
     } catch (e) {
       console.log(e);
@@ -148,11 +146,11 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
         Add or remove this note from groups.
       </p>
       <GroupMenuContent>
-        {groups.map((group, index) => (
+        {groupsState.map((group, index) => (
           <GroupMenuItem
             item={item}
             group={group}
-            last={index !== groups.length - 1}
+            last={index !== groupsState.length - 1}
             handleSelectGroup={handleSelectGroup}
           />
         ))}

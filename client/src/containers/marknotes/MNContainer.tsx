@@ -9,26 +9,20 @@ import { useDispatch } from "react-redux";
 import { handleUpdateMarknote } from "../../utils/marknotes";
 
 // Common imports
-import { Group, Marknote } from "../../common/types";
+import { Marknote } from "../../common/types";
 import { ColorId } from "../../common/color";
 
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
 
 export interface MNContainerProps {
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  setGroupPage?: Function;
+  setActiveGroup?: Function;
   currentNote: Marknote;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNContainer: React.FC<MNContainerProps> = ({
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  setGroupPage,
+  setActiveGroup,
   currentNote,
   setSelectedTab,
 }) => {
@@ -138,10 +132,7 @@ const MNContainer: React.FC<MNContainerProps> = ({
   return (
     <MNComponent
       key={marknoteComponent._id}
-      groups={groups}
-      updateGroupsList={updateGroupsList}
-      handleUpdateGroup={handleUpdateGroup}
-      setGroupPage={setGroupPage}
+      setActiveGroup={setActiveGroup}
       currentNote={currentNote}
       handleEditField={handleEditField}
       handleFavorite={handleFavorite}

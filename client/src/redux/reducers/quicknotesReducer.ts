@@ -27,7 +27,7 @@ const configReducer = (state = initialState, action: AnyAction) => {
       const quicknoteId: string = payload;
       const deletedQuicknotesState = state.filter(
         (note: Quicknote) => note._id !== quicknoteId
-      ); // don't need to make new array since filter returns new array
+      );
       return deletedQuicknotesState;
     default:
       return state;

@@ -5,10 +5,26 @@ import { Quicknote } from "../common/types";
 import {
   createQuicknote,
   deleteQuicknote,
+  setQuicknotes,
   updateQuicknotes,
 } from "../redux/actions";
 
 const BASE_ADDR = "http://localhost:3001";
+
+/**
+ * Fetches quicknotes from the database.
+ */
+const fetchQuicknotes = async (dispatch: Dispatch<AnyAction>) => {
+  const { data: savedQuicknotes } = await axios({
+    baseURL: BASE_ADDR,
+    url: "/quicknotes",
+    method: "GET",
+  });
+  // Check if notes were received
+  if (savedQuicknotes) {
+    dispatch(setQuicknotes(savedQuicknotes));
+  }
+};
 
 /**
  * Creates a new empty quicknote.
@@ -104,7 +120,7 @@ const handleUpdateQuicknotesGroups = async (
 
 /**
  * Deletes a quicknote.
- * @param noteId The id of the quicknote to be deleted
+ * @param quicknoteId The id of the quicknote to be deleted
  */
 const handleDeleteQuicknote = async (
   dispatch: Dispatch<AnyAction>,
@@ -123,6 +139,7 @@ const handleDeleteQuicknote = async (
 };
 
 export {
+  fetchQuicknotes,
   handleCreateQuicknote,
   handleUpdateQuicknote,
   handleUpdateQuicknotes,

@@ -5,6 +5,9 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
+// Redux imports
+import { useSelector } from "react-redux";
+
 // Common imports
 import { Group } from "../../common/types";
 
@@ -29,44 +32,32 @@ const List = styled.div`
 
 export interface GroupListProps {
   GroupsFilterText?: string;
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
   favorites?: boolean;
 }
 
 const GroupList: React.FC<GroupListProps> = ({
   GroupsFilterText,
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  handleDeleteGroup,
   favorites,
 }) => {
+  // Groups State
+  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
+
+  let groups = groupsState;
   if (favorites) {
     groups = groups.filter((group) => group.favorited);
   }
 
-  let filteredGroups = groups;
-
   // Filter notes by filter text if given
   if (GroupsFilterText) {
-    filteredGroups = groups.filter((group) =>
+    groups = groups.filter((group) =>
       group.title.toLowerCase().includes(GroupsFilterText.toLowerCase())
     );
   }
 
   const groupsList = (
     <List>
-      {filteredGroups.map((group) => (
-        <GroupComponent
-          key={group._id}
-          currentGroup={group}
-          updateGroupsList={updateGroupsList}
-          handleUpdateGroup={handleUpdateGroup}
-          handleDeleteGroup={handleDeleteGroup}
-        />
+      {groups.map((group) => (
+        <GroupComponent key={group._id} currentGroup={group} />
       ))}
     </List>
   );
@@ -91,7 +82,7 @@ const GroupList: React.FC<GroupListProps> = ({
 
   return (
     <React.Fragment>
-      {filteredGroups.length !== 0
+      {groups.length !== 0
         ? groupsList
         : GroupsFilterText
         ? searchEmpty

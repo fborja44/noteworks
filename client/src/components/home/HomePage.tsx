@@ -5,7 +5,6 @@ import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
-import { Group } from "../../common/types";
 import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
@@ -19,23 +18,13 @@ import HomeIcon from "../icons/HomeIcon";
  * Home content props
  */
 export interface HomePageProps {
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
  * Home content renderer
  */
-const HomePage: React.FC<HomePageProps> = ({
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  handleDeleteGroup,
-  setSelectedTab,
-}) => {
+const HomePage: React.FC<HomePageProps> = ({ setSelectedTab }) => {
   // Data Saved State
   const [saved, setSaved] = useState(true);
 
@@ -44,31 +33,13 @@ const HomePage: React.FC<HomePageProps> = ({
       <PageHeader title="Dashboard" icon={<HomeIcon />} saved={saved} />
       <div className="main-content-wrapper">
         <Section name={`Favorited Groups`} icon={<StarIcon />}>
-          <GroupList
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            favorites={true}
-            handleUpdateGroup={handleUpdateGroup}
-            handleDeleteGroup={handleDeleteGroup}
-          />
+          <GroupList favorites={true} />
         </Section>
         <Section name={`Favorited Quicknotes`} icon={<StarIcon />}>
-          <QNList
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            favorites={true}
-            setSaved={setSaved}
-          />
+          <QNList favorites={true} setSaved={setSaved} />
         </Section>
         <Section name={`Favorited Marknotes`} icon={<StarIcon />}>
-          <MNList
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            favorites={true}
-            setSelectedTab={setSelectedTab}
-          />
+          <MNList favorites={true} setSelectedTab={setSelectedTab} />
         </Section>
       </div>
     </React.Fragment>

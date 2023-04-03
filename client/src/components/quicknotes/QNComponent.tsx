@@ -17,7 +17,7 @@ import {
 } from "../../utils/quicknotes";
 
 // Common imports
-import { Group, Quicknote } from "../../common/types";
+import { Quicknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
@@ -66,11 +66,7 @@ const QuicknoteContainer = styled.div`
 `;
 
 export interface QNComponentProps {
-  // Props for children of QuicknotesContent
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  setGroupPage?: Function;
+  setActiveGroup?: Function;
   currentNote: Quicknote;
   setSaved: Function;
   unsavedNotes: Quicknote[];
@@ -78,10 +74,7 @@ export interface QNComponentProps {
 }
 
 const QNComponent: React.FC<QNComponentProps> = ({
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  setGroupPage,
+  setActiveGroup,
   currentNote,
   setSaved,
   unsavedNotes,
@@ -245,12 +238,9 @@ const QNComponent: React.FC<QNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={quicknote}
-        groups={groups}
-        updateGroupsList={updateGroupsList}
-        setGroupPage={setGroupPage}
+        setActiveGroup={setActiveGroup}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
-        handleUpdateGroup={handleUpdateGroup}
       />
       <ColorMenu
         showColorMenu={showColorMenu}

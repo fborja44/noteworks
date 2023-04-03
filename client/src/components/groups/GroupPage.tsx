@@ -9,7 +9,8 @@ import { useHistory } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 
 // Redux state
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { handleUpdateGroup } from "../../utils/groups";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
@@ -37,10 +38,6 @@ import FolderOpenIcon from "../icons/FolderOpenIcon";
  */
 export interface GroupPageProps {
   currentGroup: Group;
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -49,13 +46,12 @@ export interface GroupPageProps {
  */
 const GroupPage: React.FC<GroupPageProps> = ({
   currentGroup,
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  handleDeleteGroup,
   setSelectedTab,
 }) => {
-  // History
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // History hook
   const history = useHistory();
 
   // Quicknotes State
@@ -71,7 +67,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
   /**
    * State for current group info
    */
-  const [group, setGroupPage] = useState(currentGroup);
+  const [activeGroup, setActiveGroup] = useState(currentGroup);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -80,10 +76,10 @@ const GroupPage: React.FC<GroupPageProps> = ({
   const [saved, setSaved] = useState(true);
 
   /**
-   * Function to handle changes in a note's field.
+   * Function to handle changes in a group's field.
    * @param key The field being changed
    * @param value The new value of the field
-   * @param updateDate If true, updates the note's last modified date. [default=false]
+   * @param updateDate If true, updates the group's last modified date. [default=false]
    */
   const handleEditField = (
     key: string,
@@ -93,36 +89,47 @@ const GroupPage: React.FC<GroupPageProps> = ({
     let updatedGroup;
     if (updateDate) {
       updatedGroup = {
-        ...group,
+        ...activeGroup,
         [key]: value,
         lastModified: Date.now(),
       };
     } else {
       updatedGroup = {
-        ...group,
+        ...activeGroup,
         [key]: value,
       };
     }
-    setGroupPage(updatedGroup);
+    setActiveGroup(updatedGroup);
   };
 
   /**
-   * Function to handle a change in the note's color.
+   * Function to toggle whether a group is favorited
+   * Does NOT change the last modified date.
+   */
+  const handleFavorite = () => {
+    const updatedGroup = {
+      ...activeGroup,
+      favorited: !activeGroup.favorited,
+    };
+    handleUpdateGroup(dispatch, updatedGroup);
+  };
+
+  /**
+   * Function to handle a change in the group's color.
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
-    handleUpdateGroup(group._id, {
-      ...group,
+    const updatedGroup: Group = {
+      ...activeGroup,
       color: color,
-    });
+    };
+    handleUpdateGroup(dispatch, updatedGroup);
   };
 
   /**
    * Function to toggle the color menu
    */
-  const toggleColorMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const toggleColorMenu = () => {
     // Toggle display of component
     setShowColorMenu((prev) => !prev);
   };
@@ -139,20 +146,19 @@ const GroupPage: React.FC<GroupPageProps> = ({
 
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateGroup(group._id, group);
-      updateGroupsList(group._id, group);
+      handleUpdateGroup(dispatch, activeGroup);
       setSaved(true);
     }, 2000);
     return () => {
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [group, quicknotesState, marknotesState]);
+  }, [activeGroup, quicknotesState, marknotesState]);
 
   return (
     <React.Fragment>
       <InputPageHeader
-        item={group}
+        item={activeGroup}
         handleEditField={handleEditField}
         icon={<FolderOpenIcon filled />}
         saved={saved}
@@ -163,16 +169,8 @@ const GroupPage: React.FC<GroupPageProps> = ({
         <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
           <TrashIcon />
         </PageHeaderButton>
-        <PageHeaderButton
-          title="Favorite"
-          onClick={() => {
-            handleUpdateGroup(group._id, {
-              ...group,
-              favorited: !group.favorited,
-            });
-          }}
-        >
-          {group.favorited === false ? <StarIcon /> : <StarIcon filled />}
+        <PageHeaderButton title="Favorite" onClick={() => handleFavorite()}>
+          {activeGroup.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
@@ -182,30 +180,25 @@ const GroupPage: React.FC<GroupPageProps> = ({
         </PageHeaderButton>
       </InputPageHeader>
       <div className="main-content-wrapper">
-        {group.quicknotes.length > 0 ? (
+        {activeGroup.quicknotes.length > 0 ? (
           <Section name="Quicknotes">
             <QNList
-              groups={groups}
-              updateGroupsList={updateGroupsList}
-              handleUpdateGroup={handleUpdateGroup}
               setSelectedTab={setSelectedTab}
-              setGroupPage={setGroupPage}
+              setActiveGroup={setActiveGroup}
               setSaved={setSaved}
             ></QNList>
           </Section>
         ) : null}
-        {group.marknotes.length > 0 ? (
+        {activeGroup.marknotes.length > 0 ? (
           <Section name="Marknotes">
             <MNList
-              groups={groups}
-              updateGroupsList={updateGroupsList}
-              handleUpdateGroup={handleUpdateGroup}
               setSelectedTab={setSelectedTab}
-              setGroupPage={setGroupPage}
+              setActiveGroup={setActiveGroup}
             />
           </Section>
         ) : null}
-        {group.quicknotes.length === 0 && group.marknotes.length === 0 ? (
+        {activeGroup.quicknotes.length === 0 &&
+        activeGroup.marknotes.length === 0 ? (
           <div
             css={css`
               width: 100%;
@@ -234,7 +227,7 @@ const GroupPage: React.FC<GroupPageProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={group}
+        item={activeGroup}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}

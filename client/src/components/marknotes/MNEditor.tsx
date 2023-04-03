@@ -11,8 +11,7 @@ import { css, jsx, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { useSelector, useDispatch } from "react-redux";
-import { updateMarknote } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 // Common imports
 import { Marknote } from "../../common/types";
@@ -39,6 +38,7 @@ import "codemirror/theme/material-darker.css";
 import "codemirror/mode/markdown/markdown"; // import codemirror markdown
 
 import { Controlled as CodeMirror } from "react-codemirror2"; // import text editor
+import { handleUpdateMarknote } from "../../utils/marknotes";
 
 const EditorMain = styled.div`
   height: 100%;
@@ -287,11 +287,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
     setMarknote(updatedNote);
   };
 
-  const handleChangeEditorBody = (
-    editor: string,
-    data: string,
-    value: string
-  ) => {
+  const handleChangeEditorBody = (value: string) => {
     handleEditField("body", value);
   };
 
@@ -306,7 +302,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      dispatch(updateMarknote(marknote));
+      handleUpdateMarknote(dispatch, marknote);
       setSaved(true);
     }, 2000);
 

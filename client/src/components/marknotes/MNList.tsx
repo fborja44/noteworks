@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Common imports
-import { Group, Marknote, Quicknote } from "../../common/types";
+import { Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import MNContainer from "../../containers/marknotes/MNContainer";
@@ -30,20 +30,14 @@ const List = styled.div`
 
 export interface MNListProps {
   MNFilterText?: string;
-  groups: Group[];
-  updateGroupsList: Function;
-  setGroupPage?: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
+  setActiveGroup?: Function;
   favorites?: boolean;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MNList: React.FC<MNListProps> = ({
   MNFilterText,
-  groups,
-  updateGroupsList,
-  setGroupPage,
-  handleUpdateGroup,
+  setActiveGroup,
   favorites,
   setSelectedTab,
 }) => {
@@ -54,8 +48,6 @@ const MNList: React.FC<MNListProps> = ({
   const marknotesState: Marknote[] = useSelector(
     (state: any) => state.marknotesState
   );
-
-  console.log(marknotesState);
 
   // Sort marknotes by last modified date
   let notes = marknotesState.sort(
@@ -90,10 +82,7 @@ const MNList: React.FC<MNListProps> = ({
         ) => (
           <MNContainer
             key={note._id}
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            setGroupPage={setGroupPage}
+            setActiveGroup={setActiveGroup}
             currentNote={note}
             setSelectedTab={setSelectedTab}
           />

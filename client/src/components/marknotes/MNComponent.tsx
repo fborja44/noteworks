@@ -10,7 +10,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Group, Marknote } from "../../common/types";
+import { Marknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
@@ -47,10 +47,7 @@ const MarknoteLink = css`
 `;
 
 export interface MNComponentProps {
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  setGroupPage?: Function;
+  setActiveGroup?: Function;
   currentNote: Marknote;
   handleEditField: (
     key: string,
@@ -81,10 +78,7 @@ export interface MNComponentProps {
 }
 
 const MNComponent: React.FC<MNComponentProps> = ({
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  setGroupPage,
+  setActiveGroup,
   currentNote,
   handleEditField,
   handleFavorite,
@@ -143,12 +137,9 @@ const MNComponent: React.FC<MNComponentProps> = ({
       </NoteContent>
       <GroupMenu
         item={currentNote}
-        groups={groups}
-        updateGroupsList={updateGroupsList}
-        setGroupPage={setGroupPage}
+        setActiveGroup={setActiveGroup}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
-        handleUpdateGroup={handleUpdateGroup}
       />
       <ColorMenu
         showColorMenu={showColorMenu}

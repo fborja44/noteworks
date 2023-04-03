@@ -23,6 +23,7 @@ import CheckCircleIcon from "../icons/CheckCircleIcon";
  * Issue: input is rerendered each time input is given, losing focus
  * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
  */
+// eslint-disable-next-line
 const PageHeaderColors = ({
   color,
   color2,

@@ -12,9 +12,11 @@ import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
+import { handleCreateMarknote } from "../../utils/marknotes";
+import { handleCreateGroup } from "../../utils/groups";
 
 // Common imports
-import { Group, Marknote } from "../../common/types";
+import { Marknote } from "../../common/types";
 
 // Component imports
 import MNHelp from "./MNHelp";
@@ -34,7 +36,6 @@ import MenuIcon from "../icons/MenuIcon";
 import SquareBlocksIcon from "../icons/SquareBlocksIcon";
 import SparkleIcon from "../icons/SparkleIcon";
 import { BsMarkdown } from "react-icons/bs";
-import { handleCreateMarknote } from "../../utils/marknotes";
 
 /**
  * Props for MNPage
@@ -42,12 +43,6 @@ import { handleCreateMarknote } from "../../utils/marknotes";
 export interface MNPageProps {
   explorerOpen: boolean;
   setExplorerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  groups: Group[];
-  updateGroupsList: Function;
-  setGroups: React.Dispatch<React.SetStateAction<any[]>>;
-  handleAddGroup: () => void;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -57,12 +52,6 @@ export interface MNPageProps {
 const MNPage: React.FC<MNPageProps> = ({
   explorerOpen,
   setExplorerOpen,
-  groups,
-  updateGroupsList,
-  setGroups,
-  handleAddGroup,
-  handleUpdateGroup,
-  handleDeleteGroup,
   setSelectedTab,
 }) => {
   // Dispatch hook
@@ -104,7 +93,10 @@ const MNPage: React.FC<MNPageProps> = ({
               >
                 <PlusIcon />
               </PageHeaderButton>
-              <PageHeaderButton title="New Group" onClick={handleAddGroup}>
+              <PageHeaderButton
+                title="New Group"
+                onClick={() => handleCreateGroup(dispatch)}
+              >
                 <FolderPlusIcon />
               </PageHeaderButton>
             </>
@@ -134,13 +126,11 @@ const MNPage: React.FC<MNPageProps> = ({
         <div className="main-content-wrapper">
           {!explorerOpen ? (
             <>
-              <Section name="Groups" handleClick={handleAddGroup}>
-                <GroupList
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  handleUpdateGroup={handleUpdateGroup}
-                  handleDeleteGroup={handleDeleteGroup}
-                />
+              <Section
+                name="Groups"
+                handleClick={() => handleCreateGroup(dispatch)}
+              >
+                <GroupList />
               </Section>
               <Section
                 name="My Marknotes"
@@ -148,9 +138,6 @@ const MNPage: React.FC<MNPageProps> = ({
               >
                 <MNList
                   MNFilterText={MNFilterText}
-                  groups={groups}
-                  updateGroupsList={updateGroupsList}
-                  handleUpdateGroup={handleUpdateGroup}
                   setSelectedTab={setSelectedTab}
                 />
               </Section>

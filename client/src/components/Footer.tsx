@@ -8,6 +8,12 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Redux imports
+import { useDispatch } from "react-redux";
+import { fetchQuicknotes } from "../utils/quicknotes";
+import { fetchMarknotes } from "../utils/marknotes";
+import { fetchGroups } from "../utils/groups";
+
 // Image and icon imports
 import RefreshIcon from "./icons/RefreshIcon";
 
@@ -69,17 +75,13 @@ const FooterOption = styled.button`
   }
 `;
 
-interface FooterProps {
-  fetchQuicknotes: Function;
-  fetchMarknotes: Function;
-  fetchGroups: Function;
-}
+interface FooterProps {}
 
-const Footer = ({
-  fetchQuicknotes,
-  fetchMarknotes,
-  fetchGroups,
-}: FooterProps) => {
+const Footer = ({}: FooterProps) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // Refreshing state
   const [refreshing, setRefreshing] = useState(false);
 
   return (
@@ -90,9 +92,9 @@ const Footer = ({
           onClick={async () => {
             setRefreshing(true);
             try {
-              await fetchQuicknotes();
-              await fetchMarknotes();
-              await fetchGroups();
+              await fetchQuicknotes(dispatch);
+              await fetchMarknotes(dispatch);
+              await fetchGroups(dispatch);
             } catch (e: any) {
               console.log(e.toString());
             }

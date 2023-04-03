@@ -5,7 +5,6 @@ import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
-import { Group } from "../../common/types";
 import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";
@@ -19,10 +18,6 @@ import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
  */
 export interface SearchPageProps {
   searchTerm: string;
-  groups: Group[];
-  updateGroupsList: Function;
-  handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
-  handleDeleteGroup: (groupId: string) => void;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -31,10 +26,6 @@ export interface SearchPageProps {
  */
 const SearchPage: React.FC<SearchPageProps> = ({
   searchTerm,
-  groups,
-  updateGroupsList,
-  handleUpdateGroup,
-  handleDeleteGroup,
   setSelectedTab,
 }) => {
   // Data Saved State
@@ -49,31 +40,13 @@ const SearchPage: React.FC<SearchPageProps> = ({
       />
       <div className="main-content-wrapper">
         <Section name={`Groups`}>
-          <GroupList
-            GroupsFilterText={searchTerm}
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            handleDeleteGroup={handleDeleteGroup}
-          />
+          <GroupList GroupsFilterText={searchTerm} />
         </Section>
         <Section name={`Quicknotes`}>
-          <QNList
-            QNFilterText={searchTerm}
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            setSaved={setSaved}
-          />
+          <QNList QNFilterText={searchTerm} setSaved={setSaved} />
         </Section>
         <Section name={`Marknotes`}>
-          <MNList
-            MNFilterText={searchTerm}
-            groups={groups}
-            updateGroupsList={updateGroupsList}
-            handleUpdateGroup={handleUpdateGroup}
-            setSelectedTab={setSelectedTab}
-          />
+          <MNList MNFilterText={searchTerm} setSelectedTab={setSelectedTab} />
         </Section>
       </div>
     </React.Fragment>

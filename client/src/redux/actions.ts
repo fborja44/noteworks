@@ -45,9 +45,19 @@ const deleteMarknote = (marknoteId: string) => ({
   payload: marknoteId,
 });
 
-const updateGroup = (updatedGroups: Group[]) => ({
-  type: "UPDATE_GROUPS",
-  payload: updatedGroups,
+const setGroups = (groups: Group[]) => ({
+  type: "SET_GROUPS",
+  payload: groups,
+});
+
+const createGroup = (newGroup: Group) => ({
+  type: "CREATE_GROUP",
+  payload: newGroup,
+});
+
+const updateGroup = (updatedGroup: Group) => ({
+  type: "UPDATE_GROUP",
+  payload: updatedGroup,
 });
 
 const deleteGroup = (groupId: string) => ({
@@ -65,6 +75,8 @@ export {
   updateMarknote,
   createMarknote,
   deleteMarknote,
+  setGroups,
+  createGroup,
   updateGroup,
   deleteGroup,
 };

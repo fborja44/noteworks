@@ -12,6 +12,8 @@ import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
+import { handleCreateMarknote } from "../../utils/marknotes";
+import { handleCreateGroup } from "../../utils/groups";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
@@ -26,7 +28,6 @@ import NotesExplorerMarknote from "./NotesExplorerMarknote";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
-import { handleCreateMarknote } from "../../utils/marknotes";
 
 const NotesExplorerContainer = styled.section`
   background: ${(props) => props.theme.sidebar.background};
@@ -82,21 +83,18 @@ const NotesExplorerContentText = styled.div`
 `;
 
 interface NotesExplorerProps {
-  groups: Group[];
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  handleAddGroup: () => void;
 }
 
-const NotesExplorer = ({
-  groups,
-  setSelectedTab,
-  handleAddGroup,
-}: NotesExplorerProps) => {
+const NotesExplorer = ({ setSelectedTab }: NotesExplorerProps) => {
   // Dispatch
   const dispatch = useDispatch();
 
   // History
   const history = useHistory();
+
+  // Groups State
+  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
@@ -137,7 +135,7 @@ const NotesExplorer = ({
 
   const groupsList = (
     <NotesList>
-      {groups.map((group) => (
+      {groupsState.map((group) => (
         <NotesExplorerGroup
           group={group}
           marknotes={marknotesState}
@@ -171,7 +169,10 @@ const NotesExplorer = ({
       <NotesExplorerHeader>
         <NotesExplorerFilter handleFilterNote={setExplorerFilter} />
         <NotesExplorerButtons>
-          <NotesExplorerButton title={"New Group"} onClick={handleAddGroup}>
+          <NotesExplorerButton
+            title={"New Group"}
+            onClick={() => handleCreateGroup(dispatch)}
+          >
             <FolderPlusIcon />
           </NotesExplorerButton>
           <NotesExplorerButton
