@@ -8,11 +8,7 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import {
-  deleteGroup,
-  deleteMarknote,
-  deleteQuicknote,
-} from "../../redux/actions";
+import { deleteGroup } from "../../redux/actions";
 
 // Common imports
 import { Quicknote, Marknote, Group } from "../../common/types";
@@ -22,6 +18,7 @@ import { COLOR } from "../../common/color";
 import ModalMenu from "./ModalMenu";
 import TrashIcon from "../icons/TrashIcon";
 import { handleDeleteMarknote } from "../../utils/marknotes";
+import { handleDeleteQuicknote } from "../../utils/quicknotes";
 
 const MenuContent = styled.div`
   text-align: center;
@@ -95,7 +92,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
         <DeleteButton
           onClick={(event) => {
             if (item.type === "quicknote") {
-              dispatch(deleteQuicknote(item._id));
+              handleDeleteQuicknote(dispatch, item._id);
             } else if (item.type === "marknote") {
               handleDeleteMarknote(dispatch, item._id);
             } else if (item.type === "group") {

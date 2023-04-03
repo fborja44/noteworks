@@ -218,11 +218,6 @@ export interface MNEditorProps {
 }
 
 const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
-  // Marknotes State
-  const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
-  );
-
   // History hook
   const history = useHistory();
 

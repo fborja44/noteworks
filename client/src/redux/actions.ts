@@ -10,6 +10,11 @@ const setQuicknotes = (quicknotes: Quicknote[]) => ({
   payload: quicknotes,
 });
 
+const createQuicknote = (newQuicknote: Quicknote) => ({
+  type: "CREATE_QUICKNOTE",
+  payload: newQuicknote,
+});
+
 const updateQuicknotes = (updatedQuicknotes: Quicknote[]) => ({
   type: "UPDATE_QUICKNOTES",
   payload: updatedQuicknotes,
@@ -25,14 +30,14 @@ const setMarknotes = (marknotes: Marknote[]) => ({
   payload: marknotes,
 });
 
-const updateMarknote = (updatedMarknote: Marknote) => ({
-  type: "UPDATE_MARKNOTE",
-  payload: updatedMarknote,
-});
-
 const createMarknote = (newMarknote: Marknote) => ({
   type: "CREATE_MARKNOTE",
   payload: newMarknote,
+});
+
+const updateMarknote = (updatedMarknote: Marknote) => ({
+  type: "UPDATE_MARKNOTE",
+  payload: updatedMarknote,
 });
 
 const deleteMarknote = (marknoteId: string) => ({
@@ -53,6 +58,7 @@ const deleteGroup = (groupId: string) => ({
 export {
   updateSearch,
   setQuicknotes,
+  createQuicknote,
   deleteQuicknote,
   updateQuicknotes,
   setMarknotes,

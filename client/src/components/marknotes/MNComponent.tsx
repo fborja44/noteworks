@@ -9,9 +9,6 @@ import { Link } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-// Redux imports
-import { useSelector } from "react-redux";
-
 // Common imports
 import { Group, Marknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";

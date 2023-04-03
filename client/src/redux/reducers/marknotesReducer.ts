@@ -1,20 +1,16 @@
 import { Marknote } from "../../common/types";
 import { AnyAction } from "redux";
 
-import axios from "axios";
-import { COLOR } from "../../common/color";
-import { Group } from "../../common/types";
-
 const initialState: Marknote[] = [];
 
 const marknotesReducer = (state = initialState, action: AnyAction) => {
   const { type, payload } = action;
   switch (type) {
     case "SET_MARKNOTES": // Sets marknotes state
-      let marknotes: Marknote[] = payload;
+      const marknotes: Marknote[] = payload;
       return [...marknotes];
     case "UPDATE_MARKNOTE": // Updates a single marknote
-      let updatedMarknote: Marknote = payload;
+      const updatedMarknote: Marknote = payload;
       const updatedMarknotesState = state.map((note: any) => {
         if (note._id === updatedMarknote._id) {
           return updatedMarknote;

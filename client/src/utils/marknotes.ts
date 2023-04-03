@@ -11,7 +11,7 @@ import {
 const BASE_ADDR = "http://localhost:3001";
 
 /**
- * Marknote function to add a new empty marknote to the list
+ * Creates a new empty marknote.
  */
 const handleCreateMarknote = async (
   dispatch: Dispatch<AnyAction>,
@@ -39,7 +39,7 @@ const handleCreateMarknote = async (
 };
 
 /**
- * Updates a marknote in the database
+ * Updates a marknote.
  * @param updatedMarknote The data to update the marknote with
  */
 const handleUpdateMarknote = async (
@@ -60,7 +60,31 @@ const handleUpdateMarknote = async (
 };
 
 /**
- * Deletes a marknote from the database
+ * Adds a group to a marknote if not a member.
+ * Otherwise, removes the marknote from the group.
+ * @param marknoteId The marknote id
+ * @param groupid The group id
+ */
+const handleUpdateMarknotesGroups = async (
+  dispatch: Dispatch<AnyAction>,
+  marknoteId: string,
+  groupId: string
+) => {
+  try {
+    const { data } = await axios({
+      baseURL: BASE_ADDR,
+      url: `/groups/${groupId}/marknotes/${marknoteId}`,
+      method: "PATCH",
+    });
+    dispatch(updateMarknote(data.updatedNote));
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Deletes a marknote.
  * @param noteId The id of the marknote to be deleted
  */
 const handleDeleteMarknote = async (
@@ -79,4 +103,9 @@ const handleDeleteMarknote = async (
   }
 };
 
-export { handleCreateMarknote, handleUpdateMarknote, handleDeleteMarknote };
+export {
+  handleCreateMarknote,
+  handleUpdateMarknote,
+  handleUpdateMarknotesGroups,
+  handleDeleteMarknote,
+};

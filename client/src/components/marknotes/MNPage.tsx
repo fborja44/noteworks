@@ -12,7 +12,6 @@ import { useHistory } from "react-router-dom";
 
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { createMarknote } from "../../redux/actions";
 
 // Common imports
 import { Group, Marknote } from "../../common/types";
@@ -82,8 +81,6 @@ const MNPage: React.FC<MNPageProps> = ({
   const marknotesState: Marknote[] = useSelector(
     (state: any) => state.marknotesState
   );
-
-  console.log(marknotesState);
 
   /**
    * State for marknotes filter text

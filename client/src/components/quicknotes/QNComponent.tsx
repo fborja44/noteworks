@@ -10,17 +10,15 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux Imports
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  handleUpdateQuicknote,
+  handleUpdateQuicknotes,
+} from "../../utils/quicknotes";
 
 // Common imports
 import { Group, Quicknote } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
-
-import {
-  updateQuicknotesState,
-  handleUpdateQuicknote,
-  handleDeleteQuicknote,
-} from "../../utils/quicknotes";
 
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
@@ -89,12 +87,8 @@ const QNComponent: React.FC<QNComponentProps> = ({
   unsavedNotes,
   setUnsavedNotes,
 }) => {
+  // Dispatch hook
   const dispatch = useDispatch();
-
-  // Quicknotes State
-  const quicknotesState: Quicknote[] = useSelector(
-    (state: any) => state.quicknotesState
-  );
 
   // Character limits
   const titleCharLimit = 30;
@@ -162,8 +156,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
       color: color,
     };
     setQuicknote(updatedQuicknote);
-    handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesState(quicknotesState, [updatedQuicknote], dispatch);
+    handleUpdateQuicknote(dispatch, updatedQuicknote);
   };
 
   /**
@@ -176,8 +169,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
       favorited: !quicknote.favorited,
     };
     setQuicknote(updatedQuicknote);
-    handleUpdateQuicknote(quicknote._id, updatedQuicknote);
-    updateQuicknotesState(quicknotesState, [updatedQuicknote], dispatch);
+    handleUpdateQuicknote(dispatch, updatedQuicknote);
   };
 
   // Menu state
@@ -213,10 +205,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
       // Update every note in the unsaved queue.
-      for (let note of unsavedNotes) {
-        handleUpdateQuicknote(note._id, note);
-      }
-      updateQuicknotesState(quicknotesState, unsavedNotes, dispatch);
+      handleUpdateQuicknotes(dispatch, unsavedNotes);
       setUnsavedNotes([]); // Reset unsaved notes
       setSaved(true);
     }, 2000);

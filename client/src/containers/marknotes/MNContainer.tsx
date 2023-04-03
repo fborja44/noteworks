@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 // Redux imports
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleUpdateMarknote } from "../../utils/marknotes";
 
 // Common imports
@@ -15,7 +15,7 @@ import { ColorId } from "../../common/color";
 // Component imports
 import MNComponent from "../../components/marknotes/MNComponent";
 
-export interface MNComponentContainerProps {
+export interface MNContainerProps {
   groups: Group[];
   updateGroupsList: Function;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
@@ -24,7 +24,7 @@ export interface MNComponentContainerProps {
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
+const MNContainer: React.FC<MNContainerProps> = ({
   groups,
   updateGroupsList,
   handleUpdateGroup,
@@ -32,11 +32,6 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   currentNote,
   setSelectedTab,
 }) => {
-  // Marknotes State
-  const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
-  );
-
   // Dispatch
   const dispatch = useDispatch();
 
@@ -166,4 +161,4 @@ const MNComponentContainer: React.FC<MNComponentContainerProps> = ({
   );
 };
 
-export default MNComponentContainer;
+export default MNContainer;

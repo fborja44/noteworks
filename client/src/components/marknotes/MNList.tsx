@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
-import MNComponentContainer from "../../containers/marknotes/MNComponentContainer";
+import MNContainer from "../../containers/marknotes/MNContainer";
 import { Empty } from "../Section";
 
 const List = styled.div`
@@ -88,7 +88,7 @@ const MNList: React.FC<MNListProps> = ({
         (
           note // Note should not be a member of a group to be listed with the general notes
         ) => (
-          <MNComponentContainer
+          <MNContainer
             key={note._id}
             groups={groups}
             updateGroupsList={updateGroupsList}

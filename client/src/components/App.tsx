@@ -251,7 +251,6 @@ const App = () => {
               <QNPage
                 groups={groups}
                 updateGroupsList={updateGroupsList}
-                setGroups={setGroups}
                 handleAddGroup={handleAddGroup}
                 handleUpdateGroup={handleUpdateGroup}
                 handleDeleteGroup={handleDeleteGroup}

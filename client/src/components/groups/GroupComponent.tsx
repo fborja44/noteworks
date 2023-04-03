@@ -84,9 +84,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   updateGroupsList,
   handleUpdateGroup,
 }) => {
-  // Groups State
-  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
-
   /**
    * State for current group info
    */

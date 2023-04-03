@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 // Common imports
 import PageHeader from "../pageheader/PageHeader";
-import { Quicknote, Marknote, Group } from "../../common/types";
+import { Group } from "../../common/types";
 import Section from "../Section";
 import QNList from "../quicknotes/QNList";
 import MNList from "../marknotes/MNList";

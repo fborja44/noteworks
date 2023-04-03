@@ -9,11 +9,11 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux Imports
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { handleUpdateQuicknotesGroups } from "../../utils/quicknotes";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
-import { updateQuicknotesState } from "../../utils/quicknotes";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -24,9 +24,7 @@ import FolderIcon from "../icons/FolderIcon";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
 
-import axios from "axios";
-
-const BASE_ADDR = "http://localhost:3001";
+import { handleUpdateMarknotesGroups } from "../../utils/marknotes";
 
 const GroupMenuContent = styled.div`
   display: flex;
@@ -89,7 +87,6 @@ const GroupMenuItemTitle = styled.div`
 
 export interface GroupMenuProps {
   item: Quicknote | Marknote;
-  updateMarknotesList?: Function;
   groups: Group[];
   updateGroupsList: Function;
   setGroupPage?: Function;
@@ -100,7 +97,6 @@ export interface GroupMenuProps {
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
   item,
-  updateMarknotesList,
   groups,
   updateGroupsList,
   setGroupPage,
@@ -110,11 +106,6 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  // Quicknotes State
-  const quicknotesState: Quicknote[] = useSelector(
-    (state: any) => state.quicknotesState
-  );
-
   /**
    * On click handler to add/remove note from group.
    * Event target needs dataset attribute.
@@ -123,31 +114,17 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
     const groupId = event.target.dataset.id;
     let data: any = null;
     try {
-      if (item.type === "marknote" && updateMarknotesList) {
-        data = await axios({
-          baseURL: BASE_ADDR,
-          url: `/groups/${groupId}/marknotes/${item._id}`,
-          method: "PATCH",
-        });
-        updateMarknotesList(item._id, data.data.updatedNote);
+      if (item.type === "marknote") {
+        data = await handleUpdateMarknotesGroups(dispatch, item._id, groupId);
       } else if (item.type === "quicknote") {
-        data = await axios({
-          baseURL: BASE_ADDR,
-          url: `/groups/${groupId}/quicknotes/${item._id}`,
-          method: "PATCH",
-        });
-        updateQuicknotesState(
-          quicknotesState,
-          [data.data.updatedNote],
-          dispatch
-        );
+        data = await handleUpdateQuicknotesGroups(dispatch, item._id, groupId);
       }
       if (data) {
         if (setGroupPage) {
-          setGroupPage(data.data.updatedGroup);
+          setGroupPage(data.updatedGroup);
         }
-        handleUpdateGroup(groupId, data.data.updatedGroup);
-        updateGroupsList(groupId, data.data.updatedGroup);
+        handleUpdateGroup(groupId, data.updatedGroup);
+        updateGroupsList(groupId, data.updatedGroup);
       }
     } catch (e) {
       console.log(e);
@@ -202,16 +179,12 @@ const GroupMenuItem = ({
       key={group._id}
       data-id={group._id}
       onClick={(event) => handleSelectGroup(event)}
-      className={`${
-        group.quicknotes.includes(item._id) ||
-        group.marknotes.includes(item._id)
-          ? "selected"
-          : ""
-      } ${last ? "border" : ""}`}
+      className={`${item.groups.includes(group._id) ? "selected" : ""} ${
+        last ? "border" : ""
+      }`}
     >
       <GroupMenuItemTitle iconColor={COLOR[group.color].primary}>
-        {group.quicknotes.includes(item._id) ||
-        group.marknotes.includes(item._id) ? (
+        {item.groups.includes(group._id) ? (
           <FolderOpenIcon filled />
         ) : (
           <FolderIcon />
@@ -220,8 +193,7 @@ const GroupMenuItem = ({
           <span className="italic">Untitled Group</span>
         )}
       </GroupMenuItemTitle>
-      {group.quicknotes.includes(item._id) ||
-      group.marknotes.includes(item._id) ? (
+      {item.groups.includes(group._id) ? (
         <CheckCircleIcon className="selected-icon" />
       ) : null}
     </GroupMenuItemContainer>

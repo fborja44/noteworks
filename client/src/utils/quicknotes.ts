@@ -2,40 +2,18 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Quicknote } from "../common/types";
-import { setQuicknotes } from "../redux/actions";
+import {
+  createQuicknote,
+  deleteQuicknote,
+  updateQuicknotes,
+} from "../redux/actions";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
- * Quicknote function to update the quicknotes list in app state
- * when notes are updated.
- * @param updatedQuicknotes Array of updated quicknote data.
+ * Creates a new empty quicknote.
  */
-const updateQuicknotesState = (
-  quicknotes: Quicknote[],
-  updatedQuicknotes: Quicknote[],
-  dispatch: Dispatch<AnyAction>
-) => {
-  // Combine lists of updated notes and non-updated notes
-  const filteredQuicknotes: Quicknote[] = quicknotes.filter((note) => {
-    for (const updatedNote of updatedQuicknotes) {
-      if (note._id === updatedNote._id) {
-        return false;
-      }
-    }
-    return true;
-  });
-  dispatch(setQuicknotes([...updatedQuicknotes, ...filteredQuicknotes]));
-};
-
-/**
- * Function to add new empty quicknote after add quicknote button is pressed.
- * Color is the id of the note color.
- */
-const handleAddQuicknote = async (
-  quicknotes: Quicknote[],
-  dispatch: Dispatch<AnyAction>
-) => {
+const handleCreateQuicknote = async (dispatch: Dispatch<AnyAction>) => {
   try {
     const { data: newQuicknote } = await axios({
       baseURL: BASE_ADDR,
@@ -47,60 +25,107 @@ const handleAddQuicknote = async (
         body: "",
       },
     });
-    dispatch(setQuicknotes([...quicknotes, newQuicknote]));
+    dispatch(createQuicknote(newQuicknote));
   } catch (e) {
     console.log(e);
   }
 };
 
 /**
- * Function to update a quicknote in the database with updated information
+ * Updates a single quicknote.
  * @param noteId The quicknote id
  * @param updatedQuicknote The new information in update with
  */
 const handleUpdateQuicknote = async (
-  noteId: string,
+  dispatch: Dispatch<AnyAction>,
   updatedQuicknote: Quicknote
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/quicknotes/${noteId}`,
+      url: `/quicknotes/${updatedQuicknote._id}`,
       method: "PATCH",
       data: updatedQuicknote,
     });
+    dispatch(updateQuicknotes([updatedQuicknote]));
   } catch (e) {
     console.log(e);
   }
 };
 
 /**
- * Function to delete a quicknote from the list
+ * Updates a list of quicknotes.
+ * @param noteId The quicknote id
+ * @param updatedQuicknotes The new information in update with
+ */
+const handleUpdateQuicknotes = async (
+  dispatch: Dispatch<AnyAction>,
+  updatedQuicknotes: Quicknote[]
+) => {
+  try {
+    for (const updatedQuicknote of updatedQuicknotes) {
+      await axios({
+        baseURL: BASE_ADDR,
+        url: `/quicknotes/${updatedQuicknote._id}`,
+        method: "PATCH",
+        data: updatedQuicknote,
+      });
+    }
+    dispatch(updateQuicknotes(updatedQuicknotes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Adds a group to a quicknote if not a member.
+ * Otherwise, removes the quicknote from the group.
+ * @param quicknoteId The quicknote id
+ * @param groupId The group id
+ */
+const handleUpdateQuicknotesGroups = async (
+  dispatch: Dispatch<AnyAction>,
+  quicknoteId: string,
+  groupId: string
+) => {
+  try {
+    const { data } = await axios({
+      baseURL: BASE_ADDR,
+      url: `/groups/${groupId}/quicknotes/${quicknoteId}`,
+      method: "PATCH",
+    });
+    console.log(data.updatedNote);
+    dispatch(updateQuicknotes([data.updatedNote]));
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Deletes a quicknote.
  * @param noteId The id of the quicknote to be deleted
  */
 const handleDeleteQuicknote = async (
-  items: Quicknote[],
-  noteId: string,
-  dispatch: Dispatch<AnyAction>
+  dispatch: Dispatch<AnyAction>,
+  quicknoteId: string
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/quicknotes/${noteId}`,
+      url: `/quicknotes/${quicknoteId}`,
       method: "DELETE",
     });
-    const newQuicknotes = items.filter(
-      (note: Quicknote) => note._id !== noteId
-    ); // don't need to make new array since filter returns new array
-    dispatch(setQuicknotes(newQuicknotes));
+    dispatch(deleteQuicknote(quicknoteId));
   } catch (e) {
     console.log(e);
   }
 };
 
 export {
-  updateQuicknotesState,
-  handleAddQuicknote,
+  handleCreateQuicknote,
   handleUpdateQuicknote,
+  handleUpdateQuicknotes,
+  handleUpdateQuicknotesGroups,
   handleDeleteQuicknote,
 };

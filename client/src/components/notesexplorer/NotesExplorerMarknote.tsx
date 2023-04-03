@@ -1,7 +1,7 @@
 /* Notes Explorer Item Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 
 /** @jsxRuntime classic */
@@ -9,7 +9,7 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 
 // Common imports
-import { Marknote, Group } from "../../common/types";
+import { Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports

@@ -3,6 +3,10 @@
 // React imports
 import React, { useState, useEffect } from "react";
 
+// Redux imports
+import { useDispatch } from "react-redux";
+import { handleCreateQuicknote } from "../../utils/quicknotes";
+
 // Common imports
 import { Group } from "../../common/types";
 
@@ -20,12 +24,9 @@ import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
 import BoltIcon from "../icons/BoltIcon";
 
-import { handleAddQuicknote } from "../../utils/quicknotes";
-
 export interface QNPageProps {
   groups: Group[];
   updateGroupsList: Function;
-  setGroups: React.Dispatch<React.SetStateAction<any[]>>;
   handleAddGroup: () => void;
   handleUpdateGroup: (groupId: string, updatedGroup: Group) => void;
   handleDeleteGroup: (groupId: string) => void;
@@ -37,11 +38,13 @@ export interface QNPageProps {
 const QNPage: React.FC<QNPageProps> = ({
   groups,
   updateGroupsList,
-  setGroups,
   handleAddGroup,
   handleUpdateGroup,
   handleDeleteGroup,
 }) => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
   // Quicknotes Help Menu State
   const [showQNHelp, setShowQNHelp] = useState(false);
   const openQNHelp = () => {
@@ -69,7 +72,10 @@ const QNPage: React.FC<QNPageProps> = ({
         icon={<BoltIcon />}
         saved={saved}
       >
-        <PageHeaderButton title={"New Note"} onClick={handleAddQuicknote}>
+        <PageHeaderButton
+          title={"New Note"}
+          onClick={() => handleCreateQuicknote(dispatch)}
+        >
           <PlusIcon />
         </PageHeaderButton>
         <PageHeaderButton title="New Group" onClick={handleAddGroup}>
@@ -88,7 +94,10 @@ const QNPage: React.FC<QNPageProps> = ({
             handleDeleteGroup={handleDeleteGroup}
           />
         </Section>
-        <Section name="My Quicknotes" handleClick={handleAddQuicknote}>
+        <Section
+          name="My Quicknotes"
+          handleClick={() => handleCreateQuicknote(dispatch)}
+        >
           <QNList
             QNFilterText={QNFilterText}
             groups={groups}
