@@ -10,8 +10,7 @@ import styled from "@emotion/styled";
 
 // Redux Imports
 import { useDispatch, useSelector } from "react-redux";
-import { handleUpdateQuicknotesGroups } from "../../utils/quicknotes";
-import { handleUpdateMarknotesGroups } from "../../utils/marknotes";
+import { handleUpdateGroup, handleUpdateNoteGroups } from "../../utils/groups";
 
 // Common imports
 import { Group, Marknote, Quicknote } from "../../common/types";
@@ -24,7 +23,6 @@ import ModalMenu from "./ModalMenu";
 import FolderIcon from "../icons/FolderIcon";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
-import { handleUpdateGroup } from "../../utils/groups";
 
 const GroupMenuContent = styled.div`
   display: flex;
@@ -112,11 +110,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
     const groupId = event.target.dataset.id;
     let data: any = null;
     try {
-      if (item.type === "marknote") {
-        data = await handleUpdateMarknotesGroups(dispatch, item._id, groupId);
-      } else if (item.type === "quicknote") {
-        data = await handleUpdateQuicknotesGroups(dispatch, item._id, groupId);
-      }
+      data = await handleUpdateNoteGroups(dispatch, item, groupId);
       if (data) {
         if (setActiveGroup) {
           // If group page is open, update the group live so that displayed notes are updated

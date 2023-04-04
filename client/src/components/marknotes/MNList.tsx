@@ -11,11 +11,11 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Common imports
-import { Marknote, Quicknote } from "../../common/types";
+import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import MNContainer from "../../containers/marknotes/MNContainer";
-import MNCreateButton from "./MNCreateButton";
+import NoteCreateButton from "../notes/NoteCreateButton";
 import { Empty } from "../Section";
 
 const List = styled.div`
@@ -31,12 +31,14 @@ const List = styled.div`
 
 export interface MNListProps {
   MNFilterText?: string;
+  activeGroup?: Group;
   setActiveGroup?: Function;
   favorites?: boolean;
 }
 
 const MNList: React.FC<MNListProps> = ({
   MNFilterText,
+  activeGroup,
   setActiveGroup,
   favorites,
 }) => {
@@ -86,7 +88,7 @@ const MNList: React.FC<MNListProps> = ({
           />
         )
       )}
-      <MNCreateButton />
+      <NoteCreateButton noteType="marknote" group={activeGroup} />
     </List>
   );
 

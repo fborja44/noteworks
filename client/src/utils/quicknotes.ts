@@ -28,6 +28,7 @@ const fetchQuicknotes = async (dispatch: Dispatch<AnyAction>) => {
 
 /**
  * Creates a new empty quicknote.
+ * @returns The new Quicknote object.
  */
 const handleCreateQuicknote = async (dispatch: Dispatch<AnyAction>) => {
   try {
@@ -42,6 +43,7 @@ const handleCreateQuicknote = async (dispatch: Dispatch<AnyAction>) => {
       },
     });
     dispatch(createQuicknote(newQuicknote));
+    return newQuicknote;
   } catch (e) {
     console.log(e);
   }
@@ -94,6 +96,7 @@ const handleUpdateQuicknotes = async (
 };
 
 /**
+ * @deprecated Use handleUpdateNote groups in groups module instead.
  * Adds a group to a quicknote if not a member.
  * Otherwise, removes the quicknote from the group.
  * @param quicknoteId The quicknote id

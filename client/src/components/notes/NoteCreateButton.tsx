@@ -1,17 +1,22 @@
 // React imports
 import React from "react";
 
-import styled from "@emotion/styled";
-
 import { useHistory } from "react-router-dom";
+
+import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import { handleCreateMarknote } from "../../utils/marknotes";
+import { handleCreateQuicknote } from "../../utils/quicknotes";
 
 // Common imports
+import { Group, Marknote, Quicknote } from "../../common/types";
 import { COLOR } from "../../common/color";
+import { handleCreateMarknote } from "../../utils/marknotes";
+
+// Image and icon imports
 import PlusIcon from "../icons/PlusIcon";
+import { handleUpdateNoteGroups } from "../../utils/groups";
 
 const CreateButtonContainer = styled.button`
   width: 100%;
@@ -43,17 +48,36 @@ const ButtonContent = styled.div`
   }
 `;
 
-const MNCreateButton = () => {
+interface NoteCreateButtonProps {
+  noteType: "quicknote" | "marknote";
+  group?: Group;
+}
+
+const NoteCreateButton = ({ noteType, group }: NoteCreateButtonProps) => {
   // Dispatch hook
   const dispatch = useDispatch();
 
   // History hook
   const history = useHistory();
 
+  /**
+   * Creates a new note of noteType.
+   * If group is passed as a prop, adds that new note to the group.
+   */
+  const handleCreateNote = async () => {
+    let newNote: Quicknote | Marknote;
+    if (noteType === "quicknote") {
+      newNote = await handleCreateQuicknote(dispatch);
+    } else {
+      newNote = await handleCreateMarknote(dispatch, history);
+    }
+    if (group) {
+      await handleUpdateNoteGroups(dispatch, newNote, group._id);
+    }
+  };
+
   return (
-    <CreateButtonContainer
-      onClick={() => handleCreateMarknote(dispatch, history)}
-    >
+    <CreateButtonContainer onClick={() => handleCreateNote()}>
       <ButtonContent>
         <PlusIcon />
         <span>Add New Note</span>
@@ -62,4 +86,4 @@ const MNCreateButton = () => {
   );
 };
 
-export default MNCreateButton;
+export default NoteCreateButton;

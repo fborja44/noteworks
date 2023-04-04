@@ -10,11 +10,11 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Common imports
-import { Marknote, Quicknote } from "../../common/types";
+import { Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import QNComponent from "./QNComponent";
-import QNCreateButton from "./QNCreateButton";
+import NoteCreateButton from "../notes/NoteCreateButton";
 import { Empty } from "../Section";
 
 const List = styled.div`
@@ -30,6 +30,7 @@ const List = styled.div`
 
 export interface QNListProps {
   QNFilterText?: string;
+  activeGroup?: Group;
   setActiveGroup?: Function;
   favorites?: boolean;
   setSaved: Function;
@@ -37,6 +38,7 @@ export interface QNListProps {
 
 const QNList: React.FC<QNListProps> = ({
   QNFilterText,
+  activeGroup,
   setActiveGroup,
   favorites,
   setSaved,
@@ -89,7 +91,7 @@ const QNList: React.FC<QNListProps> = ({
           setSaved={setSaved}
         />
       ))}
-      <QNCreateButton />
+      <NoteCreateButton noteType="quicknote" group={activeGroup} />
     </List>
   );
 

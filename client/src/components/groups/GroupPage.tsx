@@ -179,6 +179,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         {activeGroup.quicknotes.length > 0 ? (
           <Section name="Quicknotes">
             <QNList
+              activeGroup={activeGroup}
               setActiveGroup={setActiveGroup}
               setSaved={setSaved}
             ></QNList>
@@ -186,7 +187,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         ) : null}
         {activeGroup.marknotes.length > 0 ? (
           <Section name="Marknotes">
-            <MNList setActiveGroup={setActiveGroup} />
+            <MNList activeGroup={activeGroup} setActiveGroup={setActiveGroup} />
           </Section>
         ) : null}
         {activeGroup.quicknotes.length === 0 &&

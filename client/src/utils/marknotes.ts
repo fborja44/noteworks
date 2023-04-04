@@ -28,6 +28,7 @@ const fetchMarknotes = async (dispatch: Dispatch<AnyAction>) => {
 
 /**
  * Creates a new empty marknote.
+ * @returns The new Marknote object
  */
 const handleCreateMarknote = async (
   dispatch: Dispatch<AnyAction>,
@@ -48,6 +49,7 @@ const handleCreateMarknote = async (
     // Redirect when new note is added
     history.push("/marknotes");
     history.push(`/marknotes/${newMarknote._id}`);
+    return newMarknote;
   } catch (e) {
     console.log(e);
   }
@@ -75,6 +77,7 @@ const handleUpdateMarknote = async (
 };
 
 /**
+ * @deprecated Use handleUpdateNote groups in groups module instead.
  * Adds a group to a marknote if not a member.
  * Otherwise, removes the marknote from the group.
  * @param marknoteId The marknote id
