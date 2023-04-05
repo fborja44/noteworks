@@ -129,6 +129,22 @@ const SavingIndicatorContainer = styled.div`
   }
 `;
 
+const TitleInput = styled.input`
+  background: ${(props) => props.theme.header.backgroundSecondary};
+  border: 1px solid ${(props) => props.theme.header.borderColor};
+  color: white;
+  height: 26px;
+  width: fit-content;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.7rem;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const SavedIndicator = ({ saved }: { saved: boolean }) => {
   return !saved ? (
     <SavingIndicatorContainer className="blink">
@@ -149,22 +165,24 @@ const SavedIndicator = ({ saved }: { saved: boolean }) => {
 };
 
 export interface PageHeaderProps {
-  title: string;
+  title?: string;
   color?: string;
-  useFilter?: boolean;
   icon?: React.ReactNode;
   saved?: boolean;
   setFilterText?: React.Dispatch<React.SetStateAction<string>>;
+  item?: Marknote | Group;
+  handleEditField?: (key: string, value: string | Boolean) => void;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
-  useFilter,
-  setFilterText,
   color,
   icon,
   saved,
+  setFilterText,
   children,
+  handleEditField,
+  item,
 }) => {
   // const appTheme = useTheme();
   return (
@@ -182,13 +200,22 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             {icon}
           </span>
         )}
-        <h1>{title}</h1>
+        {item && handleEditField ? (
+          <TitleInput
+            type="text"
+            placeholder={
+              item.type === "marknote" ? "Untitled Note" : "Untitled Group"
+            }
+            value={item.title}
+            onChange={(event) => handleEditField("title", event.target.value)}
+          />
+        ) : (
+          <h1>{title}</h1>
+        )}
       </PageHeaderSection>
       <PageHeaderSection>
         {saved !== undefined && <SavedIndicator saved={saved} />}
-        {useFilter && setFilterText && (
-          <Filterbar handleFilterNote={setFilterText} />
-        )}
+        {setFilterText && <Filterbar handleFilterNote={setFilterText} />}
         <PageHeaderButtonsContainer>
           <ul>{children}</ul>
         </PageHeaderButtonsContainer>
@@ -197,70 +224,4 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   );
 };
 
-PageHeader.defaultProps = {
-  useFilter: false,
-};
-
 export default PageHeader;
-
-const TitleInput = styled.input`
-  background: ${(props) => props.theme.header.backgroundSecondary};
-  border: 1px solid ${(props) => props.theme.header.borderColor};
-  color: white;
-  height: 26px;
-  width: fit-content;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 0 0.5rem 0 0.7rem;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-interface InputPageHeaderProps {
-  item: Marknote | Group;
-  icon?: React.ReactNode;
-  handleEditField: (key: string, value: string | Boolean) => void;
-  saved?: boolean;
-}
-
-export const InputPageHeader: React.FC<InputPageHeaderProps> = ({
-  item,
-  icon,
-  handleEditField,
-  saved,
-  children,
-}) => {
-  return (
-    <PageHeaderContainer>
-      <PageHeaderSection>
-        {icon && (
-          <span
-            css={[
-              PageHeaderIconStyles,
-              css`
-                color: ${COLOR[item.color].primary};
-              `,
-            ]}
-          >
-            {icon}
-          </span>
-        )}
-        <TitleInput
-          type="text"
-          placeholder={
-            item.type === "marknote" ? "Untitled Note" : "Untitled Group"
-          }
-          value={item.title}
-          onChange={(event) => handleEditField("title", event.target.value)}
-        />
-      </PageHeaderSection>
-      <PageHeaderSection>
-        {saved !== undefined && <SavedIndicator saved={saved} />}
-        <PageHeaderButtonsContainer>{children}</PageHeaderButtonsContainer>
-      </PageHeaderSection>
-    </PageHeaderContainer>
-  );
-};

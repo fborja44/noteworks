@@ -95,17 +95,26 @@ const QNList: React.FC<QNListProps> = ({
     </List>
   );
 
-  const searchEmpty = (
+  const favoritesEmpty = (
     <Empty>
-      <p>{`No notes found for the term "${QNFilterText}".`}</p>
+      <p>{`You have no favorited marknotes.`}</p>
     </Empty>
   );
 
-  return (
-    <React.Fragment>
-      {QNFilterText && notes.length === 0 ? searchEmpty : notesList}
-    </React.Fragment>
+  const searchEmpty = (
+    <Empty>
+      <p>{`No quicknotes found for the term "${QNFilterText}".`}</p>
+    </Empty>
   );
+
+  if (notes.length === 0) {
+    if (QNFilterText) {
+      return searchEmpty;
+    } else if (favorites) {
+      return favoritesEmpty;
+    }
+  }
+  return notesList;
 };
 
 QNList.defaultProps = {

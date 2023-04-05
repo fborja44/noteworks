@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import * as React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -28,8 +28,8 @@ import GroupMenu from "../menus/GroupMenu";
 const MarknoteContainer = styled.div`
   background-color: ${(props: { bodyColor: string }) => props.bodyColor};
   margin: 0 10px 0 10px;
-  width: 240px;
-  height: 330px;
+  width: 215px;
+  height: 280px;
   justify-self: center;
   font-size: 13px;
   font-family: "Source Sans Pro", sans-serif !important;
@@ -99,9 +99,6 @@ const MNComponent: React.FC<MNComponentProps> = ({
 }) => {
   // Dispatch hook
   const dispatch = useDispatch();
-
-  // History hook
-  const history = useHistory();
 
   return (
     <MarknoteContainer

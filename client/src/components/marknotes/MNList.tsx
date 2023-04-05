@@ -20,9 +20,8 @@ import { Empty } from "../Section";
 
 const List = styled.div`
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(auto-fit, 240px);
-  grid-auto-rows: 330px;
+  grid-template-columns: repeat(auto-fit, 215px);
+  grid-auto-rows: 280px;
   width: 100%;
   row-gap: 2em;
   column-gap: 2em;
@@ -92,17 +91,26 @@ const MNList: React.FC<MNListProps> = ({
     </List>
   );
 
-  const searchEmpty = (
+  const favoritesEmpty = (
     <Empty>
-      <p>{`No notes found for the term "${MNFilterText}".`}</p>
+      <p>{`You have no favorited marknotes.`}</p>
     </Empty>
   );
 
-  return (
-    <React.Fragment>
-      {MNFilterText && notes.length === 0 ? searchEmpty : notesList}
-    </React.Fragment>
+  const searchEmpty = (
+    <Empty>
+      <p>{`No marknotes found for the term "${MNFilterText}".`}</p>
+    </Empty>
   );
+
+  if (notes.length === 0) {
+    if (MNFilterText) {
+      return searchEmpty;
+    } else if (favorites) {
+      return favoritesEmpty;
+    }
+  }
+  return notesList;
 };
 
 MNList.defaultProps = {

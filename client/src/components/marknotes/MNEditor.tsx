@@ -20,7 +20,7 @@ import { COLOR, ColorId, NoteColor } from "../../common/color";
 // Component imports
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
-import { InputPageHeader } from "../pageheader/PageHeader";
+import PageHeader from "../pageheader/PageHeader";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import { Empty } from "../Section";
 
@@ -314,7 +314,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
 
   return (
     <EditorMain>
-      <InputPageHeader
+      <PageHeader
         item={marknote}
         handleEditField={handleEditField}
         icon={<BsMarkdownFill className="markdown" />}
@@ -361,7 +361,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         <PageHeaderButton onClick={() => history.goBack()} title="Close Note">
           <ArrowUturnRightIcon />
         </PageHeaderButton>
-      </InputPageHeader>
+      </PageHeader>
       {!showEditor && !showPreview ? (
         <div className="main-content-wrapper">
           <Empty>

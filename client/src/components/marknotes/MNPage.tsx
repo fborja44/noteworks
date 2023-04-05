@@ -76,8 +76,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
       <Route exact path="/marknotes">
         <PageHeader
           title="My Marknotes"
-          useFilter={!explorerOpen}
-          setFilterText={setMNFilterText}
+          setFilterText={!explorerOpen ? setMNFilterText : undefined}
           icon={<BsMarkdown className="markdown-icon" />}
         >
           {!explorerOpen && (

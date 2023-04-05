@@ -53,7 +53,6 @@ const QNPage: React.FC<QNPageProps> = () => {
     <React.Fragment>
       <PageHeader
         title="My Quicknotes"
-        useFilter={true}
         setFilterText={setQNFilterText}
         icon={<BoltIcon />}
         saved={saved}

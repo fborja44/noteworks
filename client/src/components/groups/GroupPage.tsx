@@ -4,10 +4,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-
 // Redux state
 import { useSelector, useDispatch } from "react-redux";
 import { handleUpdateGroup } from "../../utils/groups";
@@ -18,15 +14,14 @@ import { ColorId } from "../../common/color";
 
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
-import { InputPageHeader } from "../pageheader/PageHeader";
-import Section, { Empty } from "../Section";
+import PageHeader from "../pageheader/PageHeader";
+import Section from "../Section";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
 import MNList from "../marknotes/MNList";
 import QNList from "../quicknotes/QNList";
 
 // Image and icon imports
-import SparkleIcon from "../icons/SparkleIcon";
 import TrashIcon from "../icons/TrashIcon";
 import PencilSquareIcon from "../icons/PencilSquareIcon";
 import StarIcon from "../icons/StarIcon";
@@ -59,6 +54,9 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
   const marknotesState: Marknote[] = useSelector(
     (state: any) => state.marknotesState
   );
+
+  // Filtertext State
+  const [filterText, setFilterText] = useState("");
 
   /**
    * State for current group info
@@ -153,9 +151,10 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
 
   return (
     <React.Fragment>
-      <InputPageHeader
+      <PageHeader
         item={activeGroup}
         handleEditField={handleEditField}
+        setFilterText={setFilterText}
         icon={<FolderOpenIcon filled />}
         saved={saved}
       >
@@ -174,18 +173,23 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         >
           <ArrowUturnRightIcon />
         </PageHeaderButton>
-      </InputPageHeader>
+      </PageHeader>
       <div className="main-content-wrapper">
         <Section name="Quicknotes">
           <QNList
             activeGroup={activeGroup}
             setActiveGroup={setActiveGroup}
+            QNFilterText={filterText}
             setSaved={setSaved}
           ></QNList>
         </Section>
 
         <Section name="Marknotes">
-          <MNList activeGroup={activeGroup} setActiveGroup={setActiveGroup} />
+          <MNList
+            activeGroup={activeGroup}
+            setActiveGroup={setActiveGroup}
+            MNFilterText={filterText}
+          />
         </Section>
       </div>
       <ColorMenu
