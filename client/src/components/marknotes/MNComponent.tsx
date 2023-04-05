@@ -113,7 +113,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
         to={`/marknotes/${currentNote._id}`}
         onClick={() => {
           dispatch(setSelectedTab("/marknotes"));
-          history.push("/marknotes");
+          // history.push("/marknotes");
         }}
       />
       <NoteHeader

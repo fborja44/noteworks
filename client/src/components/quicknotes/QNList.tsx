@@ -101,20 +101,9 @@ const QNList: React.FC<QNListProps> = ({
     </Empty>
   );
 
-  const notesEmpty = !favorites ? (
-    <Empty>
-      <p>You have no saved quicknotes.</p>
-      <p>Create one now by pressing the + button in the menu above!</p>
-    </Empty>
-  ) : (
-    <Empty>
-      <p>You have no favorited marknotes.</p>
-    </Empty>
-  );
-
   return (
     <React.Fragment>
-      {notes.length !== 0 ? notesList : QNFilterText ? searchEmpty : notesEmpty}
+      {QNFilterText && notes.length === 0 ? searchEmpty : notesList}
     </React.Fragment>
   );
 };

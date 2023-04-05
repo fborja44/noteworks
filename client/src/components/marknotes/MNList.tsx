@@ -22,7 +22,7 @@ const List = styled.div`
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(auto-fit, 240px);
-  grid-auto-rows: fit-content;
+  grid-auto-rows: 330px;
   width: 100%;
   row-gap: 2em;
   column-gap: 2em;
@@ -98,20 +98,9 @@ const MNList: React.FC<MNListProps> = ({
     </Empty>
   );
 
-  const notesEmpty = !favorites ? (
-    <Empty>
-      <p>You have no saved marknotes.</p>
-      <p>Create one now by pressing the + button in the menu above!</p>
-    </Empty>
-  ) : (
-    <Empty>
-      <p>You have no favorited marknotes.</p>
-    </Empty>
-  );
-
   return (
     <React.Fragment>
-      {notes.length !== 0 ? notesList : MNFilterText ? searchEmpty : notesEmpty}
+      {MNFilterText && notes.length === 0 ? searchEmpty : notesList}
     </React.Fragment>
   );
 };

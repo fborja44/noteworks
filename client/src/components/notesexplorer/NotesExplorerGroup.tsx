@@ -29,8 +29,19 @@ export const GroupNotesList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  margin-left: 1.5em;
-  border-left: 1px solid ${(props) => COLOR.dark_grey.primary};
+
+  li {
+    padding-left: 2em;
+
+    .item-content {
+      padding-left: 2.75em;
+      border-left: 1px solid ${COLOR.dark_grey.primary};
+    }
+  }
+`;
+
+const GroupItemContainer = styled.div`
+  display: flex;
 `;
 
 interface NotesExplorerGroupProps {
@@ -81,35 +92,45 @@ const NotesExplorerGroup = ({
   return (
     <>
       <NotesExplorerItemContainer>
-        <div css={NotesExplorerLink} onClick={() => setOpenGroup(!openGroup)}>
-          {!openGroup ? (
-            <FolderIcon
-              className="folder-icon"
-              filled
-              css={css`
-                color: ${COLOR[group.color].primary};
-              `}
-            />
-          ) : (
-            <FolderOpenIcon
-              className="folder-icon"
-              filled
-              css={css`
-                color: ${COLOR[group.color].primary};
-              `}
-            />
-          )}
-          {group.title ? (
-            <span>{title}</span>
-          ) : (
-            <span className="untitled">Untitled Group</span>
-          )}
+        <div
+          css={[
+            NotesExplorerLink,
+            css`
+              justify-content: space-between;
+            `,
+          ]}
+          onClick={() => setOpenGroup(!openGroup)}
+        >
+          <GroupItemContainer>
+            {openGroup ? (
+              <ChevronDownIcon className="chevron-icon" />
+            ) : (
+              <ChevronRightIcon className="chevron-icon" />
+            )}
+            {!openGroup ? (
+              <FolderIcon
+                className="folder-icon"
+                filled
+                css={css`
+                  color: ${COLOR[group.color].primary};
+                `}
+              />
+            ) : (
+              <FolderOpenIcon
+                className="folder-icon"
+                filled
+                css={css`
+                  color: ${COLOR[group.color].primary};
+                `}
+              />
+            )}
+            {group.title ? (
+              <span>{title}</span>
+            ) : (
+              <span className="untitled">Untitled Group</span>
+            )}
+          </GroupItemContainer>
         </div>
-        {openGroup ? (
-          <ChevronDownIcon className="chevron-icon" />
-        ) : (
-          <ChevronRightIcon className="chevron-icon" />
-        )}
       </NotesExplorerItemContainer>
       {openGroup && notesList}
     </>

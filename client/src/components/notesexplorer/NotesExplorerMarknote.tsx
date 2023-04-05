@@ -52,6 +52,7 @@ const NotesExplorerMarknote = ({
       className={pathname.includes(marknote._id) ? "selected" : ""}
     >
       <Link
+        className="item-content"
         css={NotesExplorerLink}
         to={`/marknotes/${marknote._id}`}
         onClick={() => {

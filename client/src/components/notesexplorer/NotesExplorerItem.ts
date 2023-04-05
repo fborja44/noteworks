@@ -17,13 +17,13 @@ export const NotesExplorerItemContainer = styled.li`
   .folder-icon {
     width: 17px;
     height: 17px;
-    margin-right: 0.875em;
+    margin-right: 1.1em;
   }
 
   .chevron-icon {
     width: 14px;
     height: 14px;
-    margin-right: 1em;
+    margin-right: 1.1em;
   }
 
   .untitled {

@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------*/
 // React imports
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -80,6 +80,9 @@ export interface GroupComponentProps {
 const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
   // Dispatch hook
   const dispatch = useDispatch();
+
+  // History hook
+  const history = useHistory();
 
   /**
    * State for current group info

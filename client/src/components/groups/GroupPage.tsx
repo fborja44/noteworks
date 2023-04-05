@@ -176,43 +176,17 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         </PageHeaderButton>
       </InputPageHeader>
       <div className="main-content-wrapper">
-        {activeGroup.quicknotes.length > 0 ? (
-          <Section name="Quicknotes">
-            <QNList
-              activeGroup={activeGroup}
-              setActiveGroup={setActiveGroup}
-              setSaved={setSaved}
-            ></QNList>
-          </Section>
-        ) : null}
-        {activeGroup.marknotes.length > 0 ? (
-          <Section name="Marknotes">
-            <MNList activeGroup={activeGroup} setActiveGroup={setActiveGroup} />
-          </Section>
-        ) : null}
-        {activeGroup.quicknotes.length === 0 &&
-        activeGroup.marknotes.length === 0 ? (
-          <div
-            css={css`
-              width: 100%;
-              height: 80%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
+        <Section name="Quicknotes">
+          <QNList
+            activeGroup={activeGroup}
+            setActiveGroup={setActiveGroup}
+            setSaved={setSaved}
+          ></QNList>
+        </Section>
 
-              .sparkle-icon {
-                height: 50px;
-                width: 50px;
-                margin-top: 1.5em;
-              }
-            `}
-          >
-            <Empty>
-              <p>This group is empty.</p>
-              <SparkleIcon className="sparkle-icon" />
-            </Empty>
-          </div>
-        ) : null}
+        <Section name="Marknotes">
+          <MNList activeGroup={activeGroup} setActiveGroup={setActiveGroup} />
+        </Section>
       </div>
       <ColorMenu
         showColorMenu={showColorMenu}
