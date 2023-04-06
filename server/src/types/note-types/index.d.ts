@@ -28,8 +28,26 @@ declare module "note-types" {
     color: ColorId;
     quicknotes: string[];
     marknotes: string[];
+    checklists: string[];
     lastModified: number;
     favorited: boolean;
+  };
+
+  export type Checklist = {
+    type: string;
+    _id: ObjectId;
+    title: string;
+    color: ColorId;
+    items: ChecklistItem[];
+    lastModified: number;
+    favorited: boolean;
+    groups: string[];
+  };
+
+  export type ChecklistItem = {
+    _id: ObjectId;
+    content: string;
+    checked: boolean;
   };
 
   export type ColorId =

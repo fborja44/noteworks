@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 const mongoCollections = require("../config/mongoCollections");
 const quicknotes = require("./quicknotes");
 const marknotes = require("./marknotes");
+const checklists = require("./checklists");
 const groups = mongoCollections.groups;
 
 /**
@@ -21,6 +22,7 @@ export const createGroup = async (title: string, color: ColorId) => {
     color: color,
     quicknotes: [],
     marknotes: [],
+    checklists: [],
     lastModified: Date.now(),
     favorited: false,
   };
@@ -73,7 +75,7 @@ export const updateGroupById = async (id: string, updatedGroup: Group) => {
     { _id: parsed_id },
     { $set: updatedGroup }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw "updateGroupById: Failed to update group";
   return await getGroupById(id.trim());
 };
@@ -125,24 +127,33 @@ export const addToGroup = async (
   const parsed_id = new ObjectId(group_id.trim());
 
   // Update the group
-  const updateInfo =
-    note_type === "quicknote"
-      ? await groupsCollection.updateOne(
-          { _id: parsed_id },
-          { $addToSet: { quicknotes: note_id } }
-        )
-      : await groupsCollection.updateOne(
-          { _id: parsed_id },
-          { $addToSet: { marknotes: note_id } }
-        );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  let updateInfo = null;
+  if (note_type === "quicknote") {
+    updateInfo = await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $addToSet: { quicknotes: note_id } }
+    );
+  } else if (note_type === "marknote") {
+    updateInfo = await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $addToSet: { marknotes: note_id } }
+    );
+  } else if (note_type === "checklist") {
+    updateInfo = await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $addToSet: { checklists: note_id } }
+    );
+  }
+  if (!updateInfo || !updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `addToGroup: Failed to add note {'type': '${note_type}', 'id': '${note_id}'}' to group {'id': '${group_id}'}`;
 
   // Also update the note
   if (note_type === "quicknote") {
     await quicknotes.addGroupToQuicknote(note_id, group_id);
-  } else {
+  } else if (note_type === "marknote") {
     await marknotes.addGroupToMarknote(note_id, group_id);
+  } else if (note_type === "checklist") {
+    await checklists.addGroupToChecklist(note_id, group_id);
   }
   return await getGroupById(group_id.trim());
 };
@@ -164,25 +175,34 @@ export const removeFromGroup = async (
   const parsed_id = new ObjectId(group_id.trim());
 
   // Update the group
-  const updateInfo =
-    note_type === "quicknote"
-      ? await groupsCollection.updateOne(
-          { _id: parsed_id },
-          { $pull: { quicknotes: note_id } }
-        )
-      : await groupsCollection.updateOne(
-          { _id: parsed_id },
-          { $pull: { marknotes: note_id } }
-        );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  let updateInfo = null;
+  if (note_type === "quicknote") {
+    updateInfo = await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $pull: { quicknotes: note_id } }
+    );
+  } else if (note_type === "marknote") {
+    await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $pull: { marknotes: note_id } }
+    );
+  } else if (note_type === "checklist") {
+    await groupsCollection.updateOne(
+      { _id: parsed_id },
+      { $pull: { checklists: note_id } }
+    );
+  }
+  if (!updateInfo || !updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `removeFromGroup: Failed to remove note {'type': '${note_type}', 'id': '${note_id}'}' from group {'id': '${group_id}'}`;
 
   // Also update the note if not deleted
   if (!deleted_note) {
     if (note_type === "quicknote") {
       await quicknotes.removeGroupFromQuicknote(note_id, group_id);
-    } else {
+    } else if (note_type === "marknote") {
       await marknotes.removeGroupFromMarknote(note_id, group_id);
+    } else if (note_type === "checklist") {
+      await checklists.removeGroupFromChecklist(note_id, group_id);
     }
   }
 

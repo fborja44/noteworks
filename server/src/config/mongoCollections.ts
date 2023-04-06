@@ -19,6 +19,7 @@ module.exports = {
   groups: getCollectionFn("groups"),
   quicknotes: getCollectionFn("quicknotes"),
   marknotes: getCollectionFn("marknotes"),
+  checklists: getCollectionFn("checklists"),
 };
 
 export {};

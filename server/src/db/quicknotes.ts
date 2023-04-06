@@ -1,6 +1,6 @@
 import { ColorId, Quicknote } from "note-types";
-import { ObjectId } from "mongodb";
 import { ColorIds } from "../common/colors";
+import { ObjectId } from "mongodb";
 
 const mongoCollections = require("../config/mongoCollections");
 const groups = require("./groups");
@@ -85,14 +85,14 @@ export const updateQuicknoteById = async (
   if (updatedQuicknote.body.length > 300)
     throw "updateQuicknoteById: Body length cannot exceed 300 characters.";
   if (!ColorIds.includes(updatedQuicknote.color))
-    throw `updateQuicknoteById: '${updatedQuicknote.color}' is not a valid hex code`;
+    throw `updateQuicknoteById: '${updatedQuicknote.color}' is not a valid color code`;
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await quicknotesCollection.updateOne(
     { _id: parsed_id },
     { $set: updatedQuicknote }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `updateQuicknoteById: Failed to update quicknote with id '${id}';`;
   return await getQuicknoteById(id.trim());
 };
@@ -151,7 +151,7 @@ export const addGroupToQuicknote = async (
     { _id: parsed_id },
     { $addToSet: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `addGroupToQuicknote: Failed to add group {'id': '${group_id}'}' to note {'type': 'quicknote', 'id': '${note_id}'}`;
   return await getQuicknoteById(note_id.trim());
 };
@@ -173,7 +173,7 @@ export const removeGroupFromQuicknote = async (
     { _id: parsed_id },
     { $pull: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `removeGroupFromQuicknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'quicknote', 'id': '${note_id}'}`;
   return await getQuicknoteById(note_id.trim());
 };

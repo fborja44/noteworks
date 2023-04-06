@@ -1,8 +1,11 @@
+import { Checklist, Group, Marknote, Quicknote } from "note-types";
+
 const dbConnection = require("../config/mongoConnection");
 const data = require("../db/");
 const quicknotes = data.quicknotes;
 const marknotes = data.marknotes;
 const groups = data.groups;
+const checklists = data.checklists;
 
 const chalk = require("chalk");
 
@@ -15,22 +18,30 @@ const main = async () => {
   /* Quicknotes
   ---------------------------------------------------------------------------*/
   // Create
-  
-  let qn1 = await quicknotes.createQuicknote("Note 1", "#fff", "Body 1");
-  let qn2 = await quicknotes.createQuicknote("Note 2", "#000", "Body 2");
+
+  let qn1: Quicknote = await quicknotes.createQuicknote(
+    "Note 1",
+    "red",
+    "Body 1"
+  );
+  let qn2: Quicknote = await quicknotes.createQuicknote(
+    "Note 2",
+    "yellow",
+    "Body 2"
+  );
 
   // Update
 
-  qn1.title = "New Note 1"
-  qn1.body = "New Body 1"
-  qn1.color = "#000"
-  qn1.lastModified =  Date.now()
-  qn1 = await quicknotes.updateQuicknoteById(qn1._id.toString(), qn1)
+  qn1.title = "New Note 1";
+  qn1.body = "New Body 1";
+  qn1.color = "yellow";
+  qn1.lastModified = Date.now();
+  qn1 = await quicknotes.updateQuicknoteById(qn1._id.toString(), qn1);
 
   // Get
 
   let qnget = await quicknotes.getQuicknoteById(qn1._id.toString());
-  console.log(qnget)
+  console.log(qnget);
 
   let qnlist = await quicknotes.getAllQuicknotes();
   console.log(qnlist);
@@ -45,22 +56,26 @@ const main = async () => {
   /* Marknotes
   ---------------------------------------------------------------------------*/
   // Create
-  
-  let mn1 = await marknotes.createMarknote("Note 1", "#fff", "Body 1");
-  let mn2 = await marknotes.createMarknote("Note 2", "#000", "Body 2");
+
+  let mn1: Marknote = await marknotes.createMarknote("Note 1", "red", "Body 1");
+  let mn2: Marknote = await marknotes.createMarknote(
+    "Note 2",
+    "yellow",
+    "Body 2"
+  );
 
   // Update
 
-  mn1.title = "New Note 1"
-  mn1.body = "New Body 1"
-  mn1.color = "#000"
-  mn1.lastModified =  Date.now()
-  mn1 = await marknotes.updateMarknoteById(mn1._id.toString(), mn1)
+  mn1.title = "New Note 1";
+  mn1.body = "New Body 1";
+  mn1.color = "yellow";
+  mn1.lastModified = Date.now();
+  mn1 = await marknotes.updateMarknoteById(mn1._id.toString(), mn1);
 
   // Get
 
   let mnget = await marknotes.getMarknoteById(mn1._id.toString());
-  console.log(mnget)
+  console.log(mnget);
 
   let mnlist = await marknotes.getAllMarknotes();
   console.log(mnlist);
@@ -72,26 +87,85 @@ const main = async () => {
 
   console.log(await marknotes.getAllMarknotes());
 
-  console.log(chalk.yellow("\nDatabase seeding complete."));
+  /* Checklists
+  ---------------------------------------------------------------------------*/
+  // Create
+
+  let checklist1: Checklist = await checklists.createChecklist(
+    "Checklist 1",
+    "red"
+  );
+  let checklist2: Checklist = await checklists.createChecklist(
+    "Checklist 2",
+    "yellow"
+  );
+
+  // Update
+
+  checklist1.title = "New Checklist 1";
+  checklist1.color = "yellow";
+  checklist1.lastModified = Date.now();
+  checklist1 = await checklists.updateChecklistById(
+    checklist1._id.toString(),
+    checklist1
+  );
+
+  // Get
+
+  let checklistget = await checklists.getChecklistById(
+    checklist1._id.toString()
+  );
+  console.log(checklistget);
+
+  let checklistlist = await checklists.getAllChecklists();
+  console.log(checklistlist);
+
+  // Delete
+
+  let checklistdelete = await checklists.deleteChecklistById(
+    checklist1._id.toString()
+  );
+  console.log(checklistdelete);
+
+  console.log(await checklists.getAllChecklists());
+
+  // Add Item
+
+  checklist2 = await checklists.addChecklistItem(
+    checklist2._id.toString(),
+    "Item 1"
+  );
+
+  checklist2 = await checklists.addChecklistItem(
+    checklist2._id.toString(),
+    "Item 2"
+  );
+
+  // Remove Item
+
+  checklist2 = await checklists.removeChecklistItem(
+    checklist2._id.toString(),
+    checklist2.items[0]._id.toString()
+  );
 
   /* Groups
   ---------------------------------------------------------------------------*/
   // Create
-  
-  let group1 = await groups.createGroup("Group 1", "#fff");
-  let group2 = await groups.createGroup("Group 2", "#000");
+
+  let group1: Group = await groups.createGroup("Group 1", "red");
+  let group2: Group = await groups.createGroup("Group 2", "yellow");
 
   // Update
 
-  group1.title = "New Group 1"
-  group1.color = "#000"
-  group1.lastModified =  Date.now()
-  group1 = await groups.updateGroupById(group1._id.toString(), group1)
+  group1.title = "New Group 1";
+  group1.color = "yellow";
+  group1.lastModified = Date.now();
+  group1 = await groups.updateGroupById(group1._id.toString(), group1);
 
   // Get
-  
+
   let groupget = await groups.getGroupById(group1._id.toString());
-  console.log(groupget)
+  console.log(groupget);
 
   let grouplist = await groups.getAllGroups();
   console.log(grouplist);
@@ -105,10 +179,23 @@ const main = async () => {
 
   // Add Note To Group
 
-  let groupadd1 = await groups.addToGroup(group2._id.toString(), qn2._id.toString(), qn2.type)
-  let groupadd2 = await groups.addToGroup(group2._id.toString(), mn2._id.toString(), mn2.type)
+  let groupadd1 = await groups.addToGroup(
+    group2._id.toString(),
+    qn2._id.toString(),
+    qn2.type
+  );
+  let groupadd2 = await groups.addToGroup(
+    group2._id.toString(),
+    mn2._id.toString(),
+    mn2.type
+  );
+  let groupadd3 = await groups.addToGroup(
+    group2._id.toString(),
+    checklist2._id.toString(),
+    checklist2.type
+  );
 
-  console.log(await groups.getGroupById(group2._id.toString()))
+  console.log(await groups.getGroupById(group2._id.toString()));
   console.log(await quicknotes.getAllQuicknotes());
   console.log(await marknotes.getAllMarknotes());
 
@@ -142,8 +229,6 @@ const main = async () => {
 
   console.log(chalk.yellow("\nDatabase seeding complete."));
 };
-
-
 
 main().catch((e) => {
   console.error(e);

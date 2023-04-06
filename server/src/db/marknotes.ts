@@ -77,14 +77,14 @@ export const updateMarknoteById = async (
   updatedMarknote: Marknote
 ) => {
   if (!ColorIds.includes(updatedMarknote.color))
-    throw `updateMarknote: '${updatedMarknote.color}' is not a valid hex code`;
+    throw `updateMarknote: '${updatedMarknote.color}' is not a valid color code`;
   const marknotesCollection = await marknotes();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await marknotesCollection.updateOne(
     { _id: parsed_id },
     { $set: updatedMarknote }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw "updateMarknoteById: Failed to update marknote";
   return await getMarknoteById(id.trim());
 };
@@ -140,7 +140,7 @@ export const addGroupToMarknote = async (note_id: string, group_id: string) => {
     { _id: parsed_id },
     { $addToSet: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `addGroupToMarknote: Failed to add group {'id': '${group_id}'}' to note {'type': 'marknote', 'id': '${note_id}'}`;
   return await getMarknoteById(note_id.trim());
 };
@@ -162,7 +162,7 @@ export const removeGroupFromMarknote = async (
     { _id: parsed_id },
     { $pull: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `removeGroupFromMarknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'marknote', 'id': '${note_id}'}`;
   return await getMarknoteById(note_id.trim());
 };
