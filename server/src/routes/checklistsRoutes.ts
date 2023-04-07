@@ -40,7 +40,6 @@ router.get("/:id", async (req: any, res: any) => {
 router.post("/", async (req: any, res: any) => {
   let title = req.body.title;
   let color = req.body.color;
-  let body = req.body.body;
 
   if (!title) {
     title = "";
@@ -48,17 +47,9 @@ router.post("/", async (req: any, res: any) => {
   if (!color) {
     color = "grey";
   }
-  if (!body) {
-    body = "";
-  }
   if (title.length > 30) {
     return res.status(400).json({
       error: "Title length cannot exceed 30 characters",
-    });
-  }
-  if (body.length > 300) {
-    return res.status(400).json({
-      error: "Body length cannot exceed 300 characters",
     });
   }
   if (!ColorIds.includes(color)) {
@@ -68,11 +59,7 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
-    let new_checklist = await checklistsData.createChecklist(
-      title,
-      color,
-      body
-    );
+    let new_checklist = await checklistsData.createChecklist(title, color);
     return res.status(200).json(new_checklist);
   } catch (e: any) {
     return res.status(500).json({
@@ -174,6 +161,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
         id.trim(),
         groupId.trim()
       );
+      return res.status(200).json(checklist);
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to remove group from checklist.",
@@ -186,6 +174,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
         id.trim(),
         groupId.trim()
       );
+      return res.status(200).json(checklist);
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to add group to checklist.",
@@ -230,3 +219,82 @@ router.delete("/:id", async (req: any, res: any) => {
 });
 
 module.exports = router;
+
+/**
+ * [POST /checklists/:id/item]
+ */
+router.post("/:id/item", async (req: any, res: any) => {
+  const id = req.params.id;
+
+  // Check if checklist exists
+  let checklist;
+  try {
+    checklist = await checklistsData.getChecklistById(id.trim());
+    if (!checklist) {
+      return res.status(400).json({
+        error: `Checklist with id ${id.trim()} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to fetch checklist.",
+      message: e.toString(),
+    });
+  }
+
+  checklist.lastModified = Date.now();
+
+  // Add item to checklist
+  try {
+    let updated_checklist = await checklistsData.addChecklistItem(
+      id.trim(),
+      ""
+    );
+    return res.status(200).json(updated_checklist);
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to add new item to checklist.",
+      message: e.toString(),
+    });
+  }
+});
+
+/**
+ * [DELETE /checklists/:id/item/:item_id]
+ */
+router.delete("/:id/item/:item_id", async (req: any, res: any) => {
+  const id = req.params.id;
+  const item_id = req.params.item_id;
+
+  // Check if checklist exists
+  let checklist;
+  try {
+    checklist = await checklistsData.getChecklistById(id.trim());
+    if (!checklist) {
+      return res.status(400).json({
+        error: `Checklist with id ${id.trim()} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to fetch checklist.",
+      message: e.toString(),
+    });
+  }
+
+  checklist.lastModified = Date.now();
+
+  // Delete item in checklist
+  try {
+    let delete_status = await checklistsData.removeChecklistItem(
+      id.trim(),
+      item_id.trim()
+    );
+    return res.status(200).json({ success: delete_status });
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to remove item from checklist.",
+      message: e.toString(),
+    });
+  }
+});

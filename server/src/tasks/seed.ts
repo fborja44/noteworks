@@ -143,61 +143,69 @@ const main = async () => {
 
   // Remove Item
 
-  checklist2 = await checklists.removeChecklistItem(
+  // checklist2 = await checklists.removeChecklistItem(
+  //   checklist2._id.toString(),
+  //   checklist2.items[0]._id.toString()
+  // );
+
+  // Get Item
+
+  let checklist_item1 = await checklists.getChecklistItemById(
     checklist2._id.toString(),
     checklist2.items[0]._id.toString()
   );
+  console.log(checklist_item1);
 
   /* Groups
   ---------------------------------------------------------------------------*/
-  // Create
+  // // Create
 
-  let group1: Group = await groups.createGroup("Group 1", "red");
-  let group2: Group = await groups.createGroup("Group 2", "yellow");
+  // let group1: Group = await groups.createGroup("Group 1", "red");
+  // let group2: Group = await groups.createGroup("Group 2", "yellow");
 
-  // Update
+  // // Update
 
-  group1.title = "New Group 1";
-  group1.color = "yellow";
-  group1.lastModified = Date.now();
-  group1 = await groups.updateGroupById(group1._id.toString(), group1);
+  // group1.title = "New Group 1";
+  // group1.color = "yellow";
+  // group1.lastModified = Date.now();
+  // group1 = await groups.updateGroupById(group1._id.toString(), group1);
 
-  // Get
+  // // Get
 
-  let groupget = await groups.getGroupById(group1._id.toString());
-  console.log(groupget);
+  // let groupget = await groups.getGroupById(group1._id.toString());
+  // console.log(groupget);
 
-  let grouplist = await groups.getAllGroups();
-  console.log(grouplist);
+  // let grouplist = await groups.getAllGroups();
+  // console.log(grouplist);
 
-  // Delete
+  // // Delete
 
-  let groupdelete = await groups.deleteGroupById(group1._id.toString());
-  console.log(groupdelete);
+  // let groupdelete = await groups.deleteGroupById(group1._id.toString());
+  // console.log(groupdelete);
 
-  console.log(await groups.getAllGroups());
+  // console.log(await groups.getAllGroups());
 
-  // Add Note To Group
+  // // Add Note To Group
 
-  let groupadd1 = await groups.addToGroup(
-    group2._id.toString(),
-    qn2._id.toString(),
-    qn2.type
-  );
-  let groupadd2 = await groups.addToGroup(
-    group2._id.toString(),
-    mn2._id.toString(),
-    mn2.type
-  );
-  let groupadd3 = await groups.addToGroup(
-    group2._id.toString(),
-    checklist2._id.toString(),
-    checklist2.type
-  );
+  // let groupadd1 = await groups.addToGroup(
+  //   group2._id.toString(),
+  //   qn2._id.toString(),
+  //   qn2.type
+  // );
+  // let groupadd2 = await groups.addToGroup(
+  //   group2._id.toString(),
+  //   mn2._id.toString(),
+  //   mn2.type
+  // );
+  // let groupadd3 = await groups.addToGroup(
+  //   group2._id.toString(),
+  //   checklist2._id.toString(),
+  //   checklist2.type
+  // );
 
-  console.log(await groups.getGroupById(group2._id.toString()));
-  console.log(await quicknotes.getAllQuicknotes());
-  console.log(await marknotes.getAllMarknotes());
+  // console.log(await groups.getGroupById(group2._id.toString()));
+  // console.log(await quicknotes.getAllQuicknotes());
+  // console.log(await marknotes.getAllMarknotes());
 
   // Delete group with notes added to it
 

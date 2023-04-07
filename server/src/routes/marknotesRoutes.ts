@@ -159,6 +159,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
         id.trim(),
         groupId.trim()
       );
+      return res.status(200).json(marknote);
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to remove group from marknote.",
@@ -171,6 +172,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
         id.trim(),
         groupId.trim()
       );
+      return res.status(200).json(marknote);
     } catch (e: any) {
       return res.status(500).json({
         error: "Failed to add group to marknote.",
