@@ -1,48 +1,108 @@
-/* Settings Content Component
+/* Checklists Page Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
+import { Route, Switch, useHistory } from "react-router-dom";
+
+// Redux imports
+import { useSelector, useDispatch } from "react-redux";
+import { handleCreateChecklist } from "../../utils/checklists";
+import { handleCreateGroup } from "../../utils/groups";
+
+// Common imports
+import { Checklist } from "../../common/types";
+
 // Component imports
 import PageHeader from "../pageheader/PageHeader";
-import { Empty } from "../Section";
-import WrenchScrewdriverIcon from "../icons/WrenchScrewdriverIcon";
+import Section from "../Section";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
+import GroupList from "../groups/GroupList";
+import ChecklistList from "./ChecklistsList";
+import PageHeaderButton from "../pageheader/PageHeaderButton";
 
-export interface SettingsPageProps {}
+// Image and icon imports
+import PlusIcon from "../icons/PlusIcon";
+import FolderPlusIcon from "../icons/FolderPlusIcon";
+import HelpIcon from "../icons/HelpIcon";
+import SingleChecklistPage from "./SingleChecklistPage";
 
-const SettingsPage: React.FC<SettingsPageProps> = () => {
+export interface ChecklistsPageProps {}
+
+const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
+  // Dispatch hook
+  const dispatch = useDispatch();
+
+  // History hook
+  const history = useHistory();
+
+  // Checklists Help Menu State
+  const [showChecklistHelp, setShowChecklistHelp] = useState(false);
+  const openChecklistHelp = () => {
+    setShowChecklistHelp((prev) => !prev);
+  };
+
+  // Checklists State
+  const checklistsState: Checklist[] = useSelector(
+    (state: any) => state.checklistsState
+  );
+
+  /**
+   * State for checklists filter text
+   */
+  const [ChecklistFilterText, setChecklistFilterText] = useState("");
+
   return (
-    <React.Fragment>
-      <PageHeader title="Checklists" icon={<DocumentCheckIcon />} />
-      <div className="main-content-wrapper">
-        <div
-          css={css`
-            width: 100%;
-            height: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            svg {
-              width: 50px;
-              height: 50px;
-              margin-top: 1.5em;
-            }
-          `}
+    <Switch>
+      <Route exact path="/checklists">
+        <PageHeader
+          title="Checklists"
+          icon={<DocumentCheckIcon />}
+          setFilterText={setChecklistFilterText}
         >
-          <Empty>
-            <p>This feature is not ready yet!</p>
-            <WrenchScrewdriverIcon />
-          </Empty>
+          <PageHeaderButton
+            title={"New Checklist"}
+            onClick={() => handleCreateChecklist(dispatch, history)}
+          >
+            <PlusIcon />
+          </PageHeaderButton>
+          <PageHeaderButton
+            title="New Group"
+            onClick={() => handleCreateGroup(dispatch)}
+          >
+            <FolderPlusIcon />
+          </PageHeaderButton>
+          <PageHeaderButton title={"Help"} onClick={openChecklistHelp}>
+            <HelpIcon />
+          </PageHeaderButton>
+        </PageHeader>
+        <div className="main-content-wrapper">
+          <Section
+            name="Groups"
+            handleClick={() => handleCreateGroup(dispatch)}
+          >
+            <GroupList />
+          </Section>
+          <Section
+            name="My Checklists"
+            handleClick={() => handleCreateChecklist(dispatch, history)}
+          >
+            <ChecklistList ChecklistFilterText={ChecklistFilterText} />
+          </Section>
         </div>
-      </div>
-    </React.Fragment>
+      </Route>
+      {/** Routes for Editors */}
+      {checklistsState.map((checklist) => (
+        <Route key={checklist._id} path={`/checklists/${checklist._id}`}>
+          <SingleChecklistPage activeChecklist={checklist} />
+        </Route>
+      ))}
+    </Switch>
   );
 };
 
-export default SettingsPage;
+export default ChecklistsPage;

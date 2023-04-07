@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 
 // Common imports
-import { Quicknote, Marknote, Group } from "../../common/types";
+import { Quicknote, Marknote, Group, Checklist } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component Imports
@@ -19,6 +19,7 @@ import TrashIcon from "../icons/TrashIcon";
 import { handleDeleteMarknote } from "../../utils/marknotes";
 import { handleDeleteQuicknote } from "../../utils/quicknotes";
 import { handleDeleteGroup } from "../../utils/groups";
+import { handleDeleteChecklist } from "../../utils/checklists";
 import { enqueueSnackbar } from "notistack";
 
 const MenuContent = styled.div`
@@ -56,7 +57,7 @@ const DeleteButton = styled.button`
 `;
 
 export interface ConfirmDeleteProps {
-  item: Quicknote | Marknote | Group;
+  item: Quicknote | Marknote | Checklist | Group;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
   toggleConfirmDelete: (event: any) => void;
@@ -99,6 +100,8 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
                 handleDeleteMarknote(dispatch, item._id);
               } else if (item.type === "group") {
                 handleDeleteGroup(dispatch, item._id);
+              } else if (item.type === "checklist") {
+                handleDeleteChecklist(dispatch, item._id);
               } else {
                 return;
               }

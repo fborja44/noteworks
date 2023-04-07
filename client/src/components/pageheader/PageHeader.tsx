@@ -9,7 +9,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Group, Marknote } from "../../common/types";
+import { Checklist, Group, Marknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -170,7 +170,7 @@ export interface PageHeaderProps {
   icon?: React.ReactNode;
   saved?: boolean;
   setFilterText?: React.Dispatch<React.SetStateAction<string>>;
-  item?: Marknote | Group;
+  item?: Marknote | Checklist | Group;
   handleEditField?: (key: string, value: string | Boolean) => void;
 }
 
@@ -193,7 +193,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             css={[
               PageHeaderIconStyles,
               css`
-                color: ${color};
+                color: ${!item ? color : COLOR[item.color].primary};
               `,
             ]}
           >

@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 
 // Common imports
-import { Group, Marknote, Quicknote } from "../../common/types";
+import { Checklist, Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import NoteButton from "./NoteButton";
@@ -18,8 +18,8 @@ import DropdownMenu from "../dropdown/DropdownMenu";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
 
 export interface MenuButtonProps {
-  item: Quicknote | Marknote | Group;
-  toggleGroupMenu:
+  item: Quicknote | Marknote | Checklist | Group;
+  toggleGroupMenu?:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:

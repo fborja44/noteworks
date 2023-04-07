@@ -3,7 +3,7 @@ import { AnyAction } from "redux";
 
 const initialState: Quicknote[] = [];
 
-const configReducer = (state = initialState, action: AnyAction) => {
+const quicknotesReducer = (state = initialState, action: AnyAction) => {
   const { type, payload } = action;
   switch (type) {
     case "SET_QUICKNOTES":
@@ -34,4 +34,4 @@ const configReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export default configReducer;
+export default quicknotesReducer;

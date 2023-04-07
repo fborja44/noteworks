@@ -9,7 +9,7 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Common imports
-import { Group, Marknote, Quicknote } from "../../common/types";
+import { Checklist, Group, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import DropdownItem from "./DropdownItem";
@@ -55,10 +55,10 @@ const Menu = styled.div`
 `;
 
 export interface DropdownMenuProps {
-  item: Quicknote | Marknote | Group;
+  item: Quicknote | Marknote | Checklist | Group;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleGroupMenu:
+  toggleGroupMenu?:
     | (() => void)
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   toggleColorMenu:
@@ -111,7 +111,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         `}
       >
         <Menu>
-          {item.type !== "group" && (
+          {item.type !== "group" && toggleGroupMenu && (
             <DropdownItem
               setOpen={setOpen}
               icon={<FolderOpenIcon filled />}
@@ -127,7 +127,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           >
             Change Color
           </DropdownItem>
-          <div css={css`height: 28px;`} />
+          <div
+            css={css`
+              height: 28px;
+            `}
+          />
           <DropdownItem
             setOpen={setOpen}
             icon={<TrashIcon filled />}

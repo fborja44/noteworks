@@ -49,7 +49,7 @@ const GroupContent = styled.div`
   color: inherit;
   justify-content: space-between;
   height: 100%;
-  padding: 0.2em 0.5rem;
+  padding: 0.2em 0.75rem;
   position: relative;
 `;
 
@@ -105,16 +105,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
   };
 
   const appTheme = useTheme();
-
-  // Quicknote Group Menu state
-  const [, setShowGroupMenu] = useState(false);
-
-  /**
-   * Function to toggle the confirm delete menu
-   */
-  const toggleGroupMenu = () => {
-    setShowGroupMenu((prev) => !prev);
-  };
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -186,7 +176,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
           <GroupContentSection>
             <MenuButton
               item={groupComponent}
-              toggleGroupMenu={toggleGroupMenu}
               toggleColorMenu={toggleColorMenu}
               toggleConfirmDelete={toggleConfirmDelete}
             />

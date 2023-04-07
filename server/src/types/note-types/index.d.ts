@@ -1,6 +1,6 @@
 declare module "note-types" {
   export type Quicknote = {
-    type: string;
+    type: "quicknote";
     _id: ObjectId;
     title: string;
     color: ColorId;
@@ -11,7 +11,7 @@ declare module "note-types" {
   };
 
   export type Marknote = {
-    type: string;
+    type: "marknote";
     _id: ObjectId;
     title: string;
     color: ColorId;
@@ -22,7 +22,7 @@ declare module "note-types" {
   };
 
   export type Group = {
-    type: string;
+    type: "group";
     _id: ObjectId;
     title: string;
     color: ColorId;
@@ -34,7 +34,7 @@ declare module "note-types" {
   };
 
   export type Checklist = {
-    type: string;
+    type: "checklist";
     _id: ObjectId;
     title: string;
     color: ColorId;

@@ -1,4 +1,4 @@
-import { Quicknote, Marknote, Group } from "../common/types";
+import { Quicknote, Marknote, Group, Checklist } from "../common/types";
 
 /* Search Term
 /***********************************/
@@ -58,6 +58,28 @@ const deleteMarknote = (marknoteId: string) => ({
   payload: marknoteId,
 });
 
+/* Checklists
+/***********************************/
+const setChecklists = (marknotes: Checklist[]) => ({
+  type: "SET_CHECKLISTS",
+  payload: marknotes,
+});
+
+const createChecklist = (newChecklist: Checklist) => ({
+  type: "CREATE_CHECKLIST",
+  payload: newChecklist,
+});
+
+const updateChecklist = (updatedChecklist: Checklist) => ({
+  type: "UPDATE_CHECKLIST",
+  payload: updatedChecklist,
+});
+
+const deleteChecklist = (marknoteId: string) => ({
+  type: "DELETE_CHECKLIST",
+  payload: marknoteId,
+});
+
 /* Groups
 /***********************************/
 const setGroups = (groups: Group[]) => ({
@@ -103,6 +125,10 @@ export {
   updateMarknote,
   createMarknote,
   deleteMarknote,
+  setChecklists,
+  updateChecklist,
+  createChecklist,
+  deleteChecklist,
   setGroups,
   createGroup,
   updateGroup,

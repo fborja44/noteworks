@@ -3,7 +3,7 @@ import { AnyAction } from "redux";
 
 const initialState: Group[] = [];
 
-const configReducer = (state = initialState, action: AnyAction) => {
+const groupsReducer = (state = initialState, action: AnyAction) => {
   const { type, payload } = action;
   switch (type) {
     case "SET_GROUPS":
@@ -29,4 +29,4 @@ const configReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export default configReducer;
+export default groupsReducer;

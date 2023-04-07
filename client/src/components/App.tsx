@@ -38,6 +38,7 @@ import ChecklistsPage from "./checklists/ChecklistsPage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
+import { fetchChecklists } from "../utils/checklists";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
@@ -61,6 +62,7 @@ const App = () => {
     fetchQuicknotes(dispatch);
     fetchMarknotes(dispatch);
     fetchGroups(dispatch);
+    fetchChecklists(dispatch);
   }, []); // Run on load
 
   // Groups State

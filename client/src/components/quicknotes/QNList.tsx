@@ -97,7 +97,7 @@ const QNList: React.FC<QNListProps> = ({
 
   const favoritesEmpty = (
     <Empty>
-      <p>{`You have no favorited marknotes.`}</p>
+      <p>{`You have no favorited quicknotes.`}</p>
     </Empty>
   );
 

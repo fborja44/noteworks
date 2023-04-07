@@ -24,6 +24,23 @@ export type Marknote = {
   groups: string[];
 };
 
+export type Checklist = {
+  _id: string;
+  type: "checklist";
+  title: string;
+  color: ColorId;
+  items: ChecklistItem[];
+  lastModified: number;
+  favorited: boolean;
+  groups: string[];
+};
+
+export type ChecklistItem = {
+  _id: string;
+  content: string;
+  checked: boolean;
+};
+
 export type Group = {
   _id: string;
   type: "group";
