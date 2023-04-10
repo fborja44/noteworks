@@ -30,7 +30,7 @@ router.get("/:id", async (req: any, res: any) => {
   } catch (e) {
     return res
       .status(500)
-      .json({ error: "Failed to fetch checklists from database." });
+      .json({ error: "Failed to fetch checklist from database." });
   }
 });
 
@@ -218,7 +218,45 @@ router.delete("/:id", async (req: any, res: any) => {
   }
 });
 
-module.exports = router;
+/**
+ * [GET /checklists/:id/item/:item_id]
+ */
+router.get("/:id/item/:item_id", async (req: any, res: any) => {
+  const id = req.params.id;
+  const item_id = req.params.item_id;
+
+  // Check if checklist exists
+  let checklist;
+  try {
+    checklist = await checklistsData.getChecklistById(id.trim());
+    if (!checklist) {
+      return res.status(400).json({
+        error: `Checklist with id ${id.trim()} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to fetch checklist.",
+      message: e.toString(),
+    });
+  }
+
+  // Fetch item from checklist
+  try {
+    let checklistItem = await checklistsData.getChecklistItemById(
+      id.trim(),
+      item_id.trim()
+    );
+    return res.status(200).json(checklistItem);
+  } catch (e: any) {
+    return res
+      .status(500)
+      .json({
+        error: "Failed to fetch checklist item from database.",
+        message: e.toString(),
+      });
+  }
+});
 
 /**
  * [POST /checklists/:id/item]
@@ -254,6 +292,63 @@ router.post("/:id/item", async (req: any, res: any) => {
   } catch (e: any) {
     return res.status(500).json({
       error: "Failed to add new item to checklist.",
+      message: e.toString(),
+    });
+  }
+});
+
+/**
+ * [PATCH /checklists/:id/item/:item_id]
+ */
+router.patch("/:id/item/:item_id", async (req: any, res: any) => {
+  const id = req.params.id;
+  const item_id = req.params.item_id;
+  const content = req.body.content;
+  const checked = req.body.checked;
+
+  if (typeof checked !== "boolean" && typeof checked !== "undefined") {
+    return res.status(400).json({
+      error: `Item status '${checked}' is not a valid boolean.`,
+    });
+  }
+
+  // Check if checklist item exists
+  let checklistItem;
+  try {
+    checklistItem = await checklistsData.getChecklistItemById(
+      id.trim(),
+      item_id.trim()
+    );
+    if (!checklistItem) {
+      return res.status(400).json({
+        error: `Checklist item with id ${item_id.trim()} in checklist with id ${id} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to fetch checklist item from database.",
+      message: e.toString(),
+    });
+  }
+
+  if (content != null) {
+    checklistItem.content = content;
+  }
+  if (checked != null) {
+    checklistItem.checked = checked;
+  }
+  checklistItem.lastModified = Date.now();
+
+  // Update the checklist
+  try {
+    let updated_checklist = await checklistsData.updateChecklistItemById(
+      id.trim(),
+      checklistItem
+    );
+    return res.status(200).json(updated_checklist);
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to update checklist item.",
       message: e.toString(),
     });
   }
@@ -298,3 +393,5 @@ router.delete("/:id/item/:item_id", async (req: any, res: any) => {
     });
   }
 });
+
+module.exports = router;

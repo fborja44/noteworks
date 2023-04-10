@@ -170,6 +170,32 @@ export const removeGroupFromChecklist = async (
 };
 
 /**
+ * Returns a single checklist by its id.
+ * @param checklist_id Target checklist id.
+ * @param item_id Target checklist item id.
+ * @returns The checklist object if found. Otherwise, null.
+ */
+export const getChecklistItemById = async (
+  checklist_id: string,
+  item_id: string
+) => {
+  const parsed_id = new ObjectId(checklist_id.trim());
+  const checklistsCollection = await checklists();
+
+  const checklist = await checklistsCollection.findOne({ _id: parsed_id });
+  if (!checklist)
+    throw `getChecklistItemById: Failed to get checklist with id '${checklist_id}'.`;
+
+  // Find checklist item
+  for (const item of checklist.items) {
+    if (item._id.toString() === item_id) {
+      return item;
+    }
+  }
+  throw `getChecklistItemById: Failed to get checklist item with id '${item_id}' from checklist with id '${checklist_id}'.`;
+};
+
+/**
  * Adds a new item to a checklist.
  * @param checklist_id The target checklist id.
  * @param content The content of the new checklist item.
@@ -215,5 +241,30 @@ export const removeChecklistItem = async (
   );
   if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `removeChecklistItem: Failed to remove item {'id': '${item_id}'}' from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
+  return await getChecklistById(checklist_id.trim());
+};
+
+/**
+ * Updates a checklist item in a checklist.
+ * @param checklist_id The target checklist id.
+ * @param updatedItem The target item id.
+ * @returns The updated checklist if usccessful. Otherwise, throws an error.
+ */
+export const updateChecklistItemById = async (
+  checklist_id: string,
+  updatedItem: ChecklistItem
+) => {
+  if (typeof updatedItem.checked !== "boolean")
+    throw "updateChecklistItemById: Checklist item checked status must be a boolean.";
+  updatedItem._id = updatedItem._id.toString();
+  const checklistsCollection = await checklists();
+  const parsed_id = new ObjectId(checklist_id.trim());
+  const parsed_item_id = new ObjectId(updatedItem._id.trim());
+  const updateInfo = await checklistsCollection.updateOne(
+    { _id: parsed_id, "items._id": parsed_item_id },
+    { $set: { "items.$": updatedItem } }
+  );
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+    throw `updateChecklistById: Failed to update item {'id': '${updatedItem._id}'}' in checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
