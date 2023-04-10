@@ -12,7 +12,7 @@ const quicknotesReducer = (state = initialState, action: AnyAction) => {
     case "CREATE_QUICKNOTE":
       const newQuicknote: Quicknote = payload;
       return [...state, newQuicknote];
-    case "UPDATE_QUICKNOTES":
+    case "UPDATE_QUICKNOTES": // Updates a list of updated quicknotes
       const updatedQuicknotes = payload;
       const filteredQuicknotes: Quicknote[] = state.filter((note) => {
         for (const updatedNote of updatedQuicknotes) {

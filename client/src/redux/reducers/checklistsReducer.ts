@@ -12,17 +12,14 @@ const checklistsReducer = (state = initialState, action: AnyAction) => {
     case "CREATE_CHECKLIST":
       const newChecklist: Checklist = payload;
       return [...state, newChecklist];
-    case "UPDATE_CHECKLISTS":
-      const updatedChecklists = payload;
-      const filteredChecklists: Checklist[] = state.filter((note) => {
-        for (const updatedNote of updatedChecklists) {
-          if (note._id === updatedNote._id) {
-            return false;
-          }
-        }
-        return true;
+    case "UPDATE_CHECKLIST":
+      const updatedChecklist: Checklist = payload;
+      const updatedChecklistsState = state.map((checklist: Checklist) => {
+        return checklist._id === updatedChecklist._id
+          ? updatedChecklist
+          : checklist;
       });
-      return [...updatedChecklists, ...filteredChecklists];
+      return updatedChecklistsState;
     case "DELETE_CHECKLIST":
       const checklistId: string = payload;
       const deletedChecklistsState = state.filter(

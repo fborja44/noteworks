@@ -77,6 +77,7 @@ router.patch("/:id", async (req: any, res: any) => {
   const title = req.body.title;
   const color = req.body.color;
   const favorited = req.body.favorited;
+  const items = req.body.items;
 
   if (title && title.length > 30) {
     return res.status(400).json({
@@ -86,6 +87,23 @@ router.patch("/:id", async (req: any, res: any) => {
   if (color && !ColorIds.includes(color)) {
     return res.status(400).json({
       error: `'${color}' is not a valid hex code`,
+    });
+  }
+  if (items && Array.isArray(items)) {
+    // Check all items to see if valid
+    for (const item of items) {
+      if (!item._id || item.checked === undefined || item.content === undefined)
+        return res.status(400).json({
+          error: `Checklist item {'item_id': '${item._id}'} is missing required fields.`,
+        });
+      if (typeof item.checked !== "boolean")
+        return res.status(400).json({
+          error: `Checklist item {'item_id': '${item._id}'} checked status must be a boolean.`,
+        });
+    }
+  } else {
+    return res.status(400).json({
+      error: `Items field is not a valid array.`,
     });
   }
 
@@ -113,6 +131,9 @@ router.patch("/:id", async (req: any, res: any) => {
   }
   if (favorited != null) {
     checklist.favorited = favorited;
+  }
+  if (items != null) {
+    checklist.items = items;
   }
   checklist.lastModified = Date.now();
 
@@ -249,12 +270,10 @@ router.get("/:id/item/:item_id", async (req: any, res: any) => {
     );
     return res.status(200).json(checklistItem);
   } catch (e: any) {
-    return res
-      .status(500)
-      .json({
-        error: "Failed to fetch checklist item from database.",
-        message: e.toString(),
-      });
+    return res.status(500).json({
+      error: "Failed to fetch checklist item from database.",
+      message: e.toString(),
+    });
   }
 });
 
@@ -337,7 +356,6 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   if (checked != null) {
     checklistItem.checked = checked;
   }
-  checklistItem.lastModified = Date.now();
 
   // Update the checklist
   try {

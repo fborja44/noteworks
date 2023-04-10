@@ -4,6 +4,7 @@ import quicknotesReducer from "./quicknotesReducer";
 import marknotesReducer from "./marknotesReducer";
 import groupsReducer from "./groupsReducer";
 import unsavedNotesReducer from "./unsavedNotesReducer";
+import unsavedItemsReducer from "./unsavedItemsReducer";
 import selectedTabReducer from "./selectedTabReducer";
 import checklistsReducer from "./checklistsReducer";
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   marknotesState: marknotesReducer,
   groupsState: groupsReducer,
   unsavedNotesState: unsavedNotesReducer,
+  unsavedItemsState: unsavedItemsReducer,
   checklistsState: checklistsReducer,
 });
 

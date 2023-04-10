@@ -1,4 +1,10 @@
-import { Quicknote, Marknote, Group, Checklist } from "../common/types";
+import {
+  Quicknote,
+  Marknote,
+  Group,
+  Checklist,
+  ChecklistItem,
+} from "../common/types";
 
 /* Search Term
 /***********************************/
@@ -114,6 +120,18 @@ const addUnsavedNote = (updatedNote: Quicknote) => ({
   payload: updatedNote,
 });
 
+/* unsavedItems
+/***********************************/
+const setUnsavedItems = (newUnsavedItems: ChecklistItem[]) => ({
+  type: "SET_UNSAVED_ITEMS",
+  payload: newUnsavedItems,
+});
+
+const addUnsavedItem = (updatedItem: ChecklistItem) => ({
+  type: "ADD_UNSAVED_ITEM",
+  payload: updatedItem,
+});
+
 export {
   setSearchTerm,
   setSelectedTab,
@@ -135,4 +153,6 @@ export {
   deleteGroup,
   setUnsavedNotes,
   addUnsavedNote,
+  setUnsavedItems,
+  addUnsavedItem,
 };

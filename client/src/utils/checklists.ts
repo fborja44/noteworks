@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
-import { Checklist } from "../common/types";
+import { Checklist, ChecklistItem } from "../common/types";
 import {
   createChecklist,
   deleteChecklist,
@@ -142,6 +142,30 @@ const handleDeleteChecklistItem = async (
   }
 };
 
+/**
+ * Updates a checklist item in the specified checklist.
+ * @param checklist_id The target checklist.
+ * @param updatedChecklistItem The checklist item to update.
+ * @returns The updated checklist.
+ */
+const handleUpdateChecklistItem = async (
+  dispatch: Dispatch<AnyAction>,
+  checklist_id: string,
+  updatedChecklistItem: ChecklistItem
+) => {
+  try {
+    const { data: updatedChecklist } = await axios({
+      baseURL: BASE_ADDR,
+      url: `/checklists/${checklist_id}/item/${updatedChecklistItem._id}`,
+      method: "PATCH",
+      data: updatedChecklistItem,
+    });
+    dispatch(updateChecklist(updatedChecklist));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   fetchChecklists,
   handleCreateChecklist,
@@ -149,4 +173,5 @@ export {
   handleDeleteChecklist,
   handleAddChecklistItem,
   handleDeleteChecklistItem,
+  handleUpdateChecklistItem,
 };

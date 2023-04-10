@@ -57,4 +57,5 @@ export interface HeroIconProps {
   filled?: boolean;
   id?: string;
   css?: any;
+  strokeWidth?: number;
 }

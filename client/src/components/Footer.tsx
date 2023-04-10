@@ -14,6 +14,7 @@ import { enqueueSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
 import { fetchQuicknotes } from "../utils/quicknotes";
 import { fetchMarknotes } from "../utils/marknotes";
+import { fetchChecklists } from "../utils/checklists";
 import { fetchGroups } from "../utils/groups";
 
 // Image and icon imports
@@ -93,6 +94,7 @@ const Footer = () => {
       await fetchQuicknotes(dispatch);
       await fetchMarknotes(dispatch);
       await fetchGroups(dispatch);
+      await fetchChecklists(dispatch);
       enqueueSnackbar("Notes have been refreshed.", { variant: "success" });
     } catch (e: any) {
       console.log(e.toString());

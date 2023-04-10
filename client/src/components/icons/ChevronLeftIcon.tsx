@@ -1,12 +1,12 @@
 import { HeroIconProps } from "../../common/types";
 
-const ChevronLeftIcon = ({ className, filled }: HeroIconProps) => {
+const ChevronLeftIcon = ({ className, filled, strokeWidth }: HeroIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={strokeWidth}
       stroke="currentColor"
       className={className}
     >
@@ -17,6 +17,10 @@ const ChevronLeftIcon = ({ className, filled }: HeroIconProps) => {
       />
     </svg>
   );
+};
+
+ChevronLeftIcon.defaultProps = {
+  strokeWidth: 1.5,
 };
 
 export default ChevronLeftIcon;

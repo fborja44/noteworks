@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
 
 // Redux imports
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleAddChecklistItem,
   handleUpdateChecklist,
@@ -22,6 +22,7 @@ import { Checklist, ChecklistItem } from "../../common/types";
 import { COLOR, ColorId, NoteColor } from "../../common/color";
 
 // Component imports
+import ChecklistItemComponent from "./ChecklistItemComponent";
 import PageHeader from "../pageheader/PageHeader";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -34,8 +35,6 @@ import PencilSquareIcon from "../icons/PencilSquareIcon";
 import TrashIcon from "../icons/TrashIcon";
 import StarIcon from "../icons/StarIcon";
 import PlusIcon from "../icons/PlusIcon";
-import ChevronUpIcon from "../icons/ChevronUpIcon";
-import ChevronDownIcon from "../icons/ChevronDownIcon";
 
 const ChecklistList = styled.ul`
   width: fit-content;
@@ -58,9 +57,16 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
   const history = useHistory();
 
   /**
+   * Unsaved items
+   */
+  const unsavedItemsState = useSelector(
+    (state: any) => state.unsavedItemsState
+  );
+
+  /**
    * State for current checklist info
    */
-  const [checklist, setChecklist] = useState(activeChecklist);
+  const [checklistState, setChecklistState] = useState(activeChecklist);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -107,25 +113,28 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
     let updatedChecklist;
     if (updateDate) {
       updatedChecklist = {
-        ...checklist,
+        ...checklistState,
         [key]: value,
         lastModified: Date.now(),
       };
     } else {
       updatedChecklist = {
-        ...checklist,
+        ...checklistState,
         [key]: value,
       };
     }
-    setChecklist(updatedChecklist);
+    setChecklistState(updatedChecklist);
   };
 
   /**
    * Adds a new item to the checklist.
    */
   const handleAddItem = async () => {
-    const updatedChecklist = await handleAddChecklistItem(dispatch, checklist);
-    setChecklist(updatedChecklist);
+    const updatedChecklist = await handleAddChecklistItem(
+      dispatch,
+      checklistState
+    );
+    setChecklistState(updatedChecklist);
   };
 
   /**
@@ -133,7 +142,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateChecklist(dispatch, checklist);
+      handleUpdateChecklist(dispatch, checklistState);
       setSaved(true);
     }, 2000);
 
@@ -141,12 +150,12 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [checklist]);
+  }, [checklistState]);
 
   return (
     <React.Fragment>
       <PageHeader
-        item={checklist}
+        item={checklistState}
         handleEditField={handleEditField}
         icon={<DocumentCheckIcon filled />}
         saved={saved}
@@ -167,14 +176,18 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
           title="Favorite"
           onClick={() => {
             const updatedChecklist = {
-              ...checklist,
-              favorited: !checklist.favorited,
+              ...checklistState,
+              favorited: !checklistState.favorited,
             };
-            setChecklist(checklist);
+            setChecklistState(updatedChecklist);
             dispatch(updatedChecklist);
           }}
         >
-          {checklist.favorited === false ? <StarIcon /> : <StarIcon filled />}
+          {checklistState.favorited === false ? (
+            <StarIcon />
+          ) : (
+            <StarIcon filled />
+          )}
         </PageHeaderButton>
         <PageHeaderButton
           onClick={() => history.goBack()}
@@ -185,8 +198,13 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
       </PageHeader>
       <div className="main-content-wrapper">
         <ChecklistList>
-          {checklist.items.map((item: ChecklistItem) => (
-            <ItemComponent item={item} />
+          {checklistState.items.map((item: ChecklistItem) => (
+            <ChecklistItemComponent
+              parent={checklistState}
+              item={item}
+              setSaved={setSaved}
+              unsavedItems={unsavedItemsState}
+            />
           ))}
         </ChecklistList>
       </div>
@@ -196,7 +214,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={checklist}
+        item={checklistState}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}
@@ -207,58 +225,3 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
 };
 
 export default SingleChecklistPage;
-
-const ItemContainer = styled.li`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1em;
-
-  .arrows {
-    display: flex;
-    flex-direction: column;
-    margin-right: 1em;
-    justify-content: center;
-    align-items: center;
-
-    button {
-      width: fit-content;
-      height: 14px;
-      padding: 0;
-      background: inherit;
-      border: none;
-      color: inherit;
-    }
-
-    svg {
-      width: 15px;
-      height: 15px;
-    }
-  }
-`;
-
-interface ItemProps {
-  item: ChecklistItem;
-}
-
-const ItemComponent = ({ item }: ItemProps) => {
-  return (
-    <ItemContainer>
-      <span className="arrows">
-        <button>
-          <ChevronUpIcon />
-        </button>
-        <button>
-          <ChevronDownIcon />
-        </button>
-      </span>
-      <input type="checkbox" name={`checkbox-${item._id}`} />
-      {item.content.trim().length > 0 ? (
-        <span>{item.content}</span>
-      ) : (
-        <span className="italic">Empty item</span>
-      )}
-    </ItemContainer>
-  );
-};

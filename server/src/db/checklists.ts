@@ -77,6 +77,15 @@ export const updateChecklistById = async (
     throw "updateChecklistById: Title length cannot exceed 30 characters.";
   if (!ColorIds.includes(updatedChecklist.color))
     throw `updateChecklistById: '${updatedChecklist.color}' is not a valid hex code`;
+
+  // Check all items to see if valid
+  for (const item of updatedChecklist.items) {
+    if (!item._id || item.checked === undefined || item.content === undefined)
+      throw `updateChecklistById: Checklist item {'item_id': '${item._id}'} is missing required fields.`;
+    if (typeof item.checked !== "boolean")
+      throw `updateChecklistById: Checklist item {'item_id': '${item._id}'} checked status must be a boolean.`;
+  }
+
   const checklistsCollection = await checklists();
   const parsed_id = new ObjectId(id.trim());
   const updateInfo = await checklistsCollection.updateOne(
@@ -143,7 +152,7 @@ export const addGroupToChecklist = async (
     { $addToSet: { groups: group_id } }
   );
   if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
-    throw `addGroupToChecklist: Failed to add group {'id': '${group_id}'}' to checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
+    throw `addGroupToChecklist: Failed to add group {'id': '${group_id}'} to checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
 
@@ -165,7 +174,7 @@ export const removeGroupFromChecklist = async (
     { $pull: { groups: group_id } }
   );
   if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
-    throw `removeGroupFromChecklist: Failed to remove group {'id': '${group_id}'}' from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
+    throw `removeGroupFromChecklist: Failed to remove group {'id': '${group_id}'} from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
 
@@ -208,7 +217,7 @@ export const addChecklistItem = async (
   const checklistsCollection = await checklists();
   const parsed_id = new ObjectId(checklist_id.trim());
   const newItem: ChecklistItem = {
-    _id: new ObjectId(),
+    _id: new ObjectId().toString(),
     content: content,
     checked: false,
   };
@@ -233,11 +242,10 @@ export const removeChecklistItem = async (
 ) => {
   const checklistsCollection = await checklists();
   const parsed_checklist_id = new ObjectId(checklist_id.trim());
-  const parsed_item_id = new ObjectId(item_id.trim());
 
   const updateInfo = await checklistsCollection.updateOne(
     { _id: parsed_checklist_id },
-    { $pull: { items: { _id: parsed_item_id } } }
+    { $pull: { items: { _id: item_id } } }
   );
   if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
     throw `removeChecklistItem: Failed to remove item {'id': '${item_id}'}' from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
@@ -254,14 +262,14 @@ export const updateChecklistItemById = async (
   checklist_id: string,
   updatedItem: ChecklistItem
 ) => {
+  // Check checked status
   if (typeof updatedItem.checked !== "boolean")
     throw "updateChecklistItemById: Checklist item checked status must be a boolean.";
-  updatedItem._id = updatedItem._id.toString();
+
   const checklistsCollection = await checklists();
   const parsed_id = new ObjectId(checklist_id.trim());
-  const parsed_item_id = new ObjectId(updatedItem._id.trim());
   const updateInfo = await checklistsCollection.updateOne(
-    { _id: parsed_id, "items._id": parsed_item_id },
+    { _id: parsed_id, "items._id": updatedItem._id.toString() },
     { $set: { "items.$": updatedItem } }
   );
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
