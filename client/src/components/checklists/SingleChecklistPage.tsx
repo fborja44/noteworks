@@ -3,15 +3,10 @@
 // React imports
 import React, { useEffect, useState } from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-import styled from "@emotion/styled";
-
 import { useHistory } from "react-router-dom";
 
 // Redux imports
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   handleAddChecklistItem,
   handleUpdateChecklist,
@@ -19,10 +14,10 @@ import {
 
 // Common imports
 import { Checklist, ChecklistItem } from "../../common/types";
-import { COLOR, ColorId, NoteColor } from "../../common/color";
+import { ColorId, NoteColor } from "../../common/color";
 
 // Component imports
-import ChecklistItemComponent from "./ChecklistItemComponent";
+import ItemsList from "./ItemsList";
 import PageHeader from "../pageheader/PageHeader";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -36,13 +31,6 @@ import TrashIcon from "../icons/TrashIcon";
 import StarIcon from "../icons/StarIcon";
 import PlusIcon from "../icons/PlusIcon";
 
-const ChecklistList = styled.ul`
-  width: fit-content;
-  color: ${(props) => props.theme.main.textSecondary};
-  font-size: 14px;
-  padding-left: 1em;
-`;
-
 export interface SingleChecklistPageProps {
   activeChecklist: Checklist;
 }
@@ -55,13 +43,6 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
 
   // History hook
   const history = useHistory();
-
-  /**
-   * Unsaved items
-   */
-  const unsavedItemsState = useSelector(
-    (state: any) => state.unsavedItemsState
-  );
 
   /**
    * State for current checklist info
@@ -134,6 +115,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
       dispatch,
       checklistState
     );
+    console.log(checklistState);
     setChecklistState(updatedChecklist);
   };
 
@@ -197,16 +179,11 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
-        <ChecklistList>
-          {checklistState.items.map((item: ChecklistItem) => (
-            <ChecklistItemComponent
-              parent={checklistState}
-              item={item}
-              setSaved={setSaved}
-              unsavedItems={unsavedItemsState}
-            />
-          ))}
-        </ChecklistList>
+        <ItemsList
+          activeChecklist={checklistState}
+          items={activeChecklist.items}
+          setSaved={setSaved}
+        />
       </div>
       <ColorMenu
         showColorMenu={showColorMenu}

@@ -216,11 +216,17 @@ export const addChecklistItem = async (
 ) => {
   const checklistsCollection = await checklists();
   const parsed_id = new ObjectId(checklist_id.trim());
+
+  const checklist = await getChecklistById(checklist_id.trim());
+  if (!checklist)
+    throw `addChecklistItem: Failed to get checklist with id '${checklist_id}'.`;
+
   const newItem: ChecklistItem = {
     _id: new ObjectId().toString(),
     content: content,
     checked: false,
   };
+
   const updateInfo = await checklistsCollection.updateOne(
     { _id: parsed_id },
     { $push: { items: newItem } }

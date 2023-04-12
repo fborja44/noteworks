@@ -324,12 +324,42 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   const item_id = req.params.item_id;
   const content = req.body.content;
   const checked = req.body.checked;
+  // const index = req.body.index;
 
   if (typeof checked !== "boolean" && typeof checked !== "undefined") {
     return res.status(400).json({
       error: `Item status '${checked}' is not a valid boolean.`,
     });
   }
+
+  // if (typeof index !== "number") {
+  //   return res.status(400).json({
+  //     error: `Item index '${index}' is not a valid number.`,
+  //   });
+  // }
+
+  // Check if checklist exists
+  let checklist;
+  try {
+    checklist = await checklistsData.getChecklistById(id.trim());
+    if (!checklist) {
+      return res.status(400).json({
+        error: `Checklist with id ${id.trim()} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      error: "Failed to fetch checklist.",
+      message: e.toString(),
+    });
+  }
+
+  // // Check if valid index
+  // if (index > checklist.items.length || index < 0) {
+  //   return res.status(500).json({
+  //     error: `Item index '${index}' is out of range.`,
+  //   });
+  // }
 
   // Check if checklist item exists
   let checklistItem;
@@ -356,6 +386,9 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   if (checked != null) {
     checklistItem.checked = checked;
   }
+  // if (index != null) {
+  //   checklistItem.index = index;
+  // }
 
   // Update the checklist
   try {

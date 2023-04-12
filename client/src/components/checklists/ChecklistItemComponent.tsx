@@ -100,16 +100,21 @@ const ArrowsContainer = styled.span`
     background: inherit;
     border: none;
     color: inherit;
-  }
-
-  svg {
-    width: 15px;
-    height: 15px;
 
     &:hover {
       cursor: pointer;
       color: ${(props) => props.theme.main.textPrimary};
     }
+
+    &:disabled {
+      color: ${COLOR.dark_grey.secondary};
+      cursor: default;
+    }
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
   }
 `;
 
@@ -132,30 +137,25 @@ const ContentInput = styled.input`
 interface ItemProps {
   parent: Checklist;
   item: ChecklistItem;
+  index: number;
   setSaved: Function;
   unsavedItems: ChecklistItem[];
+  swapFunction: Function;
 }
 
 const ChecklistItemComponent = ({
   parent,
   item,
+  index,
   setSaved,
   unsavedItems,
+  swapFunction,
 }: ItemProps) => {
   // Dispatch hook
   const dispatch = useDispatch();
 
-  /**
-   * State for current checklist info
-   */
-  const [checklistState] = useState(parent);
-
   // Current item state
-  const [itemState, setItemState] = useState<ChecklistItem>(
-    checklistState.items.filter(
-      (filterItem: ChecklistItem) => filterItem._id === item._id
-    )[0] || null
-  );
+  const [itemState, setItemState] = useState<ChecklistItem>(item);
 
   /**
    * Function to handle changes in a checklist's field
@@ -184,7 +184,7 @@ const ChecklistItemComponent = ({
       checked: value,
     };
     setItemState(updatedChecklistItem);
-    handleUpdateChecklistItem(dispatch, parent._id, updatedChecklistItem);
+    dispatch(addUnsavedItem(updatedChecklistItem));
   };
 
   /**
@@ -193,7 +193,7 @@ const ChecklistItemComponent = ({
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
       // Update every item in the unsaved queue.
-      const filteredItems: ChecklistItem[] = checklistState.items.filter(
+      const filteredItems: ChecklistItem[] = parent.items.filter(
         (filterItem) => {
           for (const updatedItem of unsavedItems) {
             if (filterItem._id === updatedItem._id) {
@@ -204,10 +204,11 @@ const ChecklistItemComponent = ({
         }
       );
       const updatedItems = [...unsavedItems, ...filteredItems];
-      handleUpdateChecklist(dispatch, {
-        ...checklistState,
+      const updatedChecklist = {
+        ...parent,
         items: updatedItems,
-      });
+      };
+      handleUpdateChecklist(dispatch, updatedChecklist);
       dispatch(setUnsavedItems([]));
       setSaved(true);
     }, 5000);
@@ -221,7 +222,11 @@ const ChecklistItemComponent = ({
   return (
     <ItemContainer>
       <ArrowsContainer>
-        <button title="Shift Up">
+        <button
+          title="Shift Up"
+          onClick={() => swapFunction(index, true)}
+          disabled={index === 0}
+        >
           <ChevronRightIcon
             strokeWidth={3}
             css={css`
@@ -229,7 +234,11 @@ const ChecklistItemComponent = ({
             `}
           />
         </button>
-        <button title="Shift Down">
+        <button
+          title="Shift Down"
+          onClick={() => swapFunction(index)}
+          disabled={index === parent.items.length - 1}
+        >
           <ChevronLeftIcon
             strokeWidth={3}
             css={css`
