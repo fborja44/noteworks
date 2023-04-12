@@ -13,7 +13,7 @@ import {
 } from "../../utils/checklists";
 
 // Common imports
-import { Checklist, ChecklistItem } from "../../common/types";
+import { Checklist } from "../../common/types";
 import { ColorId, NoteColor } from "../../common/color";
 
 // Component imports
@@ -180,7 +180,8 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
       </PageHeader>
       <div className="main-content-wrapper">
         <ItemsList
-          activeChecklist={checklistState}
+          checklistState={checklistState}
+          setChecklistState={setChecklistState}
           items={activeChecklist.items}
           setSaved={setSaved}
         />

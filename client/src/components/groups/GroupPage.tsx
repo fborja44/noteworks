@@ -27,6 +27,7 @@ import PencilSquareIcon from "../icons/PencilSquareIcon";
 import StarIcon from "../icons/StarIcon";
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
+import ChecklistList from "../checklists/ChecklistsList";
 
 /**
  * Props for GroupPage
@@ -183,12 +184,17 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
             setSaved={setSaved}
           ></QNList>
         </Section>
-
         <Section name="Marknotes">
           <MNList
             activeGroup={activeGroup}
             setActiveGroup={setActiveGroup}
             MNFilterText={filterText}
+          />
+        </Section>
+        <Section name="Checklists">
+          <ChecklistList
+            activeGroup={activeGroup}
+            setActiveGroup={setActiveGroup}
           />
         </Section>
       </div>

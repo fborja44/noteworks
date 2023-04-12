@@ -69,7 +69,7 @@ const NotesExplorerMarknote = ({
         {marknote.title ? (
           <span>{title}</span>
         ) : (
-          <span className="untitled">Untitled Note</span>
+          <span className="untitled">Untitled Marknote</span>
         )}
       </Link>
     </NotesExplorerItemContainer>

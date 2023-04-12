@@ -17,6 +17,7 @@ import { handleCreateMarknote } from "../../utils/marknotes";
 // Image and icon imports
 import PlusIcon from "../icons/PlusIcon";
 import { handleUpdateNoteGroups } from "../../utils/groups";
+import { handleCreateChecklist } from "../../utils/checklists";
 
 const CreateButtonContainer = styled.button`
   width: 100%;
@@ -25,8 +26,8 @@ const CreateButtonContainer = styled.button`
   color: ${(props) => props.theme.title.textSecondary};
   border: 1px solid ${(props) => props.theme.note.borderColor};
   border-radius: 5px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
 
   &:hover {
     cursor: pointer;
@@ -37,23 +38,31 @@ const CreateButtonContainer = styled.button`
 
 const ButtonContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props: { variant: "vertical" | "horizontal" }) =>
+    props.variant === "vertical" ? "column" : "row"};
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 55px;
+  padding: 0 1.5em;
+  text-transform: capitalize;
 
   svg {
-    width: 35px;
-    height: 35px;
+    width: 24px;
+    height: 24px;
   }
 `;
 
 interface NoteCreateButtonProps {
-  noteType: "quicknote" | "marknote";
+  noteType: "quicknote" | "marknote" | "checklist" | "group";
   group?: Group;
+  variant: "vertical" | "horizontal";
 }
 
-const NoteCreateButton = ({ noteType, group }: NoteCreateButtonProps) => {
+const NoteCreateButton = ({
+  noteType,
+  group,
+  variant,
+}: NoteCreateButtonProps) => {
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -68,8 +77,12 @@ const NoteCreateButton = ({ noteType, group }: NoteCreateButtonProps) => {
     let newNote: Quicknote | Marknote;
     if (noteType === "quicknote") {
       newNote = await handleCreateQuicknote(dispatch);
-    } else {
+    } else if (noteType === "marknote") {
       newNote = await handleCreateMarknote(dispatch, history);
+    } else if (noteType === "checklist") {
+      newNote = await handleCreateChecklist(dispatch, history);
+    } else {
+      return;
     }
     if (group) {
       await handleUpdateNoteGroups(dispatch, newNote, group._id);
@@ -78,12 +91,16 @@ const NoteCreateButton = ({ noteType, group }: NoteCreateButtonProps) => {
 
   return (
     <CreateButtonContainer onClick={() => handleCreateNote()}>
-      <ButtonContent>
+      <ButtonContent variant={variant}>
         <PlusIcon />
-        <span>Add New Note</span>
+        <span>Add New {noteType}</span>
       </ButtonContent>
     </CreateButtonContainer>
   );
+};
+
+NoteCreateButton.defaultProps = {
+  variant: "vertical",
 };
 
 export default NoteCreateButton;

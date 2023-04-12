@@ -1,11 +1,12 @@
 import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
-import { Group, Marknote, Quicknote } from "../common/types";
+import { Checklist, Group, Marknote, Quicknote } from "../common/types";
 import {
   createGroup,
   deleteGroup,
   setGroups,
+  updateChecklist,
   updateGroup,
   updateMarknote,
   updateQuicknotes,
@@ -78,7 +79,7 @@ const handleUpdateGroup = async (
  */
 const handleUpdateNoteGroups = async (
   dispatch: Dispatch<AnyAction>,
-  note: Quicknote | Marknote,
+  note: Quicknote | Marknote | Checklist,
   groupId: string
 ) => {
   try {
@@ -91,6 +92,8 @@ const handleUpdateNoteGroups = async (
       dispatch(updateQuicknotes([data.updatedNote]));
     } else if (note.type === "marknote") {
       dispatch(updateMarknote(data.updatedNote));
+    } else if (note.type === "checklist") {
+      dispatch(updateChecklist(data.updatedNote));
     }
     return data;
   } catch (e) {

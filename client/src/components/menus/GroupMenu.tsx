@@ -1,7 +1,7 @@
 /* Color Menu Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleUpdateGroup, handleUpdateNoteGroups } from "../../utils/groups";
 
 // Common imports
-import { Group, Marknote, Quicknote } from "../../common/types";
+import { Checklist, Group, Marknote, Quicknote } from "../../common/types";
 import { COLOR } from "../../common/color";
 
 // Component imports
@@ -23,6 +23,7 @@ import ModalMenu from "./ModalMenu";
 import FolderIcon from "../icons/FolderIcon";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
+import { enqueueSnackbar } from "notistack";
 
 const GroupMenuContent = styled.div`
   display: flex;
@@ -84,14 +85,14 @@ const GroupMenuItemTitle = styled.div`
 `;
 
 export interface GroupMenuProps {
-  item: Quicknote | Marknote;
+  note: Quicknote | Marknote | Checklist;
   setActiveGroup?: Function;
   showGroupMenu: boolean;
   setShowGroupMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GroupMenu: React.FC<GroupMenuProps> = ({
-  item,
+  note,
   setActiveGroup,
   showGroupMenu,
   setShowGroupMenu,
@@ -102,6 +103,9 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
   // Groups State
   const groupsState: Group[] = useSelector((state: any) => state.groupsState);
 
+  // Note Groups State
+  const [noteGroupsState, setNoteGroupsState] = useState<string[]>(note.groups);
+
   /**
    * On click handler to add/remove note from group.
    * Event target needs dataset attribute.
@@ -110,7 +114,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
     const groupId = event.target.dataset.id;
     let data: any = null;
     try {
-      data = await handleUpdateNoteGroups(dispatch, item, groupId);
+      data = await handleUpdateNoteGroups(dispatch, note, groupId);
       if (data) {
         if (setActiveGroup) {
           // If group page is open, update the group live so that displayed notes are updated
@@ -118,8 +122,10 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
         }
         handleUpdateGroup(dispatch, data.updatedGroup);
       }
+      setNoteGroupsState(data.updatedNote.groups);
     } catch (e) {
       console.log(e);
+      enqueueSnackbar("Failed to update note groups.", { variant: "error" });
     }
   };
 
@@ -142,7 +148,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
       <GroupMenuContent>
         {groupsState.map((group, index) => (
           <GroupMenuItem
-            item={item}
+            noteGroups={noteGroupsState}
             group={group}
             last={index !== groupsState.length - 1}
             handleSelectGroup={handleSelectGroup}
@@ -156,12 +162,12 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
 export default GroupMenu;
 
 const GroupMenuItem = ({
-  item,
+  noteGroups,
   group,
   last,
   handleSelectGroup,
 }: {
-  item: Quicknote | Marknote;
+  noteGroups: string[];
   group: Group;
   last: boolean;
   handleSelectGroup: Function;
@@ -171,12 +177,12 @@ const GroupMenuItem = ({
       key={group._id}
       data-id={group._id}
       onClick={(event) => handleSelectGroup(event)}
-      className={`${item.groups.includes(group._id) ? "selected" : ""} ${
+      className={`${noteGroups.includes(group._id) ? "selected" : ""} ${
         last ? "border" : ""
       }`}
     >
       <GroupMenuItemTitle iconColor={COLOR[group.color].primary}>
-        {item.groups.includes(group._id) ? (
+        {noteGroups.includes(group._id) ? (
           <FolderOpenIcon filled />
         ) : (
           <FolderIcon />
@@ -185,7 +191,7 @@ const GroupMenuItem = ({
           <span className="italic">Untitled Group</span>
         )}
       </GroupMenuItemTitle>
-      {item.groups.includes(group._id) ? (
+      {noteGroups.includes(group._id) ? (
         <CheckCircleIcon className="selected-icon" />
       ) : null}
     </GroupMenuItemContainer>

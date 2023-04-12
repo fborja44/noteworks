@@ -75,7 +75,7 @@ export const updateGroupById = async (id: string, updatedGroup: Group) => {
     { _id: parsed_id },
     { $set: updatedGroup }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw "updateGroupById: Failed to update group";
   return await getGroupById(id.trim());
 };
@@ -144,7 +144,7 @@ export const addToGroup = async (
       { $addToSet: { checklists: note_id } }
     );
   }
-  if (!updateInfo || !updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo || !updateInfo.matchedCount)
     throw `addToGroup: Failed to add note {'type': '${note_type}', 'id': '${note_id}'}' to group {'id': '${group_id}'}`;
 
   // Also update the note
@@ -182,17 +182,17 @@ export const removeFromGroup = async (
       { $pull: { quicknotes: note_id } }
     );
   } else if (note_type === "marknote") {
-    await groupsCollection.updateOne(
+    updateInfo = await groupsCollection.updateOne(
       { _id: parsed_id },
       { $pull: { marknotes: note_id } }
     );
   } else if (note_type === "checklist") {
-    await groupsCollection.updateOne(
+    updateInfo = await groupsCollection.updateOne(
       { _id: parsed_id },
       { $pull: { checklists: note_id } }
     );
   }
-  if (!updateInfo || !updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo || !updateInfo.matchedCount)
     throw `removeFromGroup: Failed to remove note {'type': '${note_type}', 'id': '${note_id}'}' from group {'id': '${group_id}'}`;
 
   // Also update the note if not deleted

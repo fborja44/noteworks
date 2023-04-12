@@ -4,6 +4,7 @@ const data = require("../db");
 const groupsData = data.groups;
 const quicknotesData = data.quicknotes;
 const marknotesData = data.marknotes;
+const checklistsData = data.checklists;
 const express = require("express");
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.get("/", async (req: any, res: any) => {
     let groups = await groupsData.getAllGroups();
     return res.status(200).json(groups);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch groups from database." });
@@ -30,6 +32,7 @@ router.get("/:id", async (req: any, res: any) => {
     let group = await groupsData.getGroupById(id.trim());
     return res.status(200).json(group);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch groups from database." });
@@ -59,6 +62,7 @@ router.post("/", async (req: any, res: any) => {
     let new_group = await groupsData.createGroup(title, color);
     return res.status(200).json(new_group);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to create new group.",
       message: e.toString(),
@@ -92,6 +96,7 @@ router.patch("/:id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch group.",
       message: e.toString(),
@@ -116,6 +121,7 @@ router.patch("/:id", async (req: any, res: any) => {
     let updated_group = await groupsData.updateGroupById(id.trim(), group);
     return res.status(200).json(updated_group);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to update group.",
       message: e.toString(),
@@ -139,6 +145,7 @@ router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch group.",
       message: e.toString(),
@@ -159,10 +166,8 @@ router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
         noteId,
         id.trim()
       );
-      return res
-        .status(200)
-        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to remove quicknote to group.",
         message: e.toString(),
@@ -176,16 +181,17 @@ router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
         "quicknote"
       );
       updatedNote = await quicknotesData.addGroupToQuicknote(noteId, id.trim());
-      return res
-        .status(200)
-        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to add quicknote to group.",
         message: e.toString(),
       });
     }
   }
+  return res
+    .status(200)
+    .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
 });
 
 /**
@@ -204,6 +210,7 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch group.",
       message: e.toString(),
@@ -224,10 +231,8 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
         noteId,
         id.trim()
       );
-      return res
-        .status(200)
-        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to remove marknote from group.",
         message: e.toString(),
@@ -241,16 +246,82 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
         "marknote"
       );
       updatedNote = await marknotesData.addGroupToMarknote(noteId, id.trim());
-      return res
-        .status(200)
-        .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to add marknote from group.",
         message: e.toString(),
       });
     }
   }
+  return res
+    .status(200)
+    .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
+});
+
+/**
+ * [PATCH /groups/:id/checklists/:noteId]
+ */
+router.patch("/:id/checklists/:noteId", async (req: any, res: any) => {
+  const id = req.params.id;
+  const noteId = req.params.noteId;
+  // Check if group exists
+  let group;
+  try {
+    group = await groupsData.getGroupById(id.trim());
+    if (!group) {
+      return res.status(400).json({
+        error: `Group with id ${id.trim()} was not found.`,
+      });
+    }
+  } catch (e: any) {
+    console.log(e);
+    return res.status(500).json({
+      error: "Failed to fetch group.",
+      message: e.toString(),
+    });
+  }
+
+  // If note is in group, remove the group, otherwise, add it
+  let updatedGroup = null,
+    updatedNote = null;
+  if (group.checklists.includes(noteId.trim())) {
+    try {
+      updatedGroup = await groupsData.removeFromGroup(
+        id.trim(),
+        noteId.trim(),
+        "checklist"
+      );
+      updatedNote = await checklistsData.removeGroupFromChecklist(
+        noteId,
+        id.trim()
+      );
+    } catch (e: any) {
+      console.log(e);
+      return res.status(500).json({
+        error: "Failed to remove checklist from group.",
+        message: e.toString(),
+      });
+    }
+  } else {
+    try {
+      updatedGroup = await groupsData.addToGroup(
+        id.trim(),
+        noteId.trim(),
+        "checklist"
+      );
+      updatedNote = await checklistsData.addGroupToChecklist(noteId, id.trim());
+    } catch (e: any) {
+      console.log(e);
+      return res.status(500).json({
+        error: "Failed to add checklist from group.",
+        message: e.toString(),
+      });
+    }
+  }
+  return res
+    .status(200)
+    .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
 });
 
 /**
@@ -269,6 +340,7 @@ router.delete("/:id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch group.",
       message: e.toString(),
@@ -280,6 +352,7 @@ router.delete("/:id", async (req: any, res: any) => {
     let delete_status = await groupsData.deleteGroupById(id.trim());
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to delete group.",
       message: e.toString(),

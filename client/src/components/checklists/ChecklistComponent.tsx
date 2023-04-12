@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { handleUpdateChecklist } from "../../utils/checklists";
 
 // Common imports
-import { Checklist, ChecklistItem } from "../../common/types";
+import { Checklist } from "../../common/types";
 import { COLOR, ColorId } from "../../common/color";
 
 // Component imports
@@ -22,6 +22,7 @@ import FavoriteButton from "../notes/FavoriteButton";
 import MenuButton from "../notes/MenuButton";
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
+import GroupMenu from "../menus/GroupMenu";
 
 // Image and icon imports
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
@@ -89,10 +90,12 @@ const ChecklistItemCounter = styled.span`
 
 export interface ChecklistComponentProps {
   currentChecklist: Checklist;
+  setActiveGroup?: Function;
 }
 
 const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
   currentChecklist,
+  setActiveGroup,
 }) => {
   // Dispatch hook
   const dispatch = useDispatch();
@@ -244,6 +247,12 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
           )}
         </ChecklistContent>
       </ChecklistContainer>
+      <GroupMenu
+        note={currentChecklist}
+        setActiveGroup={setActiveGroup}
+        showGroupMenu={showGroupMenu}
+        setShowGroupMenu={setShowGroupMenu}
+      />
       <ColorMenu
         showColorMenu={showColorMenu}
         setShowColorMenu={setShowColorMenu}

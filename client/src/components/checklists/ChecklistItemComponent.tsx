@@ -10,11 +10,7 @@ import styled from "@emotion/styled";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import {
-  handleAddChecklistItem,
-  handleUpdateChecklist,
-  handleUpdateChecklistItem,
-} from "../../utils/checklists";
+import { handleUpdateChecklist } from "../../utils/checklists";
 
 // Common imports
 import { Checklist, ChecklistItem } from "../../common/types";
@@ -104,11 +100,6 @@ const ArrowsContainer = styled.span`
     &:hover {
       cursor: pointer;
       color: ${(props) => props.theme.main.textPrimary};
-    }
-
-    &:disabled {
-      color: ${COLOR.dark_grey.secondary};
-      cursor: default;
     }
   }
 
@@ -250,7 +241,6 @@ const ChecklistItemComponent = ({
       <Checkbox
         type="checkbox"
         name={`checkbox-${item._id}`}
-        disabled={itemState.content.trim().length === 0}
         checked={itemState.checked}
         onChange={(event) => handleChecked(event.target.checked)}
       />

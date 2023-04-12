@@ -151,7 +151,7 @@ export const addGroupToChecklist = async (
     { _id: parsed_id },
     { $addToSet: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `addGroupToChecklist: Failed to add group {'id': '${group_id}'} to checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
@@ -173,7 +173,7 @@ export const removeGroupFromChecklist = async (
     { _id: parsed_id },
     { $pull: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `removeGroupFromChecklist: Failed to remove group {'id': '${group_id}'} from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
@@ -231,7 +231,7 @@ export const addChecklistItem = async (
     { _id: parsed_id },
     { $push: { items: newItem } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `addChecklistItem: Failed to add item {'id': '${checklist_id}'}' to checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };
@@ -253,7 +253,7 @@ export const removeChecklistItem = async (
     { _id: parsed_checklist_id },
     { $pull: { items: { _id: item_id } } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `removeChecklistItem: Failed to remove item {'id': '${item_id}'}' from checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim());
 };

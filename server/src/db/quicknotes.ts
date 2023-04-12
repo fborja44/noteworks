@@ -92,7 +92,7 @@ export const updateQuicknoteById = async (
     { _id: parsed_id },
     { $set: updatedQuicknote }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `updateQuicknoteById: Failed to update quicknote with id '${id}';`;
   return await getQuicknoteById(id.trim());
 };
@@ -151,7 +151,7 @@ export const addGroupToQuicknote = async (
     { _id: parsed_id },
     { $addToSet: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `addGroupToQuicknote: Failed to add group {'id': '${group_id}'}' to note {'type': 'quicknote', 'id': '${note_id}'}`;
   return await getQuicknoteById(note_id.trim());
 };
@@ -173,7 +173,7 @@ export const removeGroupFromQuicknote = async (
     { _id: parsed_id },
     { $pull: { groups: group_id } }
   );
-  if (!updateInfo.matchedCount || !updateInfo.modifiedCount)
+  if (!updateInfo.matchedCount)
     throw `removeGroupFromQuicknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'quicknote', 'id': '${note_id}'}`;
   return await getQuicknoteById(note_id.trim());
 };

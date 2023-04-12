@@ -143,6 +143,10 @@ const TitleInput = styled.input`
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    text-transform: capitalize;
+  }
 `;
 
 const SavedIndicator = ({ saved }: { saved: boolean }) => {
@@ -203,9 +207,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         {item && handleEditField ? (
           <TitleInput
             type="text"
-            placeholder={
-              item.type === "marknote" ? "Untitled Note" : "Untitled Group"
-            }
+            placeholder={`Untitled ${item.type}`}
             value={item.title}
             onChange={(event) => handleEditField("title", event.target.value)}
           />

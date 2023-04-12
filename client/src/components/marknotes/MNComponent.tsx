@@ -137,7 +137,7 @@ const MNComponent: React.FC<MNComponentProps> = ({
       </NoteContent>
       <MNFooter currentNote={currentNote} />
       <GroupMenu
-        item={currentNote}
+        note={currentNote}
         setActiveGroup={setActiveGroup}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}

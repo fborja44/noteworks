@@ -222,7 +222,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         limit={bodyCharLimit}
       />
       <GroupMenu
-        item={quicknote}
+        note={quicknote}
         setActiveGroup={setActiveGroup}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}

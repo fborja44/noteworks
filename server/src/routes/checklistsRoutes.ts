@@ -62,6 +62,7 @@ router.post("/", async (req: any, res: any) => {
     let new_checklist = await checklistsData.createChecklist(title, color);
     return res.status(200).json(new_checklist);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to create new checklist.",
       message: e.toString(),
@@ -117,6 +118,7 @@ router.patch("/:id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -145,6 +147,7 @@ router.patch("/:id", async (req: any, res: any) => {
     );
     return res.status(200).json(updated_checklist);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to update checklist.",
       message: e.toString(),
@@ -169,6 +172,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -184,6 +188,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
       );
       return res.status(200).json(checklist);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to remove group from checklist.",
         message: e.toString(),
@@ -197,6 +202,7 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
       );
       return res.status(200).json(checklist);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to add group to checklist.",
         message: e.toString(),
@@ -221,6 +227,7 @@ router.delete("/:id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -232,6 +239,7 @@ router.delete("/:id", async (req: any, res: any) => {
     let delete_status = await checklistsData.deleteChecklistById(id.trim());
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to delete checklist.",
       message: e.toString(),
@@ -256,6 +264,7 @@ router.get("/:id/item/:item_id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -270,6 +279,7 @@ router.get("/:id/item/:item_id", async (req: any, res: any) => {
     );
     return res.status(200).json(checklistItem);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist item from database.",
       message: e.toString(),
@@ -293,6 +303,7 @@ router.post("/:id/item", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -309,6 +320,7 @@ router.post("/:id/item", async (req: any, res: any) => {
     );
     return res.status(200).json(updated_checklist);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to add new item to checklist.",
       message: e.toString(),
@@ -348,6 +360,7 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -374,6 +387,7 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist item from database.",
       message: e.toString(),
@@ -398,6 +412,7 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
     );
     return res.status(200).json(updated_checklist);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to update checklist item.",
       message: e.toString(),
@@ -422,6 +437,7 @@ router.delete("/:id/item/:item_id", async (req: any, res: any) => {
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch checklist.",
       message: e.toString(),
@@ -438,6 +454,7 @@ router.delete("/:id/item/:item_id", async (req: any, res: any) => {
     );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to remove item from checklist.",
       message: e.toString(),

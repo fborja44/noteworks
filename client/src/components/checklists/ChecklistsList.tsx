@@ -10,11 +10,12 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // Common imports
-import { Group, Checklist } from "../../common/types";
+import { Checklist, Group } from "../../common/types";
 
 // Component imports
-import { Empty } from "../Section";
+import NoteCreateButton from "../notes/NoteCreateButton";
 import ChecklistComponent from "./ChecklistComponent";
+import { Empty } from "../Section";
 
 const List = styled.div`
   display: grid;
@@ -28,16 +29,16 @@ const List = styled.div`
 `;
 
 export interface ChecklistListProps {
-  ChecklistFilterText?: string;
   activeGroup?: Group;
   setActiveGroup?: Function;
+  ChecklistFilterText?: string;
   favorites?: boolean;
 }
 
 const ChecklistList: React.FC<ChecklistListProps> = ({
-  ChecklistFilterText,
   activeGroup,
   setActiveGroup,
+  ChecklistFilterText,
   favorites,
 }) => {
   // URL Pathname
@@ -75,8 +76,16 @@ const ChecklistList: React.FC<ChecklistListProps> = ({
   const checklistsList = (
     <List>
       {checklists.map((checklist: Checklist) => (
-        <ChecklistComponent currentChecklist={checklist} />
+        <ChecklistComponent
+          currentChecklist={checklist}
+          setActiveGroup={setActiveGroup}
+        />
       ))}
+      <NoteCreateButton
+        noteType={"checklist"}
+        variant="horizontal"
+        group={activeGroup}
+      />
     </List>
   );
 
