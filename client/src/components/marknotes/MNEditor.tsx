@@ -227,7 +227,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
   /**
    * State for current marknote info
    */
-  const [marknote, setMarknote] = useState(activeNote);
+  const [activeMarknote, setActiveMarknote] = useState(activeNote);
 
   // Color menu state
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -274,17 +274,17 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
     let updatedNote;
     if (updateDate) {
       updatedNote = {
-        ...marknote,
+        ...activeMarknote,
         [key]: value,
         lastModified: Date.now(),
       };
     } else {
       updatedNote = {
-        ...marknote,
+        ...activeMarknote,
         [key]: value,
       };
     }
-    setMarknote(updatedNote);
+    setActiveMarknote(updatedNote);
   };
 
   const handleChangeEditorBody = (value: string) => {
@@ -302,7 +302,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateMarknote(dispatch, marknote);
+      handleUpdateMarknote(dispatch, activeMarknote);
       setSaved(true);
     }, 2000);
 
@@ -310,12 +310,12 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [marknote]);
+  }, [activeMarknote]);
 
   return (
     <EditorMain>
       <PageHeader
-        item={marknote}
+        item={activeMarknote}
         handleEditField={handleEditField}
         icon={<BsMarkdownFill className="markdown" />}
         saved={saved}
@@ -349,14 +349,18 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
           title="Favorite"
           onClick={() => {
             const updatedMarknote = {
-              ...marknote,
-              favorited: !marknote.favorited,
+              ...activeMarknote,
+              favorited: !activeMarknote.favorited,
             };
-            setMarknote(marknote);
+            setActiveMarknote(activeMarknote);
             dispatch(updatedMarknote);
           }}
         >
-          {marknote.favorited === false ? <StarIcon /> : <StarIcon filled />}
+          {activeMarknote.favorited === false ? (
+            <StarIcon />
+          ) : (
+            <StarIcon filled />
+          )}
         </PageHeaderButton>
         <PageHeaderButton onClick={() => history.goBack()} title="Close Note">
           <ArrowUturnRightIcon />
@@ -386,7 +390,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         >
           <EditorBody
             css={[appTheme.id === "light" ? null : EditorBodyDark]}
-            value={marknote.body}
+            value={activeMarknote.body}
             onBeforeChange={handleChangeEditorBody}
             options={{
               lineWrapping: true,
@@ -410,7 +414,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
               appTheme.id === "light" ? null : PreviewBodyDark,
             ]}
           >
-            {marknote.body}
+            {activeMarknote.body}
           </ReactMarkdown>
         </PreviewContainer>
       </EditorContent>
@@ -420,7 +424,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={marknote}
+        item={activeMarknote}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}

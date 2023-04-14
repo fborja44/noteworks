@@ -103,7 +103,7 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
   /**
    * State for current checklist info
    */
-  const [checklistComponent, setChecklistComponent] =
+  const [checklistState, setChecklistState] =
     useState<Checklist>(currentChecklist);
 
   /**
@@ -118,9 +118,9 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
     event.nativeEvent.stopImmediatePropagation();
     const updatedChecklist = {
       ...currentChecklist,
-      favorited: !checklistComponent.favorited,
+      favorited: !checklistState.favorited,
     };
-    setChecklistComponent(updatedChecklist);
+    setChecklistState(updatedChecklist);
     handleUpdateChecklist(dispatch, updatedChecklist);
   };
 
@@ -138,7 +138,7 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
       ...currentChecklist,
       color: color,
     };
-    setChecklistComponent(updatedChecklist);
+    setChecklistState(updatedChecklist);
     handleUpdateChecklist(dispatch, updatedChecklist);
   };
 
@@ -171,13 +171,13 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
   };
 
   const title =
-    checklistComponent.title.trim() && checklistComponent.title.length > 20
-      ? checklistComponent.title.slice(0, 20) + "..."
-      : checklistComponent.title;
+    checklistState.title.trim() && checklistState.title.length > 20
+      ? checklistState.title.slice(0, 20) + "..."
+      : checklistState.title;
 
-  const items_length = checklistComponent.items.length;
+  const items_length = checklistState.items.length;
   let completed_count = 0;
-  for (const item of checklistComponent.items) {
+  for (const item of checklistState.items) {
     if (item.checked) {
       completed_count++;
     }
@@ -186,28 +186,25 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
   return (
     <React.Fragment>
       <ChecklistContainer>
-        <Link
-          css={ChecklistLink}
-          to={`/checklists/${checklistComponent._id}`}
-        />
+        <Link css={ChecklistLink} to={`/checklists/${checklistState._id}`} />
         <ChecklistContent>
           <ChecklistContentSection>
             <FavoriteButton
-              favorited={checklistComponent.favorited}
+              favorited={checklistState.favorited}
               onClick={handleFavorite}
               color={appTheme.main.textPrimary}
             />
             <DocumentCheckIcon
               filled
               css={css`
-                color: ${COLOR[checklistComponent.color].primary};
+                color: ${COLOR[checklistState.color].primary};
                 width: 16px;
                 height: 16px;
                 margin: 0 0.75em;
               `}
             />
             <ChecklistName>
-              {checklistComponent.title.trim() ? (
+              {checklistState.title.trim() ? (
                 <span>{title}</span>
               ) : (
                 <span className="italic">Untitled Checklist</span>
@@ -216,7 +213,7 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
           </ChecklistContentSection>
           <ChecklistContentSection>
             <MenuButton
-              item={checklistComponent}
+              item={checklistState}
               toggleGroupMenu={toggleGroupMenu}
               toggleColorMenu={toggleColorMenu}
               toggleConfirmDelete={toggleConfirmDelete}
@@ -259,7 +256,7 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={checklistComponent}
+        item={checklistState}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}

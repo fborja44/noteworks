@@ -89,7 +89,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   /**
    * State for current quicknote info
    */
-  const [quicknote, setQuicknote] = useState(currentNote);
+  const [quicknoteState, setQuicknoteState] = useState(currentNote);
 
   /**
    * Function to handle changes in a quicknote's field.
@@ -112,17 +112,17 @@ const QNComponent: React.FC<QNComponentProps> = ({
       let updatedNote: Quicknote;
       if (updateDate) {
         updatedNote = {
-          ...quicknote,
+          ...quicknoteState,
           [key]: value,
           lastModified: Date.now(),
         };
       } else {
         updatedNote = {
-          ...quicknote,
+          ...quicknoteState,
           [key]: value,
         };
       }
-      setQuicknote(updatedNote);
+      setQuicknoteState(updatedNote);
       setSaved(false);
       // Update unsaved
       dispatch(addUnsavedNote(updatedNote));
@@ -135,10 +135,10 @@ const QNComponent: React.FC<QNComponentProps> = ({
    */
   const handleEditColor = (color: ColorId) => {
     const updatedQuicknote = {
-      ...quicknote,
+      ...quicknoteState,
       color: color,
     };
-    setQuicknote(updatedQuicknote);
+    setQuicknoteState(updatedQuicknote);
     handleUpdateQuicknote(dispatch, updatedQuicknote);
   };
 
@@ -148,10 +148,10 @@ const QNComponent: React.FC<QNComponentProps> = ({
    */
   const handleFavorite = () => {
     const updatedQuicknote = {
-      ...quicknote,
-      favorited: !quicknote.favorited,
+      ...quicknoteState,
+      favorited: !quicknoteState.favorited,
     };
-    setQuicknote(updatedQuicknote);
+    setQuicknoteState(updatedQuicknote);
     handleUpdateQuicknote(dispatch, updatedQuicknote);
   };
 
@@ -195,12 +195,12 @@ const QNComponent: React.FC<QNComponentProps> = ({
     return () => {
       clearTimeout(delayDBUpdate);
     };
-  }, [quicknote, unsavedNotes]);
+  }, [quicknoteState, unsavedNotes]);
 
   return (
-    <QuicknoteContainer bodyColor={COLOR[quicknote.color].body}>
+    <QuicknoteContainer bodyColor={COLOR[quicknoteState.color].body}>
       <NoteHeader
-        currentNote={quicknote}
+        currentNote={quicknoteState}
         handleFavorite={handleFavorite}
         handleEditField={handleEditField}
         toggleGroupMenu={toggleGroupMenu}
@@ -210,19 +210,19 @@ const QNComponent: React.FC<QNComponentProps> = ({
       <NoteContent spellCheck={false}>
         <QuicknoteBody
           placeholder="Write your quicknote here..."
-          value={quicknote.body}
+          value={quicknoteState.body}
           onChange={(event) =>
             handleEditField("body", event.target.value, true)
           }
         />
       </NoteContent>
       <QNFooter
-        currentNote={quicknote}
+        currentNote={quicknoteState}
         remaining={bodyCharRemaining}
         limit={bodyCharLimit}
       />
       <GroupMenu
-        note={quicknote}
+        note={quicknoteState}
         setActiveGroup={setActiveGroup}
         showGroupMenu={showGroupMenu}
         setShowGroupMenu={setShowGroupMenu}
@@ -233,7 +233,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={quicknote}
+        item={quicknoteState}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}

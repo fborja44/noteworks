@@ -84,7 +84,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
   /**
    * State for current group info
    */
-  const [groupComponent, setGroupComponent] = useState(currentGroup);
+  const [groupState, setGroupState] = useState(currentGroup);
 
   /**
    * Function to toggle whether a group is favorited
@@ -98,9 +98,9 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
     event.nativeEvent.stopImmediatePropagation();
     const updatedGroup = {
       ...currentGroup,
-      favorited: !groupComponent.favorited,
+      favorited: !groupState.favorited,
     };
-    setGroupComponent(updatedGroup);
+    setGroupState(updatedGroup);
     handleUpdateGroup(dispatch, updatedGroup);
   };
 
@@ -118,7 +118,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
       ...currentGroup,
       color: color,
     };
-    setGroupComponent(updatedGroup);
+    setGroupState(updatedGroup);
     handleUpdateGroup(dispatch, updatedGroup);
   };
 
@@ -141,32 +141,32 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
   };
 
   const title =
-    groupComponent.title.trim() && groupComponent.title.length > 20
-      ? groupComponent.title.slice(0, 20) + "..."
-      : groupComponent.title;
+    groupState.title.trim() && groupState.title.length > 20
+      ? groupState.title.slice(0, 20) + "..."
+      : groupState.title;
 
   return (
     <React.Fragment>
       <GroupContainer>
-        <Link css={GroupLink} to={`/groups/${groupComponent._id}`} />
+        <Link css={GroupLink} to={`/groups/${groupState._id}`} />
         <GroupContent>
           <GroupContentSection>
             <FavoriteButton
-              favorited={groupComponent.favorited}
+              favorited={groupState.favorited}
               onClick={handleFavorite}
               color={appTheme.main.textPrimary}
             />
             <FolderIcon
               filled
               css={css`
-                color: ${COLOR[groupComponent.color].primary};
+                color: ${COLOR[groupState.color].primary};
                 width: 16px;
                 height: 16px;
                 margin: 0 0.75em;
               `}
             />
             <GroupName>
-              {groupComponent.title.trim() ? (
+              {groupState.title.trim() ? (
                 <span>{title}</span>
               ) : (
                 <span className="italic">Untitled Group</span>
@@ -175,7 +175,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
           </GroupContentSection>
           <GroupContentSection>
             <MenuButton
-              item={groupComponent}
+              item={groupState}
               toggleColorMenu={toggleColorMenu}
               toggleConfirmDelete={toggleConfirmDelete}
             />
@@ -188,7 +188,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
         handleEditColor={handleEditColor}
       />
       <ConfirmDelete
-        item={groupComponent}
+        item={groupState}
         showMenuState={showConfirmDelete}
         setShowMenuState={setShowConfirmDelete}
         toggleConfirmDelete={toggleConfirmDelete}

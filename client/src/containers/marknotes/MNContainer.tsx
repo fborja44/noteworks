@@ -27,9 +27,9 @@ const MNContainer: React.FC<MNContainerProps> = ({
   const dispatch = useDispatch();
 
   /**
-   * State for current marknoteComponent info
+   * State for current marknote info
    */
-  const [marknoteComponent, setMarknoteComponent] = useState(currentNote);
+  const [marknoteState, setMarknoteState] = useState(currentNote);
 
   // Group menu state
   const [showGroupMenu, setShowGroupMenu] = useState(false);
@@ -46,10 +46,10 @@ const MNContainer: React.FC<MNContainerProps> = ({
   const [showColorMenu, setShowColorMenu] = useState(false);
 
   /**
-   * Function to handle changes in a marknoteComponent's field
+   * Function to handle changes in a marknote's field
    * @param key The field being changed
    * @param value The new value of the field
-   * @param updateDate If true, updates the marknoteComponent's last modified date. [default=false]
+   * @param updateDate If true, updates the marknote's last modified date. [default=false]
    */
   const handleEditField = (
     key: string,
@@ -59,35 +59,35 @@ const MNContainer: React.FC<MNContainerProps> = ({
     let updatedMarknote: Marknote;
     if (updateDate) {
       updatedMarknote = {
-        ...marknoteComponent,
+        ...marknoteState,
         [key]: value,
         lastModified: Date.now(),
       };
     } else {
       updatedMarknote = {
-        ...marknoteComponent,
+        ...marknoteState,
         [key]: value,
       };
     }
-    setMarknoteComponent(updatedMarknote);
+    setMarknoteState(updatedMarknote);
     handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
   /**
-   * Function to handle a change in the marknoteComponent's color.
+   * Function to handle a change in the marknote's color.
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
     const updatedMarknote = {
-      ...marknoteComponent,
+      ...marknoteState,
       color: color,
     };
-    setMarknoteComponent(marknoteComponent);
+    setMarknoteState(marknoteState);
     handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
   /**
-   * Function to toggle whether a marknoteComponent is favorited
+   * Function to toggle whether a marknote is favorited
    * Does NOT change the last modified date.
    */
   const handleFavorite = (
@@ -97,10 +97,10 @@ const MNContainer: React.FC<MNContainerProps> = ({
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
     const updatedMarknote = {
-      ...marknoteComponent,
-      favorited: !marknoteComponent.favorited,
+      ...marknoteState,
+      favorited: !marknoteState.favorited,
     };
-    setMarknoteComponent(marknoteComponent);
+    setMarknoteState(marknoteState);
     handleUpdateMarknote(dispatch, updatedMarknote);
   };
 
@@ -125,7 +125,7 @@ const MNContainer: React.FC<MNContainerProps> = ({
 
   return (
     <MNComponent
-      key={marknoteComponent._id}
+      key={marknoteState._id}
       setActiveGroup={setActiveGroup}
       currentNote={currentNote}
       handleEditField={handleEditField}
