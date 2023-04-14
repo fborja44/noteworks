@@ -148,10 +148,15 @@ const App = () => {
           </main>
         </div>
         <Footer />
-        <LoginModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
+        <LoginModal
+          openLogin={openLogin}
+          setOpenLogin={setOpenLogin}
+          setOpenCreateAccount={setOpenCreateAccount}
+        />
         <CreateAccountModal
           openCreateAccount={openCreateAccount}
           setOpenCreateAccount={setOpenCreateAccount}
+          setOpenLogin={setOpenLogin}
         />
       </RendererContainer>
     </ThemeProvider>

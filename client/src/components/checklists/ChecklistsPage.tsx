@@ -3,10 +3,6 @@
 // React imports
 import React, { useState } from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-
 import { Route, Switch, useHistory } from "react-router-dom";
 
 // Redux imports

@@ -3,7 +3,11 @@
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import ChevronDownIcon from "../icons/ChevronDownIcon";
+import { useHistory } from "react-router-dom";
+import { doSignOut } from "../../firebase/Firebase";
+import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
+import { setSelectedTab } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 const ButtonContainer = styled.div`
   background: ${(props) => props.theme.title.backgroundSecondary};
@@ -51,6 +55,12 @@ const ButtonContainer = styled.div`
 `;
 
 const ProfileButton = () => {
+  // History hook
+  const history = useHistory();
+
+  // Dispatch hook
+  const dispatch = useDispatch();
+
   return (
     <ButtonContainer>
       <button
@@ -65,8 +75,14 @@ const ProfileButton = () => {
         css={css`
           border-radius: 0px 5px 5px 0px;
         `}
+        title="Sign Out"
+        onClick={() => {
+          doSignOut();
+          history.push("/");
+          dispatch(setSelectedTab("/"));
+        }}
       >
-        <ChevronDownIcon />
+        <ArrowRightOnRectangleIcon />
       </button>
     </ButtonContainer>
   );

@@ -91,17 +91,17 @@ const Section: React.FC<SectionProps> = ({
 }) => {
   return (
     <SectionContainer>
-      <SectionHeader>
-        <SectionTitle>
+      {name && <SectionHeader>
+        {<SectionTitle>
           {icon}
           {name}
-        </SectionTitle>
+        </SectionTitle>}
         {/* {handleClick ? (
           <SectionHeaderButton onClick={handleClick}>
             <RiAddLine />
           </SectionHeaderButton>
         ) : null} */}
-      </SectionHeader>
+      </SectionHeader>}
       {children}
     </SectionContainer>
   );

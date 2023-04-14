@@ -225,7 +225,7 @@ const Titlebar = ({ setOpenLogin, setOpenCreateAccount }: TitlebarProps) => {
       <Draggable />
       {currentUser ? (
         <ProfileInfoContainer>
-          <span>Username</span>
+          <span>{currentUser.email}</span>
           <ProfileIcon>
             <SmileIcon />
           </ProfileIcon>

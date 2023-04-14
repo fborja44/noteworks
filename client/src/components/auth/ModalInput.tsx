@@ -4,11 +4,20 @@
 import React from "react";
 
 import styled from "@emotion/styled";
+import { COLOR } from "../../common/color";
+
+const Container = styled.div`
+  margin-bottom: 1.5em;
+
+  .error {
+    margin-top: 0.5em;
+    color: ${COLOR.red.primary};
+  }
+`;
 
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 2em;
   position: relative;
   color: ${(props) => props.theme.header.textSecondary};
 
@@ -16,15 +25,14 @@ const InputContainer = styled.div`
     position: absolute;
     height: 22px;
     width: 22px;
-    left: 16px;
+    left: 12px;
   }
 `;
 
 const Input = styled.input`
   width: 100%;
   height: 38px;
-  margin-left: 0.3rem;
-  padding: 0.2em 0.5em 0.2em 3.5em;
+  padding: 0.2em 0.5em 0.2em 3.4em;
   font-size: 13px;
   color: ${(props) => props.theme.header.textSecondary};
   background-color: ${(props) => props.theme.header.backgroundSecondary};
@@ -42,20 +50,31 @@ interface ModalInput {
   name?: string;
   id?: string;
   type?: "text" | "email" | "password";
+  error?: string;
 }
 
-const ModalInput = ({ icon, placeholder, name, id, type }: ModalInput) => {
+const ModalInput = ({
+  icon,
+  placeholder,
+  name,
+  id,
+  type,
+  error,
+}: ModalInput) => {
   return (
-    <InputContainer>
-      {icon}
-      <Input
-        type={type}
-        onChange={() => {}}
-        placeholder={placeholder}
-        name={name}
-        id={id}
-      />
-    </InputContainer>
+    <Container>
+      <InputContainer>
+        {icon}
+        <Input
+          type={type}
+          onChange={() => {}}
+          placeholder={placeholder}
+          name={name}
+          id={id}
+        />
+      </InputContainer>
+      {error && <small className="error">Error: {error}</small>}
+    </Container>
   );
 };
 

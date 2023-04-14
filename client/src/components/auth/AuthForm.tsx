@@ -57,6 +57,12 @@ export const FormButton = styled.button`
     transition: background-color 0.1s ease 0s;
   }
 
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   svg {
     margin-left: 0.5em;
     width: 16px;

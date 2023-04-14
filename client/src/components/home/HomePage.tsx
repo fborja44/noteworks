@@ -5,6 +5,10 @@ import React, { useState } from "react";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Common imports
 import { COLOR } from "../../common/color";
 
@@ -94,10 +98,11 @@ const HomePage: React.FC<HomePageProps> = ({
   setOpenLogin,
   setOpenCreateAccount,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Data Saved State
   const [saved, setSaved] = useState(true);
-
-  const currentUser = false;
 
   return (
     <React.Fragment>
