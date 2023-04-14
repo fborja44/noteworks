@@ -176,9 +176,10 @@ const TitleButton = styled.button`
 
 interface TitlebarProps {
   setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenCreateAccount: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Titlebar = ({ setOpenLogin }: TitlebarProps) => {
+const Titlebar = ({ setOpenLogin, setOpenCreateAccount }: TitlebarProps) => {
   // Firebase user context hook
   const currentUser = useContext(AuthContext);
 
@@ -233,7 +234,12 @@ const Titlebar = ({ setOpenLogin }: TitlebarProps) => {
       ) : (
         <ProfileInfoContainer>
           <TitleButton onClick={() => setOpenLogin(true)}>Sign In</TitleButton>
-          <TitleButton className="create-account">Create Account</TitleButton>
+          <TitleButton
+            onClick={() => setOpenCreateAccount(true)}
+            className="create-account"
+          >
+            Create Account
+          </TitleButton>
         </ProfileInfoContainer>
       )}
       {ipc ? (

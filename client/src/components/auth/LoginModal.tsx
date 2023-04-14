@@ -2,54 +2,19 @@
 ------------------------------------------------------------------------------*/
 // React import
 import React from "react";
-import { useHistory } from "react-router-dom";
 
-import styled from "@emotion/styled";
-
-// Redux imports
-import { useDispatch } from "react-redux";
-
-// Common imports
-import { COLOR } from "../../common/color";
+import { enqueueSnackbar } from "notistack";
 
 // Component Imports
 import ModalMenu from "../menus/ModalMenu";
-import { enqueueSnackbar } from "notistack";
 import UserIcon from "../icons/UserIcon";
+import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
+import ModalInput from "./ModalInput";
 
-const MenuContent = styled.div`
-  text-align: center;
-
-  p {
-    font-size: 14px;
-    padding-bottom: 1em;
-  }
-`;
-
-const LoginButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem auto 0 auto;
-  width: 200px;
-  background-color: ${COLOR.red.primary};
-  border: 1px solid ${(props) => props.theme.main.borderColor};
-  color: white;
-  height: 28px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 13px;
-
-  &:visited {
-    color: white;
-  }
-
-  &:hover {
-    cursor: pointer;
-    background-color: ${COLOR.red.secondary};
-    transition: background-color 0.1s ease 0s;
-  }
-`;
+// Image and icon imports
+import EmailIcon from "../icons/EmailIcon";
+import KeyIcon from "../icons/KeyIcon";
+import { Form, FormButton, ModalContent } from "./AuthForm";
 
 export interface LoginModalProps {
   openLogin: boolean;
@@ -57,9 +22,6 @@ export interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ openLogin, setOpenLogin }) => {
-  // History
-  const history = useHistory();
-
   return (
     <ModalMenu
       heading={"Login to Existing Account"}
@@ -67,9 +29,32 @@ const LoginModal: React.FC<LoginModalProps> = ({ openLogin, setOpenLogin }) => {
       showMenuState={openLogin}
       setShowMenuState={setOpenLogin}
     >
-      <MenuContent>
+      <ModalContent>
         <p>Enter your login info below to access your account.</p>
-      </MenuContent>
+        <Form>
+          <ModalInput
+            name={"login-email"}
+            icon={<EmailIcon />}
+            placeholder={"Enter Your Email"}
+            type="email"
+          />
+          <ModalInput
+            name={"login-password"}
+            icon={<KeyIcon />}
+            placeholder={"Enter Your Password"}
+            type="password"
+          />
+          <FormButton>
+            Login <ArrowRightOnRectangleIcon />
+          </FormButton>
+        </Form>
+        <small>
+          Forgot your password? <a>Reset Password.</a>
+        </small>
+        <small>
+          New here? <a>Create an Account.</a>
+        </small>
+      </ModalContent>
     </ModalMenu>
   );
 };

@@ -84,12 +84,16 @@ const HomePageButton = styled.button`
 
 interface HomePageProps {
   setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenCreateAccount: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
  * Home content renderer
  */
-const HomePage: React.FC<HomePageProps> = ({ setOpenLogin }) => {
+const HomePage: React.FC<HomePageProps> = ({
+  setOpenLogin,
+  setOpenCreateAccount,
+}) => {
   // Data Saved State
   const [saved, setSaved] = useState(true);
 
@@ -134,7 +138,10 @@ const HomePage: React.FC<HomePageProps> = ({ setOpenLogin }) => {
               <HomePageButton onClick={() => setOpenLogin(true)}>
                 Sign In
               </HomePageButton>
-              <HomePageButton className="create-account">
+              <HomePageButton
+                onClick={() => setOpenCreateAccount(true)}
+                className="create-account"
+              >
                 Create Account
               </HomePageButton>
             </ButtonsContainer>

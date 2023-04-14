@@ -38,6 +38,7 @@ import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
 import { fetchChecklists } from "../utils/checklists";
+import CreateAccountModal from "./auth/CreateAccountModal";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
@@ -97,17 +98,26 @@ const App = () => {
   // Login Modal open state
   const [openLogin, setOpenLogin] = useState(false);
 
+  // Create Account Modal open state
+  const [openCreateAccount, setOpenCreateAccount] = useState(false);
+
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
-        <Titlebar setOpenLogin={setOpenLogin} />
+        <Titlebar
+          setOpenLogin={setOpenLogin}
+          setOpenCreateAccount={setOpenCreateAccount}
+        />
         <div className="app-container">
           <Sidebar />
           {pathname.includes("marknotes") && explorerOpen && <NotesExplorer />}
           <main>
             <Switch>
               <Route exact path="/">
-                <HomePage setOpenLogin={setOpenLogin} />
+                <HomePage
+                  setOpenLogin={setOpenLogin}
+                  setOpenCreateAccount={setOpenCreateAccount}
+                />
               </Route>
               <Route path="/quicknotes">
                 <QNPage />
@@ -139,6 +149,10 @@ const App = () => {
         </div>
         <Footer />
         <LoginModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
+        <CreateAccountModal
+          openCreateAccount={openCreateAccount}
+          setOpenCreateAccount={setOpenCreateAccount}
+        />
       </RendererContainer>
     </ThemeProvider>
   );
