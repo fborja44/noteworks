@@ -4,10 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+
 import { ThemeProvider } from "@emotion/react";
 
 // Redux imports
@@ -25,6 +23,7 @@ import Titlebar from "./titlebar/Titlebar";
 import Sidebar from "./sidebar/Sidebar";
 import NotesExplorer from "./notesexplorer/NotesExplorer";
 import Footer from "./Footer";
+import LoginModal from "./auth/LoginModal";
 
 import HomePage from "./home/HomePage";
 import QNPage from "./quicknotes/QNPage";
@@ -95,17 +94,20 @@ const App = () => {
     localStorage.setItem(themeLocal, JSON.stringify(appTheme.id));
   }, [appTheme]);
 
+  // Login Modal open state
+  const [openLogin, setOpenLogin] = useState(false);
+
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
-        <Titlebar />
+        <Titlebar setOpenLogin={setOpenLogin} />
         <div className="app-container">
           <Sidebar />
           {pathname.includes("marknotes") && explorerOpen && <NotesExplorer />}
           <main>
             <Switch>
               <Route exact path="/">
-                <HomePage />
+                <HomePage setOpenLogin={setOpenLogin} />
               </Route>
               <Route path="/quicknotes">
                 <QNPage />
@@ -136,6 +138,7 @@ const App = () => {
           </main>
         </div>
         <Footer />
+        <LoginModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
       </RendererContainer>
     </ThemeProvider>
   );

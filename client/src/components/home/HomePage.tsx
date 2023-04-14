@@ -21,7 +21,7 @@ import HomeIcon from "../icons/HomeIcon";
 import GlobeIcon from "../icons/GlobeIcon";
 
 const TitleContainer = styled.div`
-  color: ${props => props.theme.title.textPrimary};
+  color: ${(props) => props.theme.title.textPrimary};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -56,12 +56,12 @@ const ButtonsContainer = styled.div`
 const HomePageButton = styled.button`
   background: ${(props) => props.theme.title.backgroundSecondary};
   color: ${(props) => props.theme.title.textSecondary};
-  height: 40px;
-  width: 130px;
+  height: 38px;
+  min-width: 100px;
   outline: none;
   border: 0;
   font-size: 13px;
-  padding: 0 1em;
+  padding: 0 1.25em;
   border-radius: 5px;
   margin-right: 1.5em;
 
@@ -71,7 +71,7 @@ const HomePageButton = styled.button`
     color: ${(props) => props.theme.sidebar.textSecondary};
   }
 
-  &.blue {
+  &.create-account {
     background: ${COLOR.blue.primary};
     color: white;
 
@@ -82,10 +82,14 @@ const HomePageButton = styled.button`
   }
 `;
 
+interface HomePageProps {
+  setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 /**
  * Home content renderer
  */
-const HomePage: React.FC = () => {
+const HomePage: React.FC<HomePageProps> = ({ setOpenLogin }) => {
   // Data Saved State
   const [saved, setSaved] = useState(true);
 
@@ -93,7 +97,11 @@ const HomePage: React.FC = () => {
 
   return (
     <React.Fragment>
-      <PageHeader title="Dashboard" icon={<HomeIcon />} saved={saved} />
+      <PageHeader
+        title="Dashboard"
+        icon={<HomeIcon />}
+        saved={currentUser ? saved : undefined}
+      />
       <div className="main-content-wrapper">
         {currentUser ? (
           <>
@@ -123,8 +131,12 @@ const HomePage: React.FC = () => {
               To get started now, log in, or create a new account!
             </Content>
             <ButtonsContainer>
-              <HomePageButton>Sign In</HomePageButton>
-              <HomePageButton className="blue">Create Account</HomePageButton>
+              <HomePageButton onClick={() => setOpenLogin(true)}>
+                Sign In
+              </HomePageButton>
+              <HomePageButton className="create-account">
+                Create Account
+              </HomePageButton>
             </ButtonsContainer>
           </Section>
         )}

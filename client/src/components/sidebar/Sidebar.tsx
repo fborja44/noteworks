@@ -8,6 +8,10 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Component imports
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 
@@ -73,9 +77,11 @@ const SidebarTitle = styled.div`
 `;
 
 const Sidebar: React.FC = () => {
-  const [open, setOpen] = useState(true);
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
 
-  const currentUser = false;
+  // State for open or collapsed
+  const [open, setOpen] = useState(true);
 
   return (
     <SidebarContainer open={open}>

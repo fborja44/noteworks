@@ -8,6 +8,10 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Component imports
 import ProfileButton from "./ProfileButton";
 import AppSearchbar from "./AppSearchbar";
@@ -144,10 +148,11 @@ const TitleButton = styled.button`
   background: ${(props) => props.theme.title.backgroundSecondary};
   color: ${(props) => props.theme.title.textSecondary};
   height: 32px;
+  min-width: 80px;
   outline: none;
   border: 0;
   font-size: 12px;
-  padding: 0 1em;
+  padding: 0 1.1em;
   border-radius: 5px;
   margin-left: 1em;
 
@@ -156,15 +161,31 @@ const TitleButton = styled.button`
     background: ${(props) => props.theme.sidebar.backgroundSecondary};
     color: ${(props) => props.theme.sidebar.textSecondary};
   }
+
+  &.create-account {
+    margin-right: 1em;
+    background: ${COLOR.blue.primary};
+    color: white;
+
+    &:hover {
+      background: ${COLOR.blue.secondary};
+      color: white;
+    }
+  }
 `;
 
-const Titlebar = () => {
+interface TitlebarProps {
+  setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Titlebar = ({ setOpenLogin }: TitlebarProps) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);
   const window_button = document.getElementById("window-button");
-
-  const currentUser = false;
 
   // Button handlers
   const handleOnClickClose = () => {
@@ -211,16 +232,8 @@ const Titlebar = () => {
         </ProfileInfoContainer>
       ) : (
         <ProfileInfoContainer>
-          <TitleButton>Sign In</TitleButton>
-          <TitleButton css={css`
-            background: ${COLOR.blue.primary};
-            color: white;
-
-            &:hover {
-              background: ${COLOR.blue.secondary};
-              color: white;
-            }
-          `}>Create Account</TitleButton>
+          <TitleButton onClick={() => setOpenLogin(true)}>Sign In</TitleButton>
+          <TitleButton className="create-account">Create Account</TitleButton>
         </ProfileInfoContainer>
       )}
       {ipc ? (
