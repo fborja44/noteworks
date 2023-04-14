@@ -101,6 +101,11 @@ const ArrowsContainer = styled.span`
       cursor: pointer;
       color: ${(props) => props.theme.main.textPrimary};
     }
+
+    &:disabled {
+      cursor: initial;
+      color: ${COLOR.dark_grey.secondary};
+    }
   }
 
   svg {

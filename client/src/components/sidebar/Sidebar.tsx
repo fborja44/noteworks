@@ -75,6 +75,8 @@ const SidebarTitle = styled.div`
 const Sidebar: React.FC = () => {
   const [open, setOpen] = useState(true);
 
+  const currentUser = false;
+
   return (
     <SidebarContainer open={open}>
       <SidebarTitle open={open}>
@@ -99,27 +101,31 @@ const Sidebar: React.FC = () => {
               icon={<HomeIcon css={NavIcon} />}
               route="/"
             />
-            <SidebarButton
-              full={open}
-              title="Quicknotes"
-              label="Quicknotes"
-              icon={<BoltIcon css={NavIcon} />}
-              route="/quicknotes"
-            />
-            <SidebarButton
-              full={open}
-              title="Marknotes"
-              label="Marknotes"
-              icon={<BsMarkdown css={NavIcon} />}
-              route="/marknotes"
-            />
-            <SidebarButton
-              full={open}
-              title="Checklists"
-              label="Checklists"
-              icon={<DocumentCheckIcon css={NavIcon} />}
-              route="/checklists"
-            />
+            {currentUser && (
+              <>
+                <SidebarButton
+                  full={open}
+                  title="Quicknotes"
+                  label="Quicknotes"
+                  icon={<BoltIcon css={NavIcon} />}
+                  route="/quicknotes"
+                />
+                <SidebarButton
+                  full={open}
+                  title="Marknotes"
+                  label="Marknotes"
+                  icon={<BsMarkdown css={NavIcon} />}
+                  route="/marknotes"
+                />
+                <SidebarButton
+                  full={open}
+                  title="Checklists"
+                  label="Checklists"
+                  icon={<DocumentCheckIcon css={NavIcon} />}
+                  route="/checklists"
+                />
+              </>
+            )}
           </div>
           <SidebarButton
             full={open}

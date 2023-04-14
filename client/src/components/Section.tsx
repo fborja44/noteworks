@@ -78,7 +78,7 @@ export const Empty = styled.div`
 `;
 
 export interface SectionProps {
-  name: string;
+  name?: string;
   icon?: any; // TODO: Change this type to something more specific
   handleClick?: any;
 }

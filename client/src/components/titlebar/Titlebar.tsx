@@ -140,11 +140,31 @@ const ProfileIcon = styled.div`
   }
 `;
 
+const TitleButton = styled.button`
+  background: ${(props) => props.theme.title.backgroundSecondary};
+  color: ${(props) => props.theme.title.textSecondary};
+  height: 32px;
+  outline: none;
+  border: 0;
+  font-size: 12px;
+  padding: 0 1em;
+  border-radius: 5px;
+  margin-left: 1em;
+
+  :hover {
+    cursor: pointer;
+    background: ${(props) => props.theme.sidebar.backgroundSecondary};
+    color: ${(props) => props.theme.sidebar.textSecondary};
+  }
+`;
+
 const Titlebar = () => {
   // State to check if window is maximized
   const [windowMaximized, setWindowMaximized] = useState(false);
   const [windowIcon, setWindowIcon] = useState(<Maximize />);
   const window_button = document.getElementById("window-button");
+
+  const currentUser = false;
 
   // Button handlers
   const handleOnClickClose = () => {
@@ -181,13 +201,28 @@ const Titlebar = () => {
       </TitleContainer>
       <AppSearchbar />
       <Draggable />
-      <ProfileInfoContainer>
-        <span>Username</span>
-        <ProfileIcon>
-          <SmileIcon />
-        </ProfileIcon>
-        <ProfileButton />
-      </ProfileInfoContainer>
+      {currentUser ? (
+        <ProfileInfoContainer>
+          <span>Username</span>
+          <ProfileIcon>
+            <SmileIcon />
+          </ProfileIcon>
+          <ProfileButton />
+        </ProfileInfoContainer>
+      ) : (
+        <ProfileInfoContainer>
+          <TitleButton>Sign In</TitleButton>
+          <TitleButton css={css`
+            background: ${COLOR.blue.primary};
+            color: white;
+
+            &:hover {
+              background: ${COLOR.blue.secondary};
+              color: white;
+            }
+          `}>Create Account</TitleButton>
+        </ProfileInfoContainer>
+      )}
       {ipc ? (
         <ButtonsContainer>
           <li onClick={handleOnClickMinimize} title="Minimize">
