@@ -9,6 +9,9 @@ export const SectionContainer = styled.section`
   margin-bottom: 2em;
   color: ${(props) => props.theme.main.textSecondary};
   font-size: 14px;
+  display: flex;
+  flex-direction: ${(props: { direction?: "row" | "column" }) =>
+    props.direction};
 `;
 
 export const SectionHeader = styled.div`
@@ -81,6 +84,7 @@ export interface SectionProps {
   name?: string;
   icon?: any; // TODO: Change this type to something more specific
   handleClick?: any;
+  direction?: "row" | "column";
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -88,23 +92,32 @@ const Section: React.FC<SectionProps> = ({
   icon,
   handleClick,
   children,
+  direction,
 }) => {
   return (
-    <SectionContainer>
-      {name && <SectionHeader>
-        {<SectionTitle>
-          {icon}
-          {name}
-        </SectionTitle>}
-        {/* {handleClick ? (
+    <SectionContainer direction={direction || "column"}>
+      {name && (
+        <SectionHeader>
+          {
+            <SectionTitle>
+              {icon}
+              {name}
+            </SectionTitle>
+          }
+          {/* {handleClick ? (
           <SectionHeaderButton onClick={handleClick}>
             <RiAddLine />
           </SectionHeaderButton>
         ) : null} */}
-      </SectionHeader>}
+        </SectionHeader>
+      )}
       {children}
     </SectionContainer>
   );
+};
+
+Section.defaultProps = {
+  direction: "column",
 };
 
 export default Section;

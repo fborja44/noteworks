@@ -132,18 +132,18 @@ const LoginModal: React.FC<LoginModalProps> = ({
           </FormButton>
         </Form>
         <small>
-          Forgot your password? <a>Reset Password.</a>
+          Forgot your password? <button>Reset Password.</button>
         </small>
         <small>
           New here?{" "}
-          <a
+          <button
             onClick={() => {
               setOpenLogin(false);
               setOpenCreateAccount(true);
             }}
           >
             Create an Account.
-          </a>
+          </button>
         </small>
       </ModalContent>
     </ModalMenu>

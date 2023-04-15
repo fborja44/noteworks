@@ -32,6 +32,7 @@ import SettingsPage from "./settings/SettingsPage";
 import GroupPage from "./groups/GroupPage";
 import SearchPage from "./searchpage/SearchPage";
 import ChecklistsPage from "./checklists/ChecklistsPage";
+import ProfilePage from "./profile/ProfilePage";
 
 // CSS imports
 import "../css/app.css";
@@ -138,6 +139,9 @@ const App = () => {
               </Route>
               <Route path="/settings">
                 <SettingsPage appTheme={appTheme} setAppTheme={setAppTheme} />
+              </Route>
+              <Route path="/profile">
+                <ProfilePage />
               </Route>
               {groupsState.map((group: Group) => (
                 <Route path={`/groups/${group._id}`}>

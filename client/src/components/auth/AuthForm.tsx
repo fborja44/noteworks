@@ -18,9 +18,12 @@ export const ModalContent = styled.div`
     margin-top: 1em;
     color: ${(props) => props.theme.main.textSecondary};
 
-    a {
+    button {
       color: ${COLOR.blue.primary};
       font-weight: 600;
+      border: none;
+      background: inherit;
+      padding: 0;
 
       &:hover {
         cursor: pointer;

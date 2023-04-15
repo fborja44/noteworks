@@ -44,7 +44,7 @@ const Input = styled.input`
   }
 `;
 
-interface ModalInput {
+interface ModalInputProps {
   icon?: React.ReactNode;
   placeholder?: string;
   name?: string;
@@ -60,7 +60,7 @@ const ModalInput = ({
   id,
   type,
   error,
-}: ModalInput) => {
+}: ModalInputProps) => {
   return (
     <Container>
       <InputContainer>

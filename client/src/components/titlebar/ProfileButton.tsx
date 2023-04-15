@@ -3,7 +3,7 @@
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { doSignOut } from "../../firebase/Firebase";
 import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
 import { setSelectedTab } from "../../redux/actions";
@@ -28,10 +28,12 @@ const ButtonContainer = styled.div`
     padding: 0 1em;
   }
 
+  a,
   button {
     display: flex;
     font-size: 12px;
     align-items: center;
+    text-decoration: none;
     color: ${(props) => props.theme.title.textSecondary};
     height: 100%;
     width: fit-content;
@@ -63,14 +65,15 @@ const ProfileButton = () => {
 
   return (
     <ButtonContainer>
-      <button
+      <Link
+        to="/profile"
         css={css`
           border-radius: 5px 0px 0px 5px;
           padding: 0 1em;
         `}
       >
         My Profile
-      </button>
+      </Link>
       <button
         css={css`
           border-radius: 0px 5px 5px 0px;

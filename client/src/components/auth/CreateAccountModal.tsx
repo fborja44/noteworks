@@ -179,14 +179,14 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
         </Form>
         <small>
           Already have an account?{" "}
-          <a
+          <button
             onClick={() => {
               setOpenCreateAccount(false);
               setOpenLogin(true);
             }}
           >
             Sign in here.
-          </a>
+          </button>
         </small>
       </ModalContent>
     </ModalMenu>
