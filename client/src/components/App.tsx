@@ -17,6 +17,7 @@ import { fetchGroups } from "../utils/groups";
 // Common imports
 import { Group } from "../common/types";
 import { darkTheme, lightTheme } from "../common/theme";
+import { fetchChecklists } from "../utils/checklists";
 
 // Component imports
 import Titlebar from "./titlebar/Titlebar";
@@ -24,6 +25,8 @@ import Sidebar from "./sidebar/Sidebar";
 import NotesExplorer from "./notesexplorer/NotesExplorer";
 import Footer from "./Footer";
 import LoginModal from "./auth/LoginModal";
+import CreateAccountModal from "./auth/CreateAccountModal";
+import ResetPasswordModal from "./auth/ResetPasswordModal";
 
 import HomePage from "./home/HomePage";
 import QNPage from "./quicknotes/QNPage";
@@ -38,8 +41,6 @@ import ProfilePage from "./profile/ProfilePage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
-import { fetchChecklists } from "../utils/checklists";
-import CreateAccountModal from "./auth/CreateAccountModal";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
@@ -102,6 +103,9 @@ const App = () => {
   // Create Account Modal open state
   const [openCreateAccount, setOpenCreateAccount] = useState(false);
 
+  // Reset Password Modal open state
+  const [openResetPassword, setOpenResetPassword] = useState(false);
+
   return (
     <ThemeProvider theme={appTheme}>
       <RendererContainer>
@@ -156,11 +160,16 @@ const App = () => {
           openLogin={openLogin}
           setOpenLogin={setOpenLogin}
           setOpenCreateAccount={setOpenCreateAccount}
+          setOpenResetPassword={setOpenResetPassword}
         />
         <CreateAccountModal
           openCreateAccount={openCreateAccount}
           setOpenCreateAccount={setOpenCreateAccount}
           setOpenLogin={setOpenLogin}
+        />
+        <ResetPasswordModal
+          openResetPassword={openResetPassword}
+          setOpenResetPassword={setOpenResetPassword}
         />
       </RendererContainer>
     </ThemeProvider>

@@ -51,6 +51,8 @@ interface ModalInputProps {
   id?: string;
   type?: "text" | "email" | "password";
   error?: string;
+  value?: string;
+  handleChange?: Function;
 }
 
 const ModalInput = ({
@@ -60,6 +62,8 @@ const ModalInput = ({
   id,
   type,
   error,
+  value,
+  handleChange,
 }: ModalInputProps) => {
   return (
     <Container>
@@ -67,10 +71,13 @@ const ModalInput = ({
         {icon}
         <Input
           type={type}
-          onChange={() => {}}
+          onChange={(event) => {
+            if (handleChange) handleChange(event.target.value);
+          }}
           placeholder={placeholder}
           name={name}
           id={id}
+          value={value}
         />
       </InputContainer>
       {error && <small className="error">Error: {error}</small>}

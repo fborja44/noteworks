@@ -8,6 +8,7 @@ import { doSignOut } from "../../firebase/Firebase";
 import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
 import { setSelectedTab } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import { COLOR } from "../../common/color";
 
 const ButtonContainer = styled.div`
   background: ${(props) => props.theme.title.backgroundSecondary};
@@ -49,6 +50,10 @@ const ButtonContainer = styled.div`
       color: ${(props) => props.theme.sidebar.textSecondary};
     }
 
+    &.sign-out:hover {
+      color: ${COLOR.blue.primary};
+    }
+
     svg {
       width: 14px;
       height: 14px;
@@ -78,6 +83,7 @@ const ProfileButton = () => {
         css={css`
           border-radius: 0px 5px 5px 0px;
         `}
+        className="sign-out"
         title="Sign Out"
         onClick={() => {
           doSignOut();

@@ -7,14 +7,14 @@ const AlertContainer = styled.div`
   flex-direction: row;
   align-items: center;
 
-  padding: 0 1em;
+  padding: 0.625em 0.875em;
   margin-bottom: 1.5em;
 
   background: ${COLOR.red.primary};
   color: white;
 
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   border-radius: 5px;
   font-size: 13px;
   font-weight: 600;

@@ -14,7 +14,7 @@ import ModalInput from "./ModalInput";
 // Image and icon imports
 import EmailIcon from "../icons/EmailIcon";
 import KeyIcon from "../icons/KeyIcon";
-import { Form, FormButton, ModalContent } from "./AuthForm";
+import { Form, FormButton, ModalContent, SubOptions } from "./AuthForm";
 import { validateEmail } from "../../common/utils";
 import { doSignInWithEmailAndPassword } from "../../firebase/Firebase";
 import Alert from "../alert/Alert";
@@ -23,6 +23,7 @@ export interface LoginModalProps {
   openLogin: boolean;
   setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenCreateAccount: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenResetPassword: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface LoginErrors {
@@ -41,6 +42,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   openLogin,
   setOpenLogin,
   setOpenCreateAccount,
+  setOpenResetPassword,
 }) => {
   // Loading state
   const [loading, setLoading] = useState(false);
@@ -131,20 +133,30 @@ const LoginModal: React.FC<LoginModalProps> = ({
             </span>
           </FormButton>
         </Form>
-        <small>
-          Forgot your password? <button>Reset Password.</button>
-        </small>
-        <small>
-          New here?{" "}
-          <button
-            onClick={() => {
-              setOpenLogin(false);
-              setOpenCreateAccount(true);
-            }}
-          >
-            Create an Account.
-          </button>
-        </small>
+        <SubOptions>
+          <small>
+            Forgot your password?{" "}
+            <button
+              onClick={() => {
+                setOpenLogin(false);
+                setOpenResetPassword(true);
+              }}
+            >
+              Reset Password.
+            </button>
+          </small>
+          <small>
+            New here?{" "}
+            <button
+              onClick={() => {
+                setOpenLogin(false);
+                setOpenCreateAccount(true);
+              }}
+            >
+              Create an Account.
+            </button>
+          </small>
+        </SubOptions>
       </ModalContent>
     </ModalMenu>
   );

@@ -1,7 +1,7 @@
 /* Home Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
@@ -22,7 +22,9 @@ import Section from "../Section";
 import UserIcon from "../icons/UserIcon";
 import SmileIcon from "../icons/SmileIcon";
 import EmailIcon from "../icons/EmailIcon";
-import { doSignOut } from "../../firebase/Firebase";
+import { doDeleteUser, doSignOut } from "../../firebase/Firebase";
+import DeleteUserModal from "./DeleteUserModal";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 const ProfileInfoContainer = styled.div`
   display: flex;
@@ -127,6 +129,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
   // History hook
   const history = useHistory();
 
+  // Delete Account modal
+  const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
+
+  // Reset Password modal
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+
   if (!currentUser) {
     // Redirect to home page
     history.push("/");
@@ -143,7 +151,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
           </ProfileIcon>
           <ProfileInfoContainer>
             <div>
-              <h3>First Last</h3>
+              <h3>{currentUser.displayName}</h3>
               <span>
                 <EmailIcon /> {currentUser.email}
               </span>
@@ -161,14 +169,29 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
             >
               Logout
             </ProfilePageButton>
-            <ProfilePageButton>Reset Password</ProfilePageButton>
+            <ProfilePageButton onClick={() => setOpenChangePassword(true)}>
+              Change Password
+            </ProfilePageButton>
             <ProfilePageButton>Reset App Data</ProfilePageButton>
-            <ProfilePageButton className="delete-account">
+            <ProfilePageButton
+              className="delete-account"
+              onClick={() => setOpenDeleteAccount(true)}
+            >
               Delete Account
             </ProfilePageButton>
           </ButtonsContainer>
         </Section>
       </div>
+      <DeleteUserModal
+        currentUser={currentUser}
+        showMenuState={openDeleteAccount}
+        setShowMenuState={setOpenDeleteAccount}
+      />
+      <ChangePasswordModal
+        currentUser={currentUser}
+        showMenuState={openChangePassword}
+        setShowMenuState={setOpenChangePassword}
+      />
     </React.Fragment>
   );
 };

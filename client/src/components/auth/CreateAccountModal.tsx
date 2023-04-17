@@ -8,7 +8,7 @@ import { enqueueSnackbar } from "notistack";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/Firebase";
 
 // Common imports
-import { validateEmail } from "../../common/utils";
+import { validateEmail, validateUsername } from "../../common/utils";
 
 // Component Imports
 import Alert from "../alert/Alert";
@@ -16,11 +16,12 @@ import UserPlusIcon from "../icons/UserPlusIcon";
 import ModalMenu from "../menus/ModalMenu";
 import PlusIcon from "../icons/PlusIcon";
 import ModalInput from "./ModalInput";
-import { Form, FormButton, ModalContent } from "./AuthForm";
+import { Form, FormButton, ModalContent, SubOptions } from "./AuthForm";
 
 // Image and icon imports
 import EmailIcon from "../icons/EmailIcon";
 import KeyIcon from "../icons/KeyIcon";
+import UserIcon from "../icons/UserIcon";
 
 export interface CreateAccountModalProps {
   openCreateAccount: boolean;
@@ -29,6 +30,7 @@ export interface CreateAccountModalProps {
 }
 
 interface SignupErrors {
+  username: string;
   email: string;
   password: string;
   passwordConfirm: string;
@@ -36,6 +38,7 @@ interface SignupErrors {
 }
 
 const defaultErrors: SignupErrors = {
+  username: "",
   email: "",
   password: "",
   passwordConfirm: "",
@@ -64,7 +67,8 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
     let errorFlag = false;
     setErrors(defaultErrors);
     setLoading(true);
-    const { email, password, passwordConfirm } = event.target.elements;
+    const { username, email, password, passwordConfirm } =
+      event.target.elements;
     // Check for missing inputs
     for (const elem of event.target.elements) {
       if (elem.nodeName === "INPUT" && !elem.value.trim()) {
@@ -76,6 +80,26 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
         });
         errorFlag = true;
       }
+    }
+    // Check for valid username
+    if (!validateUsername(username.value.trim())) {
+      setErrors((prevErrors) => {
+        return {
+          ...prevErrors,
+          username:
+            "Username may only contain alphanumeric characters (a-Z, 0-9).",
+        };
+      });
+      errorFlag = true;
+    }
+    if (username.value.trim().length < 6) {
+      setErrors((prevErrors) => {
+        return {
+          ...prevErrors,
+          username: "Username must be greater than 6 characters.",
+        };
+      });
+      errorFlag = true;
     }
     // Check for valid email
     if (email.value.trim() && !validateEmail(email.value.trim())) {
@@ -118,7 +142,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
         await doCreateUserWithEmailAndPassword(
           email.value.trim(),
           password.value.trim(),
-          ""
+          username.value.trim()
         );
         setOpenCreateAccount(false);
         enqueueSnackbar("You have been successfully signed up!", {
@@ -147,6 +171,14 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
         <p>Enter your information below to create an account.</p>
         {errors.firebase && <Alert>{errors.firebase}</Alert>}
         <Form id="signup-form" onSubmit={(event) => handleSignUp(event)}>
+          <ModalInput
+            id="username"
+            name="signupUsername"
+            icon={<UserIcon />}
+            placeholder="Enter Your Username"
+            type="text"
+            error={errors.username}
+          />
           <ModalInput
             id="email"
             name="signupEmail"
@@ -177,17 +209,19 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
             </span>
           </FormButton>
         </Form>
-        <small>
-          Already have an account?{" "}
-          <button
-            onClick={() => {
-              setOpenCreateAccount(false);
-              setOpenLogin(true);
-            }}
-          >
-            Sign in here.
-          </button>
-        </small>
+        <SubOptions>
+          <small>
+            Already have an account?{" "}
+            <button
+              onClick={() => {
+                setOpenCreateAccount(false);
+                setOpenLogin(true);
+              }}
+            >
+              Sign in here.
+            </button>
+          </small>
+        </SubOptions>
       </ModalContent>
     </ModalMenu>
   );

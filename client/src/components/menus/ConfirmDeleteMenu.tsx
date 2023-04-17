@@ -41,7 +41,7 @@ const DeleteButton = styled.button`
   border: 1px solid ${(props) => props.theme.main.borderColor};
   color: white;
   height: 28px;
-  border-radius: 8px;
+  border-radius: 5px;
   text-decoration: none;
   font-size: 13px;
 

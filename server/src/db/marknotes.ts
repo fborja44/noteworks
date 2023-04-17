@@ -34,13 +34,13 @@ export const createMarknote = async (
 
   const insertInfo = await marknotesCollection.insertOne(newMarknote);
   if (insertInfo.insertedCount === 0)
-    throw "createMarknote: Could not create new quicknote";
+    throw "createMarknote: Could not create new marknote";
 
   return newMarknote;
 };
 
 /**
- * Returns a list of all quicknotes in the database.
+ * Returns a list of all marknotes in the database.
  * @returns List of marknotes.
  */
 export const getAllMarknotes = async () => {
@@ -55,7 +55,7 @@ export const getAllMarknotes = async () => {
 };
 
 /**
- * Returns a single quicknote by its id.
+ * Returns a single marknote by its id.
  * @param id Target marknote id.
  * @returns The marknote object if found. Otherwise, null.
  */
@@ -90,7 +90,7 @@ export const updateMarknoteById = async (
 };
 
 /**
- * Deletes the quicknote with the target id.
+ * Deletes the marknote with the target id.
  * @param id Target marknote id.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */

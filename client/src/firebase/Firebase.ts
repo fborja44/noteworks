@@ -12,6 +12,7 @@ import {
   signOut,
   reauthenticateWithCredential,
   updateProfile,
+  deleteUser,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -108,6 +109,19 @@ async function doSignOut() {
   await signOut(auth);
 }
 
+/**
+ * Deletes a user through firebase
+ * @param user The user to delete
+ */
+async function doDeleteUser(email: string, password: string) {
+  // Reauthenticate user
+  let credential = EmailAuthProvider.credential(email, password);
+  if (auth.currentUser) {
+    await reauthenticateWithCredential(auth.currentUser, credential);
+    await deleteUser(auth.currentUser);
+  }
+}
+
 export default firebaseApp;
 
 export {
@@ -118,5 +132,6 @@ export {
   doPasswordReset,
   doPasswordUpdate,
   doSignOut,
+  doDeleteUser,
   doChangePassword,
 };

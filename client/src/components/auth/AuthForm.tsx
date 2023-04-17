@@ -6,12 +6,19 @@ import { COLOR } from "../../common/color";
 export const ModalContent = styled.div`
   text-align: center;
   padding: 0 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   p {
     color: ${(props) => props.theme.main.textSecondary};
     font-size: 13px;
     padding-bottom: 1em;
   }
+`;
+
+export const SubOptions = styled.div`
+  margin-top: 1em;
 
   small {
     display: block;
@@ -75,5 +82,4 @@ export const FormButton = styled.button`
 
 export const Form = styled.form`
   width: 325px;
-  margin-bottom: 2em;
 `;
