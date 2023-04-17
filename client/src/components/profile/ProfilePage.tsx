@@ -25,6 +25,7 @@ import EmailIcon from "../icons/EmailIcon";
 import { doDeleteUser, doSignOut } from "../../firebase/Firebase";
 import DeleteUserModal from "./DeleteUserModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+import EditProfileModal from "../auth/EditProfileModal";
 
 const ProfileInfoContainer = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const ProfileInfoContainer = styled.div`
   }
 `;
 
-const ProfileIcon = styled.div`
+const ProfileImage = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,6 +83,14 @@ const ProfileIcon = styled.div`
     width: 70px;
     height: 70px;
   }
+`;
+
+const ProfileIcon = styled.div`
+  height: 100px;
+  width: 100px;
+  background: ${COLOR.blue.primary};
+  border-radius: 1000em;
+  margin-right: 0.75em;
 `;
 
 const ButtonsContainer = styled.div`
@@ -135,6 +144,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
   // Reset Password modal
   const [openChangePassword, setOpenChangePassword] = useState(false);
 
+  // Reset Password modal
+  const [openEditProfile, setOpenEditProfile] = useState(false);
+
   if (!currentUser) {
     // Redirect to home page
     history.push("/");
@@ -146,9 +158,14 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
       <PageHeader title="My Profile" icon={<UserIcon />} />
       <div className="main-content-wrapper">
         <Section direction="row">
-          <ProfileIcon>
-            <SmileIcon />
-          </ProfileIcon>
+          {currentUser.photoURL ? (
+            <ProfileImage src={currentUser.photoURL} alt="Profile Image" />
+          ) : (
+            <ProfileIcon>
+              <SmileIcon />
+            </ProfileIcon>
+          )}
+
           <ProfileInfoContainer>
             <div>
               <h3>{currentUser.displayName}</h3>
@@ -156,7 +173,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
                 <EmailIcon /> {currentUser.email}
               </span>
             </div>
-            <button>Edit Profile</button>
+            <button onClick={() => setOpenEditProfile(true)}>
+              Edit Profile
+            </button>
           </ProfileInfoContainer>
         </Section>
         <Section name="Account Management">
@@ -191,6 +210,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
         currentUser={currentUser}
         showMenuState={openChangePassword}
         setShowMenuState={setOpenChangePassword}
+      />
+      <EditProfileModal
+        currentUser={currentUser}
+        openEditProfile={openEditProfile}
+        setOpenEditProfile={setOpenEditProfile}
       />
     </React.Fragment>
   );

@@ -126,6 +126,14 @@ const ProfileInfoContainer = styled.div`
   }
 `;
 
+const ProfileImage = styled.img`
+  height: 28px;
+  width: 28px;
+  background: ${COLOR.blue.primary};
+  border-radius: 1000em;
+  margin-right: 0.75em;
+`;
+
 const ProfileIcon = styled.div`
   display: flex;
   justify-content: center;
@@ -226,9 +234,14 @@ const Titlebar = ({ setOpenLogin, setOpenCreateAccount }: TitlebarProps) => {
       {currentUser ? (
         <ProfileInfoContainer>
           <span>{currentUser.displayName}</span>
-          <ProfileIcon>
-            <SmileIcon />
-          </ProfileIcon>
+          {currentUser.photoURL ? (
+            <ProfileImage src={currentUser.photoURL} alt="Profile Image"/>
+          ) : (
+            <ProfileIcon>
+              <SmileIcon />
+            </ProfileIcon>
+          )}
+
           <ProfileButton />
         </ProfileInfoContainer>
       ) : (

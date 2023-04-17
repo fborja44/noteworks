@@ -40,7 +40,21 @@ async function doCreateUserWithEmailAndPassword(
 ) {
   await createUserWithEmailAndPassword(auth, email, password);
   if (auth.currentUser)
-    updateProfile(auth.currentUser, { displayName: displayName });
+    await updateProfile(auth.currentUser, { displayName: displayName });
+}
+
+/**
+ * Updates a Firebase user profile
+ * @param displayName The new display name of the user
+ * @param photoURL The new photo URL of the user
+ */
+async function doUpdateUserProfile(displayName: string, photoURL: string) {
+  if (auth.currentUser) {
+    await updateProfile(auth.currentUser, {
+      displayName: displayName,
+      photoURL: photoURL,
+    });
+  }
 }
 
 /**
@@ -134,4 +148,5 @@ export {
   doSignOut,
   doDeleteUser,
   doChangePassword,
+  doUpdateUserProfile,
 };
