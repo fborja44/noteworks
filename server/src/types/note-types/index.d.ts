@@ -1,5 +1,6 @@
 declare module "note-types" {
   export type Quicknote = {
+    author_id: string;
     type: "quicknote";
     _id: ObjectId;
     title: string;
@@ -11,6 +12,7 @@ declare module "note-types" {
   };
 
   export type Marknote = {
+    author_id: string;
     type: "marknote";
     _id: ObjectId;
     title: string;
@@ -22,6 +24,7 @@ declare module "note-types" {
   };
 
   export type Group = {
+    author_id: string;
     type: "group";
     _id: ObjectId;
     title: string;
@@ -34,6 +37,7 @@ declare module "note-types" {
   };
 
   export type Checklist = {
+    author_id: string;
     type: "checklist";
     _id: ObjectId;
     title: string;

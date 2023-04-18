@@ -9,13 +9,19 @@ const groups = mongoCollections.groups;
 
 /**
  * Creates a new empty group.
+ * @param author_id ID of the user who created the note.
  * @param title Title of the group.
  * @param color ID for the color of the group.
  * @returns The new group. Throws an error if failed.
  */
-export const createGroup = async (title: string, color: ColorId) => {
+export const createGroup = async (
+  author_id: string,
+  title: string,
+  color: ColorId
+) => {
   if (!color) throw "createGroup: must provide a color";
   const newGroup: Group = {
+    author_id,
     type: "group",
     _id: new ObjectId(),
     title: title,
@@ -36,12 +42,13 @@ export const createGroup = async (title: string, color: ColorId) => {
 };
 
 /**
- * Returns a list of all groups in the database.
+ * Returns a list of all groups in the database for a specific user.
+ * @param author_id ID of the user.
  * @returns List of groups.
  */
-export const getAllGroups = async () => {
+export const getAllGroups = async (author_id: string) => {
   const groupsCollection = await groups();
-  const groupsList = await groupsCollection.find({}).toArray();
+  const groupsList = await groupsCollection.find({ author_id }).toArray();
 
   if (groupsList.length === 0) return [];
   for (const group of groupsList) {
@@ -52,60 +59,76 @@ export const getAllGroups = async () => {
 
 /**
  * Returns a single group by its id.
- * @param id Target group id.
+ * @param group_id Target group id.
+ * @param author_id ID of the user.
  * @returns The group object if found. Otherwise, throws an error.
  */
-export const getGroupById = async (id: string) => {
-  const parsed_id = new ObjectId(id.trim());
+export const getGroupById = async (group_id: string, author_id: string) => {
+  const parsed_id = new ObjectId(group_id.trim());
   const groupsCollection = await groups();
-  const group = await groupsCollection.findOne({ _id: parsed_id });
+  const group = await groupsCollection.findOne({
+    _id: parsed_id,
+    author_id,
+  });
   return group;
 };
 
 /**
  * Updates the group with the target id.
- * @param id Target group id.
+ * @param group_id Target group id.
+ * @param author_id ID of the user.
  * @param updatedGroup The updated group information.
  * @returns The updated group if successful. Otherwise, throws an error.
  */
-export const updateGroupById = async (id: string, updatedGroup: Group) => {
+export const updateGroupById = async (
+  group_id: string,
+  author_id: string,
+  updatedGroup: Group
+) => {
   const groupsCollection = await groups();
-  const parsed_id = new ObjectId(id.trim());
+  const parsed_id = new ObjectId(group_id.trim());
   const updateInfo = await groupsCollection.updateOne(
-    { _id: parsed_id },
+    { _id: parsed_id, author_id },
     { $set: updatedGroup }
   );
-  if (!updateInfo.matchedCount)
-    throw "updateGroupById: Failed to update group";
-  return await getGroupById(id.trim());
+  if (!updateInfo.matchedCount) throw "updateGroupById: Failed to update group";
+  return await getGroupById(group_id.trim(), author_id.trim());
 };
 
 /**
  * Deletes the group with the target id. Notes still persist outside of the group.
- * @param id
+ * @param group_id Target group id.
+ * @param author_id ID of the user.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */
-export const deleteGroupById = async (id: string) => {
+export const deleteGroupById = async (group_id: string, author_id: string) => {
   const groupsCollection = await groups();
-  const parsed_id = new ObjectId(id.trim());
+  const parsed_id = new ObjectId(group_id.trim());
 
   // Check if group exists
-  const group = await getGroupById(id);
+  const group = await getGroupById(group_id.trim(), author_id.trim());
   if (!group) {
-    throw `deleteGroupById: Could not find group with id '${id}'`;
+    throw `deleteGroupById: Could not find group with id '${group_id}'`;
   }
 
   // Delete the group
-  const deleteInfo = await groupsCollection.deleteOne({ _id: parsed_id });
+  const deleteInfo = await groupsCollection.deleteOne({
+    _id: parsed_id,
+    author_id,
+  });
   if (deleteInfo.deletedCount === 0)
     throw "deleteGroupById: Failed to delete group";
 
   // For all notes in the group, remove from their groups array
   for (const quicknote_id of group.quicknotes) {
-    await quicknotes.removeGroupFromQuicknote(quicknote_id, id);
+    await quicknotes.removeGroupFromQuicknote(
+      quicknote_id,
+      group_id,
+      author_id
+    );
   }
   for (const marknote_id of group.marknotes) {
-    await marknotes.removeGroupFromMarknote(marknote_id, id);
+    await marknotes.removeGroupFromMarknote(marknote_id, group_id, author_id);
   }
 
   return true;
@@ -116,12 +139,14 @@ export const deleteGroupById = async (id: string) => {
  * @param group_id Target group id.
  * @param note_id The target note id.
  * @param note_type The target note type.
+ * @param author_id ID of the user.
  * @returns The updated group if successful. Otherwise, throws an error.
  */
 export const addToGroup = async (
   group_id: string,
   note_id: string,
-  note_type: string
+  note_type: string,
+  author_id: string
 ) => {
   const groupsCollection = await groups();
   const parsed_id = new ObjectId(group_id.trim());
@@ -130,17 +155,17 @@ export const addToGroup = async (
   let updateInfo = null;
   if (note_type === "quicknote") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $addToSet: { quicknotes: note_id } }
     );
   } else if (note_type === "marknote") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $addToSet: { marknotes: note_id } }
     );
   } else if (note_type === "checklist") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $addToSet: { checklists: note_id } }
     );
   }
@@ -155,7 +180,7 @@ export const addToGroup = async (
   } else if (note_type === "checklist") {
     await checklists.addGroupToChecklist(note_id, group_id);
   }
-  return await getGroupById(group_id.trim());
+  return await getGroupById(group_id.trim(), author_id.trim());
 };
 
 /**
@@ -169,6 +194,7 @@ export const removeFromGroup = async (
   group_id: string,
   note_id: string,
   note_type: string,
+  author_id: string,
   deleted_note: boolean = false
 ) => {
   const groupsCollection = await groups();
@@ -178,17 +204,17 @@ export const removeFromGroup = async (
   let updateInfo = null;
   if (note_type === "quicknote") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $pull: { quicknotes: note_id } }
     );
   } else if (note_type === "marknote") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $pull: { marknotes: note_id } }
     );
   } else if (note_type === "checklist") {
     updateInfo = await groupsCollection.updateOne(
-      { _id: parsed_id },
+      { _id: parsed_id, author_id },
       { $pull: { checklists: note_id } }
     );
   }
@@ -206,5 +232,5 @@ export const removeFromGroup = async (
     }
   }
 
-  return await getGroupById(group_id.trim());
+  return await getGroupById(group_id.trim(), author_id.trim());
 };
