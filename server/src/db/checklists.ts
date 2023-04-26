@@ -2,8 +2,8 @@ import { ColorId, Checklist, ChecklistItem } from "note-types";
 import { ColorIds } from "../common/colors";
 import { ObjectId } from "mongodb";
 
-const mongoCollections = require("../config/mongoCollections");
-const groups = require("./groups");
+import mongoCollections from "../config/mongoCollections";
+import groups from "./groups";
 const checklists = mongoCollections.checklists;
 
 /**
@@ -13,7 +13,7 @@ const checklists = mongoCollections.checklists;
  * @param color ID for the color of the checklist.
  * @returns The new checklist. Throws an error if failed.
  */
-export const createChecklist = async (
+const createChecklist = async (
   author_id: string,
   title: string,
   color: ColorId
@@ -47,7 +47,7 @@ export const createChecklist = async (
  * @param author_id ID of the user.
  * @returns List of checklists.
  */
-export const getAllChecklists = async (author_id: string) => {
+const getAllChecklists = async (author_id: string) => {
   const checklistsCollection = await checklists();
   const checklistsList = await checklistsCollection
     .find({ author_id })
@@ -66,10 +66,7 @@ export const getAllChecklists = async (author_id: string) => {
  * @param author_id ID of the user.
  * @returns The checklist object if found. Otherwise, null.
  */
-export const getChecklistById = async (
-  checklist_id: string,
-  author_id: string
-) => {
+const getChecklistById = async (checklist_id: string, author_id: string) => {
   const parsed_id = new ObjectId(checklist_id.trim());
   const checklistsCollection = await checklists();
   const checklist = await checklistsCollection.findOne({
@@ -85,7 +82,7 @@ export const getChecklistById = async (
  * @param updatedChecklist The updated checklist information.
  * @returns The updated checklist if successful. Otherwise, throws an error.
  */
-export const updateChecklistById = async (
+const updateChecklistById = async (
   checklist_id: string,
   author_id: string,
   updatedChecklist: Checklist
@@ -120,10 +117,7 @@ export const updateChecklistById = async (
  * @param author_id ID of the user.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */
-export const deleteChecklistById = async (
-  checklist_id: string,
-  author_id: string
-) => {
+const deleteChecklistById = async (checklist_id: string, author_id: string) => {
   const checklistsCollection = await checklists();
   const parsed_id = new ObjectId(checklist_id.trim());
 
@@ -169,7 +163,7 @@ export const deleteChecklistById = async (
  * @param author_id ID of the user.
  * @returns The updated checklist if successful. Otherwise, throws an error.
  */
-export const addGroupToChecklist = async (
+const addGroupToChecklist = async (
   checklist_id: string,
   group_id: string,
   author_id: string
@@ -193,7 +187,7 @@ export const addGroupToChecklist = async (
  * @param author_id ID of the user.
  * @returns The updated checklist if successful. Otherwise, throws an error.
  */
-export const removeGroupFromChecklist = async (
+const removeGroupFromChecklist = async (
   checklist_id: string,
   group_id: string,
   author_id: string
@@ -217,7 +211,7 @@ export const removeGroupFromChecklist = async (
  * @param author_id ID of the user.
  * @returns The checklist object if found. Otherwise, null.
  */
-export const getChecklistItemById = async (
+const getChecklistItemById = async (
   checklist_id: string,
   item_id: string,
   author_id: string
@@ -248,7 +242,7 @@ export const getChecklistItemById = async (
  * @param content The content of the new checklist item.
  * @returns The updated checklist if successful. Otherwise, throws an error.
  */
-export const addChecklistItem = async (
+const addChecklistItem = async (
   checklist_id: string,
   author_id: string,
   content: string
@@ -285,7 +279,7 @@ export const addChecklistItem = async (
  * @param author_id ID of the user.
  * @returns The updated checklist if successful. Otherwise, throws an error.
  */
-export const removeChecklistItem = async (
+const removeChecklistItem = async (
   checklist_id: string,
   item_id: string,
   author_id: string
@@ -309,7 +303,7 @@ export const removeChecklistItem = async (
  * @param updatedItem The target item id.
  * @returns The updated checklist if usccessful. Otherwise, throws an error.
  */
-export const updateChecklistItemById = async (
+const updateChecklistItemById = async (
   checklist_id: string,
   author_id: string,
   updatedItem: ChecklistItem
@@ -327,4 +321,18 @@ export const updateChecklistItemById = async (
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw `updateChecklistById: Failed to update item {'id': '${updatedItem._id}'}' in checklist {'type': 'checklist', 'id': '${checklist_id}'}`;
   return await getChecklistById(checklist_id.trim(), author_id.trim());
+};
+
+export default {
+  createChecklist,
+  getAllChecklists,
+  getChecklistById,
+  updateChecklistById,
+  deleteChecklistById,
+  addGroupToChecklist,
+  removeGroupFromChecklist,
+  getChecklistItemById,
+  addChecklistItem,
+  removeChecklistItem,
+  updateChecklistItemById,
 };

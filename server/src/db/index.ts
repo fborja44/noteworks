@@ -1,9 +1,9 @@
-const groups = require("./groups");
-const quicknotes = require("./quicknotes");
-const marknotes = require("./marknotes");
-const checklists = require("./checklists");
+import groups from "./groups";
+import quicknotes from "./quicknotes";
+import marknotes from "./marknotes";
+import checklists from "./checklists";
 
-module.exports = {
+export default {
   groups: groups,
   quicknotes: quicknotes,
   marknotes: marknotes,

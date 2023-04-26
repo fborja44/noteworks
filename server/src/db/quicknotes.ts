@@ -2,8 +2,8 @@ import { ColorId, Quicknote } from "note-types";
 import { ColorIds } from "../common/colors";
 import { ObjectId } from "mongodb";
 
-const mongoCollections = require("../config/mongoCollections");
-const groups = require("./groups");
+import mongoCollections from "../config/mongoCollections";
+import groups from "./groups";
 const quicknotes = mongoCollections.quicknotes;
 
 /**
@@ -14,7 +14,7 @@ const quicknotes = mongoCollections.quicknotes;
  * @param body Content of the note.
  * @returns The new quicknote. Throws an error if failed.
  */
-export const createQuicknote = async (
+const createQuicknote = async (
   author_id: string,
   title: string,
   color: ColorId,
@@ -51,7 +51,7 @@ export const createQuicknote = async (
  * @param author_id ID of the user
  * @returns List of quicknotes.
  */
-export const getAllQuicknotes = async (author_id: string) => {
+const getAllQuicknotes = async (author_id: string) => {
   const quicknotesCollection = await quicknotes();
   const quicknotesList = await quicknotesCollection
     .find({ author_id })
@@ -70,7 +70,7 @@ export const getAllQuicknotes = async (author_id: string) => {
  * @param author_id ID of the user.
  * @returns The quicknote object if found. Otherwise, null.
  */
-export const getQuicknoteById = async (note_id: string, author_id: string) => {
+const getQuicknoteById = async (note_id: string, author_id: string) => {
   const parsed_id = new ObjectId(note_id.trim());
   const quicknotesCollection = await quicknotes();
   const quicknote = await quicknotesCollection.findOne({
@@ -87,7 +87,7 @@ export const getQuicknoteById = async (note_id: string, author_id: string) => {
  * @param updatedQuicknote The updated quicknote information.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const updateQuicknoteById = async (
+const updateQuicknoteById = async (
   note_id: string,
   author_id: string,
   updatedQuicknote: Quicknote
@@ -115,10 +115,7 @@ export const updateQuicknoteById = async (
  * @param author_id ID of the user.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */
-export const deleteQuicknoteById = async (
-  note_id: string,
-  author_id: string
-) => {
+const deleteQuicknoteById = async (note_id: string, author_id: string) => {
   const quicknotesCollection = await quicknotes();
   const parsed_id = new ObjectId(note_id.trim());
 
@@ -161,7 +158,7 @@ export const deleteQuicknoteById = async (
  * @param author_id ID of the user.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const addGroupToQuicknote = async (
+const addGroupToQuicknote = async (
   note_id: string,
   group_id: string,
   author_id: string
@@ -185,7 +182,7 @@ export const addGroupToQuicknote = async (
  * @param author_id ID of the user.
  * @returns The updated quicknote if successful. Otherwise, throws an error.
  */
-export const removeGroupFromQuicknote = async (
+const removeGroupFromQuicknote = async (
   note_id: string,
   group_id: string,
   author_id: string
@@ -200,4 +197,14 @@ export const removeGroupFromQuicknote = async (
   if (!updateInfo.matchedCount)
     throw `removeGroupFromQuicknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'quicknote', 'id': '${note_id}'}`;
   return await getQuicknoteById(note_id.trim(), author_id.trim());
+};
+
+export default {
+  createQuicknote,
+  getQuicknoteById,
+  getAllQuicknotes,
+  updateQuicknoteById,
+  deleteQuicknoteById,
+  addGroupToQuicknote,
+  removeGroupFromQuicknote,
 };

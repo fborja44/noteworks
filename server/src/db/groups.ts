@@ -1,10 +1,10 @@
-import { ColorId, Group, Marknote, Quicknote } from "note-types";
+import { ColorId, Group } from "note-types";
 import { ObjectId } from "mongodb";
 
-const mongoCollections = require("../config/mongoCollections");
-const quicknotes = require("./quicknotes");
-const marknotes = require("./marknotes");
-const checklists = require("./checklists");
+import mongoCollections from "../config/mongoCollections";
+import quicknotes from "./quicknotes";
+import marknotes from "./marknotes";
+import checklists from "./checklists";
 const groups = mongoCollections.groups;
 
 /**
@@ -14,7 +14,7 @@ const groups = mongoCollections.groups;
  * @param color ID for the color of the group.
  * @returns The new group. Throws an error if failed.
  */
-export const createGroup = async (
+const createGroup = async (
   author_id: string,
   title: string,
   color: ColorId
@@ -46,7 +46,7 @@ export const createGroup = async (
  * @param author_id ID of the user.
  * @returns List of groups.
  */
-export const getAllGroups = async (author_id: string) => {
+const getAllGroups = async (author_id: string) => {
   const groupsCollection = await groups();
   const groupsList = await groupsCollection.find({ author_id }).toArray();
 
@@ -63,7 +63,7 @@ export const getAllGroups = async (author_id: string) => {
  * @param author_id ID of the user.
  * @returns The group object if found. Otherwise, throws an error.
  */
-export const getGroupById = async (group_id: string, author_id: string) => {
+const getGroupById = async (group_id: string, author_id: string) => {
   const parsed_id = new ObjectId(group_id.trim());
   const groupsCollection = await groups();
   const group = await groupsCollection.findOne({
@@ -80,7 +80,7 @@ export const getGroupById = async (group_id: string, author_id: string) => {
  * @param updatedGroup The updated group information.
  * @returns The updated group if successful. Otherwise, throws an error.
  */
-export const updateGroupById = async (
+const updateGroupById = async (
   group_id: string,
   author_id: string,
   updatedGroup: Group
@@ -101,7 +101,7 @@ export const updateGroupById = async (
  * @param author_id ID of the user.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */
-export const deleteGroupById = async (group_id: string, author_id: string) => {
+const deleteGroupById = async (group_id: string, author_id: string) => {
   const groupsCollection = await groups();
   const parsed_id = new ObjectId(group_id.trim());
 
@@ -142,7 +142,7 @@ export const deleteGroupById = async (group_id: string, author_id: string) => {
  * @param author_id ID of the user.
  * @returns The updated group if successful. Otherwise, throws an error.
  */
-export const addToGroup = async (
+const addToGroup = async (
   group_id: string,
   note_id: string,
   note_type: string,
@@ -174,11 +174,11 @@ export const addToGroup = async (
 
   // Also update the note
   if (note_type === "quicknote") {
-    await quicknotes.addGroupToQuicknote(note_id, group_id);
+    await quicknotes.addGroupToQuicknote(note_id, group_id, author_id);
   } else if (note_type === "marknote") {
-    await marknotes.addGroupToMarknote(note_id, group_id);
+    await marknotes.addGroupToMarknote(note_id, group_id, author_id);
   } else if (note_type === "checklist") {
-    await checklists.addGroupToChecklist(note_id, group_id);
+    await checklists.addGroupToChecklist(note_id, group_id, author_id);
   }
   return await getGroupById(group_id.trim(), author_id.trim());
 };
@@ -190,7 +190,7 @@ export const addToGroup = async (
  * @param note_type The target note type.
  * @returns The updated group if successful. Otherwise, throws an error.
  */
-export const removeFromGroup = async (
+const removeFromGroup = async (
   group_id: string,
   note_id: string,
   note_type: string,
@@ -224,13 +224,23 @@ export const removeFromGroup = async (
   // Also update the note if not deleted
   if (!deleted_note) {
     if (note_type === "quicknote") {
-      await quicknotes.removeGroupFromQuicknote(note_id, group_id);
+      await quicknotes.removeGroupFromQuicknote(note_id, group_id, author_id);
     } else if (note_type === "marknote") {
-      await marknotes.removeGroupFromMarknote(note_id, group_id);
+      await marknotes.removeGroupFromMarknote(note_id, group_id, author_id);
     } else if (note_type === "checklist") {
-      await checklists.removeGroupFromChecklist(note_id, group_id);
+      await checklists.removeGroupFromChecklist(note_id, group_id, author_id);
     }
   }
 
   return await getGroupById(group_id.trim(), author_id.trim());
+};
+
+export default {
+  createGroup,
+  getAllGroups,
+  getGroupById,
+  updateGroupById,
+  deleteGroupById,
+  addToGroup,
+  removeFromGroup,
 };

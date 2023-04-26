@@ -1,11 +1,12 @@
-const dbConnection = require("./mongoConnection");
+import { Collection } from "mongodb";
+import dbConnection from "./mongoConnection";
 
 /* Allows one reference to each collection per app */
 const getCollectionFn = (collection: any) => {
-  let _col: undefined = undefined;
+  let _col: Collection | undefined = undefined;
 
   return async () => {
-    if (!_col) {
+    while (!_col) {
       const db = await dbConnection();
       _col = await db.collection(collection);
     }
@@ -15,11 +16,9 @@ const getCollectionFn = (collection: any) => {
 };
 
 /* List collections: */
-module.exports = {
+export default {
   groups: getCollectionFn("groups"),
   quicknotes: getCollectionFn("quicknotes"),
   marknotes: getCollectionFn("marknotes"),
   checklists: getCollectionFn("checklists"),
 };
-
-export {};

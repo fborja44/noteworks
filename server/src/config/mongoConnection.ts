@@ -5,7 +5,7 @@ const mongoConfig = settings.mongoConfig;
 let _connection: any = undefined;
 let _db: any = undefined;
 
-module.exports = async () => {
+export default async () => {
   if (!_connection) {
     _connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
@@ -16,5 +16,3 @@ module.exports = async () => {
 
   return _db;
 };
-
-export {};

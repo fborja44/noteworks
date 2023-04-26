@@ -2,9 +2,9 @@ import { ColorId, Marknote } from "note-types";
 import { ObjectId } from "mongodb";
 import { ColorIds } from "../common/colors";
 
-const mongoCollections = require("../config/mongoCollections");
+import mongoCollections from "../config/mongoCollections";
+import groups from "./groups";
 const marknotes = mongoCollections.marknotes;
-const groups = require("./groups");
 
 /**
  * Inserts a marknote into the database.
@@ -14,7 +14,7 @@ const groups = require("./groups");
  * @param body Content of the note.
  * @returns The new marknote. Throws an error if failed.
  */
-export const createMarknote = async (
+const createMarknote = async (
   author_id: string,
   title: string,
   color: ColorId,
@@ -47,7 +47,7 @@ export const createMarknote = async (
  * @param author_id ID of the user.
  * @returns List of marknotes.
  */
-export const getAllMarknotes = async (author_id: string) => {
+const getAllMarknotes = async (author_id: string) => {
   const marknotesCollection = await marknotes();
   const marknotesList = await marknotesCollection.find({ author_id }).toArray();
 
@@ -64,7 +64,7 @@ export const getAllMarknotes = async (author_id: string) => {
  * @param author_id ID of the user.
  * @returns The marknote object if found. Otherwise, null.
  */
-export const getMarknoteById = async (note_id: string, author_id: string) => {
+const getMarknoteById = async (note_id: string, author_id: string) => {
   const parsed_id = new ObjectId(note_id.trim());
   const marknotesCollection = await marknotes();
   const marknote = await marknotesCollection.findOne({
@@ -81,7 +81,7 @@ export const getMarknoteById = async (note_id: string, author_id: string) => {
  * @param updatedMarknote The updated marknote information.
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
-export const updateMarknoteById = async (
+const updateMarknoteById = async (
   note_id: string,
   author_id: string,
   updatedMarknote: Marknote
@@ -105,7 +105,7 @@ export const updateMarknoteById = async (
  * @param author_id ID of the user.
  * @returns True if successfully deleted. Otherwise, throws an error.
  */
-export const deleteMarknoteById = async (
+const deleteMarknoteById = async (
   note_id: string,
   author_id: string
 ) => {
@@ -151,7 +151,7 @@ export const deleteMarknoteById = async (
  * @param author_id ID of the user.
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
-export const addGroupToMarknote = async (
+const addGroupToMarknote = async (
   note_id: string,
   group_id: string,
   author_id: string
@@ -175,7 +175,7 @@ export const addGroupToMarknote = async (
  * @param author_id ID of the user.
  * @returns The updated marknote if successful. Otherwise, throws an error.
  */
-export const removeGroupFromMarknote = async (
+const removeGroupFromMarknote = async (
   note_id: string,
   group_id: string,
   author_id: string
@@ -191,3 +191,13 @@ export const removeGroupFromMarknote = async (
     throw `removeGroupFromMarknote: Failed to remove group {'id': '${group_id}'}' from note {'type': 'marknote', 'id': '${note_id}'}`;
   return await getMarknoteById(note_id.trim(), author_id.trim());
 };
+
+export default {
+  createMarknote,
+  getAllMarknotes,
+  getMarknoteById,
+  updateMarknoteById,
+  deleteMarknoteById,
+  addGroupToMarknote,
+  removeGroupFromMarknote
+}
