@@ -5,6 +5,10 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx, useTheme } from "@emotion/react";
@@ -218,6 +222,9 @@ export interface MNEditorProps {
 }
 
 const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // History hook
   const history = useHistory();
 
@@ -301,8 +308,9 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
    * Effect hook to delay saving to the database.
    */
   useEffect(() => {
+    if (!currentUser) return;
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateMarknote(dispatch, activeMarknote);
+      handleUpdateMarknote(dispatch, activeMarknote, currentUser);
       setSaved(true);
     }, 2000);
 

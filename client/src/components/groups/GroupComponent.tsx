@@ -4,6 +4,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx, useTheme } from "@emotion/react";
@@ -78,6 +82,9 @@ export interface GroupComponentProps {
 }
 
 const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -96,12 +103,16 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedGroup = {
       ...currentGroup,
       favorited: !groupState.favorited,
     };
     setGroupState(updatedGroup);
-    handleUpdateGroup(dispatch, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup, currentUser);
   };
 
   const appTheme = useTheme();
@@ -114,12 +125,16 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedGroup = {
       ...currentGroup,
       color: color,
     };
     setGroupState(updatedGroup);
-    handleUpdateGroup(dispatch, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup, currentUser);
   };
 
   /**

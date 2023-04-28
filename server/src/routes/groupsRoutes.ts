@@ -1,19 +1,20 @@
 import { ColorIds } from "../common/colors";
 
-const data = require("../db");
+import data from "../db";
+const express = require("express");
 const groupsData = data.groups;
 const quicknotesData = data.quicknotes;
 const marknotesData = data.marknotes;
 const checklistsData = data.checklists;
-const express = require("express");
 const router = express.Router();
 
 /**
- * [GET /groups]
+ * [GET /user/:userId/groups]
  */
-router.get("/", async (req: any, res: any) => {
+router.get("/user/:userId/groups", async (req: any, res: any) => {
+  const userId = req.params.userId;
   try {
-    let groups = await groupsData.getAllGroups();
+    let groups = await groupsData.getAllGroups(userId.trim());
     return res.status(200).json(groups);
   } catch (e) {
     console.log(e);
@@ -24,12 +25,13 @@ router.get("/", async (req: any, res: any) => {
 });
 
 /**
- * [GET /groups/:id]
+ * [GET /user/:userId/groups/:id]
  */
-router.get("/:id", async (req: any, res: any) => {
+router.get("/user/:userId/groups/:id", async (req: any, res: any) => {
   let id = req.params.id;
+  const userId = req.params.userId;
   try {
-    let group = await groupsData.getGroupById(id.trim());
+    let group = await groupsData.getGroupById(id.trim(), userId.trim());
     return res.status(200).json(group);
   } catch (e) {
     console.log(e);
@@ -40,9 +42,10 @@ router.get("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [POST /groups]
+ * [POST /user/:userId/groups]
  */
-router.post("/", async (req: any, res: any) => {
+router.post("/user/:userId/groups", async (req: any, res: any) => {
+  const userId = req.params.userId;
   const title = req.body.title;
   const color = req.body.color;
 
@@ -59,7 +62,7 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
-    let new_group = await groupsData.createGroup(title, color);
+    let new_group = await groupsData.createGroup(userId.trim(), title, color);
     return res.status(200).json(new_group);
   } catch (e: any) {
     console.log(e);
@@ -71,10 +74,11 @@ router.post("/", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /groups/:id]
+ * [PATCH /user/:userId/groups/:id]
  */
-router.patch("/:id", async (req: any, res: any) => {
+router.patch("/user/:userId/groups/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   const title = req.body.title;
   const color = req.body.color;
   const favorited = req.body.favorited;
@@ -89,7 +93,7 @@ router.patch("/:id", async (req: any, res: any) => {
   // Check if group exists
   let group;
   try {
-    group = await groupsData.getGroupById(id.trim());
+    group = await groupsData.getGroupById(id.trim(), userId.trim());
     if (!group) {
       return res.status(400).json({
         error: `Group with id ${id.trim()} was not found.`,
@@ -118,7 +122,11 @@ router.patch("/:id", async (req: any, res: any) => {
 
   // Update the group
   try {
-    let updated_group = await groupsData.updateGroupById(id.trim(), group);
+    let updated_group = await groupsData.updateGroupById(
+      id.trim(),
+      userId.trim(),
+      group
+    );
     return res.status(200).json(updated_group);
   } catch (e: any) {
     console.log(e);
@@ -130,80 +138,92 @@ router.patch("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /groups/:id/quicknotes/:noteId]
+ * [PATCH /user/:userId/groups/:id/quicknotes/:noteId]
  */
-router.patch("/:id/quicknotes/:noteId", async (req: any, res: any) => {
-  const id = req.params.id;
-  const noteId = req.params.noteId;
-  // Check if group exists
-  let group;
-  try {
-    group = await groupsData.getGroupById(id.trim());
-    if (!group) {
-      return res.status(400).json({
-        error: `Group with id ${id.trim()} was not found.`,
+router.patch(
+  "/user/:userId/groups/:id/quicknotes/:noteId",
+  async (req: any, res: any) => {
+    const id = req.params.id;
+    const noteId = req.params.noteId;
+    const userId = req.params.userId;
+    // Check if group exists
+    let group;
+    try {
+      group = await groupsData.getGroupById(id.trim(), userId.trim());
+      if (!group) {
+        return res.status(400).json({
+          error: `Group with id ${id.trim()} was not found.`,
+        });
+      }
+    } catch (e: any) {
+      console.log(e);
+      return res.status(500).json({
+        error: "Failed to fetch group.",
+        message: e.toString(),
       });
     }
-  } catch (e: any) {
-    console.log(e);
-    return res.status(500).json({
-      error: "Failed to fetch group.",
-      message: e.toString(),
-    });
-  }
 
-  // If note is in group, remove the group, otherwise, add it
-  let updatedGroup = null,
-    updatedNote = null;
-  if (group.quicknotes.includes(noteId.trim())) {
-    try {
-      updatedGroup = await groupsData.removeFromGroup(
-        id.trim(),
-        noteId.trim(),
-        "quicknote"
-      );
-      updatedNote = await quicknotesData.removeGroupFromQuicknote(
-        noteId,
-        id.trim()
-      );
-    } catch (e: any) {
-      console.log(e);
-      return res.status(500).json({
-        error: "Failed to remove quicknote to group.",
-        message: e.toString(),
-      });
+    // If note is in group, remove the group, otherwise, add it
+    let updatedGroup = null,
+      updatedNote = null;
+    if (group.quicknotes.includes(noteId.trim())) {
+      try {
+        updatedGroup = await groupsData.removeFromGroup(
+          id.trim(),
+          noteId.trim(),
+          "quicknote",
+          userId.trim()
+        );
+        updatedNote = await quicknotesData.removeGroupFromQuicknote(
+          noteId.trim(),
+          id.trim(),
+          userId.trim()
+        );
+      } catch (e: any) {
+        console.log(e);
+        return res.status(500).json({
+          error: "Failed to remove quicknote to group.",
+          message: e.toString(),
+        });
+      }
+    } else {
+      try {
+        updatedGroup = await groupsData.addToGroup(
+          id.trim(),
+          noteId.trim(),
+          "quicknote",
+          userId.trim()
+        );
+        updatedNote = await quicknotesData.addGroupToQuicknote(
+          noteId.trim(),
+          id.trim(),
+          userId.trim()
+        );
+      } catch (e: any) {
+        console.log(e);
+        return res.status(500).json({
+          error: "Failed to add quicknote to group.",
+          message: e.toString(),
+        });
+      }
     }
-  } else {
-    try {
-      updatedGroup = await groupsData.addToGroup(
-        id.trim(),
-        noteId.trim(),
-        "quicknote"
-      );
-      updatedNote = await quicknotesData.addGroupToQuicknote(noteId, id.trim());
-    } catch (e: any) {
-      console.log(e);
-      return res.status(500).json({
-        error: "Failed to add quicknote to group.",
-        message: e.toString(),
-      });
-    }
+    return res
+      .status(200)
+      .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
   }
-  return res
-    .status(200)
-    .json({ updatedGroup: updatedGroup, updatedNote: updatedNote });
-});
+);
 
 /**
- * [PATCH /groups/:id/marknotes/:noteId]
+ * [PATCH /user/:userId/groups/:id/marknotes/:noteId]
  */
-router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
+router.patch("/user/:userId/groups/:id/marknotes/:noteId", async (req: any, res: any) => {
   const id = req.params.id;
   const noteId = req.params.noteId;
+  const userId = req.params.userId;
   // Check if group exists
   let group;
   try {
-    group = await groupsData.getGroupById(id.trim());
+    group = await groupsData.getGroupById(id.trim(), userId.trim());
     if (!group) {
       return res.status(400).json({
         error: `Group with id ${id.trim()} was not found.`,
@@ -225,11 +245,13 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
       updatedGroup = await groupsData.removeFromGroup(
         id.trim(),
         noteId.trim(),
-        "marknote"
+        "marknote",
+        userId.trim()
       );
       updatedNote = await marknotesData.removeGroupFromMarknote(
         noteId,
-        id.trim()
+        id.trim(),
+        userId.trim()
       );
     } catch (e: any) {
       console.log(e);
@@ -243,9 +265,14 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
       updatedGroup = await groupsData.addToGroup(
         id.trim(),
         noteId.trim(),
-        "marknote"
+        "marknote",
+        userId.trim()
       );
-      updatedNote = await marknotesData.addGroupToMarknote(noteId, id.trim());
+      updatedNote = await marknotesData.addGroupToMarknote(
+        noteId,
+        id.trim(),
+        userId.trim()
+      );
     } catch (e: any) {
       console.log(e);
       return res.status(500).json({
@@ -260,15 +287,16 @@ router.patch("/:id/marknotes/:noteId", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /groups/:id/checklists/:noteId]
+ * [PATCH /user/:userId/groups/:id/checklists/:noteId]
  */
-router.patch("/:id/checklists/:noteId", async (req: any, res: any) => {
+router.patch("/user/:userId/groups/:id/checklists/:noteId", async (req: any, res: any) => {
   const id = req.params.id;
   const noteId = req.params.noteId;
+  const userId = req.params.userId;
   // Check if group exists
   let group;
   try {
-    group = await groupsData.getGroupById(id.trim());
+    group = await groupsData.getGroupById(id.trim(), userId.trim());
     if (!group) {
       return res.status(400).json({
         error: `Group with id ${id.trim()} was not found.`,
@@ -290,11 +318,13 @@ router.patch("/:id/checklists/:noteId", async (req: any, res: any) => {
       updatedGroup = await groupsData.removeFromGroup(
         id.trim(),
         noteId.trim(),
-        "checklist"
+        "checklist",
+        userId.trim()
       );
       updatedNote = await checklistsData.removeGroupFromChecklist(
         noteId,
-        id.trim()
+        id.trim(),
+        userId.trim()
       );
     } catch (e: any) {
       console.log(e);
@@ -308,9 +338,14 @@ router.patch("/:id/checklists/:noteId", async (req: any, res: any) => {
       updatedGroup = await groupsData.addToGroup(
         id.trim(),
         noteId.trim(),
-        "checklist"
+        "checklist",
+        userId.trim()
       );
-      updatedNote = await checklistsData.addGroupToChecklist(noteId, id.trim());
+      updatedNote = await checklistsData.addGroupToChecklist(
+        noteId,
+        id.trim(),
+        userId.trim()
+      );
     } catch (e: any) {
       console.log(e);
       return res.status(500).json({
@@ -325,15 +360,16 @@ router.patch("/:id/checklists/:noteId", async (req: any, res: any) => {
 });
 
 /**
- * [DELETE /groups/:id/]
+ * [DELETE /user/:userId/groups/:id]
  */
-router.delete("/:id", async (req: any, res: any) => {
+router.delete("/user/:userId/groups/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
 
   // Check if group exists
   let group;
   try {
-    group = await groupsData.getGroupById(id.trim());
+    group = await groupsData.getGroupById(id.trim(), userId.trim());
     if (!group) {
       return res.status(400).json({
         error: `Group with id ${id.trim()} was not found.`,
@@ -349,7 +385,10 @@ router.delete("/:id", async (req: any, res: any) => {
 
   // Delete the group
   try {
-    let delete_status = await groupsData.deleteGroupById(id.trim());
+    let delete_status = await groupsData.deleteGroupById(
+      id.trim(),
+      userId.trim()
+    );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
     console.log(e);

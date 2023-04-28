@@ -11,16 +11,17 @@ import {
   updateMarknote,
   updateQuicknotes,
 } from "../redux/actions";
+import { User } from "firebase/auth";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Fetches groups from the database.
  */
-const fetchGroups = async (dispatch: Dispatch<AnyAction>) => {
+const fetchGroups = async (dispatch: Dispatch<AnyAction>, user: User) => {
   const { data: savedGroups } = await axios({
     baseURL: BASE_ADDR,
-    url: "/groups",
+    url: `/user/${user.uid}/groups`,
     method: "GET",
   });
   // Check if notes were received
@@ -32,11 +33,11 @@ const fetchGroups = async (dispatch: Dispatch<AnyAction>) => {
 /**
  * Creates a new empty group.
  */
-const handleCreateGroup = async (dispatch: Dispatch<AnyAction>) => {
+const handleCreateGroup = async (dispatch: Dispatch<AnyAction>, user: User) => {
   try {
     const { data: newGroup } = await axios({
       baseURL: BASE_ADDR,
-      url: "/groups",
+      url: `/user/${user.uid}/groups`,
       method: "POST",
       data: {
         title: "",
@@ -55,12 +56,13 @@ const handleCreateGroup = async (dispatch: Dispatch<AnyAction>) => {
  */
 const handleUpdateGroup = async (
   dispatch: Dispatch<AnyAction>,
-  updatedGroup: Group
+  updatedGroup: Group,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/groups/${updatedGroup._id}`,
+      url: `/user/${user.uid}/groups/${updatedGroup._id}`,
       method: "PATCH",
       data: updatedGroup,
     });
@@ -80,12 +82,13 @@ const handleUpdateGroup = async (
 const handleUpdateNoteGroups = async (
   dispatch: Dispatch<AnyAction>,
   note: Quicknote | Marknote | Checklist,
-  groupId: string
+  groupId: string,
+  user: User
 ) => {
   try {
     const { data } = await axios({
       baseURL: BASE_ADDR,
-      url: `/groups/${groupId}/${note.type}s/${note._id}`,
+      url: `/user/${user.uid}/groups/${groupId}/${note.type}s/${note._id}`,
       method: "PATCH",
     });
     if (note.type === "quicknote") {
@@ -107,12 +110,13 @@ const handleUpdateNoteGroups = async (
  */
 const handleDeleteGroup = async (
   dispatch: Dispatch<AnyAction>,
-  groupId: string
+  groupId: string,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/groups/${groupId}`,
+      url: `/user/${user.uid}/groups/${groupId}`,
       method: "DELETE",
     });
     dispatch(deleteGroup(groupId));

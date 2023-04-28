@@ -3,6 +3,10 @@
 // React imports
 import React, { useState, useEffect } from "react";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
@@ -147,6 +151,9 @@ const ChecklistItemComponent = ({
   unsavedItems,
   swapFunction,
 }: ItemProps) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -188,6 +195,10 @@ const ChecklistItemComponent = ({
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
+      if (!currentUser) {
+        console.log("Error: Unauthorized action.");
+        return;
+      }
       // Update every item in the unsaved queue.
       const filteredItems: ChecklistItem[] = parent.items.filter(
         (filterItem) => {
@@ -204,7 +215,7 @@ const ChecklistItemComponent = ({
         ...parent,
         items: updatedItems,
       };
-      handleUpdateChecklist(dispatch, updatedChecklist);
+      handleUpdateChecklist(dispatch, updatedChecklist, currentUser);
       dispatch(setUnsavedItems([]));
       setSaved(true);
     }, 5000);

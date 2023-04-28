@@ -5,6 +5,10 @@ import React, { useState } from "react";
 
 import { Route, Switch, useHistory } from "react-router-dom";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
 import { handleCreateChecklist } from "../../utils/checklists";
@@ -30,6 +34,9 @@ import SingleChecklistPage from "./SingleChecklistPage";
 export interface ChecklistsPageProps {}
 
 const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -62,13 +69,25 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
         >
           <PageHeaderButton
             title={"New Checklist"}
-            onClick={() => handleCreateChecklist(dispatch, history)}
+            onClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateChecklist(dispatch, currentUser);
+            }}
           >
             <PlusIcon />
           </PageHeaderButton>
           <PageHeaderButton
             title="New Group"
-            onClick={() => handleCreateGroup(dispatch)}
+            onClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateGroup(dispatch, currentUser);
+            }}
           >
             <FolderPlusIcon />
           </PageHeaderButton>
@@ -79,13 +98,25 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
         <div className="main-content-wrapper">
           <Section
             name="Groups"
-            handleClick={() => handleCreateGroup(dispatch)}
+            handleClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateGroup(dispatch, currentUser);
+            }}
           >
             <GroupList />
           </Section>
           <Section
             name="My Checklists"
-            handleClick={() => handleCreateChecklist(dispatch, history)}
+            handleClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateChecklist(dispatch, currentUser);
+            }}
           >
             <ChecklistList ChecklistFilterText={ChecklistFilterText} />
           </Section>

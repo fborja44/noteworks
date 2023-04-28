@@ -8,6 +8,10 @@ import styled from "@emotion/styled";
 
 import { ThemeProvider } from "@emotion/react";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { fetchQuicknotes } from "../utils/quicknotes";
@@ -51,6 +55,9 @@ const RendererContainer = styled.div`
  * Main application component
  */
 const App = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -61,10 +68,11 @@ const App = () => {
    * Effect hook to retrieve data from the database.
    */
   useEffect(() => {
-    fetchQuicknotes(dispatch);
-    fetchMarknotes(dispatch);
-    fetchGroups(dispatch);
-    fetchChecklists(dispatch);
+    if (!currentUser) return;
+    fetchQuicknotes(dispatch, currentUser);
+    fetchMarknotes(dispatch, currentUser);
+    fetchGroups(dispatch, currentUser);
+    fetchChecklists(dispatch, currentUser);
   }, []); // Run on load
 
   // Groups State

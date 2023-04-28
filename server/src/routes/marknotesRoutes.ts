@@ -1,18 +1,20 @@
 import { ColorIds } from "../common/colors";
 
-const data = require("../db");
+import data from "../db";
 const marknotesData = data.marknotes;
 const express = require("express");
 const router = express.Router();
 
 /**
- * [GET /marknotes]
+ * [GET /user/:userId/marknotes]
  */
-router.get("/", async (req: any, res: any) => {
+router.get("/user/:userId/marknotes", async (req: any, res: any) => {
+  const userId = req.params.userId;
   try {
-    let marknotes = await marknotesData.getAllMarknotes();
+    let marknotes = await marknotesData.getAllMarknotes(userId.trim());
     return res.status(200).json(marknotes);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch marknotes from database." });
@@ -20,14 +22,19 @@ router.get("/", async (req: any, res: any) => {
 });
 
 /**
- * [GET /marknotes/:id]
+ * [GET /user/:userId/marknotes/:id]
  */
-router.get("/:id", async (req: any, res: any) => {
+router.get("/user/:userId/marknotes/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   try {
-    let marknote = await marknotesData.getMarknoteById(id.trim());
+    let marknote = await marknotesData.getMarknoteById(
+      id.trim(),
+      userId.trim()
+    );
     return res.status(200).json(marknote);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch marknotes from database." });
@@ -35,9 +42,10 @@ router.get("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [POST /marknotes]
+ * [POST /user/:userId/marknotes]
  */
-router.post("/", async (req: any, res: any) => {
+router.post("/user/:userId/marknotes", async (req: any, res: any) => {
+  const userId = req.params.userId;
   let title = req.body.title;
   let color = req.body.color;
   let body = req.body.body;
@@ -58,9 +66,15 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
-    let new_marknote = await marknotesData.createMarknote(title, color, body);
+    let new_marknote = await marknotesData.createMarknote(
+      userId.trim(),
+      title,
+      color,
+      body
+    );
     return res.status(200).json(new_marknote);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to create new marknote.",
       message: e.toString(),
@@ -69,14 +83,15 @@ router.post("/", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /marknotes/:id]
+ * [PATCH /user/:userId/marknotes/:id]
  */
-router.patch("/:id", async (req: any, res: any) => {
+router.patch("/user/:userId/marknotes/:id", async (req: any, res: any) => {
+  const id = req.params.id;
+  const userId = req.params.userId;
   const title = req.body.title;
   const color = req.body.color;
   const body = req.body.body;
   const favorited = req.body.favorited;
-  const id = req.params.id;
 
   if (color && !ColorIds.includes(color)) {
     return res.status(400).json({
@@ -87,13 +102,14 @@ router.patch("/:id", async (req: any, res: any) => {
   // Check if marknote exists
   let marknote;
   try {
-    marknote = await marknotesData.getMarknoteById(id.trim());
+    marknote = await marknotesData.getMarknoteById(id.trim(), userId.trim());
     if (!marknote) {
       return res.status(400).json({
         error: `Marknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch marknote.",
       message: e.toString(),
@@ -118,10 +134,12 @@ router.patch("/:id", async (req: any, res: any) => {
   try {
     let updated_marknote = await marknotesData.updateMarknoteById(
       id.trim(),
+      userId.trim(),
       marknote
     );
     return res.status(200).json(updated_marknote);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to update marknote.",
       message: e.toString(),
@@ -130,22 +148,24 @@ router.patch("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /marknotes/:id/:groupId]
+ * [PATCH /user/:userId/marknotes/:id/:groupId]
  */
-router.patch("/:id/:groupId", async (req: any, res: any) => {
+router.patch("/user/:userId/marknotes/:id/:groupId", async (req: any, res: any) => {
   const id = req.params.id;
   const groupId = req.params.groupId;
+  const userId = req.params.userId;
 
   // Check if marknote exists
   let marknote;
   try {
-    marknote = await marknotesData.getMarknoteById(id.trim());
+    marknote = await marknotesData.getMarknoteById(id.trim(), userId.trim());
     if (!marknote) {
       return res.status(400).json({
         error: `Marknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch marknote.",
       message: e.toString(),
@@ -157,10 +177,12 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       marknote = await marknotesData.removeGroupFromMarknote(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(marknote);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to remove group from marknote.",
         message: e.toString(),
@@ -170,10 +192,12 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       marknote = await marknotesData.addGroupToMarknote(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(marknote);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to add group to marknote.",
         message: e.toString(),
@@ -183,21 +207,22 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
 });
 
 /**
- * [DELETE /marknotes/:id/]
+ * [DELETE /user/:userId/marknotes/:id/]
  */
-router.delete("/:id", async (req: any, res: any) => {
+router.delete("/user/:userId/marknotes/:id", async (req: any, res: any) => {
   const id = req.params.id;
-
+  const userId = req.params.userId;
   // Check if marknote exists
   let marknote;
   try {
-    marknote = await marknotesData.getMarknoteById(id.trim());
+    marknote = await marknotesData.getMarknoteById(id.trim(), userId.trim());
     if (!marknote) {
       return res.status(400).json({
         error: `Marknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch marknote.",
       message: e.toString(),
@@ -206,9 +231,13 @@ router.delete("/:id", async (req: any, res: any) => {
 
   // Delete the marknote
   try {
-    let delete_status = await marknotesData.deleteMarknoteById(id.trim());
+    let delete_status = await marknotesData.deleteMarknoteById(
+      id.trim(),
+      userId.trim()
+    );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to delete marknote.",
       message: e.toString(),

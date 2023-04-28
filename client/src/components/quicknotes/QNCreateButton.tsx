@@ -3,6 +3,10 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import { handleCreateQuicknote } from "../../utils/quicknotes";
@@ -42,11 +46,22 @@ const ButtonContent = styled.div`
 `;
 
 const QNCreateButton = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
   return (
-    <CreateButtonContainer onClick={() => handleCreateQuicknote(dispatch)}>
+    <CreateButtonContainer
+      onClick={() => {
+        if (!currentUser) {
+          console.log("Error: Unauthorized action.");
+          return;
+        }
+        handleCreateQuicknote(dispatch, currentUser);
+      }}
+    >
       <ButtonContent>
         <PlusIcon />
         <span>Add New Note</span>

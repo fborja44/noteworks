@@ -3,6 +3,10 @@
 // React imports
 import React, { useState } from "react";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import { handleUpdateMarknote } from "../../utils/marknotes";
@@ -23,6 +27,9 @@ const MNContainer: React.FC<MNContainerProps> = ({
   setActiveGroup,
   currentNote,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -56,6 +63,10 @@ const MNContainer: React.FC<MNContainerProps> = ({
     value: string | Boolean,
     updateDate: Boolean = true
   ) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     let updatedMarknote: Marknote;
     if (updateDate) {
       updatedMarknote = {
@@ -70,7 +81,7 @@ const MNContainer: React.FC<MNContainerProps> = ({
       };
     }
     setMarknoteState(updatedMarknote);
-    handleUpdateMarknote(dispatch, updatedMarknote);
+    handleUpdateMarknote(dispatch, updatedMarknote, currentUser);
   };
 
   /**
@@ -78,12 +89,16 @@ const MNContainer: React.FC<MNContainerProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedMarknote = {
       ...marknoteState,
       color: color,
     };
     setMarknoteState(marknoteState);
-    handleUpdateMarknote(dispatch, updatedMarknote);
+    handleUpdateMarknote(dispatch, updatedMarknote, currentUser);
   };
 
   /**
@@ -96,12 +111,16 @@ const MNContainer: React.FC<MNContainerProps> = ({
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedMarknote = {
       ...marknoteState,
       favorited: !marknoteState.favorited,
     };
     setMarknoteState(marknoteState);
-    handleUpdateMarknote(dispatch, updatedMarknote);
+    handleUpdateMarknote(dispatch, updatedMarknote, currentUser);
   };
 
   /**

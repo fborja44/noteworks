@@ -1,16 +1,17 @@
 import { ColorIds } from "../common/colors";
 
-const data = require("../db");
-const checklistsData = data.checklists;
+import data from "../db";
 const express = require("express");
+const checklistsData = data.checklists;
 const router = express.Router();
 
 /**
- * [GET /checklists]
+ * [GET /user/:userId/checklists/:userId]
  */
-router.get("/", async (req: any, res: any) => {
+router.get("/user/:userId/checklists", async (req: any, res: any) => {
+  const userId = req.params.userId;
   try {
-    let checklists = await checklistsData.getAllChecklists();
+    let checklists = await checklistsData.getAllChecklists(userId.trim());
     return res.status(200).json(checklists);
   } catch (e) {
     return res
@@ -20,12 +21,13 @@ router.get("/", async (req: any, res: any) => {
 });
 
 /**
- * [GET /checklists/:id]
+ * [GET /user/:userId/checklists/:id]
  */
-router.get("/:id", async (req: any, res: any) => {
+router.get("/user/:userId/checklists/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   try {
-    let checklist = await checklistsData.getChecklistById(id.trim());
+    let checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     return res.status(200).json(checklist);
   } catch (e) {
     return res
@@ -35,9 +37,10 @@ router.get("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [POST /checklists]
+ * [POST /user/:userId/checklists]
  */
-router.post("/", async (req: any, res: any) => {
+router.post("/user/:userId/checklists/:userId", async (req: any, res: any) => {
+  const userId = req.params.userId;
   let title = req.body.title;
   let color = req.body.color;
 
@@ -59,7 +62,11 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
-    let new_checklist = await checklistsData.createChecklist(title, color);
+    let new_checklist = await checklistsData.createChecklist(
+      userId.trim(),
+      title,
+      color
+    );
     return res.status(200).json(new_checklist);
   } catch (e: any) {
     console.log(e);
@@ -71,10 +78,11 @@ router.post("/", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /checklists/:id]
+ * [PATCH /user/:userId/checklists/:id]
  */
-router.patch("/:id", async (req: any, res: any) => {
+router.patch("/user/:userId/checklists/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   const title = req.body.title;
   const color = req.body.color;
   const favorited = req.body.favorited;
@@ -111,7 +119,7 @@ router.patch("/:id", async (req: any, res: any) => {
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -143,6 +151,7 @@ router.patch("/:id", async (req: any, res: any) => {
   try {
     let updated_checklist = await checklistsData.updateChecklistById(
       id.trim(),
+      userId.trim(),
       checklist
     );
     return res.status(200).json(updated_checklist);
@@ -156,16 +165,17 @@ router.patch("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /checklists/:id/:groupId]
+ * [PATCH /user/:userId/checklists/:id/:groupId]
  */
-router.patch("/:id/:groupId", async (req: any, res: any) => {
+router.patch("/user/:userId/checklists/:id/:groupId", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   const groupId = req.params.groupId;
 
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -184,7 +194,8 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       checklist = await checklistsData.removeGroupFromChecklist(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(checklist);
     } catch (e: any) {
@@ -198,7 +209,8 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       checklist = await checklistsData.addGroupToChecklist(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(checklist);
     } catch (e: any) {
@@ -212,15 +224,16 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
 });
 
 /**
- * [DELETE /checklists/:id/]
+ * [DELETE /user/:userId/checklists/:id]
  */
-router.delete("/:id", async (req: any, res: any) => {
+router.delete("/user/:userId/checklists/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
 
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -236,7 +249,10 @@ router.delete("/:id", async (req: any, res: any) => {
 
   // Delete the checklist
   try {
-    let delete_status = await checklistsData.deleteChecklistById(id.trim());
+    let delete_status = await checklistsData.deleteChecklistById(
+      id.trim(),
+      userId
+    );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
     console.log(e);
@@ -248,16 +264,17 @@ router.delete("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [GET /checklists/:id/item/:item_id]
+ * [GET /user/:userId/checklists/:id/item/:item_id]
  */
-router.get("/:id/item/:item_id", async (req: any, res: any) => {
+router.get("/user/:userId/checklists/:id/item/:item_id", async (req: any, res: any) => {
   const id = req.params.id;
   const item_id = req.params.item_id;
+  const userId = req.params.userId;
 
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -275,7 +292,8 @@ router.get("/:id/item/:item_id", async (req: any, res: any) => {
   try {
     let checklistItem = await checklistsData.getChecklistItemById(
       id.trim(),
-      item_id.trim()
+      item_id.trim(),
+      userId.trim()
     );
     return res.status(200).json(checklistItem);
   } catch (e: any) {
@@ -288,15 +306,16 @@ router.get("/:id/item/:item_id", async (req: any, res: any) => {
 });
 
 /**
- * [POST /checklists/:id/item]
+ * [POST /user/:userId/checklists/:id/item]
  */
-router.post("/:id/item", async (req: any, res: any) => {
+router.post("/user/:userId/checklists/:id/item", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
 
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -316,6 +335,7 @@ router.post("/:id/item", async (req: any, res: any) => {
   try {
     let updated_checklist = await checklistsData.addChecklistItem(
       id.trim(),
+      userId.trim(),
       ""
     );
     return res.status(200).json(updated_checklist);
@@ -329,11 +349,12 @@ router.post("/:id/item", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /checklists/:id/item/:item_id]
+ * [PATCH /user/:userId/checklists/:id/item/:item_id]
  */
-router.patch("/:id/item/:item_id", async (req: any, res: any) => {
+router.patch("/user/:userId/checklists/:id/item/:item_id", async (req: any, res: any) => {
   const id = req.params.id;
   const item_id = req.params.item_id;
+  const userId = req.params.userId;
   const content = req.body.content;
   const checked = req.body.checked;
   // const index = req.body.index;
@@ -353,7 +374,7 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -379,7 +400,8 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   try {
     checklistItem = await checklistsData.getChecklistItemById(
       id.trim(),
-      item_id.trim()
+      item_id.trim(),
+      userId.trim()
     );
     if (!checklistItem) {
       return res.status(400).json({
@@ -408,6 +430,7 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
   try {
     let updated_checklist = await checklistsData.updateChecklistItemById(
       id.trim(),
+      userId.trim(),
       checklistItem
     );
     return res.status(200).json(updated_checklist);
@@ -421,16 +444,17 @@ router.patch("/:id/item/:item_id", async (req: any, res: any) => {
 });
 
 /**
- * [DELETE /checklists/:id/item/:item_id]
+ * [DELETE /user/:userId/checklists/:id/item/:item_id]
  */
-router.delete("/:id/item/:item_id", async (req: any, res: any) => {
+router.delete("/user/:userId/checklists/:id/item/:item_id", async (req: any, res: any) => {
   const id = req.params.id;
   const item_id = req.params.item_id;
+  const userId = req.params.userId;
 
   // Check if checklist exists
   let checklist;
   try {
-    checklist = await checklistsData.getChecklistById(id.trim());
+    checklist = await checklistsData.getChecklistById(id.trim(), userId.trim());
     if (!checklist) {
       return res.status(400).json({
         error: `Checklist with id ${id.trim()} was not found.`,
@@ -450,7 +474,8 @@ router.delete("/:id/item/:item_id", async (req: any, res: any) => {
   try {
     let delete_status = await checklistsData.removeChecklistItem(
       id.trim(),
-      item_id.trim()
+      item_id.trim(),
+      userId.trim()
     );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {

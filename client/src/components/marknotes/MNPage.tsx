@@ -4,6 +4,10 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
@@ -49,6 +53,9 @@ export interface MNPageProps {
  * Content for marknotes route
  */
 const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -83,13 +90,25 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
             <>
               <PageHeaderButton
                 title="New Note"
-                onClick={() => handleCreateMarknote(dispatch, history)}
+                onClick={() => {
+                  if (!currentUser) {
+                    console.log("Error: Unauthorized action.");
+                    return;
+                  }
+                  handleCreateMarknote(dispatch, history, currentUser);
+                }}
               >
                 <PlusIcon />
               </PageHeaderButton>
               <PageHeaderButton
                 title="New Group"
-                onClick={() => handleCreateGroup(dispatch)}
+                onClick={() => {
+                  if (!currentUser) {
+                    console.log("Error: Unauthorized action.");
+                    return;
+                  }
+                  handleCreateGroup(dispatch, currentUser);
+                }}
               >
                 <FolderPlusIcon />
               </PageHeaderButton>
@@ -120,16 +139,10 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
         <div className="main-content-wrapper">
           {!explorerOpen ? (
             <>
-              <Section
-                name="Groups"
-                handleClick={() => handleCreateGroup(dispatch)}
-              >
+              <Section name="Groups">
                 <GroupList />
               </Section>
-              <Section
-                name="My Marknotes"
-                handleClick={() => handleCreateMarknote(dispatch, history)}
-              >
+              <Section name="My Marknotes">
                 <MNList MNFilterText={MNFilterText} />
               </Section>
             </>

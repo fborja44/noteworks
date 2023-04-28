@@ -4,6 +4,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux state
 import { useSelector, useDispatch } from "react-redux";
 import { handleUpdateGroup } from "../../utils/groups";
@@ -40,6 +44,9 @@ export interface GroupPageProps {
  * Group page component
  */
 const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -102,11 +109,15 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedGroup = {
       ...activeGroup,
       favorited: !activeGroup.favorited,
     };
-    handleUpdateGroup(dispatch, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup, currentUser);
   };
 
   /**
@@ -114,11 +125,15 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedGroup: Group = {
       ...activeGroup,
       color: color,
     };
-    handleUpdateGroup(dispatch, updatedGroup);
+    handleUpdateGroup(dispatch, updatedGroup, currentUser);
   };
 
   /**
@@ -140,8 +155,9 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
   };
 
   useEffect(() => {
+    if (!currentUser) return;
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateGroup(dispatch, activeGroup);
+      handleUpdateGroup(dispatch, activeGroup, currentUser);
       setSaved(true);
     }, 2000);
     return () => {

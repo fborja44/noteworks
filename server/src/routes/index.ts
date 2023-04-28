@@ -7,10 +7,10 @@ const path = require("path");
 
 // Put all the routes together
 const constructorMethod = (app: any) => {
-  app.use("/groups", groups);
-  app.use("/quicknotes", quicknotes);
-  app.use("/marknotes", marknotes);
-  app.use("/checklists", checklists);
+  app.use("/", groups);
+  app.use("/", quicknotes);
+  app.use("/", marknotes);
+  app.use("/", checklists);
 
   // Catch all method
   app.use("*", (req: any, res: any) => {

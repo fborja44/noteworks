@@ -24,6 +24,7 @@ const Item = styled.div`
   margin-bottom: 0.25em;
   cursor: pointer;
   user-select: none;
+  z-index: 10000;
 
   &:hover {
     background: ${(props) => props.theme.sidebar.backgroundSecondary};

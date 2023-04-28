@@ -5,6 +5,10 @@ import { useHistory } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import { handleCreateQuicknote } from "../../utils/quicknotes";
@@ -63,6 +67,9 @@ const NoteCreateButton = ({
   group,
   variant,
 }: NoteCreateButtonProps) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -74,18 +81,23 @@ const NoteCreateButton = ({
    * If group is passed as a prop, adds that new note to the group.
    */
   const handleCreateNote = async () => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     let newNote: Quicknote | Marknote;
     if (noteType === "quicknote") {
-      newNote = await handleCreateQuicknote(dispatch);
+      newNote = await handleCreateQuicknote(dispatch, currentUser);
     } else if (noteType === "marknote") {
-      newNote = await handleCreateMarknote(dispatch, history);
+      newNote = await handleCreateMarknote(dispatch, history, currentUser);
     } else if (noteType === "checklist") {
-      newNote = await handleCreateChecklist(dispatch, history);
+      newNote = await handleCreateChecklist(dispatch, currentUser);
     } else {
       return;
     }
+    // If the note is in a group, update the note's groups
     if (group) {
-      await handleUpdateNoteGroups(dispatch, newNote, group._id);
+      await handleUpdateNoteGroups(dispatch, newNote, group._id, currentUser);
     }
   };
 

@@ -8,16 +8,17 @@ import {
   setQuicknotes,
   updateQuicknotes,
 } from "../redux/actions";
+import { User } from "firebase/auth";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Fetches quicknotes from the database.
  */
-const fetchQuicknotes = async (dispatch: Dispatch<AnyAction>) => {
+const fetchQuicknotes = async (dispatch: Dispatch<AnyAction>, user: User) => {
   const { data: savedQuicknotes } = await axios({
     baseURL: BASE_ADDR,
-    url: "/quicknotes",
+    url: `/user/${user.uid}/quicknotes`,
     method: "GET",
   });
   // Check if notes were received
@@ -30,11 +31,14 @@ const fetchQuicknotes = async (dispatch: Dispatch<AnyAction>) => {
  * Creates a new empty quicknote.
  * @returns The new Quicknote object.
  */
-const handleCreateQuicknote = async (dispatch: Dispatch<AnyAction>) => {
+const handleCreateQuicknote = async (
+  dispatch: Dispatch<AnyAction>,
+  user: User
+) => {
   try {
     const { data: newQuicknote } = await axios({
       baseURL: BASE_ADDR,
-      url: "/quicknotes",
+      url: `/user/${user.uid}/quicknotes`,
       method: "POST",
       data: {
         title: "",
@@ -56,12 +60,13 @@ const handleCreateQuicknote = async (dispatch: Dispatch<AnyAction>) => {
  */
 const handleUpdateQuicknote = async (
   dispatch: Dispatch<AnyAction>,
-  updatedQuicknote: Quicknote
+  updatedQuicknote: Quicknote,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/quicknotes/${updatedQuicknote._id}`,
+      url: `/user/${user.uid}/quicknotes/${updatedQuicknote._id}`,
       method: "PATCH",
       data: updatedQuicknote,
     });
@@ -78,13 +83,14 @@ const handleUpdateQuicknote = async (
  */
 const handleUpdateQuicknotes = async (
   dispatch: Dispatch<AnyAction>,
-  updatedQuicknotes: Quicknote[]
+  updatedQuicknotes: Quicknote[],
+  user: User
 ) => {
   try {
     for (const updatedQuicknote of updatedQuicknotes) {
       await axios({
         baseURL: BASE_ADDR,
-        url: `/quicknotes/${updatedQuicknote._id}`,
+        url: `/user/${user.uid}/quicknotes/${updatedQuicknote._id}`,
         method: "PATCH",
         data: updatedQuicknote,
       });
@@ -105,12 +111,13 @@ const handleUpdateQuicknotes = async (
 const handleUpdateQuicknotesGroups = async (
   dispatch: Dispatch<AnyAction>,
   quicknoteId: string,
-  groupId: string
+  groupId: string,
+  user: User
 ) => {
   try {
     const { data } = await axios({
       baseURL: BASE_ADDR,
-      url: `/groups/${groupId}/quicknotes/${quicknoteId}`,
+      url: `/user/${user.uid}/groups/${groupId}/quicknotes/${quicknoteId}`,
       method: "PATCH",
     });
     console.log(data.updatedNote);
@@ -127,12 +134,13 @@ const handleUpdateQuicknotesGroups = async (
  */
 const handleDeleteQuicknote = async (
   dispatch: Dispatch<AnyAction>,
-  quicknoteId: string
+  quicknoteId: string,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/quicknotes/${quicknoteId}`,
+      url: `/user/${user.uid}/quicknotes/${quicknoteId}`,
       method: "DELETE",
     });
     dispatch(deleteQuicknote(quicknoteId));

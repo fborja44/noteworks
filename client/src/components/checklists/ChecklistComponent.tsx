@@ -4,6 +4,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx, useTheme } from "@emotion/react";
@@ -97,6 +101,9 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
   currentChecklist,
   setActiveGroup,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -116,12 +123,16 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedChecklist = {
       ...currentChecklist,
       favorited: !checklistState.favorited,
     };
     setChecklistState(updatedChecklist);
-    handleUpdateChecklist(dispatch, updatedChecklist);
+    handleUpdateChecklist(dispatch, updatedChecklist, currentUser);
   };
 
   const appTheme = useTheme();
@@ -134,12 +145,16 @@ const ChecklistComponent: React.FC<ChecklistComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedChecklist = {
       ...currentChecklist,
       color: color,
     };
     setChecklistState(updatedChecklist);
-    handleUpdateChecklist(dispatch, updatedChecklist);
+    handleUpdateChecklist(dispatch, updatedChecklist, currentUser);
   };
 
   /**

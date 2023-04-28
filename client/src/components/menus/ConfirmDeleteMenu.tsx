@@ -6,6 +6,10 @@ import { useHistory } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 
@@ -71,6 +75,9 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
   toggleConfirmDelete,
   redirect,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -93,15 +100,19 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
         <p>This action cannot be reversed.</p>
         <DeleteButton
           onClick={(event) => {
+            if (!currentUser) {
+              console.log("Error: Unauthorized action.");
+              return;
+            }
             try {
               if (item.type === "quicknote") {
-                handleDeleteQuicknote(dispatch, item._id);
+                handleDeleteQuicknote(dispatch, item._id, currentUser);
               } else if (item.type === "marknote") {
-                handleDeleteMarknote(dispatch, item._id);
+                handleDeleteMarknote(dispatch, item._id, currentUser);
               } else if (item.type === "group") {
-                handleDeleteGroup(dispatch, item._id);
+                handleDeleteGroup(dispatch, item._id, currentUser);
               } else if (item.type === "checklist") {
-                handleDeleteChecklist(dispatch, item._id);
+                handleDeleteChecklist(dispatch, item._id, currentUser);
               } else {
                 return;
               }

@@ -5,6 +5,10 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { handleUpdateChecklist } from "../../utils/checklists";
@@ -35,6 +39,9 @@ const ItemsList = ({
   items,
   setSaved,
 }: ItemsListProps) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch state
   const dispatch = useDispatch();
 
@@ -47,6 +54,10 @@ const ItemsList = ({
    * Function to swap two checklist items.
    */
   const swapItems = async (index: number, up?: boolean) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     // Check if valid swap
     if (
       (up && index === 0) ||
@@ -65,7 +76,7 @@ const ItemsList = ({
       items: updatedItems,
     };
     setChecklistState(updatedChecklist);
-    await handleUpdateChecklist(dispatch, updatedChecklist); // Update the whole checklist
+    await handleUpdateChecklist(dispatch, updatedChecklist, currentUser); // Update the whole checklist
     return true;
   };
 

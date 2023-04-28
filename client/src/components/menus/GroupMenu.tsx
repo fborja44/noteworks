@@ -8,6 +8,10 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { handleUpdateGroup, handleUpdateNoteGroups } from "../../utils/groups";
@@ -97,6 +101,9 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
   showGroupMenu,
   setShowGroupMenu,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -111,16 +118,20 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    * Event target needs dataset attribute.
    */
   const handleSelectGroup = async (event: any) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const groupId = event.target.dataset.id;
     let data: any = null;
     try {
-      data = await handleUpdateNoteGroups(dispatch, note, groupId);
+      data = await handleUpdateNoteGroups(dispatch, note, groupId, currentUser);
       if (data) {
         if (setActiveGroup) {
           // If group page is open, update the group live so that displayed notes are updated
           setActiveGroup(data.updatedGroup);
         }
-        handleUpdateGroup(dispatch, data.updatedGroup);
+        handleUpdateGroup(dispatch, data.updatedGroup, currentUser);
       }
       setNoteGroupsState(data.updatedNote.groups);
     } catch (e) {

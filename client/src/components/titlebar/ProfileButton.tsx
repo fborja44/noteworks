@@ -51,7 +51,7 @@ const ButtonContainer = styled.div`
     }
 
     &.sign-out:hover {
-      color: ${COLOR.blue.primary};
+      color: ${COLOR.red.primary};
     }
 
     svg {

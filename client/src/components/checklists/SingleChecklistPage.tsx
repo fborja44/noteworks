@@ -1,9 +1,10 @@
 /* Checklists Page Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../firebase/AuthProvider";
 
 // Redux imports
 import { useDispatch } from "react-redux";
@@ -38,6 +39,9 @@ export interface SingleChecklistPageProps {
 const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
   activeChecklist,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -111,9 +115,14 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
    * Adds a new item to the checklist.
    */
   const handleAddItem = async () => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedChecklist = await handleAddChecklistItem(
       dispatch,
-      checklistState
+      checklistState,
+      currentUser
     );
     console.log(checklistState);
     setChecklistState(updatedChecklist);
@@ -123,8 +132,9 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
    * Effect hook to delay saving to the database.
    */
   useEffect(() => {
+    if (!currentUser) return;
     const delayDBUpdate = setTimeout(() => {
-      handleUpdateChecklist(dispatch, checklistState);
+      handleUpdateChecklist(dispatch, checklistState, currentUser);
       setSaved(true);
     }, 2000);
 

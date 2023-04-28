@@ -8,6 +8,10 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../firebase/AuthProvider";
+
 import { enqueueSnackbar } from "notistack";
 
 // Redux imports
@@ -79,6 +83,9 @@ const FooterOption = styled.button`
 `;
 
 const Footer = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -89,12 +96,16 @@ const Footer = () => {
    * Function to refresh all notes data.
    */
   const refreshNotes = async () => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized user.");
+      return;
+    }
     setRefreshing(true);
     try {
-      await fetchQuicknotes(dispatch);
-      await fetchMarknotes(dispatch);
-      await fetchGroups(dispatch);
-      await fetchChecklists(dispatch);
+      await fetchQuicknotes(dispatch, currentUser);
+      await fetchMarknotes(dispatch, currentUser);
+      await fetchGroups(dispatch, currentUser);
+      await fetchChecklists(dispatch, currentUser);
       enqueueSnackbar("Notes have been refreshed.", { variant: "success" });
     } catch (e: any) {
       console.log(e.toString());
@@ -106,14 +117,14 @@ const Footer = () => {
   return (
     <FooterContainer>
       <OptionContainer>
-        <FooterOption
+        {currentUser && <FooterOption
           disabled={refreshing}
           onClick={() => refreshNotes()}
           className={refreshing ? "blink" : ""}
         >
           <RefreshIcon />
           <span>{!refreshing ? "Refresh Notes" : "Refreshing..."}</span>
-        </FooterOption>
+        </FooterOption>}
       </OptionContainer>
       <div
         css={css`

@@ -8,16 +8,17 @@ import {
   setMarknotes,
   updateMarknote,
 } from "../redux/actions";
+import { User } from "firebase/auth";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Fetches marknotes from the database.
  */
-const fetchMarknotes = async (dispatch: Dispatch<AnyAction>) => {
+const fetchMarknotes = async (dispatch: Dispatch<AnyAction>, user: User) => {
   const { data: savedMarknotes } = await axios({
     baseURL: BASE_ADDR,
-    url: "/marknotes",
+    url: `/user/${user.uid}/marknotes`,
     method: "GET",
   });
   // Check if notes were received
@@ -32,12 +33,13 @@ const fetchMarknotes = async (dispatch: Dispatch<AnyAction>) => {
  */
 const handleCreateMarknote = async (
   dispatch: Dispatch<AnyAction>,
-  history: any
+  history: any,
+  user: User
 ) => {
   try {
     const { data: newMarknote } = await axios({
       baseURL: BASE_ADDR,
-      url: "/marknotes",
+      url: `/user/${user.uid}/marknotes`,
       method: "POST",
       data: {
         title: "",
@@ -61,12 +63,13 @@ const handleCreateMarknote = async (
  */
 const handleUpdateMarknote = async (
   dispatch: Dispatch<AnyAction>,
-  updatedMarknote: Marknote
+  updatedMarknote: Marknote,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/marknotes/${updatedMarknote._id}`,
+      url: `/user/${user.uid}/marknotes/${updatedMarknote._id}`,
       method: "PATCH",
       data: updatedMarknote,
     });
@@ -86,12 +89,13 @@ const handleUpdateMarknote = async (
 const handleUpdateMarknotesGroups = async (
   dispatch: Dispatch<AnyAction>,
   marknoteId: string,
-  groupId: string
+  groupId: string,
+  user: User
 ) => {
   try {
     const { data } = await axios({
       baseURL: BASE_ADDR,
-      url: `/groups/${groupId}/marknotes/${marknoteId}`,
+      url: `/user/${user.uid}/groups/${groupId}/marknotes/${marknoteId}`,
       method: "PATCH",
     });
     dispatch(updateMarknote(data.updatedNote));
@@ -107,12 +111,13 @@ const handleUpdateMarknotesGroups = async (
  */
 const handleDeleteMarknote = async (
   dispatch: Dispatch<AnyAction>,
-  marknoteId: string
+  marknoteId: string,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/marknotes/${marknoteId}`,
+      url: `/user/${user.uid}/marknotes/${marknoteId}`,
       method: "DELETE",
     });
     dispatch(deleteMarknote(marknoteId));

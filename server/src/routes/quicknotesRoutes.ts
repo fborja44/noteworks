@@ -1,18 +1,21 @@
 import { ColorIds } from "../common/colors";
 
-const data = require("../db");
+import data from "../db";
 const quicknotesData = data.quicknotes;
 const express = require("express");
 const router = express.Router();
 
 /**
- * [GET /quicknotes]
+ * [GET /user/:userId/quicknotes]
  */
-router.get("/", async (req: any, res: any) => {
+router.get("/user/:userId/quicknotes", async (req: any, res: any) => {
+  const userId = req.params.userId;
+  console.log(req.params);
   try {
-    let quicknotes = await quicknotesData.getAllQuicknotes();
+    let quicknotes = await quicknotesData.getAllQuicknotes(userId.trim());
     return res.status(200).json(quicknotes);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch quicknotes from database." });
@@ -20,14 +23,19 @@ router.get("/", async (req: any, res: any) => {
 });
 
 /**
- * [GET /quicknotes/:id]
+ * [GET /user/:userId/quicknotes/:id]
  */
-router.get("/:id", async (req: any, res: any) => {
+router.get("/user/:userId/quicknotes/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   try {
-    let quicknote = await quicknotesData.getQuicknoteById(id.trim());
+    let quicknote = await quicknotesData.getQuicknoteById(
+      id.trim(),
+      userId.trim()
+    );
     return res.status(200).json(quicknote);
   } catch (e) {
+    console.log(e);
     return res
       .status(500)
       .json({ error: "Failed to fetch quicknotes from database." });
@@ -35,9 +43,10 @@ router.get("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [POST /quicknotes]
+ * [POST /user/:userId/quicknotes]
  */
-router.post("/", async (req: any, res: any) => {
+router.post("/user/:userId/quicknotes", async (req: any, res: any) => {
+  const userId = req.params.userId;
   let title = req.body.title;
   let color = req.body.color;
   let body = req.body.body;
@@ -69,12 +78,14 @@ router.post("/", async (req: any, res: any) => {
 
   try {
     let new_quicknote = await quicknotesData.createQuicknote(
+      userId.trim(),
       title,
       color,
       body
     );
     return res.status(200).json(new_quicknote);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to create new quicknote.",
       message: e.toString(),
@@ -83,10 +94,11 @@ router.post("/", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /quicknotes/:id]
+ * [PATCH /user/:userId/quicknotes/:id]
  */
-router.patch("/:id", async (req: any, res: any) => {
+router.patch("/user/:userId/quicknotes/:id", async (req: any, res: any) => {
   const id = req.params.id;
+  const userId = req.params.userId;
   const title = req.body.title;
   const color = req.body.color;
   const favorited = req.body.favorited;
@@ -111,7 +123,7 @@ router.patch("/:id", async (req: any, res: any) => {
   // Check if quicknote exists
   let quicknote;
   try {
-    quicknote = await quicknotesData.getQuicknoteById(id.trim());
+    quicknote = await quicknotesData.getQuicknoteById(userId.trim(), id.trim());
     if (!quicknote) {
       return res.status(400).json({
         error: `Quicknote with id ${id.trim()} was not found.`,
@@ -142,10 +154,12 @@ router.patch("/:id", async (req: any, res: any) => {
   try {
     let updated_quicknote = await quicknotesData.updateQuicknoteById(
       id.trim(),
+      userId.trim(),
       quicknote
     );
     return res.status(200).json(updated_quicknote);
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to update quicknote.",
       message: e.toString(),
@@ -154,22 +168,24 @@ router.patch("/:id", async (req: any, res: any) => {
 });
 
 /**
- * [PATCH /quicknotes/:id/:groupId]
+ * [PATCH /user/:userId/quicknotes/:id/:groupId]
  */
-router.patch("/:id/:groupId", async (req: any, res: any) => {
+router.patch("/user/:userId/quicknotes/:id/:groupId", async (req: any, res: any) => {
   const id = req.params.id;
   const groupId = req.params.groupId;
+  const userId = req.params.userId;
 
   // Check if quicknote exists
   let quicknote;
   try {
-    quicknote = await quicknotesData.getQuicknoteById(id.trim());
+    quicknote = await quicknotesData.getQuicknoteById(id.trim(), userId.trim());
     if (!quicknote) {
       return res.status(400).json({
         error: `Quicknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch quicknote.",
       message: e.toString(),
@@ -181,10 +197,12 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       quicknote = await quicknotesData.removeGroupFromQuicknote(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(quicknote);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to remove group from quicknote.",
         message: e.toString(),
@@ -194,10 +212,12 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
     try {
       quicknote = await quicknotesData.addGroupToQuicknote(
         id.trim(),
-        groupId.trim()
+        groupId.trim(),
+        userId.trim()
       );
       return res.status(200).json(quicknote);
     } catch (e: any) {
+      console.log(e);
       return res.status(500).json({
         error: "Failed to add group to quicknote.",
         message: e.toString(),
@@ -207,21 +227,22 @@ router.patch("/:id/:groupId", async (req: any, res: any) => {
 });
 
 /**
- * [DELETE /quicknotes/:id/]
+ * [DELETE /user/:userId/quicknotes/:id/]
  */
-router.delete("/:id", async (req: any, res: any) => {
+router.delete("/user/:userId/quicknotes/:id", async (req: any, res: any) => {
   const id = req.params.id;
-
+  const userId = req.params.userId;
   // Check if quicknote exists
   let quicknote;
   try {
-    quicknote = await quicknotesData.getQuicknoteById(id.trim());
+    quicknote = await quicknotesData.getQuicknoteById(id.trim(), userId.trim());
     if (!quicknote) {
       return res.status(400).json({
         error: `Quicknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch quicknote.",
       message: e.toString(),
@@ -230,9 +251,13 @@ router.delete("/:id", async (req: any, res: any) => {
 
   // Delete the quicknote
   try {
-    let delete_status = await quicknotesData.deleteQuicknoteById(id.trim());
+    let delete_status = await quicknotesData.deleteQuicknoteById(
+      id.trim(),
+      userId.trim()
+    );
     return res.status(200).json({ success: delete_status });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to delete quicknote.",
       message: e.toString(),

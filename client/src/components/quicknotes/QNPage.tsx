@@ -8,6 +8,10 @@ import { useDispatch } from "react-redux";
 import { handleCreateQuicknote } from "../../utils/quicknotes";
 import { handleCreateGroup } from "../../utils/groups";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Component imports
 import QNHelp from "./QNHelp";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
@@ -28,6 +32,9 @@ export interface QNPageProps {}
  * Content for the quicknotes route.
  */
 const QNPage: React.FC<QNPageProps> = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -59,13 +66,25 @@ const QNPage: React.FC<QNPageProps> = () => {
       >
         <PageHeaderButton
           title={"New Note"}
-          onClick={() => handleCreateQuicknote(dispatch)}
+          onClick={() => {
+            if (!currentUser) {
+              console.log("Error: Unauthorized action.");
+              return;
+            }
+            handleCreateQuicknote(dispatch, currentUser);
+          }}
         >
           <PlusIcon />
         </PageHeaderButton>
         <PageHeaderButton
           title="New Group"
-          onClick={() => handleCreateGroup(dispatch)}
+          onClick={() => {
+            if (!currentUser) {
+              console.log("Error: Unauthorized action.");
+              return;
+            }
+            handleCreateGroup(dispatch, currentUser);
+          }}
         >
           <FolderPlusIcon />
         </PageHeaderButton>
@@ -74,13 +93,10 @@ const QNPage: React.FC<QNPageProps> = () => {
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
-        <Section name="Groups" handleClick={() => handleCreateGroup(dispatch)}>
+        <Section name="Groups">
           <GroupList />
         </Section>
-        <Section
-          name="My Quicknotes"
-          handleClick={() => handleCreateQuicknote(dispatch)}
-        >
+        <Section name="My Quicknotes">
           <QNList QNFilterText={QNFilterText} setSaved={setSaved} />
         </Section>
         <QNHelp showQNHelp={showQNHelp} setShowQNHelp={setShowQNHelp} />

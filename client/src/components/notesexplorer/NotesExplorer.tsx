@@ -3,10 +3,11 @@
 // React imports
 import React, { useState } from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
 
 import { useHistory } from "react-router-dom";
 
@@ -83,6 +84,9 @@ const NotesExplorerContentText = styled.div`
 `;
 
 const NotesExplorer = () => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -162,13 +166,25 @@ const NotesExplorer = () => {
         <NotesExplorerButtons>
           <NotesExplorerButton
             title={"New Group"}
-            onClick={() => handleCreateGroup(dispatch)}
+            onClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateGroup(dispatch, currentUser);
+            }}
           >
             <FolderPlusIcon />
           </NotesExplorerButton>
           <NotesExplorerButton
             title={"New Marknote"}
-            onClick={() => handleCreateMarknote(dispatch, history)}
+            onClick={() => {
+              if (!currentUser) {
+                console.log("Error: Unauthorized action.");
+                return;
+              }
+              handleCreateMarknote(dispatch, history, currentUser);
+            }}
           >
             <PlusIcon />
           </NotesExplorerButton>

@@ -8,16 +8,17 @@ import {
   setChecklists,
   updateChecklist,
 } from "../redux/actions";
+import { User } from "firebase/auth";
 
 const BASE_ADDR = "http://localhost:3001";
 
 /**
  * Fetches checklists from the database.
  */
-const fetchChecklists = async (dispatch: Dispatch<AnyAction>) => {
+const fetchChecklists = async (dispatch: Dispatch<AnyAction>, user: User) => {
   const { data: savedChecklists } = await axios({
     baseURL: BASE_ADDR,
-    url: "/checklists",
+    url: `/user/${user.uid}/checklists`,
     method: "GET",
   });
   // Check if checklists were received
@@ -32,12 +33,12 @@ const fetchChecklists = async (dispatch: Dispatch<AnyAction>) => {
  */
 const handleCreateChecklist = async (
   dispatch: Dispatch<AnyAction>,
-  history: any
+  user: User
 ) => {
   try {
     const { data: newChecklist } = await axios({
       baseURL: BASE_ADDR,
-      url: "/checklists",
+      url: `/user/${user.uid}/checklists`,
       method: "POST",
       data: {
         title: "",
@@ -61,12 +62,13 @@ const handleCreateChecklist = async (
  */
 const handleUpdateChecklist = async (
   dispatch: Dispatch<AnyAction>,
-  updatedChecklist: Checklist
+  updatedChecklist: Checklist,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/checklists/${updatedChecklist._id}`,
+      url: `/user/${user.uid}/checklists/${updatedChecklist._id}`,
       method: "PATCH",
       data: updatedChecklist,
     });
@@ -82,12 +84,13 @@ const handleUpdateChecklist = async (
  */
 const handleDeleteChecklist = async (
   dispatch: Dispatch<AnyAction>,
-  checklistId: string
+  checklistId: string,
+  user: User
 ) => {
   try {
     await axios({
       baseURL: BASE_ADDR,
-      url: `/checklists/${checklistId}`,
+      url: `/user/${user.uid}/checklists/${checklistId}`,
       method: "DELETE",
     });
     dispatch(deleteChecklist(checklistId));
@@ -103,12 +106,13 @@ const handleDeleteChecklist = async (
  */
 const handleAddChecklistItem = async (
   dispatch: Dispatch<AnyAction>,
-  checklist: Checklist
+  checklist: Checklist,
+  user: User
 ) => {
   try {
     const { data: updatedChecklist } = await axios({
       baseURL: BASE_ADDR,
-      url: `/checklists/${checklist._id}/item`,
+      url: `/user/${user.uid}/checklists/${checklist._id}/item`,
       method: "POST",
     });
     dispatch(updateChecklist(updatedChecklist));
@@ -127,12 +131,13 @@ const handleAddChecklistItem = async (
 const handleDeleteChecklistItem = async (
   dispatch: Dispatch<AnyAction>,
   checklist: Checklist,
-  item_id: string
+  item_id: string,
+  user: User
 ) => {
   try {
     const { data: updatedChecklist } = await axios({
       baseURL: BASE_ADDR,
-      url: `/checklists/${checklist._id}/item/${item_id}`,
+      url: `/user/${user.uid}/checklists/${checklist._id}/item/${item_id}`,
       method: "DELETE",
     });
     dispatch(updateChecklist(updatedChecklist));
@@ -151,12 +156,13 @@ const handleDeleteChecklistItem = async (
 const handleUpdateChecklistItem = async (
   dispatch: Dispatch<AnyAction>,
   checklist_id: string,
-  updatedChecklistItem: ChecklistItem
+  updatedChecklistItem: ChecklistItem,
+  user: User
 ) => {
   try {
     const { data: updatedChecklist } = await axios({
       baseURL: BASE_ADDR,
-      url: `/checklists/${checklist_id}/item/${updatedChecklistItem._id}`,
+      url: `/user/${user.uid}/checklists/${checklist_id}/item/${updatedChecklistItem._id}`,
       method: "PATCH",
       data: updatedChecklistItem,
     });

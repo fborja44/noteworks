@@ -6,6 +6,10 @@ import React, { useState, useEffect } from "react";
 
 import styled from "@emotion/styled";
 
+// Firebase
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 // Redux Imports
 import { useDispatch } from "react-redux";
 import {
@@ -78,6 +82,9 @@ const QNComponent: React.FC<QNComponentProps> = ({
   unsavedNotes,
   setSaved,
 }) => {
+  // Firebase user context hook
+  const currentUser = useContext(AuthContext);
+
   // Dispatch hook
   const dispatch = useDispatch();
 
@@ -134,12 +141,16 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedQuicknote = {
       ...quicknoteState,
       color: color,
     };
     setQuicknoteState(updatedQuicknote);
-    handleUpdateQuicknote(dispatch, updatedQuicknote);
+    handleUpdateQuicknote(dispatch, updatedQuicknote, currentUser);
   };
 
   /**
@@ -147,12 +158,16 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
+    if (!currentUser) {
+      console.log("Error: Unauthorized action.");
+      return;
+    }
     const updatedQuicknote = {
       ...quicknoteState,
       favorited: !quicknoteState.favorited,
     };
     setQuicknoteState(updatedQuicknote);
-    handleUpdateQuicknote(dispatch, updatedQuicknote);
+    handleUpdateQuicknote(dispatch, updatedQuicknote, currentUser);
   };
 
   // Menu state
@@ -186,9 +201,10 @@ const QNComponent: React.FC<QNComponentProps> = ({
   };
 
   useEffect(() => {
+    if (!currentUser) return;
     const delayDBUpdate = setTimeout(() => {
       // Update every note in the unsaved queue.
-      handleUpdateQuicknotes(dispatch, unsavedNotes);
+      handleUpdateQuicknotes(dispatch, unsavedNotes, currentUser);
       dispatch(setUnsavedNotes([])); // Reset unsaved notes
       setSaved(true);
     }, 5000);
