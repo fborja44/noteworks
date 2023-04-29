@@ -26,6 +26,7 @@ import { doDeleteUser, doSignOut } from "../../firebase/Firebase";
 import DeleteUserModal from "./DeleteUserModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import EditProfileModal from "../auth/EditProfileModal";
+import DeleteUserNotesModal from "./DeleteUserNotesModal";
 
 const ProfileInfoContainer = styled.div`
   display: flex;
@@ -144,7 +145,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
   // Reset Password modal
   const [openChangePassword, setOpenChangePassword] = useState(false);
 
-  // Reset Password modal
+  // Delete All Notes modal
+  const [openDeleteAllNotes, setOpenDeleteAllNotes] = useState(false);
+
+  // Edit Profile modal
   const [openEditProfile, setOpenEditProfile] = useState(false);
 
   if (!currentUser) {
@@ -191,7 +195,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
             <ProfilePageButton onClick={() => setOpenChangePassword(true)}>
               Change Password
             </ProfilePageButton>
-            <ProfilePageButton>Reset App Data</ProfilePageButton>
+            <ProfilePageButton onClick={() => setOpenDeleteAllNotes(true)}>
+              Reset App Data
+            </ProfilePageButton>
             <ProfilePageButton
               className="delete-account"
               onClick={() => setOpenDeleteAccount(true)}
@@ -210,6 +216,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
         currentUser={currentUser}
         showMenuState={openChangePassword}
         setShowMenuState={setOpenChangePassword}
+      />
+      <DeleteUserNotesModal
+        currentUser={currentUser}
+        showMenuState={openDeleteAllNotes}
+        setShowMenuState={setOpenDeleteAllNotes}
       />
       <EditProfileModal
         currentUser={currentUser}

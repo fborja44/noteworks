@@ -2,13 +2,11 @@
 ------------------------------------------------------------------------------*/
 // React import
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import styled from "@emotion/styled";
 import { enqueueSnackbar } from "notistack";
 
 // Firebase imports
-import { doDeleteUser } from "../../firebase/Firebase";
 import { User } from "firebase/auth";
 
 // Common imports
@@ -17,12 +15,13 @@ import { COLOR } from "../../common/color";
 // Component Imports
 import ModalMenu from "../menus/ModalMenu";
 import ModalInput from "../auth/ModalInput";
-import Alert from "../alert/Alert";
 import { Form, ModalContent } from "../auth/AuthForm";
 
 // Image and icon imports
-import KeyIcon from "../icons/KeyIcon";
 import TrashIcon from "../icons/TrashIcon";
+import { deleteAllUserNotes } from "../../utils/users";
+import { useDispatch } from "react-redux";
+import ExclamationCircleIcon from "../icons/ExclamationCircleIcon";
 
 const DeleteButton = styled.button`
   display: flex;
@@ -49,68 +48,69 @@ const DeleteButton = styled.button`
   }
 `;
 
-export interface DeleteUserModalProps {
+export interface DeleteUserNotesModalProps {
   currentUser: User;
   showMenuState: boolean;
   setShowMenuState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface DeleteUserErrors {
-  password: string;
-  firebase: string;
+interface DeleteUserNotesErrors {
+  confirm: string;
 }
 
-const defaultErrors: DeleteUserErrors = {
-  password: "",
-  firebase: "",
+const defaultErrors: DeleteUserNotesErrors = {
+  confirm: "",
 };
 
-const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
+const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
   currentUser,
   showMenuState,
   setShowMenuState,
 }) => {
-  // History
-  const history = useHistory();
+  // Dispatch hook
+  const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState({ password: "", firebase: "" });
+  const [errors, setErrors] = useState({ confirm: "" });
 
-  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
 
   const [loading, setLoading] = useState(false);
 
   /**
-   * Handles account deletion using the inputted password and current user.
+   * Handles note deleltion for the current user.
    */
-  const handleAccountDelete = async (
+  const handleDeleteAll = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
     setLoading(true);
     setErrors(defaultErrors);
-    if (!currentUser || !currentUser.email) {
-      setErrors((prevErrors) => {
-        return {
-          ...prevErrors,
-          firebase: "Could not authenticate user.",
-        };
+    if (!confirm.trim() || confirm.trim().toLowerCase() !== "yes") {
+      setErrors({
+        confirm: "This field is required.",
       });
     } else {
       try {
-        await doDeleteUser(currentUser.email, password);
-        enqueueSnackbar("Account has been successfully deleted.", {
+        const delete_status = await deleteAllUserNotes(dispatch, currentUser);
+        if (!delete_status) {
+          // Check if any note type failed to delete
+          enqueueSnackbar(`Failed to delete all notes.`, {
+            variant: "error",
+          });
+          setLoading(false);
+          return;
+        }
+        enqueueSnackbar("All notes have been deleted.", {
           variant: "success",
         });
-        history.push("/");
         setShowMenuState(false);
-        setPassword("");
+        setConfirm("");
       } catch (e) {
-        if (e instanceof Error) {
-          console.log(e);
-          setErrors((prevErrors) => {
-            return { ...prevErrors, firebase: (e as any).toString() };
-          });
-        }
+        console.log(e);
+        enqueueSnackbar(`Something went wrong when deleting notes.`, {
+          variant: "error",
+        });
+        return;
       }
     }
     setLoading(false);
@@ -124,27 +124,26 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
       setShowMenuState={setShowMenuState}
     >
       <ModalContent>
-        {errors.firebase && <Alert>{errors.firebase}</Alert>}
         <p>
-          WARNING: All notes and data associated with this account will be lost.
-          This action cannot be reversed.
+          WARNING: All notes and data will be deleted permanently. This action
+          cannot be reversed. Enter 'yes' in the prompt below to confirm.
         </p>
         <Form id="delete-account-form">
           <ModalInput
-            id="password"
-            name="deletePassword"
-            icon={<KeyIcon />}
-            placeholder="Enter Your Password To Confirm"
-            value={password}
-            type="password"
-            error={errors.password}
-            handleChange={setPassword}
+            id="confirm"
+            name="deleteConfirm"
+            icon={<ExclamationCircleIcon />}
+            placeholder="Enter 'yes' to confirm."
+            value={confirm}
+            type="text"
+            error={errors.confirm}
+            handleChange={setConfirm}
           />
           <DeleteButton
             type="submit"
-            onClick={(event) => handleAccountDelete(event)}
+            onClick={(event) => handleDeleteAll(event)}
           >
-            <span className={loading ? "blink" : ""}>Delete Account</span>
+            <span className={loading ? "blink" : ""}>Confirm</span>
           </DeleteButton>
         </Form>
       </ModalContent>
@@ -152,4 +151,4 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   );
 };
 
-export default DeleteUserModal;
+export default DeleteUserNotesModal;

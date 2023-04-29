@@ -60,8 +60,12 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   /**
    * Handles password changes.
    */
-  const handlePasswordChange = async () => {
+  const handlePasswordChange = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
     setLoading(true);
+    setErrors(defaultErrors);
     let errorFlag = false;
     if (!currentUser || !currentUser.email) {
       setErrors((prevErrors) => {
@@ -175,7 +179,10 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
             error={errors.newPasswordConfirm}
             handleChange={setNewPasswordConfirm}
           />
-          <FormButton type="submit" onClick={() => handlePasswordChange()}>
+          <FormButton
+            type="submit"
+            onClick={(event) => handlePasswordChange(event)}
+          >
             <span className={loading ? "blink" : ""}>Confirm</span>
           </FormButton>
         </Form>

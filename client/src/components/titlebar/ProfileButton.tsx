@@ -76,6 +76,9 @@ const ProfileButton = () => {
           border-radius: 5px 0px 0px 5px;
           padding: 0 1em;
         `}
+        onClick={() => {
+          dispatch(setSelectedTab(""));
+        }}
       >
         My Profile
       </Link>
