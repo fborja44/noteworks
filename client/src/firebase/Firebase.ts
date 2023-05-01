@@ -76,6 +76,19 @@ async function doChangePassword(
 }
 
 /**
+ * Reauthenticates the user and renews credentials.
+ * @param {string} email Email of user
+ * @param {string} password Password of user
+ * @returns The new credential
+ */
+async function reauthenticatePassword(email: string, password: string) {
+  if (auth.currentUser) {
+    let credential = EmailAuthProvider.credential(email, password);
+    await reauthenticateWithCredential(auth.currentUser, credential);
+  }
+}
+
+/**
  * Firebase user sign in with social media accounts i.e. Google
  * @param {string} provider Social media provider to sign in with
  */
@@ -142,6 +155,7 @@ export {
   auth,
   doCreateUserWithEmailAndPassword,
   doSignInWithEmailAndPassword,
+  reauthenticatePassword,
   doSocialSignIn,
   doPasswordReset,
   doPasswordUpdate,

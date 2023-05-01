@@ -21,7 +21,9 @@ import { Form, ModalContent } from "../auth/AuthForm";
 import TrashIcon from "../icons/TrashIcon";
 import { deleteAllUserNotes } from "../../utils/users";
 import { useDispatch } from "react-redux";
-import ExclamationCircleIcon from "../icons/ExclamationCircleIcon";
+import { reauthenticatePassword } from "../../firebase/Firebase";
+import Alert from "../alert/Alert";
+import KeyIcon from "../icons/KeyIcon";
 
 const DeleteButton = styled.button`
   display: flex;
@@ -55,11 +57,13 @@ export interface DeleteUserNotesModalProps {
 }
 
 interface DeleteUserNotesErrors {
-  confirm: string;
+  password: string;
+  firebase: string;
 }
 
 const defaultErrors: DeleteUserNotesErrors = {
-  confirm: "",
+  password: "",
+  firebase: "",
 };
 
 const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
@@ -70,9 +74,9 @@ const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
   // Dispatch hook
   const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState({ confirm: "" });
+  const [errors, setErrors] = useState({ password: "", firebase: "" });
 
-  const [confirm, setConfirm] = useState("");
+  const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -85,11 +89,36 @@ const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
     event.preventDefault();
     setLoading(true);
     setErrors(defaultErrors);
-    if (!confirm.trim() || confirm.trim().toLowerCase() !== "yes") {
-      setErrors({
-        confirm: "This field is required.",
+    if (!currentUser || !currentUser.email) {
+      setErrors((prevErrors) => {
+        return {
+          ...prevErrors,
+          firebase: "Could not authenticate user.",
+        };
+      });
+      setLoading(false);
+      return;
+    }
+    if (!password.trim()) {
+      setErrors((prevErrors) => {
+        return {
+          ...prevErrors,
+          password: "This field is required.",
+        };
       });
     } else {
+      try {
+        await reauthenticatePassword(currentUser.email, password);
+      } catch (e) {
+        if (e instanceof Error) {
+          console.log(e);
+          setErrors((prevErrors) => {
+            return { ...prevErrors, firebase: (e as any).toString() };
+          });
+        }
+        setLoading(false);
+        return;
+      }
       try {
         const delete_status = await deleteAllUserNotes(dispatch, currentUser);
         if (!delete_status) {
@@ -104,7 +133,7 @@ const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
           variant: "success",
         });
         setShowMenuState(false);
-        setConfirm("");
+        setPassword("");
       } catch (e) {
         console.log(e);
         enqueueSnackbar(`Something went wrong when deleting notes.`, {
@@ -126,24 +155,26 @@ const DeleteUserNotesModal: React.FC<DeleteUserNotesModalProps> = ({
       <ModalContent>
         <p>
           WARNING: All notes and data will be deleted permanently. This action
-          cannot be reversed. Enter 'yes' in the prompt below to confirm.
+          cannot be reversed. Enter your password in the prompt below to
+          confirm.
         </p>
+        {errors.firebase && <Alert>{errors.firebase}</Alert>}
         <Form id="delete-account-form">
           <ModalInput
-            id="confirm"
-            name="deleteConfirm"
-            icon={<ExclamationCircleIcon />}
-            placeholder="Enter 'yes' to confirm."
-            value={confirm}
-            type="text"
-            error={errors.confirm}
-            handleChange={setConfirm}
+            id="password"
+            name="deletePassword"
+            icon={<KeyIcon />}
+            placeholder="Enter Your Pasword"
+            value={password}
+            type="password"
+            error={errors.password}
+            handleChange={setPassword}
           />
           <DeleteButton
             type="submit"
             onClick={(event) => handleDeleteAll(event)}
           >
-            <span className={loading ? "blink" : ""}>Confirm</span>
+            <span className={loading ? "blink" : ""}>Delete All Notes</span>
           </DeleteButton>
         </Form>
       </ModalContent>
