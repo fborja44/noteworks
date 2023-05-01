@@ -33,6 +33,7 @@ import CreateAccountModal from "./auth/CreateAccountModal";
 import ResetPasswordModal from "./auth/ResetPasswordModal";
 
 import HomePage from "./home/HomePage";
+import FavoritesPage from "./home/FavoritesPage";
 import QNPage from "./quicknotes/QNPage";
 import MNPage from "./marknotes/MNPage";
 import SettingsPage from "./settings/SettingsPage";
@@ -45,7 +46,7 @@ import ProfilePage from "./profile/ProfilePage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
-import 'react-tooltip/dist/react-tooltip.css';
+import "react-tooltip/dist/react-tooltip.css";
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};
@@ -132,6 +133,9 @@ const App = () => {
                   setOpenLogin={setOpenLogin}
                   setOpenCreateAccount={setOpenCreateAccount}
                 />
+              </Route>
+              <Route exact path="/favorites">
+                <FavoritesPage />
               </Route>
               <Route path="/quicknotes">
                 <QNPage />

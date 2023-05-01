@@ -17,7 +17,7 @@ import {
 
 // Common imports
 import { Checklist } from "../../common/types";
-import { COLOR, ColorId, NoteColor } from "../../common/color";
+import { ColorId, NoteColor } from "../../common/color";
 
 // Component imports
 import ItemsList from "./ItemsList";

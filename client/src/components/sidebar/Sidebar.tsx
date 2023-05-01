@@ -20,9 +20,10 @@ import SidebarButton from "./SidebarButton";
 import BoltIcon from "../icons/BoltIcon";
 import HomeIcon from "../icons/HomeIcon";
 import SettingsIcon from "../icons/SettingsIcon";
+import StarIcon from "../icons/StarIcon";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
-import { BsMarkdown } from "react-icons/bs";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
+import { BsMarkdown } from "react-icons/bs";
 
 const NavIcon = css`
   height: 18px;
@@ -103,13 +104,20 @@ const Sidebar: React.FC = () => {
           <div>
             <SidebarButton
               full={open}
-              title="Home"
+              title="Dashboard"
               label="Dashboard"
               icon={<HomeIcon css={NavIcon} />}
               route="/"
             />
             {currentUser && (
               <>
+                <SidebarButton
+                  full={open}
+                  title="My Favorites"
+                  label="My Favorites"
+                  icon={<StarIcon css={NavIcon} />}
+                  route="/favorites"
+                />
                 <SidebarButton
                   full={open}
                   title="Quicknotes"

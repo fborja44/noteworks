@@ -101,29 +101,12 @@ const HomePage: React.FC<HomePageProps> = ({
   // Firebase user context hook
   const currentUser = useContext(AuthContext);
 
-  // Data Saved State
-  const [saved, setSaved] = useState(true);
-
   return (
     <React.Fragment>
-      <PageHeader
-        title="Dashboard"
-        icon={<HomeIcon />}
-        saved={currentUser ? saved : undefined}
-      />
+      <PageHeader title="Dashboard" icon={<HomeIcon />} />
       <div className="main-content-wrapper">
         {currentUser ? (
-          <>
-            <Section name={`Favorited Groups`} icon={<StarIcon />}>
-              <GroupList favorites={true} />
-            </Section>
-            <Section name={`Favorited Quicknotes`} icon={<StarIcon />}>
-              <QNList favorites={true} setSaved={setSaved} />
-            </Section>
-            <Section name={`Favorited Marknotes`} icon={<StarIcon />}>
-              <MNList favorites={true} />
-            </Section>
-          </>
+          <></>
         ) : (
           <Section>
             <TitleContainer>
