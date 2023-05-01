@@ -175,16 +175,17 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         icon={<FolderOpenIcon filled />}
         saved={saved}
       >
-        <PageHeaderButton title="Options" onClick={toggleColorMenu}>
+        <PageHeaderButton id="edit-color-button" title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />
         </PageHeaderButton>
-        <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
+        <PageHeaderButton id="delete-group-button" title="Delete Group" onClick={toggleConfirmDelete}>
           <TrashIcon />
         </PageHeaderButton>
-        <PageHeaderButton title="Favorite" onClick={() => handleFavorite()}>
+        <PageHeaderButton id="favorite-group-button" title="Favorite" onClick={() => handleFavorite()}>
           {activeGroup.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
         <PageHeaderButton
+          id="close-button"
           onClick={() => history.goBack()}
           title="Return to Notes"
         >

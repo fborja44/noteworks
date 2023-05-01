@@ -3,15 +3,21 @@
 // React import
 import * as React from "react";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+import { Tooltip } from "react-tooltip";
+
 export interface NotesExplorerButtonProps {
+  id: string;
   title: string;
   onClick: Function;
   selected?: boolean;
 }
 
-const StyledButton = styled.div`
+const ButtonContainer = styled.div`
   float: left;
   display: flex;
   align-items: center;
@@ -59,17 +65,33 @@ const StyledButton = styled.div`
 `;
 
 const NotesExplorerButton: React.FC<NotesExplorerButtonProps> = ({
+  id,
   title,
   onClick,
   selected,
   children,
 }) => {
   return (
-    <StyledButton title={`${title}`}>
-      <button onClick={() => onClick()} className={`${selected && "selected"}`}>
-        {children}
-      </button>
-    </StyledButton>
+    <>
+      <ButtonContainer data-tooltip-id={id} data-tooltip-content={title}>
+        <button
+          onClick={() => onClick()}
+          className={`${selected && "selected"}`}
+        >
+          {children}
+        </button>
+      </ButtonContainer>
+      <Tooltip
+        css={css`
+          font-size: 12px;
+          background: rgba(0, 0, 0, 0.8);
+          border-radius: 5px;
+          z-index: 1000;
+        `}
+        id={id}
+        place="bottom"
+      />
+    </>
   );
 };
 

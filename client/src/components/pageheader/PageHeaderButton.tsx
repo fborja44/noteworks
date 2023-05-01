@@ -3,9 +3,15 @@
 // React import
 import * as React from "react";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+import { Tooltip } from "react-tooltip";
+
 export interface PageHeaderButtonProps {
+  id: string;
   title: string;
   onClick: Function;
   selected?: boolean;
@@ -71,6 +77,7 @@ const StyledButton = styled.div`
 `;
 
 const PageHeaderButton: React.FC<PageHeaderButtonProps> = ({
+  id,
   title,
   onClick,
   selected,
@@ -79,11 +86,32 @@ const PageHeaderButton: React.FC<PageHeaderButtonProps> = ({
   height,
 }) => {
   return (
-    <StyledButton title={`${title}`} width={width} height={height}>
-      <button onClick={() => onClick()} className={`${selected && "selected"}`}>
-        {children}
-      </button>
-    </StyledButton>
+    <>
+      <StyledButton
+        data-tooltip-id={id}
+        data-tooltip-content={title}
+        id={id}
+        width={width}
+        height={height}
+      >
+        <button
+          onClick={() => onClick()}
+          className={`${selected && "selected"}`}
+        >
+          {children}
+        </button>
+      </StyledButton>
+      <Tooltip
+        css={css`
+          font-size: 12px;
+          background: rgba(0, 0, 0, 0.8);
+          border-radius: 5px;
+          z-index: 1000;
+        `}
+        id={id}
+        place="bottom"
+      />
+    </>
   );
 };
 

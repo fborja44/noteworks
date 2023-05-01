@@ -79,7 +79,7 @@ const PageHeaderIconStyles = css`
   width: 20px;
   margin-right: 0.625em;
 
-  span {
+  #icon-container {
     height: 20px;
     width: 20px;
     margin-right: 0.625em;
@@ -121,7 +121,7 @@ const SavingIndicatorContainer = styled.div`
     width: 14px;
     height: 14px;
   }
-  small {
+  small#saving-text {
     font-size: 10px;
     font-style: italic;
     position: relative;
@@ -153,7 +153,7 @@ const SavedIndicator = ({ saved }: { saved: boolean }) => {
   return !saved ? (
     <SavingIndicatorContainer className="blink">
       <IoSaveOutline />
-      <small>saving...</small>
+      <small id="saving-text">saving...</small>
     </SavingIndicatorContainer>
   ) : (
     <SavingIndicatorContainer
@@ -163,7 +163,7 @@ const SavedIndicator = ({ saved }: { saved: boolean }) => {
       `}
     >
       <CheckCircleIcon />
-      <small>data saved</small>
+      <small id="saving-text">data saved</small>
     </SavingIndicatorContainer>
   );
 };
@@ -193,7 +193,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     <PageHeaderContainer>
       <PageHeaderSection>
         {icon && (
-          <span
+          <span id="icon-container"
             css={[
               PageHeaderIconStyles,
               css`

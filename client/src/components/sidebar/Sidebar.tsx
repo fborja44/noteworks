@@ -35,7 +35,7 @@ const SidebarContainer = styled.aside`
   height: calc(100vh - 75px);
   width: ${(props: { open: boolean }) => (props.open ? "100px" : "50px")};
   color: ${(props) => props.theme.sidebar.textPrimary};
-  z-index: 0;
+  z-index: 10;
   transition: width 0.1s;
 
   nav {
@@ -88,6 +88,7 @@ const Sidebar: React.FC = () => {
       <SidebarTitle open={open}>
         {open && <span>Menu</span>}
         <PageHeaderButton
+          id="toggle-sidebar-button"
           title="Toggle Menu"
           onClick={() => {
             setOpen(!open);

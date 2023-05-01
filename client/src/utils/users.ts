@@ -17,7 +17,7 @@ const deleteAllUserNotes = async (
   dispatch: Dispatch<AnyAction>,
   user: User
 ) => {
-  const { data: data } = await axios({
+  const { data } = await axios({
     baseURL: BASE_ADDR,
     url: `/user/${user.uid}/all`,
     method: "DELETE",

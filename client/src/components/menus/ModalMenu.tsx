@@ -145,6 +145,7 @@ const ModalMenu: React.FC<ModalMenuProps> = ({
                 <Heading>{heading}</Heading>
               </HeadingContainer>
               <PageHeaderButton
+                id="close-button"
                 title="Close"
                 onClick={() => setShowMenuState((prev: boolean) => !prev)}
               >

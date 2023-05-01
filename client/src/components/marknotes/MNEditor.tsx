@@ -329,6 +329,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         saved={saved}
       >
         <PageHeaderButton
+          id="toggle-code-button"
           title="Toggle Code Editor"
           onClick={() => setShowEditor((prev) => !prev)}
           selected={showEditor}
@@ -336,6 +337,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
           <VscFileCode />
         </PageHeaderButton>
         <PageHeaderButton
+          id="toggle-preview-button"
           title="Toggle Preview"
           onClick={() => setShowPreview((prev) => !prev)}
           selected={showPreview}
@@ -347,13 +349,22 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
             `}
           />
         </PageHeaderButton>
-        <PageHeaderButton title="Options" onClick={toggleColorMenu}>
+        <PageHeaderButton
+          id="edit-color-button"
+          title="Options"
+          onClick={toggleColorMenu}
+        >
           <PencilSquareIcon />
         </PageHeaderButton>
-        <PageHeaderButton title="Delete Note" onClick={toggleConfirmDelete}>
+        <PageHeaderButton
+          id="delete-marknote-button"
+          title="Delete Note"
+          onClick={toggleConfirmDelete}
+        >
           <TrashIcon />
         </PageHeaderButton>
         <PageHeaderButton
+          id="favorite-marknote-button"
           title="Favorite"
           onClick={() => {
             const updatedMarknote = {
@@ -370,7 +381,11 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
             <StarIcon filled />
           )}
         </PageHeaderButton>
-        <PageHeaderButton onClick={() => history.goBack()} title="Close Note">
+        <PageHeaderButton
+          id="close-button"
+          onClick={() => history.goBack()}
+          title="Close Note"
+        >
           <ArrowUturnRightIcon />
         </PageHeaderButton>
       </PageHeader>

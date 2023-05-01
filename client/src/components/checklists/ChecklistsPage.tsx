@@ -3,7 +3,7 @@
 // React imports
 import React, { useState } from "react";
 
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // Firebase
 import { useContext } from "react";
@@ -40,9 +40,6 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
   // Dispatch hook
   const dispatch = useDispatch();
 
-  // History hook
-  const history = useHistory();
-
   // Checklists Help Menu State
   const [showChecklistHelp, setShowChecklistHelp] = useState(false);
   const openChecklistHelp = () => {
@@ -68,6 +65,7 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
           setFilterText={setChecklistFilterText}
         >
           <PageHeaderButton
+            id="create-checklist-button"
             title={"New Checklist"}
             onClick={() => {
               if (!currentUser) {
@@ -80,6 +78,7 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
             <PlusIcon />
           </PageHeaderButton>
           <PageHeaderButton
+            id="create-group-button"
             title="New Group"
             onClick={() => {
               if (!currentUser) {
@@ -91,7 +90,11 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
           >
             <FolderPlusIcon />
           </PageHeaderButton>
-          <PageHeaderButton title={"Help"} onClick={openChecklistHelp}>
+          <PageHeaderButton
+            id="help-button"
+            title={"Help"}
+            onClick={openChecklistHelp}
+          >
             <HelpIcon />
           </PageHeaderButton>
         </PageHeader>

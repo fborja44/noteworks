@@ -45,6 +45,7 @@ import ProfilePage from "./profile/ProfilePage";
 import "../css/app.css";
 import "../css/quicknotes.css";
 import "../css/marknotes.css";
+import 'react-tooltip/dist/react-tooltip.css';
 
 const RendererContainer = styled.div`
   background-color: ${(props) => props.theme.main.background};

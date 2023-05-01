@@ -22,7 +22,7 @@ import Section from "../Section";
 import UserIcon from "../icons/UserIcon";
 import SmileIcon from "../icons/SmileIcon";
 import EmailIcon from "../icons/EmailIcon";
-import { doDeleteUser, doSignOut } from "../../firebase/Firebase";
+import { doSignOut } from "../../firebase/Firebase";
 import DeleteUserModal from "./DeleteUserModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import EditProfileModal from "../auth/EditProfileModal";
@@ -127,12 +127,10 @@ const ProfilePageButton = styled.button`
   }
 `;
 
-interface ProfilePageProps {}
-
 /**
  * Home content renderer
  */
-const ProfilePage: React.FC<ProfilePageProps> = ({}) => {
+const ProfilePage: React.FC = () => {
   // Firebase user context hook
   const currentUser = useContext(AuthContext);
 

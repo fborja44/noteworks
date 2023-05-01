@@ -152,19 +152,21 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
         icon={<DocumentCheckIcon filled />}
         saved={saved}
       >
-        <PageHeaderButton title="Add New Item" onClick={handleAddItem}>
+        <PageHeaderButton id="new-item-button" title="Add New Item" onClick={handleAddItem}>
           <PlusIcon />
         </PageHeaderButton>
-        <PageHeaderButton title="Options" onClick={toggleColorMenu}>
+        <PageHeaderButton id="edit-color-button" title="Options" onClick={toggleColorMenu}>
           <PencilSquareIcon />
         </PageHeaderButton>
         <PageHeaderButton
+          id="delete-checklist-button"
           title="Delete Checklist"
           onClick={toggleConfirmDelete}
         >
           <TrashIcon />
         </PageHeaderButton>
         <PageHeaderButton
+          id="favorite-checklist-button"
           title="Favorite"
           onClick={() => {
             const updatedChecklist = {
@@ -182,6 +184,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
           )}
         </PageHeaderButton>
         <PageHeaderButton
+          id="close-button"
           onClick={() => history.goBack()}
           title="Close Checklist"
         >

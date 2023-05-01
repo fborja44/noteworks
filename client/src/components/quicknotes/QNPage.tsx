@@ -65,6 +65,7 @@ const QNPage: React.FC<QNPageProps> = () => {
         saved={saved}
       >
         <PageHeaderButton
+          id="create-quicknote-button"
           title={"New Note"}
           onClick={() => {
             if (!currentUser) {
@@ -77,6 +78,7 @@ const QNPage: React.FC<QNPageProps> = () => {
           <PlusIcon />
         </PageHeaderButton>
         <PageHeaderButton
+          id="create-group-button"
           title="New Group"
           onClick={() => {
             if (!currentUser) {
@@ -88,7 +90,7 @@ const QNPage: React.FC<QNPageProps> = () => {
         >
           <FolderPlusIcon />
         </PageHeaderButton>
-        <PageHeaderButton title={"Help"} onClick={openQNHelp}>
+        <PageHeaderButton id="help-button" title={"Help"} onClick={openQNHelp}>
           <HelpIcon />
         </PageHeaderButton>
       </PageHeader>

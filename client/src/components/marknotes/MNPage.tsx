@@ -89,6 +89,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
           {!explorerOpen && (
             <>
               <PageHeaderButton
+                id="create-marknote-button"
                 title="New Note"
                 onClick={() => {
                   if (!currentUser) {
@@ -101,6 +102,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
                 <PlusIcon />
               </PageHeaderButton>
               <PageHeaderButton
+                id="create-group-button"
                 title="New Group"
                 onClick={() => {
                   if (!currentUser) {
@@ -115,6 +117,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
             </>
           )}
           <PageHeaderButton
+            id="toggle-list-view-button"
             title="List View"
             selected={explorerOpen}
             onClick={() => {
@@ -124,6 +127,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
             <MenuIcon />
           </PageHeaderButton>
           <PageHeaderButton
+            id="toggle-grid-view-button"
             title="Grid View"
             selected={!explorerOpen}
             onClick={() => {
@@ -132,7 +136,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
           >
             <SquareBlocksIcon />
           </PageHeaderButton>
-          <PageHeaderButton title="Help" onClick={openMNHelp}>
+          <PageHeaderButton id="help-button" title="Help" onClick={openMNHelp}>
             <HelpIcon />
           </PageHeaderButton>
         </PageHeader>

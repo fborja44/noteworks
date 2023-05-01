@@ -157,7 +157,11 @@ const NotesExplorer = () => {
     <NotesExplorerContainer>
       <NotesExplorerHeader>
         <NotesExplorerTitle>Marknotes Explorer</NotesExplorerTitle>
-        <NotesExplorerButton title={"Explorer Options"} onClick={() => {}}>
+        <NotesExplorerButton
+          id="explorer-options-button"
+          title={"Explorer Options"}
+          onClick={() => {}}
+        >
           <EllipsisVerticalIcon />
         </NotesExplorerButton>
       </NotesExplorerHeader>
@@ -165,6 +169,7 @@ const NotesExplorer = () => {
         <NotesExplorerFilter handleFilterNote={setExplorerFilter} />
         <NotesExplorerButtons>
           <NotesExplorerButton
+            id="create-group-button"
             title={"New Group"}
             onClick={() => {
               if (!currentUser) {
@@ -177,6 +182,7 @@ const NotesExplorer = () => {
             <FolderPlusIcon />
           </NotesExplorerButton>
           <NotesExplorerButton
+            id="create-marknote-button"
             title={"New Marknote"}
             onClick={() => {
               if (!currentUser) {

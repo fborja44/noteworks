@@ -3,6 +3,8 @@
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+import { Tooltip } from "react-tooltip";
+
 import { Link, useHistory } from "react-router-dom";
 import { doSignOut } from "../../firebase/Firebase";
 import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
@@ -83,11 +85,12 @@ const ProfileButton = () => {
         My Profile
       </Link>
       <button
+        data-tooltip-id={"sign-out-button"}
+        data-tooltip-content="Sign Out"
         css={css`
           border-radius: 0px 5px 5px 0px;
         `}
         className="sign-out"
-        title="Sign Out"
         onClick={() => {
           doSignOut();
           history.push("/");
@@ -96,6 +99,16 @@ const ProfileButton = () => {
       >
         <ArrowRightOnRectangleIcon />
       </button>
+      <Tooltip
+        css={css`
+          font-size: 12px;
+          background: rgba(0, 0, 0, 0.8);
+          border-radius: 5px;
+          z-index: 1000;
+        `}
+        id={"sign-out-button"}
+        place="bottom"
+      />
     </ButtonContainer>
   );
 };
