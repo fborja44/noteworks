@@ -195,7 +195,7 @@ const ChecklistItemComponent = ({
    */
   useEffect(() => {
     const delayDBUpdate = setTimeout(() => {
-      if (!currentUser) {
+      if (!currentUser || currentUser.uid !== parent.author_id) {
         console.log("Error: Unauthorized action.");
         return;
       }

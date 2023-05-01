@@ -115,7 +115,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
    * Adds a new item to the checklist.
    */
   const handleAddItem = async () => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== activeChecklist.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -132,7 +132,7 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
    * Effect hook to delay saving to the database.
    */
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || currentUser.uid !== activeChecklist.author_id) return;
     const delayDBUpdate = setTimeout(() => {
       handleUpdateChecklist(dispatch, checklistState, currentUser);
       setSaved(true);

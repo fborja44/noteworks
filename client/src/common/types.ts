@@ -3,8 +3,9 @@ import { ColorId } from "./color";
 /* Type Definitions
 ------------------------------------------------------------------------------*/
 export type Quicknote = {
-  _id: string;
   type: "quicknote";
+  _id: string;
+  author_id: string;
   title: string;
   color: ColorId;
   body: string;
@@ -14,8 +15,9 @@ export type Quicknote = {
 };
 
 export type Marknote = {
-  _id: string;
   type: "marknote";
+  _id: string;
+  author_id: string;
   title: string;
   color: ColorId;
   body: string;
@@ -25,8 +27,9 @@ export type Marknote = {
 };
 
 export type Checklist = {
-  _id: string;
   type: "checklist";
+  _id: string;
+  author_id: string;
   title: string;
   color: ColorId;
   items: ChecklistItem[];
@@ -42,8 +45,9 @@ export type ChecklistItem = {
 };
 
 export type Group = {
-  _id: string;
   type: "group";
+  _id: string;
+  author_id: string;
   title: string;
   color: ColorId;
   quicknotes: string[];

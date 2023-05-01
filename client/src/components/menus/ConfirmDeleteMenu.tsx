@@ -100,7 +100,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
         <p>This action cannot be reversed.</p>
         <DeleteButton
           onClick={(event) => {
-            if (!currentUser) {
+            if (!currentUser || currentUser.uid !== item.author_id) {
               console.log("Error: Unauthorized action.");
               return;
             }

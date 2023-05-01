@@ -132,7 +132,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
    * Event target needs dataset attribute.
    */
   const handleSelectGroup = async (event: any) => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== note.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }

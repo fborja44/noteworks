@@ -308,7 +308,7 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
    * Effect hook to delay saving to the database.
    */
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || currentUser.uid !== activeMarknote.author_id) return;
     const delayDBUpdate = setTimeout(() => {
       handleUpdateMarknote(dispatch, activeMarknote, currentUser);
       setSaved(true);

@@ -54,7 +54,7 @@ const ItemsList = ({
    * Function to swap two checklist items.
    */
   const swapItems = async (index: number, up?: boolean) => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== checklistState.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }

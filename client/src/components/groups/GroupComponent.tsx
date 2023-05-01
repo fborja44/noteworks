@@ -103,7 +103,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== currentGroup.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -125,7 +125,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== currentGroup.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }

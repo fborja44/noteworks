@@ -109,7 +109,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== activeGroup.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -125,7 +125,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== activeGroup.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -155,7 +155,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
   };
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || currentUser.uid !== activeGroup.author_id) return;
     const delayDBUpdate = setTimeout(() => {
       handleUpdateGroup(dispatch, activeGroup, currentUser);
       setSaved(true);

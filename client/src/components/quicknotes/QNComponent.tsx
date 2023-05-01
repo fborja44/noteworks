@@ -141,7 +141,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleEditColor = (color: ColorId) => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== quicknoteState.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -158,7 +158,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
    * Does NOT change the last modified date.
    */
   const handleFavorite = () => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.uid !== quicknoteState.author_id) {
       console.log("Error: Unauthorized action.");
       return;
     }
@@ -201,7 +201,7 @@ const QNComponent: React.FC<QNComponentProps> = ({
   };
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || currentUser.uid !== quicknoteState.author_id) return;
     const delayDBUpdate = setTimeout(() => {
       // Update every note in the unsaved queue.
       handleUpdateQuicknotes(dispatch, unsavedNotes, currentUser);
