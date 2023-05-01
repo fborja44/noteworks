@@ -39,7 +39,7 @@ router.get("/user/:userId/checklists/:id", async (req: any, res: any) => {
 /**
  * [POST /user/:userId/checklists]
  */
-router.post("/user/:userId/checklists/:userId", async (req: any, res: any) => {
+router.post("/user/:userId/checklists/", async (req: any, res: any) => {
   const userId = req.params.userId;
   let title = req.body.title;
   let color = req.body.color;

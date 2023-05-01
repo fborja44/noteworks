@@ -136,6 +136,7 @@ const ContentInput = styled.input`
 
 interface ItemProps {
   parent: Checklist;
+  setParent: Function;
   item: ChecklistItem;
   index: number;
   setSaved: Function;
@@ -145,6 +146,7 @@ interface ItemProps {
 
 const ChecklistItemComponent = ({
   parent,
+  setParent,
   item,
   index,
   setSaved,
@@ -186,6 +188,11 @@ const ChecklistItemComponent = ({
       ...itemState,
       checked: value,
     };
+    const newParentItems = parent.items.map((item) =>
+      item._id === itemState._id ? updatedChecklistItem : item
+    );
+    parent.items = newParentItems;
+    setParent(parent);
     setItemState(updatedChecklistItem);
     dispatch(addUnsavedItem(updatedChecklistItem));
   };

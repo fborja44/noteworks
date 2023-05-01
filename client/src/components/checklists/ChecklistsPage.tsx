@@ -24,6 +24,7 @@ import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import GroupList from "../groups/GroupList";
 import ChecklistList from "./ChecklistsList";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
+import ChecklistsHelp from "./ChecklistsHelp";
 
 // Image and icon imports
 import PlusIcon from "../icons/PlusIcon";
@@ -40,12 +41,6 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
   // Dispatch hook
   const dispatch = useDispatch();
 
-  // Checklists Help Menu State
-  const [showChecklistHelp, setShowChecklistHelp] = useState(false);
-  const openChecklistHelp = () => {
-    setShowChecklistHelp((prev) => !prev);
-  };
-
   // Checklists State
   const checklistsState: Checklist[] = useSelector(
     (state: any) => state.checklistsState
@@ -55,6 +50,12 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
    * State for checklists filter text
    */
   const [ChecklistFilterText, setChecklistFilterText] = useState("");
+
+  // Help menu state
+  const [showChecklistsHelp, setShowChecklistsHelp] = useState(false);
+  const openChecklistsHelp = () => {
+    setShowChecklistsHelp((prev) => !prev);
+  };
 
   return (
     <Switch>
@@ -93,7 +94,7 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
           <PageHeaderButton
             id="help-button"
             title={"Help"}
-            onClick={openChecklistHelp}
+            onClick={openChecklistsHelp}
           >
             <HelpIcon />
           </PageHeaderButton>
@@ -123,9 +124,13 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
           >
             <ChecklistList ChecklistFilterText={ChecklistFilterText} />
           </Section>
+          <ChecklistsHelp
+            showChecklistsHelp={showChecklistsHelp}
+            setShowChecklistsHelp={setShowChecklistsHelp}
+          />
         </div>
       </Route>
-      {/** Routes for Editors */}
+      {/** Routes for Single Checklist Pages */}
       {checklistsState.map((checklist) => (
         <Route key={checklist._id} path={`/checklists/${checklist._id}`}>
           <SingleChecklistPage activeChecklist={checklist} />

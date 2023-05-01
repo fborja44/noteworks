@@ -6,6 +6,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 
+import styled from "@emotion/styled";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import {
@@ -15,7 +17,7 @@ import {
 
 // Common imports
 import { Checklist } from "../../common/types";
-import { ColorId, NoteColor } from "../../common/color";
+import { COLOR, ColorId, NoteColor } from "../../common/color";
 
 // Component imports
 import ItemsList from "./ItemsList";
@@ -24,6 +26,7 @@ import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
+import ChecklistProgressBar from "./ChecklistProgressBar";
 
 // Image and icon imports
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
@@ -31,6 +34,32 @@ import PencilSquareIcon from "../icons/PencilSquareIcon";
 import TrashIcon from "../icons/TrashIcon";
 import StarIcon from "../icons/StarIcon";
 import PlusIcon from "../icons/PlusIcon";
+
+const CreateItemButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  width: 100px;
+  height: 40px;
+
+  background-color: ${(props) => props.theme.main.backgroundSecondary};
+  color: ${(props) => props.theme.title.textSecondary};
+  border: 1px solid ${(props) => props.theme.note.borderColor};
+  border-radius: 5px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.title.borderColor};
+  }
+`;
 
 export interface SingleChecklistPageProps {
   activeChecklist: Checklist;
@@ -144,6 +173,14 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
     };
   }, [checklistState]);
 
+  const items_length = checklistState.items.length;
+  let completed_count = 0;
+  for (const item of checklistState.items) {
+    if (item.checked) {
+      completed_count++;
+    }
+  }
+
   return (
     <React.Fragment>
       <PageHeader
@@ -152,10 +189,18 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
         icon={<DocumentCheckIcon filled />}
         saved={saved}
       >
-        <PageHeaderButton id="new-item-button" title="Add New Item" onClick={handleAddItem}>
+        <PageHeaderButton
+          id="new-item-button"
+          title="Add New Item"
+          onClick={handleAddItem}
+        >
           <PlusIcon />
         </PageHeaderButton>
-        <PageHeaderButton id="edit-color-button" title="Options" onClick={toggleColorMenu}>
+        <PageHeaderButton
+          id="edit-color-button"
+          title="Options"
+          onClick={toggleColorMenu}
+        >
           <PencilSquareIcon />
         </PageHeaderButton>
         <PageHeaderButton
@@ -192,12 +237,17 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
+        <ChecklistProgressBar completion={completed_count / items_length} />
         <ItemsList
           checklistState={checklistState}
           setChecklistState={setChecklistState}
           items={activeChecklist.items}
           setSaved={setSaved}
         />
+        <CreateItemButton onClick={handleAddItem}>
+          <PlusIcon />
+          <span>Add Item</span>
+        </CreateItemButton>
       </div>
       <ColorMenu
         showColorMenu={showColorMenu}

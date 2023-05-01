@@ -1,4 +1,4 @@
-/* Checklists Page Component
+/* Checklist Items List Component
 ------------------------------------------------------------------------------*/
 // React imports
 import React from "react";
@@ -24,6 +24,7 @@ const StyledItemsList = styled.ul`
   color: ${(props) => props.theme.main.textSecondary};
   font-size: 14px;
   padding-left: 1em;
+  margin-bottom: 20px;
 `;
 
 interface ItemsListProps {
@@ -86,6 +87,7 @@ const ItemsList = ({
         <ChecklistItemComponent
           key={item._id}
           parent={checklistState}
+          setParent={setChecklistState}
           item={item}
           index={index}
           setSaved={setSaved}

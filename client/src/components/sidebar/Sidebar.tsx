@@ -89,7 +89,7 @@ const Sidebar: React.FC = () => {
         {open && <span>Menu</span>}
         <PageHeaderButton
           id="toggle-sidebar-button"
-          title="Toggle Menu"
+          title=""
           onClick={() => {
             setOpen(!open);
           }}

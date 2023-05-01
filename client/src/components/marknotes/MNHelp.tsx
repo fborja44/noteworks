@@ -26,7 +26,7 @@ const MNHelp: React.FC<MNHelpProps> = ({ showMNHelp, setShowMNHelp }) => {
       </p>
       <p>To add a new note, click the + button in the menu.</p>
       <p>
-        To change the label color of a quicknote, click the edit button at the
+        To change the label color of a note, click the edit button at the
         top right of the note, or at the top right of the editor.
       </p>
       <p>
