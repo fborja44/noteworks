@@ -39,7 +39,7 @@ const GroupMenuContent = styled.div`
   max-height: 300px;
   overflow: auto;
 
-  & > div {
+  & > button {
     background: ${(props) => props.theme.header.backgroundSecondary};
 
     &:hover {
@@ -52,14 +52,17 @@ const GroupMenuContent = styled.div`
   }
 `;
 
-const GroupMenuItemContainer = styled.div`
+const GroupMenuItemContainer = styled.button`
   width: 100%;
   cursor: pointer;
   padding: 1.25em;
   display: flex;
   justify-content: space-between;
-
   align-items: center;
+  font-size: 12px;
+  border: 0;
+  color: ${(props) => props.theme.main.textPrimary};
+
   font-weight: 600;
 
   .selected-icon {
@@ -72,14 +75,25 @@ const GroupMenuItemContainer = styled.div`
     background: ${(props) => props.theme.sidebar.hoverColor};
   }
 
+  &:hover:disabled {
+    background: ${(props) => props.theme.header.backgroundSecondary};
+    cursor: initial;
+  }
+
   &.border {
     border-bottom: 1px solid ${(props) => props.theme.title.borderColor};
   }
 `;
 
+const Empty = styled.span`
+  font-style: italic;
+  color: ${(props) => props.theme.header.textSecondary};
+`;
+
 const GroupMenuItemTitle = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   svg {
     color: ${(props: { iconColor: string }) => props.iconColor};
     height: 20px;
@@ -165,6 +179,17 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
             handleSelectGroup={handleSelectGroup}
           />
         ))}
+        {!groupsState.length && (
+          <GroupMenuItemContainer disabled>
+            <Empty
+              css={css`
+                font-style: italic;
+              `}
+            >
+              No groups found.
+            </Empty>
+          </GroupMenuItemContainer>
+        )}
       </GroupMenuContent>
     </ModalMenu>
   );
@@ -187,7 +212,7 @@ const GroupMenuItem = ({
     <GroupMenuItemContainer
       key={group._id}
       data-id={group._id}
-      onClick={(event) => handleSelectGroup(event)}
+      onClick={(event: any) => handleSelectGroup(event)}
       className={`${noteGroups.includes(group._id) ? "selected" : ""} ${
         last ? "border" : ""
       }`}

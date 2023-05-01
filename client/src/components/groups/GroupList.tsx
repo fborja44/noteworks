@@ -27,7 +27,7 @@ const List = styled.div`
   min-height: 60px;
   row-gap: 1em;
   column-gap: 2em;
-  z-index: 1;
+  z-index: 2;
 `;
 
 export interface GroupListProps {

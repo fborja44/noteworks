@@ -29,7 +29,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 100000;
   cursor: default;
   user-select: none;
 `;
@@ -105,7 +105,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         css={css`
           opacity: ${open ? "1" : "0"};
           max-height: ${open ? "500px" : "0px"};
-          z-index: ${open ? "200" : "0"};
+          z-index: ${open ? "1000000" : "0"};
           transition: max-height 1s ease, opacity 0.1s ease;
           ${item.type === "group" ? "left: 200px; top: 33px;" : ""}
         `}
