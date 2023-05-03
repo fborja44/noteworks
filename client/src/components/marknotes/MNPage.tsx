@@ -27,8 +27,9 @@ import MNHelp from "./MNHelp";
 import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
+import NotFoundPage from "../NotFoundPage";
 import PageHeader from "../pageheader/PageHeader";
-import Section, { Empty } from "../Section";
+import Section from "../Section";
 import MNList from "./MNList";
 import GroupList from "../groups/GroupList";
 
@@ -151,28 +152,9 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
               </Section>
             </>
           ) : (
-            <>
-              <div
-                css={css`
-                  width: 100%;
-                  height: 80%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-
-                  svg {
-                    width: 50px;
-                    height: 50px;
-                    margin-top: 1.5em;
-                  }
-                `}
-              >
-                <Empty>
-                  <p>No Active Marknotes</p>
-                  <SparkleIcon />
-                </Empty>
-              </div>
-            </>
+            <NotFoundPage icon={<SparkleIcon />}>
+              No Active Marknotes
+            </NotFoundPage>
           )}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />

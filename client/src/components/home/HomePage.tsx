@@ -1,9 +1,12 @@
 /* Home Content Component
 ------------------------------------------------------------------------------*/
 // React imports
-import React, { useState } from "react";
+import React from "react";
 
 import styled from "@emotion/styled";
+
+// Redux imports
+import { useSelector } from "react-redux";
 
 // Firebase
 import { useContext } from "react";
@@ -11,18 +14,20 @@ import { AuthContext } from "../../firebase/AuthProvider";
 
 // Common imports
 import { COLOR } from "../../common/color";
+import { Checklist, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
 import PageHeader from "../pageheader/PageHeader";
+import HomeItem from "./HomeItem";
 import Section from "../Section";
-import QNList from "../quicknotes/QNList";
-import MNList from "../marknotes/MNList";
 
 // Image and icon imports
-import GroupList from "../groups/GroupList";
-import StarIcon from "../icons/StarIcon";
 import HomeIcon from "../icons/HomeIcon";
 import GlobeIcon from "../icons/GlobeIcon";
+import BoltIcon from "../icons/BoltIcon";
+import DocumentCheckIcon from "../icons/DocumentCheckIcon";
+import { BsMarkdown } from "react-icons/bs";
+import SmileIcon from "../icons/SmileIcon";
 
 const TitleContainer = styled.div`
   color: ${(props) => props.theme.title.textPrimary};
@@ -30,11 +35,14 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   height: 100%;
+  border-bottom: 1px solid ${(props) => props.theme.main.backgroundSecondary};
   svg {
     width: 34px;
     height: 34px;
     color: ${COLOR.blue.primary};
+    margin-right: 0.6rem;
   }
+  padding-bottom: 0.75em;
 `;
 
 const Title = styled.div`
@@ -42,11 +50,36 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   font-weight: bold;
-  margin-left: 0.6rem;
   align-items: center;
   font-size: 24px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
+`;
+
+const ProfileImage = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 30px;
+  width: 30px;
+  background: ${COLOR.blue.primary};
+  color: white;
+  border-radius: 1000em;
+  margin-right: 1em;
+
+  svg {
+    width: 70px;
+    height: 70px;
+  }
+`;
+
+const ProfileIcon = styled.div`
+  height: 30px;
+  width: 30px;
+  background: ${COLOR.blue.primary};
+  border-radius: 1000em;
+  margin-right: 1em;
 `;
 
 const Content = styled.p`
@@ -101,12 +134,61 @@ const HomePage: React.FC<HomePageProps> = ({
   // Firebase user context hook
   const currentUser = useContext(AuthContext);
 
+  // Quicknotes State
+  const quicknotesState: Quicknote[] = useSelector(
+    (state: any) => state.quicknotesState
+  );
+
+  // Marknotes State
+  const marknotesState: Marknote[] = useSelector(
+    (state: any) => state.marknotesState
+  );
+
+  // Checklists State
+  const checklistsState: Checklist[] = useSelector(
+    (state: any) => state.checklistsState
+  );
+
   return (
     <React.Fragment>
       <PageHeader title="Dashboard" icon={<HomeIcon />} />
       <div className="main-content-wrapper">
         {currentUser ? (
-          <></>
+          <>
+            <Section full={false}>
+              <TitleContainer>
+                {currentUser.photoURL ? (
+                  <ProfileImage
+                    src={currentUser.photoURL}
+                    alt="Profile Image"
+                  />
+                ) : (
+                  <ProfileIcon>
+                    <SmileIcon />
+                  </ProfileIcon>
+                )}
+                <Title>Your Notebook</Title>
+              </TitleContainer>
+              <HomeItem
+                type="quicknotes"
+                icon={<BoltIcon />}
+                count={quicknotesState.length}
+              />
+              <HomeItem
+                type="marknotes"
+                icon={<BsMarkdown />}
+                count={marknotesState.length}
+                list={marknotesState}
+              />
+
+              <HomeItem
+                type="checklists"
+                icon={<DocumentCheckIcon />}
+                count={checklistsState.length}
+                list={checklistsState}
+              />
+            </Section>
+          </>
         ) : (
           <Section>
             <TitleContainer>

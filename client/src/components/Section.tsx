@@ -6,21 +6,25 @@ import * as React from "react";
 import styled from "@emotion/styled";
 
 export const SectionContainer = styled.section`
-  margin-bottom: 2em;
+  margin: 0 auto 2em auto;
   color: ${(props) => props.theme.main.textSecondary};
   font-size: 14px;
   display: flex;
-  flex-direction: ${(props: { direction?: "row" | "column" }) =>
+  flex-direction: ${(props: { direction?: "row" | "column"; full?: boolean }) =>
     props.direction};
+  max-width: ${(props: { full?: boolean }) =>
+    props.full ? "initial" : "50em"};
 `;
 
 export const SectionHeader = styled.div`
-  margin-bottom: 1em;
+  margin-bottom: 1.25em;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   color: ${(props) => props.theme.main.textPrimary};
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid ${(props) => props.theme.main.backgroundSecondary};
 `;
 
 export const SectionTitle = styled.h1`
@@ -85,6 +89,7 @@ export interface SectionProps {
   icon?: any; // TODO: Change this type to something more specific
   handleClick?: any;
   direction?: "row" | "column";
+  full?: boolean;
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -93,9 +98,10 @@ const Section: React.FC<SectionProps> = ({
   handleClick,
   children,
   direction,
+  full,
 }) => {
   return (
-    <SectionContainer direction={direction || "column"}>
+    <SectionContainer direction={direction || "column"} full={full}>
       {name && (
         <SectionHeader>
           {
@@ -118,6 +124,7 @@ const Section: React.FC<SectionProps> = ({
 
 Section.defaultProps = {
   direction: "column",
+  full: true,
 };
 
 export default Section;

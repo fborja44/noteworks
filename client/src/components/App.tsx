@@ -31,6 +31,7 @@ import Footer from "./Footer";
 import LoginModal from "./auth/LoginModal";
 import CreateAccountModal from "./auth/CreateAccountModal";
 import ResetPasswordModal from "./auth/ResetPasswordModal";
+import NotFoundPage from "./NotFoundPage";
 
 import HomePage from "./home/HomePage";
 import FavoritesPage from "./home/FavoritesPage";
@@ -41,6 +42,7 @@ import GroupPage from "./groups/GroupPage";
 import SearchPage from "./searchpage/SearchPage";
 import ChecklistsPage from "./checklists/ChecklistsPage";
 import ProfilePage from "./profile/ProfilePage";
+import FrownIcon from "./icons/FrownIcon";
 
 // CSS imports
 import "../css/app.css";
@@ -165,6 +167,9 @@ const App = () => {
                   <GroupPage currentGroup={group} />
                 </Route>
               ))}
+              <Route>
+                <NotFoundPage icon={<FrownIcon />}>Error: Page Not Found</NotFoundPage>
+              </Route>
             </Switch>
           </main>
         </div>

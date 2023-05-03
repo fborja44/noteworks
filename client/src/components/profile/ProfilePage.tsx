@@ -167,7 +167,6 @@ const ProfilePage: React.FC = () => {
               <SmileIcon />
             </ProfileIcon>
           )}
-
           <ProfileInfoContainer>
             <div>
               <h3>{currentUser.displayName}</h3>
