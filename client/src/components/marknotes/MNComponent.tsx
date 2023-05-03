@@ -48,7 +48,7 @@ const MarknoteLink = css`
   text-decoration: none;
   position: absolute;
   width: 240px;
-  height: 330px;
+  height: inherit;
   z-index: 1;
 `;
 

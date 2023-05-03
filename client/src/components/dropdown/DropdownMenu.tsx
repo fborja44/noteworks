@@ -45,7 +45,7 @@ const DropdownContainer = styled.div`
   padding: 0.5em 0.5em 0.25em 0.5em;
   border: 1px solid ${(props) => props.theme.note.borderColor};
   overflow: hidden;
-  transition: height 250ms;
+  transition: opacity 200ms;
   font-size: 12px;
   cursor: default;
 `;
@@ -106,8 +106,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           opacity: ${open ? "1" : "0"};
           max-height: ${open ? "500px" : "0px"};
           z-index: ${open ? "1000000" : "0"};
-          transition: max-height 1s ease, opacity 0.1s ease;
-          ${item.type === "group" ? "left: 200px; top: 33px;" : ""}
+          transition: max-height 1s ease, opacity 300ms ease;
+          ${item.type === "group" ? "left: 240px; top: 33px;" : ""}
         `}
       >
         <Menu>
