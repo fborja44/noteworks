@@ -143,7 +143,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
         <div className="main-content-wrapper">
           {!explorerOpen ? (
             <>
-              <Section name="Groups">
+              <Section name="My Groups">
                 <GroupList />
               </Section>
               <Section name="My Marknotes">

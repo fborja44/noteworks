@@ -101,7 +101,7 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
         </PageHeader>
         <div className="main-content-wrapper">
           <Section
-            name="Groups"
+            name="My Groups"
             handleClick={() => {
               if (!currentUser) {
                 console.log("Error: Unauthorized action.");

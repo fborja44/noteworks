@@ -95,7 +95,7 @@ const QNPage: React.FC<QNPageProps> = () => {
         </PageHeaderButton>
       </PageHeader>
       <div className="main-content-wrapper">
-        <Section name="Groups">
+        <Section name="My Groups">
           <GroupList />
         </Section>
         <Section name="My Quicknotes">

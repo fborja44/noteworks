@@ -10,7 +10,6 @@ const router = express.Router();
  */
 router.get("/user/:userId/quicknotes", async (req: any, res: any) => {
   const userId = req.params.userId;
-  console.log(req.params);
   try {
     let quicknotes = await quicknotesData.getAllQuicknotes(userId.trim());
     return res.status(200).json(quicknotes);
@@ -123,13 +122,14 @@ router.patch("/user/:userId/quicknotes/:id", async (req: any, res: any) => {
   // Check if quicknote exists
   let quicknote;
   try {
-    quicknote = await quicknotesData.getQuicknoteById(userId.trim(), id.trim());
+    quicknote = await quicknotesData.getQuicknoteById(id.trim(), userId.trim());
     if (!quicknote) {
       return res.status(400).json({
         error: `Quicknote with id ${id.trim()} was not found.`,
       });
     }
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({
       error: "Failed to fetch quicknote.",
       message: e.toString(),

@@ -87,7 +87,7 @@ const MNList: React.FC<MNListProps> = ({
           />
         )
       )}
-      <NoteCreateButton noteType="marknote" group={activeGroup} />
+      {!favorites && <NoteCreateButton noteType="marknote" group={activeGroup} />}
     </List>
   );
 

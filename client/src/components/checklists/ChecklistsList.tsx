@@ -81,11 +81,13 @@ const ChecklistList: React.FC<ChecklistListProps> = ({
           setActiveGroup={setActiveGroup}
         />
       ))}
-      <NoteCreateButton
-        noteType={"checklist"}
-        variant="horizontal"
-        group={activeGroup}
-      />
+      {!favorites && (
+        <NoteCreateButton
+          noteType={"checklist"}
+          variant="horizontal"
+          group={activeGroup}
+        />
+      )}
     </List>
   );
 

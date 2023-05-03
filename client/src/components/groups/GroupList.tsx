@@ -16,7 +16,7 @@ import GroupComponent from "./GroupComponent";
 import { Empty } from "../Section";
 
 // Image and icon imports
-import { MdCreateNewFolder } from "react-icons/md";
+import FolderPlusIcon from "../icons/FolderPlusIcon";
 
 const List = styled.div`
   display: grid;
@@ -70,10 +70,9 @@ const GroupList: React.FC<GroupListProps> = ({
 
   const groupsEmpty = !favorites ? (
     <Empty>
-      <p>You have no groups.</p>
+      <p>No groups found.</p>
       <p>
-        Create one now by pressing the <MdCreateNewFolder /> button in the menu
-        above!
+        To create a new group, use the <FolderPlusIcon /> button found in the options above.
       </p>
     </Empty>
   ) : (

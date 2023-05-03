@@ -184,6 +184,7 @@ const ChecklistItemComponent = ({
    * @param value The new value of the field
    */
   const handleChecked = (value: boolean) => {
+    setSaved(false);
     const updatedChecklistItem = {
       ...itemState,
       checked: value,
@@ -195,6 +196,7 @@ const ChecklistItemComponent = ({
     setParent(parent);
     setItemState(updatedChecklistItem);
     dispatch(addUnsavedItem(updatedChecklistItem));
+    setSaved(true);
   };
 
   /**

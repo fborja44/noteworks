@@ -367,12 +367,16 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
           id="favorite-marknote-button"
           title="Favorite"
           onClick={() => {
+            if (!currentUser) {
+              console.log("Error: Unauthorized action.");
+              return;
+            }
             const updatedMarknote = {
               ...activeMarknote,
               favorited: !activeMarknote.favorited,
             };
-            setActiveMarknote(activeMarknote);
-            dispatch(updatedMarknote);
+            setActiveMarknote(updatedMarknote);
+            handleUpdateMarknote(dispatch, updatedMarknote, currentUser);
           }}
         >
           {activeMarknote.favorited === false ? (

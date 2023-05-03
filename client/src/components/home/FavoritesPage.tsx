@@ -15,6 +15,8 @@ import StarIcon from "../icons/StarIcon";
 import FolderIcon from "../icons/FolderIcon";
 import BoltIcon from "../icons/BoltIcon";
 import { BsMarkdown } from "react-icons/bs";
+import DocumentCheckIcon from "../icons/DocumentCheckIcon";
+import ChecklistList from "../checklists/ChecklistsList";
 
 interface FavoritesPageProps {}
 
@@ -37,6 +39,9 @@ const FavoritesPage: React.FC<FavoritesPageProps> = () => {
         </Section>
         <Section name={`Favorited Marknotes`} icon={<BsMarkdown />}>
           <MNList favorites={true} />
+        </Section>
+        <Section name={`Favorited Checklists`} icon={<DocumentCheckIcon />}>
+          <ChecklistList favorites={true} />
         </Section>
       </div>
     </React.Fragment>

@@ -91,7 +91,7 @@ const QNList: React.FC<QNListProps> = ({
           setSaved={setSaved}
         />
       ))}
-      <NoteCreateButton noteType="quicknote" group={activeGroup} />
+      {!favorites && <NoteCreateButton noteType="quicknote" group={activeGroup} />}
     </List>
   );
 
