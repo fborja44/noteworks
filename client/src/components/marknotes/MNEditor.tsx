@@ -417,8 +417,10 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
         >
           <EditorBody
             css={[appTheme.id === "light" ? null : EditorBodyDark]}
-            value={activeMarknote.body}
-            onBeforeChange={handleChangeEditorBody}
+            value={activeMarknote.body.toString()}
+            onBeforeChange={(editor, data, value) =>
+              handleChangeEditorBody(value)
+            }
             options={{
               lineWrapping: true,
               mode: "markdown",
