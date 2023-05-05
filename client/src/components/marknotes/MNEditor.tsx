@@ -26,6 +26,7 @@ import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import PageHeader from "../pageheader/PageHeader";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
+import UnauthorizedPage from "../UnauthorizedPage";
 import { Empty } from "../Section";
 
 // Image and icon imports
@@ -319,6 +320,10 @@ const MNEditor: React.FC<MNEditorProps> = ({ activeNote }) => {
       clearTimeout(delayDBUpdate);
     };
   }, [activeMarknote]);
+
+  if (!currentUser || currentUser.uid !== activeMarknote.author_id) {
+    return <UnauthorizedPage />;
+  }
 
   return (
     <EditorMain>

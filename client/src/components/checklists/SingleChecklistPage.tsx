@@ -27,6 +27,7 @@ import PageHeaderButton from "../pageheader/PageHeaderButton";
 import ColorMenu from "../menus/ColorMenu";
 import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ChecklistProgressBar from "./ChecklistProgressBar";
+import UnauthorizedPage from "../UnauthorizedPage";
 
 // Image and icon imports
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
@@ -179,6 +180,10 @@ const SingleChecklistPage: React.FC<SingleChecklistPageProps> = ({
     if (item.checked) {
       completed_count++;
     }
+  }
+
+  if (!currentUser || currentUser.uid !== activeChecklist.author_id) {
+    return <UnauthorizedPage />;
   }
 
   return (

@@ -24,6 +24,7 @@ import ConfirmDelete from "../menus/ConfirmDeleteMenu";
 import ColorMenu from "../menus/ColorMenu";
 import MNList from "../marknotes/MNList";
 import QNList from "../quicknotes/QNList";
+import UnauthorizedPage from "../UnauthorizedPage";
 
 // Image and icon imports
 import TrashIcon from "../icons/TrashIcon";
@@ -166,6 +167,10 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
     };
   }, [activeGroup, quicknotesState, marknotesState]);
 
+  if (!currentUser || currentUser.uid !== activeGroup.author_id) {
+    return <UnauthorizedPage />;
+  }
+
   return (
     <React.Fragment>
       <PageHeader
@@ -175,13 +180,25 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
         icon={<FolderOpenIcon filled />}
         saved={saved}
       >
-        <PageHeaderButton id="edit-color-button" title="Options" onClick={toggleColorMenu}>
+        <PageHeaderButton
+          id="edit-color-button"
+          title="Options"
+          onClick={toggleColorMenu}
+        >
           <PencilSquareIcon />
         </PageHeaderButton>
-        <PageHeaderButton id="delete-group-button" title="Delete Group" onClick={toggleConfirmDelete}>
+        <PageHeaderButton
+          id="delete-group-button"
+          title="Delete Group"
+          onClick={toggleConfirmDelete}
+        >
           <TrashIcon />
         </PageHeaderButton>
-        <PageHeaderButton id="favorite-group-button" title="Favorite" onClick={() => handleFavorite()}>
+        <PageHeaderButton
+          id="favorite-group-button"
+          title="Favorite"
+          onClick={() => handleFavorite()}
+        >
           {activeGroup.favorited === false ? <StarIcon /> : <StarIcon filled />}
         </PageHeaderButton>
         <PageHeaderButton
