@@ -15,6 +15,7 @@ import { AuthContext } from "../../firebase/AuthProvider";
 import { COLOR } from "../../common/color";
 
 // Component imports
+import Avatar from "../avatar/Avatar";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 
@@ -32,7 +33,7 @@ const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 1em;
+  margin-left: 1.5em;
 
   h3 {
     color: ${(props) => props.theme.main.textPrimary};
@@ -66,32 +67,6 @@ const ProfileInfoContainer = styled.div`
       border-color: ${(props) => props.theme.main.textPrimary};
     }
   }
-`;
-
-const ProfileImage = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 100px;
-  width: 100px;
-  background: ${COLOR.blue.primary};
-  color: white;
-  border-radius: 1000em;
-  margin-right: 0.75em;
-
-  svg {
-    width: 70px;
-    height: 70px;
-  }
-`;
-
-const ProfileIcon = styled.div`
-  height: 100px;
-  width: 100px;
-  background: ${COLOR.blue.primary};
-  border-radius: 1000em;
-  margin-right: 0.75em;
 `;
 
 const ButtonsContainer = styled.div`
@@ -160,13 +135,7 @@ const ProfilePage: React.FC = () => {
       <PageHeader title="My Profile" icon={<UserIcon />} />
       <div className="main-content-wrapper">
         <Section direction="row">
-          {currentUser.photoURL ? (
-            <ProfileImage src={currentUser.photoURL} alt="Profile Image" />
-          ) : (
-            <ProfileIcon>
-              <SmileIcon />
-            </ProfileIcon>
-          )}
+          <Avatar currentUser={currentUser} size={100} />
           <ProfileInfoContainer>
             <div>
               <h3>{currentUser.displayName}</h3>

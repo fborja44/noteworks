@@ -17,6 +17,7 @@ import { COLOR } from "../../common/color";
 import { Checklist, Marknote, Quicknote } from "../../common/types";
 
 // Component imports
+import Avatar from "../avatar/Avatar";
 import PageHeader from "../pageheader/PageHeader";
 import HomeItem from "./HomeItem";
 import Section from "../Section";
@@ -27,7 +28,6 @@ import GlobeIcon from "../icons/GlobeIcon";
 import BoltIcon from "../icons/BoltIcon";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import { BsMarkdown } from "react-icons/bs";
-import SmileIcon from "../icons/SmileIcon";
 
 const TitleContainer = styled.div`
   color: ${(props) => props.theme.title.textPrimary};
@@ -51,35 +51,10 @@ const Title = styled.div`
   justify-content: center;
   font-weight: bold;
   align-items: center;
+  margin-left: 0.625em;
   font-size: 24px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
-`;
-
-const ProfileImage = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 30px;
-  width: 30px;
-  background: ${COLOR.blue.primary};
-  color: white;
-  border-radius: 1000em;
-  margin-right: 1em;
-
-  svg {
-    width: 70px;
-    height: 70px;
-  }
-`;
-
-const ProfileIcon = styled.div`
-  height: 30px;
-  width: 30px;
-  background: ${COLOR.blue.primary};
-  border-radius: 1000em;
-  margin-right: 1em;
 `;
 
 const Content = styled.p`
@@ -157,16 +132,7 @@ const HomePage: React.FC<HomePageProps> = ({
           <>
             <Section full={false}>
               <TitleContainer>
-                {currentUser.photoURL ? (
-                  <ProfileImage
-                    src={currentUser.photoURL}
-                    alt="Profile Image"
-                  />
-                ) : (
-                  <ProfileIcon>
-                    <SmileIcon />
-                  </ProfileIcon>
-                )}
+                <Avatar currentUser={currentUser} size={30} />
                 <Title>Your Notebook</Title>
               </TitleContainer>
               <HomeItem

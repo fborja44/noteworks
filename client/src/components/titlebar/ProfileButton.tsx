@@ -20,7 +20,7 @@ const ButtonContainer = styled.div`
   border: none;
   padding: 0;
 
-  margin-right: 0.75em;
+  margin: 0 0.75em;
 
   display: flex;
   justify-content: center;

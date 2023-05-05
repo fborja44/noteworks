@@ -13,8 +13,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../firebase/AuthProvider";
 
 // Component imports
-import ProfileButton from "./ProfileButton";
+import Avatar from "../avatar/Avatar";
 import AppSearchbar from "./AppSearchbar";
+import ProfileButton from "./ProfileButton";
 
 // Common imports
 import { COLOR } from "../../common/color";
@@ -24,7 +25,6 @@ import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import XMarkIcon from "../icons/XMarkIcon";
 import GlobeIcon from "../icons/GlobeIcon";
-import SmileIcon from "../icons/SmileIcon";
 
 // Import electron renderer
 let ipc: any;
@@ -234,14 +234,7 @@ const Titlebar = ({ setOpenLogin, setOpenCreateAccount }: TitlebarProps) => {
       {currentUser ? (
         <ProfileInfoContainer>
           <span>{currentUser.displayName}</span>
-          {currentUser.photoURL ? (
-            <ProfileImage src={currentUser.photoURL} alt="Profile Image"/>
-          ) : (
-            <ProfileIcon>
-              <SmileIcon />
-            </ProfileIcon>
-          )}
-
+          <Avatar currentUser={currentUser} size={30} />
           <ProfileButton />
         </ProfileInfoContainer>
       ) : (
