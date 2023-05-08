@@ -17,9 +17,9 @@ const ContentContainer = styled.div`
   align-items: center;
 
   svg {
-    width: 50px;
-    height: 50px;
-    margin-top: 1.5em;
+    width: 50px !important;
+    height: 50px !important;
+    margin-top: 1.5em !important;
   }
 `;
 

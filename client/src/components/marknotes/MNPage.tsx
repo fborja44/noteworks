@@ -8,10 +8,6 @@ import { Switch, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../firebase/AuthProvider";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-
 import { useHistory } from "react-router-dom";
 
 // Redux imports
@@ -27,7 +23,7 @@ import MNHelp from "./MNHelp";
 import MNEditor from "./MNEditor";
 import Preview from "./MNPreview";
 import PageHeaderButton from "../pageheader/PageHeaderButton";
-import NotFoundPage from "../NotFoundPage";
+import EmptyPage from "../EmptyPage";
 import PageHeader from "../pageheader/PageHeader";
 import Section from "../Section";
 import MNList from "./MNList";
@@ -152,9 +148,9 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
               </Section>
             </>
           ) : (
-            <NotFoundPage icon={<SparkleIcon />}>
+            <EmptyPage icon={<SparkleIcon />}>
               No Active Marknotes
-            </NotFoundPage>
+            </EmptyPage>
           )}
         </div>
         <MNHelp showMNHelp={showMNHelp} setShowMNHelp={setShowMNHelp} />

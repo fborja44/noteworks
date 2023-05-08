@@ -8,6 +8,9 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
+// Common imports
+import { COLOR } from "../common/color";
+
 // Firebase
 import { useContext } from "react";
 import { AuthContext } from "../firebase/AuthProvider";
@@ -15,7 +18,7 @@ import { AuthContext } from "../firebase/AuthProvider";
 import { enqueueSnackbar } from "notistack";
 
 // Redux imports
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchQuicknotes } from "../utils/quicknotes";
 import { fetchMarknotes } from "../utils/marknotes";
 import { fetchChecklists } from "../utils/checklists";
@@ -23,6 +26,8 @@ import { fetchGroups } from "../utils/groups";
 
 // Image and icon imports
 import RefreshIcon from "./icons/RefreshIcon";
+import CheckCircleIcon from "./icons/CheckCircleIcon";
+import ExclamationTriangleIcon from "./icons/ExclamationTriangle";
 
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.title.background};
@@ -46,7 +51,6 @@ const OptionContainer = styled.div`
   height: 100%;
   a,
   span {
-    color: ${(props) => props.theme.title.textSecondary};
     margin-left: 0.5em;
     text-decoration: none;
   }
@@ -60,7 +64,9 @@ const FooterOption = styled.button`
   margin-left: 0.5rem;
   padding: 0 0.4rem 0 0.4rem;
   height: 100%;
-  width: 90px;
+  width: fit-content;
+
+  color: ${(props) => props.theme.title.textSecondary};
 
   display: flex;
   justify-content: center;
@@ -92,6 +98,9 @@ const Footer = () => {
   // Refreshing state
   const [refreshing, setRefreshing] = useState(false);
 
+  const connected = useSelector((state: any) => state.connectionState);
+  console.log(connected);
+
   /**
    * Function to refresh all notes data.
    */
@@ -117,14 +126,42 @@ const Footer = () => {
   return (
     <FooterContainer>
       <OptionContainer>
-        {currentUser && <FooterOption
-          disabled={refreshing}
-          onClick={() => refreshNotes()}
-          className={refreshing ? "blink" : ""}
-        >
-          <RefreshIcon />
-          <span>{!refreshing ? "Refresh Notes" : "Refreshing..."}</span>
-        </FooterOption>}
+        {connected ? (
+          <FooterOption
+            disabled
+            onClick={() => refreshNotes()}
+            className={refreshing ? "blink" : ""}
+            css={css`
+            color: ${COLOR.green.primary};
+          `}
+          >
+            <CheckCircleIcon />
+            <span>Connected</span>
+          </FooterOption>
+        ) : (
+          <FooterOption
+            disabled
+            onClick={() => refreshNotes()}
+            className={refreshing ? "blink" : ""}
+            css={css`
+              color: ${COLOR.red.primary};
+            `}
+          >
+            <ExclamationTriangleIcon />
+            <span className="blink">Reconnecting</span>
+          </FooterOption>
+        )}
+
+        {currentUser && (
+          <FooterOption
+            disabled={refreshing}
+            onClick={() => refreshNotes()}
+            className={refreshing ? "blink" : ""}
+          >
+            <RefreshIcon />
+            <span>{!refreshing ? "Refresh Notes" : "Refreshing..."}</span>
+          </FooterOption>
+        )}
       </OptionContainer>
       <div
         css={css`

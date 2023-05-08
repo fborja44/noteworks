@@ -8,9 +8,15 @@ const PORT = 3001;
 const server = http.createServer(app);
 const router = express.Router();
 const configRoutes = require("./routes");
-const cors = require("cors")
+const cors = require("cors");
+const { Server } = require("socket.io");
 
-var date = new Date();
+const io = new Server(server, {
+  cors: {
+    origins: "*:*",
+    methods: ["GET", "POST"],
+  },
+});
 
 const rewriteUnsupportedBrowserMethods = (req: any, res: any, next: any) => {
   // If the user posts to the server with a property called _method, rewrite the request's method
@@ -34,6 +40,27 @@ const chalk = require("chalk");
 
 const mongoCollections = require("./config/mongoCollections.ts");
 const dbConnection = require("./config/mongoConnection");
+
+const reg = /::ffff:/;
+
+io.on("connection", function (socket: any) {
+  function ip() {
+    var tempIp = socket.request.connection.remoteAddress + "";
+    tempIp = tempIp.replace(reg, "");
+    tempIp = "<" + tempIp + ">" + " ".repeat(16 - tempIp.length);
+    return tempIp;
+  }
+  console.log(
+    chalk.bold.green("Client Connected: ") + chalk.gray(ip())
+  );
+
+  // Events
+  socket.on("disconnect", () => {
+    console.log(
+      chalk.bold.yellow("Client Disconnected: ") + chalk.gray(ip())
+    );
+  });
+});
 
 app.use(cors());
 app.use(express.json());

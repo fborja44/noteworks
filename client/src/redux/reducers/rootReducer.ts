@@ -7,6 +7,7 @@ import unsavedNotesReducer from "./unsavedNotesReducer";
 import unsavedItemsReducer from "./unsavedItemsReducer";
 import selectedTabReducer from "./selectedTabReducer";
 import checklistsReducer from "./checklistsReducer";
+import connectionReducer from "./connectionReducer";
 
 const rootReducer = combineReducers({
   searchState: searchReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   unsavedNotesState: unsavedNotesReducer,
   unsavedItemsState: unsavedItemsReducer,
   checklistsState: checklistsReducer,
+  connectionState: connectionReducer,
 });
 
 export default rootReducer;

@@ -1,4 +1,4 @@
-import NotFoundPage from "./NotFoundPage";
+import NotFoundPage from "./EmptyPage";
 import BlockedIcon from "./icons/BlockedIcon";
 
 const UnauthorizedPage = () => {

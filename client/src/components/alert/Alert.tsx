@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import { COLOR } from "../../common/color";
 import ExclamationCircleIcon from "../icons/ExclamationCircleIcon";
 
@@ -28,13 +29,14 @@ const AlertContainer = styled.div`
 
 interface AlertProps {
   children: React.ReactNode;
+  style?: any;
 }
 
-const Alert = ({ children }: AlertProps) => {
+const Alert = ({ children, style }: AlertProps) => {
   return (
-    <AlertContainer>
-      <ExclamationCircleIcon strokeWidth={2}/>
-      {children}
+    <AlertContainer style={style}>
+      <ExclamationCircleIcon strokeWidth={2} />
+      <span>{children}</span>
     </AlertContainer>
   );
 };

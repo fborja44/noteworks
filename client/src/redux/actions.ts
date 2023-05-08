@@ -6,6 +6,13 @@ import {
   ChecklistItem,
 } from "../common/types";
 
+/* Connection
+/***********************************/
+const setConnection = (connected: boolean) => ({
+  type: "SET_CONNECTED",
+  payload: connected,
+});
+
 /* Search Term
 /***********************************/
 const setSearchTerm = (searchTerm: string) => ({
@@ -133,6 +140,7 @@ const addUnsavedItem = (updatedItem: ChecklistItem) => ({
 });
 
 export {
+  setConnection,
   setSearchTerm,
   setSelectedTab,
   setQuicknotes,

@@ -6,6 +6,9 @@ import { Switch, Route, useLocation } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
+import socketIO, { Socket } from "socket.io-client";
+import socketConfig from "../config/socket.json";
+
 import { ThemeProvider } from "@emotion/react";
 
 // Firebase
@@ -14,6 +17,7 @@ import { AuthContext } from "../firebase/AuthProvider";
 
 // Redux imports
 import { useDispatch, useSelector } from "react-redux";
+import { setConnection } from "../redux/actions";
 import { fetchQuicknotes } from "../utils/quicknotes";
 import { fetchMarknotes } from "../utils/marknotes";
 import { fetchGroups } from "../utils/groups";
@@ -31,7 +35,7 @@ import Footer from "./Footer";
 import LoginModal from "./auth/LoginModal";
 import CreateAccountModal from "./auth/CreateAccountModal";
 import ResetPasswordModal from "./auth/ResetPasswordModal";
-import NotFoundPage from "./NotFoundPage";
+import EmptyPage from "./EmptyPage";
 
 import HomePage from "./home/HomePage";
 import FavoritesPage from "./home/FavoritesPage";
@@ -68,15 +72,19 @@ const App = () => {
   // Current path
   const pathname = useLocation().pathname;
 
-  /**
-   * Effect hook to retrieve data from the database.
-   */
-  useEffect(() => {
+  const fetchNotes = () => {
     if (!currentUser) return;
     fetchQuicknotes(dispatch, currentUser);
     fetchMarknotes(dispatch, currentUser);
     fetchGroups(dispatch, currentUser);
     fetchChecklists(dispatch, currentUser);
+  };
+
+  /**
+   * Effect hook to retrieve data from the database.
+   */
+  useEffect(() => {
+    fetchNotes();
   }, []); // Run on load
 
   // Groups State
@@ -100,6 +108,23 @@ const App = () => {
     if (savedTheme) {
       setAppTheme(savedTheme === "light" ? lightTheme : darkTheme);
     }
+
+    // Socket.io setup
+    const socket: Socket = socketIO(socketConfig.serverAddress);
+    socket.on("connect", () => {
+      console.log("Connected to server.");
+      dispatch(setConnection(true));
+      fetchNotes();
+    });
+    socket.on("reconnect", () => {
+      console.log("Re-established connection to server.");
+      dispatch(setConnection(true));
+      fetchNotes();
+    });
+    socket.on("disconnect", () => {
+      console.error("Lost connection to server.");
+      dispatch(setConnection(false));
+    });
   }, []); // Run on load
 
   /**
@@ -168,7 +193,9 @@ const App = () => {
                 </Route>
               ))}
               <Route>
-                <NotFoundPage icon={<FrownIcon />}>Error: Page Not Found</NotFoundPage>
+                <EmptyPage icon={<FrownIcon />}>
+                  Error: Page Not Found
+                </EmptyPage>
               </Route>
             </Switch>
           </main>

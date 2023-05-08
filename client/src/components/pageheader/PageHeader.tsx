@@ -16,34 +16,7 @@ import { COLOR } from "../../common/color";
 import Filterbar from "./Filterbar";
 import { IoSaveOutline } from "react-icons/io5";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
-
-/**
- * @deprecated Header background is no longer dynamic.
- * Dynamic Element Styles
- * Issue: input is rerendered each time input is given, losing focus
- * Logic from this thread: https://github.com/emotion-js/emotion/issues/1797
- */
-// eslint-disable-next-line
-const PageHeaderColors = ({
-  color,
-  color2,
-}: {
-  color: string;
-  color2: string;
-}) =>
-  css`
-    background: ${color};
-    button {
-      background: ${color};
-      &:hover {
-        background: ${color2} !important;
-      }
-    }
-
-    .selected {
-      background: ${color2} !important;
-    }
-  `;
+import DisconnectedAlert from "../alert/DisconnectedAlert";
 
 const PageHeaderContainer = styled.section`
   color: ${(props) => props.theme.header.textPrimary};
@@ -188,41 +161,44 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   handleEditField,
   item,
 }) => {
-  // const appTheme = useTheme();
   return (
-    <PageHeaderContainer>
-      <PageHeaderSection>
-        {icon && (
-          <span id="icon-container"
-            css={[
-              PageHeaderIconStyles,
-              css`
-                color: ${!item ? color : COLOR[item.color].primary};
-              `,
-            ]}
-          >
-            {icon}
-          </span>
-        )}
-        {item && handleEditField ? (
-          <TitleInput
-            type="text"
-            placeholder={`Untitled ${item.type}`}
-            value={item.title}
-            onChange={(event) => handleEditField("title", event.target.value)}
-          />
-        ) : (
-          <h1>{title}</h1>
-        )}
-      </PageHeaderSection>
-      <PageHeaderSection>
-        {saved !== undefined && <SavedIndicator saved={saved} />}
-        {setFilterText && <Filterbar handleFilterNote={setFilterText} />}
-        <PageHeaderButtonsContainer>
-          <ul>{children}</ul>
-        </PageHeaderButtonsContainer>
-      </PageHeaderSection>
-    </PageHeaderContainer>
+    <>
+      <PageHeaderContainer>
+        <PageHeaderSection>
+          {icon && (
+            <span
+              id="icon-container"
+              css={[
+                PageHeaderIconStyles,
+                css`
+                  color: ${!item ? color : COLOR[item.color].primary};
+                `,
+              ]}
+            >
+              {icon}
+            </span>
+          )}
+          {item && handleEditField ? (
+            <TitleInput
+              type="text"
+              placeholder={`Untitled ${item.type}`}
+              value={item.title}
+              onChange={(event) => handleEditField("title", event.target.value)}
+            />
+          ) : (
+            <h1>{title}</h1>
+          )}
+        </PageHeaderSection>
+        <PageHeaderSection>
+          {saved !== undefined && <SavedIndicator saved={saved} />}
+          {setFilterText && <Filterbar handleFilterNote={setFilterText} />}
+          <PageHeaderButtonsContainer>
+            <ul>{children}</ul>
+          </PageHeaderButtonsContainer>
+        </PageHeaderSection>
+      </PageHeaderContainer>
+      {<DisconnectedAlert />}
+    </>
   );
 };
 

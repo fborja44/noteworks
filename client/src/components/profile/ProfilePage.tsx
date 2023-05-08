@@ -21,7 +21,6 @@ import Section from "../Section";
 
 // Image and icon imports
 import UserIcon from "../icons/UserIcon";
-import SmileIcon from "../icons/SmileIcon";
 import EmailIcon from "../icons/EmailIcon";
 import { doSignOut } from "../../firebase/Firebase";
 import DeleteUserModal from "./DeleteUserModal";
