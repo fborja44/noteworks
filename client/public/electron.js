@@ -3,6 +3,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const { shell } = require("electron");
 const ipc = ipcMain;
 
 function createWindow() {
@@ -45,6 +46,12 @@ function createWindow() {
     } else {
       mainWindow.maximize();
     }
+  });
+
+  // Force external links to open in default browser
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: "deny" };
   });
 
   // Need to switch between mazimize and restore

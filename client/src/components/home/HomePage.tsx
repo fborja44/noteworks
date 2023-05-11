@@ -24,7 +24,6 @@ import Section from "../Section";
 
 // Image and icon imports
 import HomeIcon from "../icons/HomeIcon";
-import GlobeIcon from "../icons/GlobeIcon";
 import BoltIcon from "../icons/BoltIcon";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import { BsMarkdown } from "react-icons/bs";
@@ -40,19 +39,17 @@ const TitleContainer = styled.div`
     width: 34px;
     height: 34px;
     color: ${COLOR.blue.primary};
-    margin-right: 0.6rem;
   }
-  padding-bottom: 0.75em;
+  padding-bottom: 0.25em;
 `;
 
 const Title = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  font-weight: bold;
   align-items: center;
-  margin-left: 0.625em;
-  font-size: 24px;
+  font-family: Shrikhand, sans-serif;
+  font-size: 32px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
 `;
@@ -92,6 +89,12 @@ const HomePageButton = styled.button`
       color: white;
     }
   }
+`;
+
+const InlineTitle = styled.span`
+  font-family: Shrikhand, sans-serif;
+  color: ${(props) => props.theme.title.textPrimary};
+  margin-right: 0.1rem;
 `;
 
 interface HomePageProps {
@@ -158,14 +161,13 @@ const HomePage: React.FC<HomePageProps> = ({
         ) : (
           <Section>
             <TitleContainer>
-              <GlobeIcon />
-              <Title>NotesNexus</Title>
+              <Title>Your own personal notebook.</Title>
             </TitleContainer>
             <Content>
-              NotesNexus is a note taking application with the goal of giving
-              you the tools you need to quickly jot down those on-the-spot
-              ideas, record in-depth and formatted notes, or reminders of what
-              you need to do to stay on track.
+              <InlineTitle>noteworks</InlineTitle> is a note taking application
+              with the goal of giving you the tools you need to quickly jot down
+              those on-the-spot ideas, record in-depth and formatted notes, or
+              reminders of what you need to do to stay on track.
             </Content>
             <Content>
               To get started now, log in, or create a new account!

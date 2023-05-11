@@ -28,6 +28,7 @@ import { fetchGroups } from "../utils/groups";
 import RefreshIcon from "./icons/RefreshIcon";
 import CheckCircleIcon from "./icons/CheckCircleIcon";
 import ExclamationTriangleIcon from "./icons/ExclamationTriangle";
+import { VscGithubInverted } from "react-icons/vsc";
 
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.title.background};
@@ -48,6 +49,8 @@ const FooterContainer = styled.footer`
 const OptionContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   a,
   span {
@@ -62,7 +65,7 @@ const OptionContainer = styled.div`
 
 const FooterOption = styled.button`
   margin-left: 0.5rem;
-  padding: 0 0.4rem 0 0.4rem;
+  padding: 0 0.4rem;
   height: 100%;
   width: fit-content;
 
@@ -82,6 +85,34 @@ const FooterOption = styled.button`
   }
 
   &:hover:enabled {
+    background-color: ${(props) => props.theme.title.backgroundSecondary};
+    cursor: pointer;
+    transition: background-color 0.2s ease 0s;
+  }
+`;
+
+const FooterLink = styled.a`
+  margin-left: 0.5rem;
+  padding: 0 0.4rem;
+  height: 100%;
+  width: fit-content;
+
+  color: ${(props) => props.theme.title.textSecondary};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+  color: inherit;
+  font-size: inherit;
+  border: 0;
+
+  svg {
+    height: 12px;
+    width: 12px;
+  }
+
+  &:hover {
     background-color: ${(props) => props.theme.title.backgroundSecondary};
     cursor: pointer;
     transition: background-color 0.2s ease 0s;
@@ -132,8 +163,8 @@ const Footer = () => {
             onClick={() => refreshNotes()}
             className={refreshing ? "blink" : ""}
             css={css`
-            color: ${COLOR.green.primary};
-          `}
+              color: ${COLOR.green.primary};
+            `}
           >
             <CheckCircleIcon />
             <span>Connected</span>
@@ -163,14 +194,12 @@ const Footer = () => {
           </FooterOption>
         )}
       </OptionContainer>
-      <div
-        css={css`
-          margin-right: 1rem;
-        `}
-        id="cpy"
-      >
-        Francis Borja © 2021-2023
-      </div>
+      <OptionContainer>
+        <div>Francis Borja © 2021-2023</div>
+        <FooterLink href="https://github.com/fborja44/noteworks" target="_blank">
+          <VscGithubInverted />
+        </FooterLink>
+      </OptionContainer>
     </FooterContainer>
   );
 };

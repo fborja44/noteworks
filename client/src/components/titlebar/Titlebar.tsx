@@ -24,7 +24,7 @@ import { COLOR } from "../../common/color";
 import { BiWindow, BiWindows } from "react-icons/bi";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import XMarkIcon from "../icons/XMarkIcon";
-import GlobeIcon from "../icons/GlobeIcon";
+import TearIcon from "../icons/TearIcon";
 
 // Import electron renderer
 let ipc: any;
@@ -87,6 +87,7 @@ const ButtonsContainer = styled.ul`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   height: 100%;
   padding: 0 0.75rem;
@@ -105,10 +106,10 @@ const Title = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  font-weight: bold;
-  margin-left: 0.6rem;
+  margin-left: 0.5rem;
   align-items: center;
-  font-size: 16px;
+  font-size: 20px;
+  font-family: Shrikhand, sans-serif;
   -webkit-app-region: drag;
   -webkit-user-select: none;
 `;
@@ -125,33 +126,6 @@ const ProfileInfoContainer = styled.div`
     font-weight: 700;
   }
 `;
-
-const ProfileImage = styled.img`
-  height: 28px;
-  width: 28px;
-  background: ${COLOR.blue.primary};
-  border-radius: 1000em;
-  margin-right: 0.75em;
-`;
-
-const ProfileIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 28px;
-  width: 28px;
-  background: ${COLOR.blue.primary};
-  color: white;
-  border-radius: 1000em;
-  margin-right: 0.75em;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
 const TitleButton = styled.button`
   background: ${(props) => props.theme.title.backgroundSecondary};
   color: ${(props) => props.theme.title.textSecondary};
@@ -220,14 +194,14 @@ const Titlebar = ({ setOpenLogin, setOpenCreateAccount }: TitlebarProps) => {
   return (
     <TitlebarContainer>
       <TitleContainer>
-        <GlobeIcon
+        <TearIcon
           css={css`
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             color: ${COLOR.blue.primary};
           `}
         />
-        <Title>NotesNexus</Title>
+        <Title>noteworks</Title>
       </TitleContainer>
       <AppSearchbar />
       <Draggable />
