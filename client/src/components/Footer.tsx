@@ -195,8 +195,8 @@ const Footer = () => {
         )}
       </OptionContainer>
       <OptionContainer>
-        <div>Francis Borja © 2021-2023</div>
-        <FooterLink href="https://github.com/fborja44/noteworks" target="_blank">
+        <div>Francis Borja © 2021-2022</div>
+        <FooterLink href="https://github.com/fborja44/notify-app" target="_blank">
           <VscGithubInverted />
         </FooterLink>
       </OptionContainer>

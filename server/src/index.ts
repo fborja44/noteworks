@@ -73,7 +73,7 @@ server.listen(PORT);
 
 /* Initial console setup [header] 
 ------------------------------------------------------------------------------*/
-console.log(chalk.bold.cyan("--------- Denote --------- "));
-console.log(chalk.bold.cyan(` Created by Francis Borja `));
-console.log(chalk.gray(`Server running at port ${PORT}`));
-console.log(chalk.gray("---------------------------"));
+console.log(chalk.bold.cyan("--------- Notify Server --------- "));
+console.log(chalk.bold.cyan(`     Created by Francis Borja     `));
+console.log(chalk.gray(`   Server running at port ${PORT}   `));
+console.log(chalk.gray("---------------------------------"));

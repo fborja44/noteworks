@@ -25,6 +25,9 @@ const ProfileImage = styled.img`
 `;
 
 const ProfileIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: ${(props: ProfileProps) => props.size}px;
   width: ${(props: ProfileProps) => props.size}px;
   background: ${COLOR.blue.primary};
@@ -41,7 +44,7 @@ const Avatar = ({ currentUser, size }: AvatarProps) => {
     <ProfileImage src={currentUser.photoURL} alt="Profile Image" size={size} />
   ) : (
     <ProfileIcon size={size}>
-      <SmileIcon />
+      <SmileIcon className={'smile'} />
     </ProfileIcon>
   );
 };

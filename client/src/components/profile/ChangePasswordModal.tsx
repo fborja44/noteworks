@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import styled from "@emotion/styled";
 import { enqueueSnackbar } from "notistack";
 
 // Firebase imports

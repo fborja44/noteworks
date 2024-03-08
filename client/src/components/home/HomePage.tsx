@@ -34,13 +34,14 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   height: 100%;
+  column-gap: 16px;
   border-bottom: 1px solid ${(props) => props.theme.main.backgroundSecondary};
   svg {
     width: 34px;
     height: 34px;
     color: ${COLOR.blue.primary};
   }
-  padding-bottom: 0.25em;
+  padding-bottom: 0.75em;
 `;
 
 const Title = styled.div`
@@ -48,8 +49,9 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Shrikhand, sans-serif;
-  font-size: 32px;
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 28px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
 `;
@@ -65,7 +67,7 @@ const ButtonsContainer = styled.div`
 const HomePageButton = styled.button`
   background: ${(props) => props.theme.title.backgroundSecondary};
   color: ${(props) => props.theme.title.textSecondary};
-  height: 38px;
+  height: 34px;
   min-width: 100px;
   outline: none;
   border: 0;
@@ -92,7 +94,8 @@ const HomePageButton = styled.button`
 `;
 
 const InlineTitle = styled.span`
-  font-family: Shrikhand, sans-serif;
+  font-family: Inter, sans-serif;
+  font-weight: semibold;
   color: ${(props) => props.theme.title.textPrimary};
   margin-right: 0.1rem;
 `;
@@ -161,10 +164,10 @@ const HomePage: React.FC<HomePageProps> = ({
         ) : (
           <Section>
             <TitleContainer>
-              <Title>Your own personal notebook.</Title>
+              <Title>Your Own Personal Notebook</Title>
             </TitleContainer>
             <Content>
-              <InlineTitle>noteworks</InlineTitle> is a note taking application
+              <InlineTitle>notify</InlineTitle> is a note taking application
               with the goal of giving you the tools you need to quickly jot down
               those on-the-spot ideas, record in-depth and formatted notes, or
               reminders of what you need to do to stay on track.

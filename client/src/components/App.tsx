@@ -103,7 +103,7 @@ const App = () => {
    * Effect hook to retrieve theme from local storage
    */
   useEffect(() => {
-    const savedTheme = JSON.parse(localStorage.getItem(themeLocal) || "");
+    const savedTheme = JSON.parse(localStorage.getItem(themeLocal) || "") ?? "";
     // Check if theme was received
     if (savedTheme) {
       setAppTheme(savedTheme === "light" ? lightTheme : darkTheme);

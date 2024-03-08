@@ -16,7 +16,7 @@ import { setSelectedTab } from "../../redux/actions";
 
 const ItemContainer = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.main.backgroundSecondary};
-  padding: 1em 0;
+  padding: 1.25em 0;
 `;
 
 const ItemHeader = styled.div`

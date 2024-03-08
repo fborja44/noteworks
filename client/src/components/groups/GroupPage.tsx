@@ -165,7 +165,7 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
       setSaved(false);
       clearTimeout(delayDBUpdate);
     };
-  }, [activeGroup, quicknotesState, marknotesState]);
+  }, [activeGroup, quicknotesState, marknotesState, currentUser, dispatch]);
 
   if (!currentUser || currentUser.uid !== activeGroup.author_id) {
     return <UnauthorizedPage />;
