@@ -16,6 +16,7 @@ import { Checklist, Group } from "../../common/types";
 import NoteCreateButton from "../notes/NoteCreateButton";
 import ChecklistComponent from "./ChecklistComponent";
 import { Empty } from "../Section";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const List = styled.div`
   display: grid;
@@ -46,7 +47,7 @@ const ChecklistList: React.FC<ChecklistListProps> = ({
 
   // Checklists State
   const checklistsState: Checklist[] = useSelector(
-    (state: any) => state.checklistsState
+    (state: AppState) => state.checklistsState
   );
 
   let checklists = checklistsState;

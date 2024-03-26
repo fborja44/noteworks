@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { COLOR } from "../../common/color";
 import { Marknote, Checklist } from "../../common/types";
 import { useDispatch } from "react-redux";
-import { setSelectedTab } from "../../redux/actions";
+import { setSelectedTab } from "../../redux/actions/selectedTabActions";
 
 const ItemContainer = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.main.backgroundSecondary};

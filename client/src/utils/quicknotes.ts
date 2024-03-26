@@ -2,13 +2,8 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Quicknote } from "../common/types";
-import {
-  createQuicknote,
-  deleteQuicknote,
-  setQuicknotes,
-  updateQuicknotes,
-} from "../redux/actions";
 import { User } from "firebase/auth";
+import { createQuicknote, deleteQuicknote, setQuicknotes, updateQuicknotes } from "../redux/actions/quicknotesActions";
 
 const BASE_ADDR = "http://localhost:3001";
 

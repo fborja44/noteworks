@@ -1,17 +1,13 @@
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { setSearchTerm } from '../actions/searchActions';
 
-const initialState: string = "";
+const initialState: string = '';
 
-const searchReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    case "SET_SEARCH_TERM":
-      const searchTerm: string = payload;
-      return searchTerm;
-    default:
-      return state;
-  }
-};
+const searchReducer = createReducer(initialState, (builder) => {
+	builder.addCase(setSearchTerm, (state, action) => {
+		state = action.payload;
+		return state;
+	});
+});
 
 export default searchReducer;

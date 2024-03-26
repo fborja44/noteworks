@@ -10,7 +10,6 @@ import { css, jsx } from "@emotion/react";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import { setSelectedTab } from "../../redux/actions";
 
 // Common imports
 import { Marknote } from "../../common/types";
@@ -24,6 +23,7 @@ import {
 
 // Image and icon imports
 import { VscMarkdown } from "react-icons/vsc";
+import { setSelectedTab } from "../../redux/actions/selectedTabActions";
 
 interface NotesExplorerMarknoteProps {
   marknote: Marknote;

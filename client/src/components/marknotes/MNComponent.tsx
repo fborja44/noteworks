@@ -10,7 +10,6 @@ import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 // Redux imports
-import { setSelectedTab } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 // Common imports
@@ -24,6 +23,7 @@ import NoteHeader from "../notes/NoteHeader";
 import MNFooter from "./MNFooter";
 import NoteContent, { MarknoteBody } from "../notes/NoteContent";
 import GroupMenu from "../menus/GroupMenu";
+import { setSelectedTab } from "../../redux/actions/selectedTabActions";
 
 const MarknoteContainer = styled.div`
   background-color: ${(props: { bodyColor: string }) => props.bodyColor};

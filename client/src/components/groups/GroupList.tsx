@@ -17,6 +17,7 @@ import { Empty } from "../Section";
 
 // Image and icon imports
 import FolderPlusIcon from "../icons/FolderPlusIcon";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const List = styled.div`
   display: grid;
@@ -40,7 +41,7 @@ const GroupList: React.FC<GroupListProps> = ({
   favorites,
 }) => {
   // Groups State
-  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
+  const groupsState: Group[] = useSelector((state: AppState) => state.groupsState);
 
   let groups = groupsState;
   if (favorites) {

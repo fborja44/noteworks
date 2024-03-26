@@ -8,6 +8,19 @@ import unsavedItemsReducer from "./unsavedItemsReducer";
 import selectedTabReducer from "./selectedTabReducer";
 import checklistsReducer from "./checklistsReducer";
 import connectionReducer from "./connectionReducer";
+import { Checklist, ChecklistItem, Group, Marknote, Quicknote } from "../../common/types";
+
+export interface AppState {
+  searchState: string;
+  selectedTabState: string;
+  quicknotesState: Quicknote[],
+  marknotesState: Marknote[],
+  checklistsState: Checklist[],
+  groupsState: Group[];
+  unsavedNotesState: Quicknote[],
+  unsavedItemsState: ChecklistItem[],
+  connectionState: boolean;
+}
 
 const rootReducer = combineReducers({
   searchState: searchReducer,

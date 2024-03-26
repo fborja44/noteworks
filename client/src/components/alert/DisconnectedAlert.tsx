@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 
 import ExclamationTriangleIcon from "../icons/ExclamationTriangle";
 import { useSelector } from "react-redux";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const AlertContainer = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const AlertContainer = styled.div`
 `;
 
 const DisconnectedAlert = () => {
-  const connected = useSelector((state: any) => state.connectionState);
+  const connected = useSelector((state: AppState) => state.connectionState);
 
   return (
     <AlertContainer

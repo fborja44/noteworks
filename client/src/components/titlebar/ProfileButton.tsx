@@ -8,9 +8,9 @@ import { Tooltip } from "react-tooltip";
 import { Link, useHistory } from "react-router-dom";
 import { doSignOut } from "../../firebase/Firebase";
 import ArrowRightOnRectangleIcon from "../icons/ArrowRightOnRectangleIcon";
-import { setSelectedTab } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { COLOR } from "../../common/color";
+import { setSelectedTab } from "../../redux/actions/selectedTabActions";
 
 const ButtonContainer = styled.div`
   background: ${(props) => props.theme.title.backgroundSecondary};

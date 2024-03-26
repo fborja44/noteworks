@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 // Image and icon imports
 import GroupList from "../groups/GroupList";
 import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 /**
  * Search content renderer
@@ -24,7 +25,7 @@ const SearchPage: React.FC = () => {
   const [saved, setSaved] = useState(true);
 
   // Search Term State
-  const searchTerm = useSelector((state: any) => state.searchState);
+  const searchTerm = useSelector((state: AppState) => state.searchState);
 
   return (
     <React.Fragment>

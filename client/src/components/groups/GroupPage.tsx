@@ -33,6 +33,7 @@ import StarIcon from "../icons/StarIcon";
 import ArrowUturnRightIcon from "../icons/ArrowUturnRightIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
 import ChecklistList from "../checklists/ChecklistsList";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 /**
  * Props for GroupPage
@@ -56,12 +57,12 @@ const GroupPage: React.FC<GroupPageProps> = ({ currentGroup }) => {
 
   // Quicknotes State
   const quicknotesState: Quicknote[] = useSelector(
-    (state: any) => state.quicknotesState
+    (state: AppState) => state.quicknotesState
   );
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
+    (state: AppState) => state.marknotesState
   );
 
   // Filtertext State

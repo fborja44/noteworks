@@ -1,34 +1,38 @@
-import { Checklist } from "../../common/types";
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { Checklist } from '../../common/types';
+import {
+	createChecklist,
+	deleteChecklist,
+	setChecklists,
+	updateChecklist,
+} from '../actions/checklistsActions';
 
 const initialState: Checklist[] = [];
 
-const checklistsReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-  switch (type) {
-    case "SET_CHECKLISTS":
-      const checklists: Checklist[] = payload;
-      return [...checklists];
-    case "CREATE_CHECKLIST":
-      const newChecklist: Checklist = payload;
-      return [...state, newChecklist];
-    case "UPDATE_CHECKLIST":
-      const updatedChecklist: Checklist = payload;
-      const updatedChecklistsState = state.map((checklist: Checklist) => {
-        return checklist._id === updatedChecklist._id
-          ? updatedChecklist
-          : checklist;
-      });
-      return updatedChecklistsState;
-    case "DELETE_CHECKLIST":
-      const checklistId: string = payload;
-      const deletedChecklistsState = state.filter(
-        (note: Checklist) => note._id !== checklistId
-      );
-      return deletedChecklistsState;
-    default:
-      return state;
-  }
-};
+const checklistsReducer = createReducer(initialState, (builder) => {
+	builder
+		.addCase(setChecklists, (state, action) => {
+			state = action.payload;
+			return state;
+		})
+		.addCase(createChecklist, (state, action) => {
+			state = [...state, action.payload];
+			return state;
+		})
+		.addCase(updateChecklist, (state, action) => {
+			const updatedChecklist = action.payload;
+			state = state.map((checklist: Checklist) => {
+				return checklist._id === updatedChecklist._id
+					? updatedChecklist
+					: checklist;
+			});
+			return state;
+		})
+		.addCase(deleteChecklist, (state, action) => {
+			const checklistId: string = action.payload;
+			state = state.filter((note: Checklist) => note._id !== checklistId);
+			return state;
+		});
+});
 
 export default checklistsReducer;

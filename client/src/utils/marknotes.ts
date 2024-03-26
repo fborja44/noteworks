@@ -2,13 +2,8 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Marknote } from "../common/types";
-import {
-  createMarknote,
-  deleteMarknote,
-  setMarknotes,
-  updateMarknote,
-} from "../redux/actions";
 import { User } from "firebase/auth";
+import { createMarknote, deleteMarknote, setMarknotes, updateMarknote } from "../redux/actions/marknotesActions";
 
 const BASE_ADDR = "http://localhost:3001";
 

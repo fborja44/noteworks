@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 // Image and icon imports
 import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
-import { setSearchTerm } from "../../redux/actions";
+import { setSearchTerm } from "../../redux/actions/searchActions";
 
 const AppSearchbarContainer = styled.div`
   display: flex;

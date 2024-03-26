@@ -28,6 +28,7 @@ import FolderIcon from "../icons/FolderIcon";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 import FolderOpenIcon from "../icons/FolderOpenIcon";
 import { enqueueSnackbar } from "notistack";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const GroupMenuContent = styled.div`
   display: flex;
@@ -122,7 +123,7 @@ const GroupMenu: React.FC<GroupMenuProps> = ({
   const dispatch = useDispatch();
 
   // Groups State
-  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
+  const groupsState: Group[] = useSelector((state: AppState) => state.groupsState);
 
   // Note Groups State
   const [noteGroupsState, setNoteGroupsState] = useState<string[]>(note.groups);

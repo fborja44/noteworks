@@ -1,32 +1,36 @@
-import { Group } from "../../common/types";
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { Group } from '../../common/types';
+import {
+	createGroup,
+	deleteGroup,
+	setGroups,
+	updateGroup,
+} from '../actions/groupsActions';
 
 const initialState: Group[] = [];
 
-const groupsReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-  switch (type) {
-    case "SET_GROUPS":
-      const groups: Group[] = payload;
-      return [...groups];
-    case "CREATE_GROUP":
-      const newGroup: Group = payload;
-      return [...state, newGroup];
-    case "UPDATE_GROUP":
-      const updatedGroup: Group = payload;
-      const updatedGroupsState = state.map((group: Group) => {
-        return group._id === updatedGroup._id ? updatedGroup : group;
-      });
-      return updatedGroupsState;
-    case "DELETE_GROUP":
-      const groupId: string = payload;
-      const deletedGroupsState = state.filter(
-        (group: Group) => group._id !== groupId
-      );
-      return deletedGroupsState;
-    default:
-      return state;
-  }
-};
+const groupsReducer = createReducer(initialState, (builder) => {
+	builder
+		.addCase(setGroups, (state, action) => {
+			state = action.payload;
+			return state;
+		})
+		.addCase(createGroup, (state, action) => {
+			state = [...state, action.payload];
+			return state;
+		})
+		.addCase(updateGroup, (state, action) => {
+			const updatedGroup = action.payload;
+			state = state.map((group: Group) => {
+				return group._id === updatedGroup._id ? updatedGroup : group;
+			});
+			return state;
+		})
+		.addCase(deleteGroup, (state, action) => {
+			const groupId: string = action.payload;
+			state = state.filter((note: Group) => note._id !== groupId);
+			return state;
+		});
+});
 
 export default groupsReducer;

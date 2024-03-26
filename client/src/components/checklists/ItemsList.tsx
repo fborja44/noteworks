@@ -18,6 +18,7 @@ import { Checklist, ChecklistItem } from "../../common/types";
 
 // Component imports
 import ChecklistItemComponent from "./ChecklistItemComponent";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const StyledItemsList = styled.ul`
   width: fit-content;
@@ -48,7 +49,7 @@ const ItemsList = ({
 
   // Unsaved items state
   const unsavedItemsState = useSelector(
-    (state: any) => state.unsavedItemsState
+    (state: AppState) => state.unsavedItemsState
   );
 
   /**

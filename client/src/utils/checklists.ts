@@ -2,13 +2,8 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Checklist, ChecklistItem } from "../common/types";
-import {
-  createChecklist,
-  deleteChecklist,
-  setChecklists,
-  updateChecklist,
-} from "../redux/actions";
 import { User } from "firebase/auth";
+import { createChecklist, deleteChecklist, setChecklists, updateChecklist } from "../redux/actions/checklistsActions";
 
 const BASE_ADDR = "http://localhost:3001";
 

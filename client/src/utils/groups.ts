@@ -2,16 +2,11 @@ import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
 import { COLOR } from "../common/color";
 import { Checklist, Group, Marknote, Quicknote } from "../common/types";
-import {
-  createGroup,
-  deleteGroup,
-  setGroups,
-  updateChecklist,
-  updateGroup,
-  updateMarknote,
-  updateQuicknotes,
-} from "../redux/actions";
 import { User } from "firebase/auth";
+import { createGroup, deleteGroup, setGroups, updateGroup } from "../redux/actions/groupsActions";
+import { updateQuicknotes } from "../redux/actions/quicknotesActions";
+import { updateMarknote } from "../redux/actions/marknotesActions";
+import { updateChecklist } from "../redux/actions/checklistsActions";
 
 const BASE_ADDR = "http://localhost:3001";
 

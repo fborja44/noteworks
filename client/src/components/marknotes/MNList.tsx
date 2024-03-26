@@ -17,6 +17,7 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 import MNContainer from "../../containers/marknotes/MNContainer";
 import NoteCreateButton from "../notes/NoteCreateButton";
 import { Empty } from "../Section";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const List = styled.div`
   display: grid;
@@ -46,7 +47,7 @@ const MNList: React.FC<MNListProps> = ({
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
+    (state: AppState) => state.marknotesState
   );
 
   // Sort marknotes by last modified date

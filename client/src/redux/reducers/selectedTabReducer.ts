@@ -1,17 +1,13 @@
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { setSelectedTab } from '../actions/selectedTabActions';
 
-const initialState: string = "/";
+const initialState: string = '/';
 
-const selectedTabReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    case "SET_SELECTED_TAB":
-      const selectedTab: string = payload;
-      return selectedTab;
-    default:
-      return state;
-  }
-};
+const selectedTabReducer = createReducer(initialState, (builder) => {
+	builder.addCase(setSelectedTab, (state, action) => {
+		state = action.payload;
+		return state;
+	});
+});
 
 export default selectedTabReducer;

@@ -31,6 +31,7 @@ import PlusIcon from "../icons/PlusIcon";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import HelpIcon from "../icons/HelpIcon";
 import SingleChecklistPage from "./SingleChecklistPage";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 export interface ChecklistsPageProps {}
 
@@ -43,7 +44,7 @@ const ChecklistsPage: React.FC<ChecklistsPageProps> = () => {
 
   // Checklists State
   const checklistsState: Checklist[] = useSelector(
-    (state: any) => state.checklistsState
+    (state: AppState) => state.checklistsState
   );
 
   /**

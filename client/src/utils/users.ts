@@ -1,12 +1,10 @@
 import axios from "axios";
 import { Dispatch, AnyAction } from "redux";
-import {
-  setQuicknotes,
-  setMarknotes,
-  setChecklists,
-  setGroups,
-} from "../redux/actions";
 import { User } from "firebase/auth";
+import { setQuicknotes } from "../redux/actions/quicknotesActions";
+import { setMarknotes } from "../redux/actions/marknotesActions";
+import { setChecklists } from "../redux/actions/checklistsActions";
+import { setGroups } from "../redux/actions/groupsActions";
 
 const BASE_ADDR = "http://localhost:3001";
 

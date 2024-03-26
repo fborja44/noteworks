@@ -1,15 +1,13 @@
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { setConnection } from '../actions/connectionActions';
 
 const initialState: boolean = false;
 
-const connectionReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-  switch (type) {
-    case "SET_CONNECTED":
-      return payload;
-    default:
-      return state;
-  }
-};
+const connectionReducer = createReducer(initialState, (builder) => {
+	builder.addCase(setConnection, (state, action) => {
+		state = action.payload;
+		return state;
+	});
+});
 
 export default connectionReducer;

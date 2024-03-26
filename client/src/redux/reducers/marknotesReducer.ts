@@ -1,32 +1,31 @@
-import { Marknote } from "../../common/types";
-import { AnyAction } from "redux";
+import { createReducer } from '@reduxjs/toolkit';
+import { Marknote } from '../../common/types';
+import { createMarknote, deleteMarknote, setMarknotes, updateMarknote } from '../actions/marknotesActions';
 
 const initialState: Marknote[] = [];
 
-const marknotesReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-  switch (type) {
-    case "SET_MARKNOTES": // Sets marknotes state
-      const marknotes: Marknote[] = payload;
-      return [...marknotes];
-    case "CREATE_MARKNOTE": // Creates a single marknote
-      const newMarknote: Marknote = payload;
-      return [...state, newMarknote];
-    case "UPDATE_MARKNOTE": // Updates a single marknote
-      const updatedMarknote: Marknote = payload;
-      const updatedMarknotesState = state.map((note: Marknote) => {
-        return note._id === updatedMarknote._id ? updatedMarknote : note;
-      });
-      return updatedMarknotesState;
-    case "DELETE_MARKNOTE": // Deletes a single marknote
-      const marknoteId: string = payload;
-      const deletedMarknotesState = state.filter(
-        (note: Marknote) => note._id !== marknoteId
-      );
-      return deletedMarknotesState;
-    default:
-      return state;
-  }
-};
+const marknotesReducer = createReducer(initialState, (builder) => {
+	builder
+		.addCase(setMarknotes, (state, action) => {
+			state = action.payload;
+			return state;
+		})
+		.addCase(createMarknote, (state, action) => {
+			state = [...state, action.payload];
+			return state;
+		})
+		.addCase(updateMarknote, (state, action) => {
+			const updatedMarknote = action.payload;
+			state = state.map((marknote: Marknote) => {
+				return marknote._id === updatedMarknote._id ? updatedMarknote : marknote;
+			});
+			return state;
+		})
+		.addCase(deleteMarknote, (state, action) => {
+			const marknoteId: string = action.payload;
+			state = state.filter((note: Marknote) => note._id !== marknoteId);
+			return state;
+		});
+});
 
 export default marknotesReducer;

@@ -37,6 +37,7 @@ import MenuIcon from "../icons/MenuIcon";
 import SquareBlocksIcon from "../icons/SquareBlocksIcon";
 import SparkleIcon from "../icons/SparkleIcon";
 import { BsMarkdown } from "react-icons/bs";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 /**
  * Props for MNPage
@@ -67,7 +68,7 @@ const MNPage: React.FC<MNPageProps> = ({ explorerOpen, setExplorerOpen }) => {
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
+    (state: AppState) => state.marknotesState
   );
 
   /**

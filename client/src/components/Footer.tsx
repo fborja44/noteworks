@@ -29,6 +29,7 @@ import RefreshIcon from "./icons/RefreshIcon";
 import CheckCircleIcon from "./icons/CheckCircleIcon";
 import ExclamationTriangleIcon from "./icons/ExclamationTriangle";
 import { VscGithubInverted } from "react-icons/vsc";
+import { AppState } from "../redux/reducers/rootReducer";
 
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.title.background};
@@ -129,8 +130,7 @@ const Footer = () => {
   // Refreshing state
   const [refreshing, setRefreshing] = useState(false);
 
-  const connected = useSelector((state: any) => state.connectionState);
-  console.log(connected);
+  const connected = useSelector((state: AppState) => state.connectionState);
 
   /**
    * Function to refresh all notes data.

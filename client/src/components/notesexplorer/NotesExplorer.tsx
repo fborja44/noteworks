@@ -29,6 +29,7 @@ import NotesExplorerMarknote from "./NotesExplorerMarknote";
 import FolderPlusIcon from "../icons/FolderPlusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const NotesExplorerContainer = styled.section`
   background: ${(props) => props.theme.sidebar.background};
@@ -94,11 +95,11 @@ const NotesExplorer = () => {
   const history = useHistory();
 
   // Groups State
-  const groupsState: Group[] = useSelector((state: any) => state.groupsState);
+  const groupsState: Group[] = useSelector((state: AppState) => state.groupsState);
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
+    (state: AppState) => state.marknotesState
   );
 
   // Explorer filter State

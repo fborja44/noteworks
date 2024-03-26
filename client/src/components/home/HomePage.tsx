@@ -27,6 +27,7 @@ import HomeIcon from "../icons/HomeIcon";
 import BoltIcon from "../icons/BoltIcon";
 import DocumentCheckIcon from "../icons/DocumentCheckIcon";
 import { BsMarkdown } from "react-icons/bs";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const TitleContainer = styled.div`
   color: ${(props) => props.theme.title.textPrimary};
@@ -117,17 +118,17 @@ const HomePage: React.FC<HomePageProps> = ({
 
   // Quicknotes State
   const quicknotesState: Quicknote[] = useSelector(
-    (state: any) => state.quicknotesState
+    (state: AppState) => state.quicknotesState
   );
 
   // Marknotes State
   const marknotesState: Marknote[] = useSelector(
-    (state: any) => state.marknotesState
+    (state: AppState) => state.marknotesState
   );
 
   // Checklists State
   const checklistsState: Checklist[] = useSelector(
-    (state: any) => state.checklistsState
+    (state: AppState) => state.checklistsState
   );
 
   return (

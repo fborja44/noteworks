@@ -16,6 +16,7 @@ import { Group, Marknote, Quicknote } from "../../common/types";
 import QNComponent from "./QNComponent";
 import NoteCreateButton from "../notes/NoteCreateButton";
 import { Empty } from "../Section";
+import { AppState } from "../../redux/reducers/rootReducer";
 
 const List = styled.div`
   display: grid;
@@ -48,14 +49,14 @@ const QNList: React.FC<QNListProps> = ({
 
   // Quicknotes State
   const quicknotesState: Quicknote[] = useSelector(
-    (state: any) => state.quicknotesState
+    (state: AppState) => state.quicknotesState
   );
 
   /**
    * Unsaved notes
    */
   const unsavedNotesState = useSelector(
-    (state: any) => state.unsavedNotesState
+    (state: AppState) => state.unsavedNotesState
   );
 
   let notes = quicknotesState;

@@ -23,7 +23,7 @@ import { COLOR } from "../../common/color";
 // Image and icon imports
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
-import { addUnsavedItem, setUnsavedItems } from "../../redux/actions";
+import { addUnsavedItem, setUnsavedItems } from "../../redux/actions/unsavedItemsActions";
 
 const ItemContainer = styled.li`
   display: flex;
